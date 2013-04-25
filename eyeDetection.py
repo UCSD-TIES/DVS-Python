@@ -18,7 +18,10 @@ import Image
 
 
 #Load the image to analyze
-result = cv.LoadImage('C:/Users/Shannon/Documents/GitHub/DVS-Python/dallas.jpg')
+
+fileLocation = raw_input("Please designate the full path" +
+                         "to the file you want to analyze\n")
+result = cv.LoadImage(fileLocation)
 
 def Load():
 
