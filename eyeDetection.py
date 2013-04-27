@@ -6,7 +6,7 @@
 # More info: http://globalties.ucsd.edu/dvs.html
 # Github repo: https://github.com/UCSD-TIES/DVS-Python
 
-import cv
+import cv2.cv as cv
 import time
 import Image
 
