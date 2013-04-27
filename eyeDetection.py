@@ -1,4 +1,4 @@
-# Core Code: Eye Detection algorithm written by Janne Parkkila
+5# Core Code: Eye Detection algorithm written by Janne Parkkila
 # More Info: http://japskua.wordpress.com/about/
 # Blog Post with code: http://japskua.wordpress.com/2010/08/04/detecting-eyes-with-python-opencv/
 
