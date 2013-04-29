@@ -6,34 +6,21 @@
 # More info: http://globalties.ucsd.edu/dvs.html
 # Github repo: https://github.com/UCSD-TIES/DVS-Python
 
+## Import necessary libraries including opencv and PIL ##
+# importing cv2 as cv fixes installation problems for most team members 
 import cv2.cv as cv
 import time
 import Image
+import sys
 
+############## Helper Functions ############################
 
-#NOTES
-#   Right Now this code is somewhat slow and has not been tested
-#     so it may not be very accurate.
-#   Also, it could use a lot more commenting for new developers.
-
-
-#Load the image to analyze
-
-fileLocation = raw_input("Please designate the full path" +
-                         "to the file you want to analyze\n")
-result = cv.LoadImage(fileLocation)
-
+# Load the face and eye cascade when the analysis is done
 def Load():
-
    return (faceCascade, eyeCascade)
 
-def Display(image):
-   cv.NamedWindow("Red Eye Test")
-   cv.ShowImage("Red Eye Test", image)
-   cv.WaitKey(0)
-   cv.DestroyWindow("Red Eye Test")
-
-def DetectRedEyes(image, faceCascade, eyeCascade):
+# The actual eye detection logic
+def DetectEyes(image, faceCascade, eyeCascade):
    min_size = (20,20)
    image_scale = 2
    haar_scale = 1.2
@@ -46,7 +33,6 @@ def DetectRedEyes(image, faceCascade, eyeCascade):
 
    # Convert color input image to grayscale
    cv.CvtColor(image, gray, cv.CV_BGR2GRAY)
-
 
    # Scale input image for faster processing
    cv.Resize(gray, smallImage, cv.CV_INTER_LINEAR)
@@ -67,16 +53,23 @@ haar_scale, min_neighbors, haar_flags, min_size)
          pt2 = (int((x + w) * image_scale), int((y + h) * image_scale))
          cv.Rectangle(image, pt1, pt2, cv.RGB(255, 0, 0), 3, 8, 0)
          face_region = cv.GetSubRect(image,(x,int(y + (h/4)),w,int(h/2)))
-
-   cv.SetImageROI(image, (pt1[0],
+      cv.SetImageROI(image, (pt1[0],
 pt1[1],
 pt2[0] - pt1[0],
 int((pt2[1] - pt1[1]) * 0.7)))
+
+   # If there are no faces found there's no reason to continue
+   else:
+      sys.exit("No faces were found")
+      
+
+   # NOTE: This returns the eye regions we're interested in
    eyes = cv.HaarDetectObjects(image, eyeCascade,
 cv.CreateMemStorage(0),
 haar_scale, min_neighbors,
 haar_flags, (15,15))
 
+   ## Draw rectangles around the eyes found ##
    if eyes:
       # For each eye found
       for eye in eyes:
@@ -88,15 +81,32 @@ eye[0][1]),
 eye[0][1] + eye[0][3]),
 cv.RGB(255, 0, 0), 1, 8, 0)
 
-   cv.ResetImageROI(image)
+   # The following is commented out because as we're debugging we don't
+   #   need to see the original image, just the regions of interest we have.
+   #cv.ResetImageROI(image)
    return image
+ 
+################# Main ####################
 
-#NOTE: You will need to modify this path to point to the dir with your cascades
+## Load the image to analyze ##
+
+# Prompt the user for a file location
+fileLocation = raw_input("Please designate the full path" +
+                         "to the file you want to analyze\n")
+# Load the image the user chose
+# TODO: Add IO error checking here
+img = cv.LoadImage(fileLocation)
+
+#NOTE: You may need to modify this path to point to the dir with your cascades
 faceCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_frontalface_default.xml")
 eyeCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_eye.xml")
 
-img = result
-image = DetectRedEyes(img, faceCascade, eyeCascade)
-cv.ShowImage("camera", image)
+# Detect the eyes and make an image with bounding boxes on it
+image = DetectEyes(img, faceCascade, eyeCascade)
+
+# Display the image with bounding boxes
+cv.ShowImage("Face with Eyes", image)
+
+# Destroy the window when the user presses any key
 cv.WaitKey(0)
-cv.DestroyWindow("camera")
+cv.DestroyWindow("Face with Eyes")
