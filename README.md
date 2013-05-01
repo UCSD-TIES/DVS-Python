@@ -14,4 +14,4 @@ Please contribute things a new team member would need to know to get started in 
 eyeDetection.py - code to detect the eyes in a picture of a face using opencv methods
    - desired input: location of image to analyze
    - desired output: left.jpg and right.jpg, images of the left and right eyes
-
+test
