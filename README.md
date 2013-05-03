@@ -18,3 +18,4 @@ Project Structure
 */src* - The actual code that drives the program
 
 */testing* - Testing code and all test related documents
+test
