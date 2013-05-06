@@ -1,5 +1,5 @@
-"""" PLEASE NOTE: This is currently a psuedoclass and is not meant to be valid code
-
+"""" This code drives the image analysis and detection and serves as glue
+between the classes (Model in MVC) and the UI(View in MVC)
 """
 from Patient import Patient
 
@@ -7,7 +7,7 @@ from Patient import Patient
 #   two image objects
 
 # Initialize the Patient object
-thisPatient = Patient( vertImg, horizImg)
+thisPatient = Patient(vertImg, horizImg)
 
 # Display the horizontal photo with the eye regions that we
 #   detected
