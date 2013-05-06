@@ -1,76 +1,96 @@
 """ PLEASE NOTE: This is currently a psuedoclass and is not meant to be valid code
 """
-# photo.jpg is a photo of a face
+# photoImg is a photo of a face
 
 class FacePhoto:
 
     #Note: Error checking and raising is not accounted for in psudeoclasses
 
-    __init__(self, photo.jpg):
-        getEyes(photo.jpg)
+    def __init__(self, photoImg):
+        getEyes(photoImg)
 
-    getFace(self):
+    def getFace(self):
         # face detection logic goes here
         # returns face region
+        return "getFace successfully called"
         
 
-    getEyes(photo.jpg):
+    def getEyes(photoImg):
         # eyeDetection.py logic goes here
-        # this method will populate left.jpg
-        #                           right.jpg
-        #                           leftRegion (region of the original
-        #                                       photo that represents the left eye)
-        #                           rightRegion
-        #                           leftCrescent (a crescent object)
-        #                           rightCrescent ( a crescent object)
+        # if there's 2 regions
+        #     set left and right region
+        # else
+        #     don't set the left and right regions
+        return "getEyes successfully called"
 
-    setLeftEye(region):
+    def setEyes(leftRegion, rightRegion):
+        setLeftEye(leftRegion)
+        setRightEye(rightRegion)
+        return "setEyes successfully called"
+        
+    def setLeftEye(region):
         # sets or resets left.jpg, leftRegion, and leftCrescent
+        return "setLeftEye successfully called"
 
-    setRightEye(region):
+    def setRightEye(region):
         # sets or resets right.jpg, rightRegion, and rightCrescent
+        return "setRightEye successfully called"
 
-    getLeftEye():
+    def getLeftEye():
         # return all left eye vars
+        return "getLeftEye successfully called"
 
-    getRightEye():
+    def getRightEye():
         # return all right eye vars
+        return "getRightEye successfully called"
     
-    getLeftJPG():
-        return left.jpg
+    def getLeftImg():
+        #return leftImg
+        return "getLeftImg successfully called"
 
-    getLeftRegion():
-        return leftRegion
+    def getLeftRegion():
+        # return leftRegion
+        return "getLeftRegion successfully called"
 
-    getLeftCrescent():
-        return leftCrescent
+    def getLeftCrescent():
+        #return leftCrescent
+        return "getLeftCrescent successfully called"
 
-    getRightJPG():
-        return right.jpg
+    def getRightImg():
+        #return right.jpg
+        return "getRightImg successfully called"
 
-    getRightRegion():
-        return rightRegion
+    def getRightRegion():
+        #return rightRegion
+        return "getRightRegion successfully called"
 
-    getRightCrescent():
-        return rightCrescent
+    def getRightCrescent():
+        #return rightCrescent
+        return "getRightCrescent successfully called"
 
-    setLeftJPG(photo):
-        this.leftJPG = photo
+    def setLeftImg(photo):
+        #this.leftImg = photo
+        return "setLeftImg successfully called"
 
-    setLeftRegion(region):
-        this.leftRegion = region
+    def setLeftRegion(region):
+        #this.leftRegion = region
+        return "setLeftRegion successfully called"
 
-    setLeftCrescent(keypoints):
-        this.leftCresent.setKeypoints(keypoints)
+    def setLeftCrescent(keypoints):
+        #this.leftCresent.setKeypoints(keypoints)
+        return "setLeftCrescent successfully called"
 
-    setRightJPG(photo):
-        this.rightJPG = photo
+    def setRightImg(photo):
+        #this.rightImg = photo
+        return "setRightImg successfully called"
 
-    setRightRegion(region):
-        this.rightRegion = region
+    def setRightRegion(region):
+        #this.rightRegion = region
+        return "setRightRegion successfully called"
 
-    setRightCrescent(keypoints):
-        this.rightCrescent.setKeypoints(keypoints)
+    def setRightCrescent(keypoints):
+        #this.rightCrescent.setKeypoints(keypoints)
+        return "setRightCrescent successfully called"
 
     
     

@@ -1,26 +1,27 @@
-""" PLEASE NOTE: This is currently a psuedoclass and is not meant to be valid code
+""" horizontalImg and verticalImg are pictures of the patient passed from the UI
 """
-# horizontal.jpg and vertical.jpg are pictures of the patient passed from the UI
-
 class Patient:
-    __init__(self, horizontal.jpg, vertical.jpg):
-        self.Horizontal = HorizontalPhoto(horizontal.jpg)
-        self.Vertical = VerticalPhoto(vertical.jpg)
+    def __init__(self, horizontalImg, verticalImg):
+        self.Horizontal = HorizontalPhoto(horizontalImg)
+        self.Vertical = VerticalPhoto(verticalImg)
 
-    analyzeEyes(self):
+    def analyzeEyes(self):
         results = self.strabismus()
         results.append( self.astigmatism())
         results.append( self.cataracts())
         return results
 
-    strabismus(self):
+    def strabismus(self):
         # strabismus detection logic goes here
+        return "Strabismus detection called"
 
-    astigmatism(self):
+    def astigmatism(self):
         # astigmatism logic goes here
+        return "Astigmatism detection called"
 
-    cataracts(self):
+    def cataracts(self):
         # cataracts logic goes here
+        return "Cataracts detection called"
 
 
 

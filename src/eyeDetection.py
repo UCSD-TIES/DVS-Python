@@ -94,8 +94,11 @@ cv.RGB(255, 0, 0), 1, 8, 0)
 fileLocation = raw_input("Please designate the full path" +
                          "to the file you want to analyze\n")
 # Load the image the user chose
-# TODO: Add IO error checking here
-img = cv.LoadImage(fileLocation)
+try:
+   img = cv.LoadImage(fileLocation)
+except IOError as e:
+   print "File name error:", e
+   sys.exit(0)
 
 #NOTE: You may need to modify this path to point to the dir with your cascades
 faceCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_frontalface_default.xml")
