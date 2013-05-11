@@ -4,12 +4,22 @@ class MyFrame(wx.Frame):
     """We simply derive a new class of Frame."""
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(600,700))
+        panel = wx.Panel(self)
 
+        #Welcome message
+        welcome = 'Welcome to DVS!'
+        wx.StaticText(panel, -1, welcome, pos=(250,10))
+
+        #Buttons for photos
         horizontal = wx.Button(self, 1, 'Horizontal', (50, 130))
         vertical = wx.Button(self, 2, 'Vertical', (150, 130), (110, -1))
 
         self.Bind(wx.EVT_BUTTON, self.openFile, horizontal)
         self.Bind(wx.EVT_BUTTON, self.openFile, vertical)
+
+        #Button to close
+        xButton=wx.Button(panel,label="Close", pos=(500,600))
+        xButton.Bind(wx.EVT_BUTTON, self.OnExit)
 
         # Setting up the menu.
         filemenu = wx.Menu()
