@@ -6,6 +6,11 @@ class MyFrame(wx.Frame):
         wx.Frame.__init__(self, parent, title=title, size=(600,700))
         panel = wx.Panel(self)
 
+        IMGMASK = "JPEG Files |*.jpg|" \
+                  ".BMP Files |*.bmp|" \
+                  "All Files |*.*"
+
+        # frame size = (width, length)
         horizontal = wx.Button(panel, 1, 'Horizontal', (50, 130), (110, -1))
         vertical = wx.Button(panel, 2, 'Vertical', (400, 130), (110, -1))
 
@@ -39,6 +44,8 @@ class MyFrame(wx.Frame):
         xButton.Bind(wx.EVT_BUTTON, self.OnExit)
         
         self.Show(True)
+
+    #add image in screens
 
     def OnAbout(self,e):
         # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
