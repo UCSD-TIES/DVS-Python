@@ -21,7 +21,7 @@ class Patient:
 
     def astigmatism(self):
         # astigmatism logic goes here
-        return "Astigmatism detection called"
+        return "Astigmatism detection call ed"
 
     def cataracts(self):
         # cataracts logic goes here
