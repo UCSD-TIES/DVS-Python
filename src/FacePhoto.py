@@ -1,21 +1,47 @@
-""" PLEASE NOTE: This is currently a psuedoclass and is not meant to be valid code
+""" A class to perform actions on a photo of a face
+    This class has two child classes:
+      HorizonalPhoto
+      VerticalPhoto
 """
-# photoImg is a photo of a face
+# NOTE: photoImg is a photo of a face
 
 class FacePhoto:
+""" This class has attributes:
+        Eye left - the left eye object
+        Eye right - the right eye object
+"""
 
-    #Note: Error checking and raising is not accounted for in psudeoclasses
+    #TODO: Error checking and raising is not accounted for in psudeoclasses
 
     def __init__(self, photoImg):
-        getEyes(photoImg)
+        """ Initializes eye objects
 
-    def getFace(self):
-        # face detection logic goes here
-        # returns face region
-        return "getFace successfully called"
-        
+        Calls findEyes() to initialize the eye attributes.
 
-    def getEyes(photoImg):
+        Args:
+            photo photoImg - an image of a face
+
+        Return:
+            None
+        """
+        left = None
+        right = None
+        findEyes(photoImg)
+
+    def findEyes(photoImg):
+        """ Detects eyes in a photo and initializes relevant attributes
+
+        Uses opencv libarary methods to detect a face and then detect the
+        eyes in that face. If there are exactly two eye regions found it
+        populates the region attributes. If a face is not found or exactly two
+        eye regions are not found the method returns false.
+
+        Args:
+            photo photoImg - an image of a face
+
+        Return:
+            bool - True if there were no issues. False for any error
+        """
         # eyeDetection.py logic goes here
         # if there's 2 regions
         #     set left and right region
@@ -23,18 +49,32 @@ class FacePhoto:
         #     don't set the left and right regions
         return "getEyes successfully called"
 
+    def getEyes():
+        getLeftEye()
+        getRightEye()
+        # return tuple of eyes
+
     def setEyes(leftRegion, rightRegion):
         setLeftEye(leftRegion)
         setRightEye(rightRegion)
         return "setEyes successfully called"
         
     def setLeftEye(region):
-        # sets or resets left.jpg, leftRegion, and leftCrescent
+        # calls eyeRemove code
+        # sets or resets left.jpg, leftRegion
         return "setLeftEye successfully called"
 
     def setRightEye(region):
-        # sets or resets right.jpg, rightRegion, and rightCrescent
+        # calls eyeRemove code 
+        # sets or resets right.jpg, rightRegion
         return "setRightEye successfully called"
+
+    def eyeRemove(region):
+        # really takes in four points per region
+        # place eye region here
+
+    def getEyes():
+        return "get eyes successfully called"
 
     def getLeftEye():
         # return all left eye vars
@@ -44,53 +84,5 @@ class FacePhoto:
         # return all right eye vars
         return "getRightEye successfully called"
     
-    def getLeftImg():
-        #return leftImg
-        return "getLeftImg successfully called"
-
-    def getLeftRegion():
-        # return leftRegion
-        return "getLeftRegion successfully called"
-
-    def getLeftCrescent():
-        #return leftCrescent
-        return "getLeftCrescent successfully called"
-
-    def getRightImg():
-        #return right.jpg
-        return "getRightImg successfully called"
-
-    def getRightRegion():
-        #return rightRegion
-        return "getRightRegion successfully called"
-
-    def getRightCrescent():
-        #return rightCrescent
-        return "getRightCrescent successfully called"
-
-    def setLeftImg(photo):
-        #this.leftImg = photo
-        return "setLeftImg successfully called"
-
-    def setLeftRegion(region):
-        #this.leftRegion = region
-        return "setLeftRegion successfully called"
-
-    def setLeftCrescent(keypoints):
-        #this.leftCresent.setKeypoints(keypoints)
-        return "setLeftCrescent successfully called"
-
-    def setRightImg(photo):
-        #this.rightImg = photo
-        return "setRightImg successfully called"
-
-    def setRightRegion(region):
-        #this.rightRegion = region
-        return "setRightRegion successfully called"
-
-    def setRightCrescent(keypoints):
-        #this.rightCrescent.setKeypoints(keypoints)
-        return "setRightCrescent successfully called"
-
-    
+        
     

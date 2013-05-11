@@ -1,6 +1,10 @@
 """ horizontalImg and verticalImg are pictures of the patient passed from the UI
 """
 class Patient:
+""" This class has attributes:
+      HorizontalPhoto horizontal - an horizontal image object
+      VerticalPhoto vertical - a vertical image object
+"""
     def __init__(self, horizontalImg, verticalImg):
         self.Horizontal = HorizontalPhoto(horizontalImg)
         self.Vertical = VerticalPhoto(verticalImg)

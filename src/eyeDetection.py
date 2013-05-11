@@ -98,7 +98,7 @@ try:
    img = cv.LoadImage(fileLocation)
 except IOError as e:
    print "File name error:", e
-   sys.exit(0)
+   sys.exit("File Name error")
 
 #NOTE: You may need to modify this path to point to the dir with your cascades
 faceCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_frontalface_default.xml")
