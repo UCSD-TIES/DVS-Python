@@ -6,24 +6,31 @@ class Patient:
       VerticalPhoto vertical - a vertical image object
 """
     def __init__(self, horizontalImg, verticalImg):
-        self.Horizontal = HorizontalPhoto(horizontalImg)
-        self.Vertical = VerticalPhoto(verticalImg)
+        """ Initialize the horizontal and vertical attributes by creating
+            HorizontalPhoto and VerticalPhoto objects
+        """
+        horizontal = HorizontalPhoto(horizontalImg)
+        vertical = VerticalPhoto(verticalImg)
 
     def analyzeEyes(self):
+        """ Analyze all eye diseases and return the results """ 
         results = self.strabismus()
-        results.append( self.astigmatism())
-        results.append( self.cataracts())
+        results.append(self.astigmatism())
+        results.append(self.cataracts())
         return results
 
     def strabismus(self):
+        """ Analyze this patient for signs of strabismus """
         # strabismus detection logic goes here
         return "Strabismus detection called"
 
     def astigmatism(self):
+        """ Analyze this patient for signs of astigmatism """
         # astigmatism logic goes here
-        return "Astigmatism detection call ed"
+        return "Astigmatism detection called"
 
     def cataracts(self):
+        """ Analyze this patient for signs of cataracts """
         # cataracts logic goes here
         return "Cataracts detection called"
 
