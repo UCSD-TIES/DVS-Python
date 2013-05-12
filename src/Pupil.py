@@ -13,9 +13,12 @@ class Pupil:
     """ Initilaizes a pupil's region then calls findCenter and
         findCrescent() in an attempt to set the remaing attributes.
     """
+    # Set the pupil region to the region passed in
     pupil = pupilRegion
+    # Initialize the other attributes to None so that they exist
     center = None
     crescent = None
+    # Set the attributes initialized to None by finding them
     findCenter()
     findCrescent()
 

@@ -21,15 +21,17 @@ class Eye:
         """ Initializes eyePhoto and eyeRegion and calls findPupil, findSclera, and
             findKeypoints in an effort to populate the rest of the attributes
         """
+        # Initalize whole eye attributes to the values passed in
         eyePhoto = photo
         eyeRegion = region
+        # Initialize the rest of the attributes to None so that they exist
         eyePupil = None
         eyeSclera = None
         top = None
         bottom = None
         inner = None
         outer = None
-        # set the rest of the attributes by finding them
+        # Set the rest of the attributes by finding them
         findPupil()
         findSclera()
         findKeypoints()

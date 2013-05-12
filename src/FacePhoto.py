@@ -25,9 +25,12 @@ class FacePhoto:
         Return:
             None
         """
+        # Initialize the face photo to the value passed in
         facePhoto = photoImg
+        # Initialize the other attributes to None so that they exist
         left = None
         right = None
+        # Set attributes intialized to None by finding them.
         findEyes(photoImg)
 
 ################# Utility Methods ######################
@@ -48,9 +51,9 @@ class FacePhoto:
         """
         # eyeDetection.py logic goes here
         # if there's 2 regions
-        #     set left and right region
+        #     construct left and right eye objects; set left and right
         # else
-        #     don't set the left and right regions
+        #     don't set the left and right attributes or construct Eye objects
         return "findEyes successfully called"
 
     
