@@ -3,7 +3,7 @@ import wx, os
 class MyFrame(wx.Frame):
     """We simply derive a new class of Frame."""
     def __init__(self, parent, title):
-        wx.Frame.__init__(self, parent, title=title, size=(600,700))
+        wx.Frame.__init__(self, parent, title=title, pos = (0, 0), size=wx.DisplaySize())
         panel = wx.Panel(self)
 
         IMGMASK = "JPEG Files |*.jpg|" \
