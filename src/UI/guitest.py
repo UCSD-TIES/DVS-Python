@@ -42,7 +42,7 @@ class MyFrame(wx.Frame):
         self.imgCtrl = wx.StaticBitmap(self.panel, wx.ID_ANY,
                                   wx.BitmapFromImage(img))
 
-        self.photoTxt = wx.TextCtrl(self.panel, size=(200,-1))
+        self.photoTxt = wx.TextCtrl(self.panel, size=(350,-1))
 
         horiBtn = wx.Button(self.panel, label='Horizontal')
         horiBtn.Bind(wx.EVT_BUTTON, self.openFile)
@@ -53,11 +53,14 @@ class MyFrame(wx.Frame):
 
 
         # Vertical Image
+        # I did this the dumb way because I don't know how to use parameters
+        # in Python :/ So I made an exact replica of a method.. haha. Might
+        # be helpful to differentiate, however.
         img2 = wx.EmptyImage(440,440)
         self.imgCtrl2 = wx.StaticBitmap(self.panel, wx.ID_ANY,
                                         wx.BitmapFromImage(img2))
 
-        self.photoTxt2 = wx.TextCtrl(self.panel, size=(200,-1))
+        self.photoTxt2 = wx.TextCtrl(self.panel, size=(350,-1))
         
         vertiBtn = wx.Button(self.panel, label='Vertical')
         vertiBtn.Bind(wx.EVT_BUTTON, self.openFile2)
@@ -67,24 +70,37 @@ class MyFrame(wx.Frame):
 
 
         # Resolve Layout Issues
-
-        self.mainSizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.height = wx.BoxSizer(wx.VERTICAL)
+        self.header = wx.BoxSizer(wx.HORIZONTAL)
+        self.sizzle = wx.BoxSizer(wx.HORIZONTAL)
+        self.leftSizer = wx.BoxSizer(wx.VERTICAL)
+        self.rightSizer = wx.BoxSizer(wx.VERTICAL)
         self.sizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.sizer2 = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.mainSizer.Add(welcomemsg, 0, wx.ALL | wx.TOP | wx.CENTER, 5)
+        self.height.Add(self.header, 0, wx.ALL | wx.CENTER, 5)
+        self.height.Add(self.sizzle, 0, wx.ALL | wx.CENTER, 5)
 
-        self.mainSizer.Add(self.imgCtrl, 0, wx.ALL | wx.LEFT, 5)
+        self.header.Add(welcomemsg, 0, wx.ALL | wx.EXPAND | wx.CENTER, 5)
 
-        self.mainSizer.Add(self.sizer, 0, wx.ALL | wx.EXPAND, 5)
+        self.sizzle.Add(self.leftSizer, 0, wx.LEFT | wx.EXPAND, 5)
+
+        self.leftSizer.Add(self.imgCtrl, 0, wx.ALL | wx.LEFT, 5)
+        self.leftSizer.Add(self.sizer, 0, wx.ALL | wx.LEFT |
+                           wx.EXPAND, 5)
 
         self.sizer.Add(self.photoTxt, 0, wx.ALL | wx.LEFT, 5)
         self.sizer.Add(horiBtn, 0, wx.ALL | wx.LEFT, 5)
 
-        self.mainSizer.Add(self.imgCtrl2, 0, wx.ALL | wx.RIGHT, 5)
-        self.sizer.Add(self.photoTxt2, 0, wx.ALL | wx.RIGHT, 5)
-        self.sizer.Add(vertiBtn, 0, wx.ALL | wx.RIGHT, 5)
+        self.sizzle.Add(self.rightSizer, 0, wx.RIGHT | wx.EXPAND, 5)
 
-        self.panel.SetSizer(self.mainSizer)
+        self.rightSizer.Add(self.imgCtrl2, 0, wx.ALL | wx.RIGHT, 5)
+        self.rightSizer.Add(self.sizer2, 0, wx.ALL | wx.RIGHT |
+                            wx.EXPAND, 5)
+        self.sizer2.Add(self.photoTxt2, 0, wx.ALL | wx.RIGHT, 5)
+        self.sizer2.Add(vertiBtn, 0, wx.ALL | wx.RIGHT, 5)
+
+        self.panel.SetSizer(self.height)
         self.panel.Layout()
         
 
