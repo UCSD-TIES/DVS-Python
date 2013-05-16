@@ -34,8 +34,10 @@ class MyFrame(wx.Frame):
 
     def createWidgets(self):
         # Welcome message
-        welcome = 'Welcome to DVS!'
+        welcome = "Welcome to DVS!"
+        welcomeFont = wx.Font(13, wx.NORMAL, wx.NORMAL, wx.BOLD)
         welcomemsg = wx.StaticText(self.panel, -1, welcome)
+        welcomemsg.SetFont(welcomeFont)
 
         # Horizontal Image
         img = wx.EmptyImage(440,440)
@@ -46,10 +48,6 @@ class MyFrame(wx.Frame):
 
         horiBtn = wx.Button(self.panel, label='Horizontal')
         horiBtn.Bind(wx.EVT_BUTTON, self.openFile)
-
-
-
-
 
 
         # Vertical Image
@@ -64,9 +62,6 @@ class MyFrame(wx.Frame):
         
         vertiBtn = wx.Button(self.panel, label='Vertical')
         vertiBtn.Bind(wx.EVT_BUTTON, self.openFile2)
-
-
-
 
 
         # Resolve Layout Issues
