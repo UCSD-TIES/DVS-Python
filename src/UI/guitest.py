@@ -1,5 +1,12 @@
 #!/user/bin/env python
 import wx, os
+
+# file filter for pictures: bitmap and jpeg files
+IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
+          "|*.jpg; *.jpeg; *.jpe; *.jfif|" \
+          "Raw Files |*.cr2; *crw|" \
+          "All Files |*.*"
+
 class MyFrame(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, pos=(0,0), size=wx.DisplaySize())
@@ -109,14 +116,16 @@ class MyFrame(wx.Frame):
         self.Close(True) # Close the frame.
  
     def openFile(self, event):
-        dlg = wx.FileDialog(self, "Choose a file", os.getcwd(), "", "*.*",
+        dlg = wx.FileDialog(self, "Choose a file", os.getcwd(), "", IMGMASK,
                             wx.OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             self.photoTxt.SetValue(path)
+            self.OnPaint()                  # moved to make code more stable
+        # Can't load image from file '': file does not exist
 
         dlg.Destroy()
-        self.OnPaint()
+        #self.OnPaint()
 
     def OnPaint(self):
         filepath = self.photoTxt.GetValue()
@@ -139,14 +148,15 @@ class MyFrame(wx.Frame):
 
 
     def openFile2(self, event):
-        dlg2 = wx.FileDialog(self, "Choose a file", os.getcwd(), "", "*.*",
+        dlg2 = wx.FileDialog(self, "Choose a file", os.getcwd(), "", IMGMASK,
                             wx.OPEN)
         if dlg2.ShowModal() == wx.ID_OK:
             path2 = dlg2.GetPath()
             self.photoTxt2.SetValue(path2)
+            self.OnPaint2()             # moved to make code more stable
 
         dlg2.Destroy()
-        self.OnPaint2()
+        #self.OnPaint2()
 
     def OnPaint2(self):
         filepath2 = self.photoTxt2.GetValue()
