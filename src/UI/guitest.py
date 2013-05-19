@@ -108,7 +108,8 @@ class MyFrame(wx.Frame):
 
     def OnAbout(self,e):
         # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
-        dlg = wx.MessageDialog( self, "A small text editor", "About Sample Editor", wx.OK )
+        aboutText = "Eye Diagnostic Program: Please Enter a Vertical and Horizontal Photo"
+        dlg = wx.MessageDialog( self, aboutText, "About Sample Editor", wx.OK )
         dlg.ShowModal() # Show it
         dlg.Destroy() # finally destroy it when finished.
 
