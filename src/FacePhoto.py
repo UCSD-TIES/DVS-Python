@@ -6,11 +6,11 @@
 # NOTE: photoImg is a photo of a face
 
 class FacePhoto:
-""" This class has attributes:
+    """ This class has attributes:
         photo facePhoto - a photo of the whole face
         Eye left - the left eye object
         Eye right - the right eye object
-"""
+    """
 
     #TODO: Error checking and raising is not accounted for in psudeoclasses
 
@@ -71,6 +71,9 @@ class FacePhoto:
         """
         # really takes in four points per region
         # place eye region here
+        eye = cv2.cv.GetSubRect(image, region)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
         return "eyeRemove successfully called"
 
 ##################### Getters ############################
@@ -100,7 +103,7 @@ class FacePhoto:
     def setLeftEye(region):
         """ Constructs a new Eye object and stores it in left """
         # Crop out a photo of the eye to pass the Eye constructor
-        eyePhoto = eyeRemove(region)
+        left_eyePhoto = eyeRemove(region)
         # Constructs the left eye
         left = Eye(eyePhoto, region)
         return "setLeftEye successfully called"
@@ -108,7 +111,7 @@ class FacePhoto:
     def setRightEye(region):
         """ Constructs a new Eye object and stores it in right """
         # Crop out a photo of the eye to pass the Eye constructor
-        eyePhoto = eyeRemove(region)
+        right_eyePhoto = eyeRemove(region)
         # Constructs the right eye
         right = Eye(eyePhoto, region)
         return "setRightEye successfully called"
