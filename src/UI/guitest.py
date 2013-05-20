@@ -33,11 +33,13 @@ class MyFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
         self.Bind(wx.EVT_MENU, self.OnExit, menuExit)
 
+        # Passes to createWidgets method definition
         self.createWidgets()
-
 
         self.panel.Show(True)        
         self.Show(True)
+
+#----------------------------------------------------------------------------
 
     def createWidgets(self):
         # Welcome message
@@ -47,65 +49,116 @@ class MyFrame(wx.Frame):
         welcomemsg.SetFont(welcomeFont)
 
         # Horizontal Image
-        img = wx.EmptyImage(440,440)
-        self.imgCtrl = wx.StaticBitmap(self.panel, wx.ID_ANY,
-                                  wx.BitmapFromImage(img))
+        horImg = wx.EmptyImage(440,440)
+        self.horImgCtrl = wx.StaticBitmap(self.panel, wx.ID_ANY,
+                                  wx.BitmapFromImage(horImg))
 
-        self.photoTxt = wx.TextCtrl(self.panel, size=(350,-1))
+        # Displays path of horizontal image
+        self.horPhotoTxt = wx.TextCtrl(self.panel, size=(350,-1))
 
         horiBtn = wx.Button(self.panel, label='Horizontal')
-        horiBtn.Bind(wx.EVT_BUTTON, self.openFile)
+        horiBtn.Bind(wx.EVT_BUTTON, self.horOpenFile)
 
 
         # Vertical Image
         # I did this the dumb way because I don't know how to use parameters
         # in Python :/ So I made an exact replica of a method.. haha. Might
         # be helpful to differentiate, however.
-        img2 = wx.EmptyImage(440,440)
-        self.imgCtrl2 = wx.StaticBitmap(self.panel, wx.ID_ANY,
-                                        wx.BitmapFromImage(img2))
+        vertImg = wx.EmptyImage(440,440)
+        self.vertImgCtrl = wx.StaticBitmap(self.panel, wx.ID_ANY,
+                                        wx.BitmapFromImage(vertImg))
 
-        self.photoTxt2 = wx.TextCtrl(self.panel, size=(350,-1))
+        # Displays path of vertical image
+        self.vertPhotoTxt = wx.TextCtrl(self.panel, size=(350,-1))
         
         vertiBtn = wx.Button(self.panel, label='Vertical')
-        vertiBtn.Bind(wx.EVT_BUTTON, self.openFile2)
+        vertiBtn.Bind(wx.EVT_BUTTON, self.vertOpenFile)
+  
+        #####################################################
+        # Confirm Button
+        confBtn = wx.Button(self.panel, label='Confirm')
+        confBtn.Bind(wx.EVT_BUTTON, self.checkConf(self.horPhotoTxt.GetValue(),self.vertPhotoTxt.GetValue()))
+        #####################################################
 
+#------------------------------------------------------------------------------
+>>>>>>> 0144183447ad72ed56130bdc9ccc29bba01b746d
 
         # Resolve Layout Issues
-        self.height = wx.BoxSizer(wx.VERTICAL)
+        self.full = wx.BoxSizer(wx.VERTICAL)
+        
         self.header = wx.BoxSizer(wx.HORIZONTAL)
-        self.sizzle = wx.BoxSizer(wx.HORIZONTAL)
+        self.body = wx.BoxSizer(wx.HORIZONTAL)
         self.leftSizer = wx.BoxSizer(wx.VERTICAL)
         self.rightSizer = wx.BoxSizer(wx.VERTICAL)
-        self.sizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.sizer2 = wx.BoxSizer(wx.HORIZONTAL)
+        
+        self.horBrowseAndText = wx.BoxSizer(wx.HORIZONTAL)
+        self.vertBrowseAndText = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.height.Add(self.header, 0, wx.ALL | wx.CENTER, 5)
-        self.height.Add(self.sizzle, 0, wx.ALL | wx.CENTER, 5)
+        # This aligns the whole layout vertically, including header, body,
+        # and bottom line (staticLine).
+        self.full.Add(self.header, 0, wx.ALL | wx.CENTER, 5)
+        self.full.Add(self.body, 0, wx.ALL | wx.CENTER, 5)
+        self.full.Add(wx.StaticLine(self.panel, wx.ID_ANY),
+                        0, wx.ALL|wx.EXPAND, 5)
 
+        # This centers the welcome message ("Welcome to DVS!") and puts
+        # it at the top.
         self.header.Add(welcomemsg, 0, wx.ALL | wx.EXPAND | wx.CENTER, 5)
 
-        self.sizzle.Add(self.leftSizer, 0, wx.LEFT | wx.EXPAND, 5)
+        # This portions the left side of the layout, including left
+        # image, left browse button (horizontal button), and left text
+        # control box, which contains the path of the horizontal image.
+        self.body.Add(self.leftSizer, 0, wx.LEFT | wx.EXPAND, 5)
+        self.leftSizer.Add(self.horImgCtrl, 0, wx.ALL | wx.LEFT, 5)
 
-        self.leftSizer.Add(self.imgCtrl, 0, wx.ALL | wx.LEFT, 5)
-        self.leftSizer.Add(self.sizer, 0, wx.ALL | wx.LEFT |
+        # Within the leftSizer container, we have a miniature sizer, called
+        # horBrowseAndText, which allows us to format the text control box
+        # and the horizontal browse button. 
+        self.leftSizer.Add(self.horBrowseAndText, 0, wx.ALL | wx.LEFT |
                            wx.EXPAND, 5)
 
-        self.sizer.Add(self.photoTxt, 0, wx.ALL | wx.LEFT, 5)
-        self.sizer.Add(horiBtn, 0, wx.ALL | wx.LEFT, 5)
+        self.horBrowseAndText.Add(self.horPhotoTxt, 0, wx.ALL | wx.LEFT, 5)
+        self.horBrowseAndText.Add(horiBtn, 0, wx.ALL | wx.LEFT, 5)
 
-        self.sizzle.Add(self.rightSizer, 0, wx.RIGHT | wx.EXPAND, 5)
 
-        self.rightSizer.Add(self.imgCtrl2, 0, wx.ALL | wx.RIGHT, 5)
-        self.rightSizer.Add(self.sizer2, 0, wx.ALL | wx.RIGHT |
+        # This portions the right side of the layout, including right image,
+        # right browse button (vertical button), and right text control box,
+        # which contains the path of the horizontal image.
+        self.body.Add(self.rightSizer, 0, wx.RIGHT | wx.EXPAND, 5)
+        self.rightSizer.Add(self.vertImgCtrl, 0, wx.ALL | wx.RIGHT, 5)
+
+        # Within the rightSizer container, we have a miniature sizer called
+        # vertBrowseAndText, which allows us to format the text control box
+        # and the vertical browse button.
+        self.rightSizer.Add(self.vertBrowseAndText, 0, wx.ALL | wx.RIGHT |
                             wx.EXPAND, 5)
-        self.sizer2.Add(self.photoTxt2, 0, wx.ALL | wx.RIGHT, 5)
-        self.sizer2.Add(vertiBtn, 0, wx.ALL | wx.RIGHT, 5)
+        self.vertBrowseAndText.Add(self.vertPhotoTxt, 0, wx.ALL | wx.RIGHT, 5)
+        self.vertBrowseAndText.Add(vertiBtn, 0, wx.ALL | wx.RIGHT, 5)
 
-        self.panel.SetSizer(self.height)
+        self.panel.SetSizer(self.full)
         self.panel.Layout()
-        
 
+    ##################################################
+    def checkConf(self, horiImg, vertImg):
+        if horiImg == '' and vertImg == '':
+            errorTxt1 = "No Images Detected, Please Enter Images"
+            errMsg1 = wx.MessageDialog(self, errorTxt1, "No Images Detected", wx.OK)
+            errMsg1.ShowModal()
+            errMsg1.Destroy()
+        elif horiImg == '':
+            errorTxt2 = "No Horizontal Image Detected, Please Enter a Horizontal Image"
+            errMsg2 = wx.MessageDialog(self, errorTxt2, "No Horizontal Image", wx.OK)
+            errMsg2.ShowModal()
+            errMsg2.Destroy()
+        elif vertImg == '':
+            errorTxt3 = "No Vertical Image Detected, Please Enter a Vertical Image"
+            errMsg3 = wx.MessageDialog(self, errorTxt3, "No Vertical Image", wx.OK)
+            errMsg3.ShowModal()
+            errMsg3.Destroy()
+    ###################################################
+
+#---------------------------------------------------------------------------
+        
     def OnAbout(self,e):
         # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
         aboutText = "Eye Diagnostic Program: Please Enter a Vertical and Horizontal Photo"
@@ -116,66 +169,65 @@ class MyFrame(wx.Frame):
     def OnExit(self,e):
         self.Close(True) # Close the frame.
  
-    def openFile(self, event):
-        dlg = wx.FileDialog(self, "Choose a file", os.getcwd(), "", IMGMASK,
+    def horOpenFile(self, event):
+        horDlg = wx.FileDialog(self, "Choose a file", os.getcwd(), "", IMGMASK,
                             wx.OPEN)
-        if dlg.ShowModal() == wx.ID_OK:
-            path = dlg.GetPath()
-            self.photoTxt.SetValue(path)
-            self.OnPaint()                  # moved to make code more stable
+        if horDlg.ShowModal() == wx.ID_OK:
+            horPath = horDlg.GetPath()
+            self.horPhotoTxt.SetValue(horPath)
+            self.horOnPaint()                  # moved to make code more stable
         # Can't load image from file '': file does not exist
 
-        dlg.Destroy()
-        #self.OnPaint()
+        horDlg.Destroy()
 
-    def OnPaint(self):
-        filepath = self.photoTxt.GetValue()
-        img = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
+    def horOnPaint(self):
+        horFilepath = self.horPhotoTxt.GetValue()
+        horImg = wx.Image(horFilepath, wx.BITMAP_TYPE_ANY)
 
         # scale the image, preserving the aspect ratio
-        W = img.GetWidth()
-        H = img.GetHeight()
+        horW = horImg.GetWidth()
+        horH = horImg.GetHeight()
 
-        if W > H:
-            NewW = self.PhotoMaxSize
-            NewH = self.PhotoMaxSize * H / W
+        if horW > horH:
+            NewhorW = self.PhotoMaxSize
+            NewhorH = self.PhotoMaxSize * horH / horW
         else:
-            NewH = self.PhotoMaxSize
-            NewW = self.PhotoMaxSize * W / H
-        img = img.Scale(NewW,NewH)
+            NewhorH = self.PhotoMaxSize
+            NewhorW = self.PhotoMaxSize * horW / horH
+        horImg = horImg.Scale(NewhorW,NewhorH)
 
-        self.imgCtrl.SetBitmap(wx.BitmapFromImage(img))
+        self.horImgCtrl.SetBitmap(wx.BitmapFromImage(horImg))
         self.panel.Refresh()
 
 
-    def openFile2(self, event):
-        dlg2 = wx.FileDialog(self, "Choose a file", os.getcwd(), "", IMGMASK,
+    def vertOpenFile(self, event):
+        vertDlg = wx.FileDialog(self, "Choose a file", os.getcwd(), "", IMGMASK,
                             wx.OPEN)
-        if dlg2.ShowModal() == wx.ID_OK:
-            path2 = dlg2.GetPath()
-            self.photoTxt2.SetValue(path2)
-            self.OnPaint2()             # moved to make code more stable
+        if vertDlg.ShowModal() == wx.ID_OK:
+            vertPath = vertDlg.GetPath()
+            self.vertPhotoTxt.SetValue(vertPath)
+            self.vertOnPaint()             # moved to make code more stable
 
-        dlg2.Destroy()
+        vertDlg.Destroy()
         #self.OnPaint2()
 
-    def OnPaint2(self):
-        filepath2 = self.photoTxt2.GetValue()
-        img2 = wx.Image(filepath2, wx.BITMAP_TYPE_ANY)
+    def vertOnPaint(self):
+        vertFilepath = self.vertPhotoTxt.GetValue()
+        vertImg = wx.Image(vertFilepath, wx.BITMAP_TYPE_ANY)
 
         # scale the image, preserving the aspect ratio
-        W2 = img2.GetWidth()
-        H2 = img2.GetHeight()
+        vertW = vertImg.GetWidth()
+        vertH = vertImg.GetHeight()
 
-        if W2 > H2:
-            NewW2 = self.PhotoMaxSize
-            NewH2 = self.PhotoMaxSize * H2 / W2
+        if vertW > vertH:
+            NewvertW = self.PhotoMaxSize
+            NewvertH = self.PhotoMaxSize * vertH / vertW
         else:
-            NewH2 = self.PhotoMaxSize
-            NewW2 = self.PhotoMaxSize * W2 / H2
-        img2 = img2.Scale(NewW2,NewH2)
+            NewvertH = self.PhotoMaxSize
+            NewvertW = self.PhotoMaxSize * vertW / vertH
+        vertImg = vertImg.Scale(NewvertW,NewvertH)
 
-        self.imgCtrl2.SetBitmap(wx.BitmapFromImage(img2))
+        self.vertImgCtrl.SetBitmap(wx.BitmapFromImage(vertImg))
         self.panel.Refresh()
 
         
