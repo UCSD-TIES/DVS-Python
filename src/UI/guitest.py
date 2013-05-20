@@ -93,16 +93,22 @@ class MyFrame(wx.Frame):
         self.horBrowseAndText = wx.BoxSizer(wx.HORIZONTAL)
         self.vertBrowseAndText = wx.BoxSizer(wx.HORIZONTAL)
 
+        self.footer = wx.BoxSizer(wx.HORIZONTAL)
+
         # This aligns the whole layout vertically, including header, body,
         # and bottom line (staticLine).
         self.full.Add(self.header, 0, wx.ALL | wx.CENTER, 5)
+        self.full.Add(wx.StaticLine(self.panel, wx.ID_ANY),
+                      0, wx.ALL|wx.EXPAND, 5)
         self.full.Add(self.body, 0, wx.ALL | wx.CENTER, 5)
         self.full.Add(wx.StaticLine(self.panel, wx.ID_ANY),
                         0, wx.ALL|wx.EXPAND, 5)
+        self.full.Add(self.footer, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
         # This centers the welcome message ("Welcome to DVS!") and puts
         # it at the top.
         self.header.Add(welcomemsg, 0, wx.ALL | wx.EXPAND | wx.CENTER, 5)
+        self.footer.Add(confBtn, 0, wx.ALL | wx.EXPAND, 5)
 
         # This portions the left side of the layout, including left
         # image, left browse button (horizontal button), and left text
