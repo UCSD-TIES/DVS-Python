@@ -77,11 +77,11 @@ class MyFrame(wx.Frame):
         #####################################################
         # Confirm Button
         confBtn = wx.Button(self.panel, label='Confirm')
-        confBtn.Bind(wx.EVT_BUTTON, self.checkConf(self.horPhotoTxt.GetValue(),self.vertPhotoTxt.GetValue()))
+        confBtn.Bind(wx.EVT_BUTTON, lambda event: self.checkConf(event, self.horPhotoTxt.GetValue(),self.vertPhotoTxt.GetValue()))
         #####################################################
 
 #------------------------------------------------------------------------------
-        
+
         # Resolve Layout Issues
         self.full = wx.BoxSizer(wx.VERTICAL)
         
@@ -138,7 +138,7 @@ class MyFrame(wx.Frame):
         self.panel.Layout()
 
     ##################################################
-    def checkConf(self, horiImg, vertImg):
+    def checkConf(self, event, horiImg, vertImg):
         if horiImg == '' and vertImg == '':
             errorTxt1 = "No Images Detected, Please Enter Images"
             errMsg1 = wx.MessageDialog(self, errorTxt1, "No Images Detected", wx.OK)
