@@ -1,10 +1,11 @@
 """ A class to perform actions on a vertical photo of a face
     This class inherits from it's parent FacePhoto
 """
+from FacePhoto import *
 
 class VerticalPhoto(FacePhoto):
 
-    __init__(photo):
+    def __init__(self, photo):
         """ Initialize the attributes of a FacePhoto
 
             This constructor rotates the photo so that we can process

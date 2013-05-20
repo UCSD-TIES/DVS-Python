@@ -3,7 +3,7 @@
 """
 
 class Eye:
-""" This class has attributes :
+    """ This class has attributes :
       img eyePhoto - a cropped photo of the left eye
       region eyeRegion - a region that represents the exact location of the eye
       Pupil eyePupil - the eye's pupil
@@ -15,7 +15,7 @@ class Eye:
       point inner - the keypoint of the eye located nearest the tearduct
       point outer - the keypoint of the eye located on the outermost crease
                     of the eye
-"""   
+    """   
 
     def __init__(self, photo, region):
         """ Initializes eyePhoto and eyeRegion and calls findPupil, findSclera, and

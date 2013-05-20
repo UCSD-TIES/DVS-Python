@@ -9,7 +9,7 @@ import sys
 """
 # NOTE: photoImg is a photo of a face
 
-class FacePhoto:
+class FacePhoto():
     """ This class has attributes:
         photo facePhoto - a photo of the whole face
         Eye left - the left eye object
@@ -35,11 +35,11 @@ class FacePhoto:
         left = None
         right = None
         # Set attributes intialized to None by finding them.
-        findEyes(photoImg)
+        self.findEyes()
 
 ################# Utility Methods ######################
 
-    def findEyes():
+    def findEyes(self):
         """ Detects eyes in a photo and initializes relevant attributes
 
         Uses opencv libarary methods to detect a face and then detect the
@@ -65,7 +65,7 @@ class FacePhoto:
         eyeCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_eye.xml")
 
         # Detect the eyes and make an image with bounding boxes on it
-        image = DetectEyes(facePhoto, faceCascade, eyeCascade)
+        image = self.DetectEyes(facePhoto, faceCascade, eyeCascade)
         return "findEyes successfully called"
     
     ## Load the face and eye cascade when the analysis is done ##
@@ -73,7 +73,7 @@ class FacePhoto:
        return (faceCascade, eyeCascade)
 
     ## The actual eye detection logic ##
-    def DetectEyes(image, faceCascade, eyeCascade):
+    def DetectEyes(self, image, faceCascade, eyeCascade):
         min_size = (20,20)
         image_scale = 2
         haar_scale = 1.2
@@ -112,7 +112,7 @@ class FacePhoto:
 
         # If there are no faces found there's no reason to continue
         else:
-            sys.exit("No faces were found")
+            return False
       
 
         # NOTE: This returns the eye regions we're interested in
@@ -123,7 +123,7 @@ class FacePhoto:
 
         if len(eyes) == 2:
             setEyes(eyes[0], eyes[1])
-        return false
+        return False
     
     def eyeRemove(region):
         """ Crops an eye from the facePhoto and returns it as a seperate photo

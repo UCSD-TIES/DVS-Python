@@ -3,11 +3,11 @@ own crescent region
 """
 
 class Pupil:
-""" This class has attributes:
+  """ This class has attributes:
       region pupil - the region of the pupil
       point center - the center point of the pupil region
       region crescent - the region of the pupil's crescent
-"""
+  """
 
   def __init__(self, pupilRegion):
     """ Initilaizes a pupil's region then calls findCenter and

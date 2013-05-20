@@ -1,11 +1,12 @@
 """ A class to perform actions on a horizontal photo of a face
     This class inherits from it's parent FacePhoto
 """
+from FacePhoto import *
 
 class HorizontalPhoto(FacePhoto):
 
     # Simply inherits all methods from FacePhoto
-    __init__(photo):
+    def __init__(self, photo):
         """ Initialize the attributes of a FacePhoto
 
             This calls FacePhoto's __init__
@@ -18,6 +19,6 @@ class HorizontalPhoto(FacePhoto):
               None
         """
         # call FacePhoto(super)'s  init
-        super(photo)
+        FacePhoto.__init__(self, photo)
 
         
