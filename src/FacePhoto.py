@@ -59,25 +59,13 @@ class FacePhoto:
         # else
         #     don't set the left and right attributes or construct Eye objects
         # Load the image the user chose
-        try:
-           img = cv.LoadImage(fileLocation)
-        except IOError as e:
-           print "File name error:", e
-           sys.exit("File Name error")
 
         #NOTE: You may need to modify this path to point to the dir with your cascades
         faceCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_frontalface_default.xml")
         eyeCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_eye.xml")
 
         # Detect the eyes and make an image with bounding boxes on it
-        image = DetectEyes(img, faceCascade, eyeCascade)
-
-        # Display the image with bounding boxes
-        cv.ShowImage("Face with Eyes", image)
-
-        # Destroy the window when the user presses any key
-        cv.WaitKey(0)
-        cv.DestroyWindow("Face with Eyes")
+        image = DetectEyes(facePhoto, faceCascade, eyeCascade)
         return "findEyes successfully called"
     
     ## Load the face and eye cascade when the analysis is done ##
@@ -131,21 +119,11 @@ class FacePhoto:
         eyes = cv.HaarDetectObjects(image, eyeCascade, cv.CreateMemStorage(0),
                                    haar_scale, min_neighbors, haar_flags, (15,15))
 
-        ## Draw rectangles around the eyes found ##
-        if eyes:
-        # For each eye found
-            for eye in eyes:
-                # Draw a rectangle around the eye
-                cv.Rectangle(image,(eye[0][0], eye[0][1]),
-                             (eye[0][0] + eye[0][2], eye[0][1] + eye[0][3]),
-                             cv.RGB(255, 0, 0), 1, 8, 0)
+        #calls set eyes if two regions found, otherwise returns false
 
-        # The following is commented out because as we're debugging we don't
-        #   need to see the original image, just the regions of interest we have.
-        #cv.ResetImageROI(image)
-        return image
- 
-
+        if len(eyes) == 2:
+            setEyes(eyes[0], eyes[1])
+        return false
     
     def eyeRemove(region):
         """ Crops an eye from the facePhoto and returns it as a seperate photo
@@ -161,10 +139,9 @@ class FacePhoto:
         """
         # really takes in four points per region
         # place eye region here
+        print str(region)
         eye = cv2.cv.GetSubRect(facePhoto, region)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-        return "eyeRemove successfully called"
+        return eye
 
 ##################### Getters ############################
 
