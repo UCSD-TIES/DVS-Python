@@ -1,7 +1,9 @@
 import cv2.cv as cv
+import cv2
 import time
 import Image
 import sys
+from Eye import *
 """ A class to perform actions on a photo of a face
     This class has two child classes:
       HorizonalPhoto
@@ -30,10 +32,10 @@ class FacePhoto():
             None
         """
         # Initialize the face photo to the value passed in
-        facePhoto = photoImg
+        self.facePhoto = photoImg
         # Initialize the other attributes to None so that they exist
-        left = None
-        right = None
+        self.left = None
+        self.right = None
         # Set attributes intialized to None by finding them.
         self.findEyes()
 
@@ -65,7 +67,7 @@ class FacePhoto():
         eyeCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_eye.xml")
 
         # Detect the eyes and make an image with bounding boxes on it
-        image = self.DetectEyes(facePhoto, faceCascade, eyeCascade)
+        image = self.DetectEyes(self.facePhoto, faceCascade, eyeCascade)
         return "findEyes successfully called"
     
     ## Load the face and eye cascade when the analysis is done ##
@@ -122,10 +124,10 @@ class FacePhoto():
         #calls set eyes if two regions found, otherwise returns false
 
         if len(eyes) == 2:
-            setEyes(eyes[0], eyes[1])
+            self.setEyes(eyes[0][0], eyes[1][0])
         return False
     
-    def eyeRemove(region):
+    def eyeRemove(self, region):
         """ Crops an eye from the facePhoto and returns it as a seperate photo
 
         This method takes in a region which is interpreted to be a region representing
@@ -140,47 +142,47 @@ class FacePhoto():
         # really takes in four points per region
         # place eye region here
         print str(region)
-        eye = cv2.cv.GetSubRect(facePhoto, region)
+        eye = cv2.cv.GetSubRect(self.facePhoto, region)
         return eye
 
 ##################### Getters ############################
 
-    def getEyes():
+    def getEyes(self):
         """ Returns a tuple of the left and right eye objects """
-        leftEye = getLeftEye()
-        rightEye = getRightEye()
+        leftEye = self.getLeftEye()
+        rightEye = self.getRightEye()
         return (leftEye, rightEye)
 
-    def getLeftEye():
+    def getLeftEye(self):
         """ Returns the left eye object """
-        return left
+        return self.left
 
     def getRightEye():
         """ Returns the right eye object """
-        return right
+        return self.right
 
 ##################### Setters ############################
 
-    def setEyes(leftRegion, rightRegion):
+    def setEyes(self, leftRegion, rightRegion):
         """ Sets or resets both eye objects """
-        setLeftEye(leftRegion)
-        setRightEye(rightRegion)
+        self.setLeftEye(leftRegion)
+        self.setRightEye(rightRegion)
         return "setEyes successfully called"
         
-    def setLeftEye(region):
+    def setLeftEye(self,region):
         """ Constructs a new Eye object and stores it in left """
         # Crop out a photo of the eye to pass the Eye constructor
-        left_eyePhoto = eyeRemove(region)
+        left_eyePhoto = self.eyeRemove(region)
         # Constructs the left eye
-        left = Eye(eyePhoto, region)
+        left = Eye(left_eyePhoto, region)
         return "setLeftEye successfully called"
 
-    def setRightEye(region):
+    def setRightEye(self,region):
         """ Constructs a new Eye object and stores it in right """
         # Crop out a photo of the eye to pass the Eye constructor
-        right_eyePhoto = eyeRemove(region)
+        right_eyePhoto = self.eyeRemove(region)
         # Constructs the right eye
-        right = Eye(eyePhoto, region)
+        right = Eye(right_eyePhoto, region)
         return "setRightEye successfully called"
 
 
