@@ -39,6 +39,8 @@ class MyFrame(wx.Frame):
         self.panel.Show(True)        
         self.Show(True)
 
+#----------------------------------------------------------------------------
+
     def createWidgets(self):
         # Welcome message
         welcome = "Welcome to DVS!"
@@ -71,14 +73,15 @@ class MyFrame(wx.Frame):
         
         vertiBtn = wx.Button(self.panel, label='Vertical')
         vertiBtn.Bind(wx.EVT_BUTTON, self.vertOpenFile)
-
-        
+  
         #####################################################
         # Confirm Button
         confBtn = wx.Button(self.panel, label='Confirm')
         confBtn.Bind(wx.EVT_BUTTON, self.checkConf(self.horPhotoTxt.GetValue(),self.vertPhotoTxt.GetValue()))
         #####################################################
 
+#------------------------------------------------------------------------------
+>>>>>>> 0144183447ad72ed56130bdc9ccc29bba01b746d
 
         # Resolve Layout Issues
         self.full = wx.BoxSizer(wx.VERTICAL)
@@ -154,6 +157,8 @@ class MyFrame(wx.Frame):
             errMsg3.Destroy()
     ###################################################
 
+#---------------------------------------------------------------------------
+        
     def OnAbout(self,e):
         # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
         aboutText = "Eye Diagnostic Program: Please Enter a Vertical and Horizontal Photo"
