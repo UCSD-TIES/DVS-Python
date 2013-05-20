@@ -72,6 +72,13 @@ class MyFrame(wx.Frame):
         vertiBtn = wx.Button(self.panel, label='Vertical')
         vertiBtn.Bind(wx.EVT_BUTTON, self.vertOpenFile)
 
+        
+        #####################################################
+        # Confirm Button
+        confBtn = wx.Button(self.panel, label='Confirm')
+        confBtn.Bind(wx.EVT_BUTTON, self.checkConf(self.horPhotoTxt.GetValue(),self.vertPhotoTxt.GetValue()))
+        #####################################################
+
 
         # Resolve Layout Issues
         self.full = wx.BoxSizer(wx.VERTICAL)
@@ -127,7 +134,25 @@ class MyFrame(wx.Frame):
 
         self.panel.SetSizer(self.full)
         self.panel.Layout()
-        
+
+    ##################################################
+    def checkConf(self, horiImg, vertImg):
+        if horiImg == '' and vertImg == '':
+            errorTxt1 = "No Images Detected, Please Enter Images"
+            errMsg1 = wx.MessageDialog(self, errorTxt1, "No Images Detected", wx.OK)
+            errMsg1.ShowModal()
+            errMsg1.Destroy()
+        elif horiImg == '':
+            errorTxt2 = "No Horizontal Image Detected, Please Enter a Horizontal Image"
+            errMsg2 = wx.MessageDialog(self, errorTxt2, "No Horizontal Image", wx.OK)
+            errMsg2.ShowModal()
+            errMsg2.Destroy()
+        elif vertImg == '':
+            errorTxt3 = "No Vertical Image Detected, Please Enter a Vertical Image"
+            errMsg3 = wx.MessageDialog(self, errorTxt3, "No Vertical Image", wx.OK)
+            errMsg3.ShowModal()
+            errMsg3.Destroy()
+    ###################################################
 
     def OnAbout(self,e):
         # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
