@@ -14,16 +14,16 @@ class Pupil:
         findCrescent() in an attempt to set the remaing attributes.
     """
     # Set the pupil region to the region passed in
-    pupil = pupilRegion
+    self.pupil = pupilRegion
     # Initialize the other attributes to None so that they exist
-    center = None
+    self.center = None
     crescent = None
     # Set the attributes initialized to None by finding them
-    findCenter()
-    findCrescent()
+    self.findCenter()
+    self.findCrescent()
 
 
-  def findCenter():
+  def findCenter(self):
     """ Calculates the center of a pupil region and sets the centerpoint
 
     Calculates the center of a pupil from it's region and then sets the point
@@ -36,9 +36,11 @@ class Pupil:
       bool - True if there were no issues. False for any error
     """
     # calculate the centerpoint
-    setCenter(centerpoint)
+    # make a dummy var so that centerpoint exists
+    centerpoint = (0,0)
+    self.setCenter(centerpoint)
 
-  def findCrescent():
+  def findCrescent(self):
     """ Detects a crescent within a pupil region.
 
     Uses opencv libarary methods to detect a crescent. Then initializes crescent
@@ -51,36 +53,34 @@ class Pupil:
       bool - True if there were no issues. False for any error
     """
     # crescent finding logic goes here
-    setCrescent(crescentRegion)
+    # dummy variable
+    crescentRegion = None
+    self.setCrescent(crescentRegion)
 
 #################### Getters ##################################
 
-    def getPupilRegion():
-      """ Returns a region representing the pupil """
-      return pupil
+  def getPupilRegion(self):
+    """ Returns a region representing the pupil """
+    return self.pupil
 
-    def getCenter():
-      """ Returns a point representing the center of the pupil """
-      return center
+  def getCenter(self):
+    """ Returns a point representing the center of the pupil """
+    return self.center
 
-    def getCrescent():
-      """ Returns a region representing the crescent """
-      return crescent
+  def getCrescent(self):
+    """ Returns a region representing the crescent """
+    return self.crescent
 
 #################### Setters ##################################
 
-    def setPupilRegion(newRegion):
-      """ Sets the pupil's region to the region passed in as argument """
-      pupil = newRegion
+  def setPupilRegion(self,newRegion):
+    """ Sets the pupil's region to the region passed in as argument """
+    self.pupil = newRegion
 
-    def setCenter(newCenter):
-      """ Sets the pupil's center to the point passed in as arguments """
-      center = newCenter
+  def setCenter(self,newCenter):
+    """ Sets the pupil's center to the point passed in as arguments """
+    self.center = newCenter
 
-    def setCrescent(newCrescent):
-      """ Sets the pupil's crescent to the region passed in as argument """
-      crescent = newCrescent
-
-      
-      
-    
+  def setCrescent(self,newCrescent):
+    """ Sets the pupil's crescent to the region passed in as argument """
+    self.crescent = newCrescent

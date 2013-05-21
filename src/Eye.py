@@ -2,6 +2,8 @@
     its own keypoints or sclera (depending on the algorithm)
 """
 
+from Pupil import *
+
 class Eye:
     """ This class has attributes :
       img eyePhoto - a cropped photo of the left eye
@@ -22,23 +24,23 @@ class Eye:
             findKeypoints in an effort to populate the rest of the attributes
         """
         # Initalize whole eye attributes to the values passed in
-        eyePhoto = photo
-        eyeRegion = region
+        self.eyePhoto = photo
+        self.eyeRegion = region
         # Initialize the rest of the attributes to None so that they exist
-        eyePupil = None
-        eyeSclera = None
-        top = None
-        bottom = None
-        inner = None
-        outer = None
+        self.eyePupil = None
+        self.eyeSclera = None
+        self.top = None
+        self.bottom = None
+        self.inner = None
+        self.outer = None
         # Set the rest of the attributes by finding them
-        findPupil()
-        findSclera()
-        findKeypoints()
+        self.findPupil()
+        self.findSclera()
+        self.findKeypoints()
 
 ################# Utility Methods #########################################
 
-    def findPupil():
+    def findPupil(self):
         """ Detects a pupil in a photo of an eye and constructs a Pupil object
 
         Uses opencv libarary methods to detect a pupil. Then initializes eyePupil
@@ -51,10 +53,12 @@ class Eye:
             bool - True if there were no issues. False for any error
         """
         # find pupil code goes here
-        setPupil(region)
+        # Dummy code to make the var region exist
+        region = None
+        self.setPupil(region)
         return "findPupil successfully called"
 
-    def findSclera():
+    def findSclera(self):
         """ Detects a sclera in a photo of an eye and sets the sclera region
 
         Uses opencv libarary methods to detect a sclera. Then sets the sclera
@@ -67,10 +71,12 @@ class Eye:
             bool - True if there were no issues. False for any error.
         """
         # find sclera code goes here
-        setSclera(region)
+        # Dummy code to make the var region exist
+        region = None
+        self.setSclera(region)
         return "findSclera successfully called"
 
-    def findKeypoints():
+    def findKeypoints(self):
         """ Detects the four main keypoints of an eye and sets their attributes
 
         Detects the four keypoints of an eye - top, bottom, inner, and outer.
@@ -83,54 +89,59 @@ class Eye:
             bool - True if there were no issues. False for any error.
         """
         # find top, bottom, inner, and outer logic goes here
-        setKeypoints( topPoint, bottomPoint, innerPoint, outerPoint)
+        # Dummy code to make the vars exist
+        topPoint = 0
+        bottomPoint = 0
+        innerPoint = 0
+        outerPoint = 0
+        self.setKeypoints( topPoint, bottomPoint, innerPoint, outerPoint)
         return "findKeyPoints successfully called."
         
 #################### Getters ##################################
 
-    def getEyePhoto():
+    def getEyePhoto(self):
         """ Returns a photo of the eye """
-        return eyePhoto
+        return self.eyePhoto
 
-    def getEyeRegion():
+    def getEyeRegion(self):
         """ Returns a region representing the eye """
-        return eyeRegion
+        return self.eyeRegion
 
-    def getPupil():
+    def getPupil(self):
         """ Returns the Pupil object for this eye """
-        return eyePupil
+        return self.eyePupil
 
-    def getSclera():
+    def getSclera(self):
         """ Returns a region representing the sclera of this eye """
-        return eyeSclera
+        return self.eyeSclera
 
-    def getKeypoints():
+    def getKeypoints(self):
         """ Returns a tuple (top, bottom, inner, outer) of the keypoints of this eye """
-        return (top, bottom, inner, outer)
+        return (self.top, self.bottom, self.inner, self.outer)
 
 #################### Setters ##################################
 
-    def setEyePhoto(photo):
+    def setEyePhoto(self,photo):
         """ Sets eyePhoto to the photo passed in as argument"""
-        eyePhoto = photo
+        self.eyePhoto = photo
 
-    def setEyeRegion(region):
+    def setEyeRegion(self,region):
         """ Sets eyeRegion to the region passed in as argument"""
-        eyeRegion = region
+        self.eyeRegion = region
 
-    def setPupil(region):
+    def setPupil(self,region):
         """ Sets eyePupil to a new Pupil object constructed from
             the region passed in as argument"""
-        eyePupil = Pupil(region)
+        self.eyePupil = Pupil(region)
 
-    def setSclera(region):
+    def setSclera(self,region):
         """ Sets eyeScelra to the region passed in as argument"""
-        eyeSclera = region
+        self.eyeSclera = region
 
-    def setKeypoints(newTop, newBottom, newInner, newOuter):
+    def setKeypoints(self,newTop, newBottom, newInner, newOuter):
         """ Sets all the keypoints according to those passed in as argument """
-        top = newTop
-        bottom = newBottom
-        inner = newInner
-        outer = newOuter
+        self.top = newTop
+        self.bottom = newBottom
+        self.inner = newInner
+        self.outer = newOuter
 
