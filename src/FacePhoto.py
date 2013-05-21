@@ -11,6 +11,8 @@ from Eye import *
 """
 # NOTE: photoImg is a photo of a face
 
+DEBUG = True
+
 class FacePhoto():
     """ This class has attributes:
         photo facePhoto - a photo of the whole face
@@ -114,6 +116,8 @@ class FacePhoto():
 
         # If there are no faces found there's no reason to continue
         else:
+            if DEBUG:
+                print "No faces found, returning false"
             return False
       
 
@@ -121,11 +125,33 @@ class FacePhoto():
         eyes = cv.HaarDetectObjects(image, eyeCascade, cv.CreateMemStorage(0),
                                    haar_scale, min_neighbors, haar_flags, (15,15))
 
-        #calls set eyes if two regions found, otherwise returns false
+        if DEBUG:
+            ## Draw rectangles around the eyes found ##
+            if eyes:
+                # For each eye found
+                for eye in eyes:
+                    # Draw a rectangle around the eye
+                    cv.Rectangle(image,(eye[0][0], eye[0][1]),
+                                 (eye[0][0] + eye[0][2],eye[0][1] + eye[0][3]),
+                                 cv.RGB(255, 0, 0), 1, 8, 0)
 
+        
+        if DEBUG:
+            # Display the image with bounding boxes
+            cv.ShowImage("Face with Eyes", image)
+
+            # Destroy the window when the user presses any key
+            cv.WaitKey(0)
+            cv.DestroyWindow("Face with Eyes")
+                
+        #calls set eyes if two regions found, otherwise returns false
         if len(eyes) == 2:
             self.setEyes(eyes[0][0], eyes[1][0])
+            return True
+        if DEBUG:
+            print "Found more or less than 2 eyes, returning false"
         return False
+
     
     def eyeRemove(self, region):
         """ Crops an eye from the facePhoto and returns it as a seperate photo

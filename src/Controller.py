@@ -9,6 +9,7 @@ from Eye import *
 from Pupil import *
 import cv2.cv as cv
 
+DEBUG = False
 # in this script we assume the UI has passed us vertImg and horizImg,
 #   two image objects
 
@@ -59,6 +60,11 @@ def detectEyes(horizontalPath, verticalPath):
     horizontalImg = cv.LoadImage(horizontalPath)
     verticalImg = cv.LoadImage(verticalPath)
     thisPatient = Patient(horizontalImg, verticalImg)
+    if DEBUG:
+        # show both pictures with the rectangles on them
+        pass
+        
+    
 
 
 def resetEyes(horizontalTuple, verticalTuple):
@@ -74,6 +80,7 @@ def resetEyes(horizontalTuple, verticalTuple):
 
 ######################Testing ######################
 # The following code replicates calls from the UI layer
-detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/obama.jpg","C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/obama.jpg")
+detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/Obama.jpg",
+           "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/ObamaRotated.jpg")
     
      
