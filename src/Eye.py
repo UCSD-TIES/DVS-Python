@@ -3,6 +3,9 @@
 """
 
 from Pupil import *
+import cv
+
+DEBUG = True
 
 class Eye:
     """ This class has attributes :
@@ -23,6 +26,12 @@ class Eye:
         """ Initializes eyePhoto and eyeRegion and calls findPupil, findSclera, and
             findKeypoints in an effort to populate the rest of the attributes
         """
+        if DEBUG:
+            print "We're here in eye's __init__"
+            print "And our region is: " + str(region)
+            cv.ShowImage("Cropped Eye Photo", photo)
+            cv.WaitKey(0)
+            cv.DestroyWindow("Cropped Eye Photo")
         # Initalize whole eye attributes to the values passed in
         self.eyePhoto = photo
         self.eyeRegion = region

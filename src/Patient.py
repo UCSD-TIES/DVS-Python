@@ -37,6 +37,18 @@ class Patient:
         # cataracts logic goes here
         return "Cataracts detection called"
 
+    def getHorizontal(self):
+        return horizontal
+
+    def getVertical(self):
+        return vertical
+
+    def setHorizontal(self, photo):
+        self.horizontal = photo
+
+    def setVertical(self,photo):
+        self.vertical = photo
+
 
 
 

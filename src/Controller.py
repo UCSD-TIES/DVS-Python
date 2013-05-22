@@ -61,11 +61,27 @@ def detectEyes(horizontalPath, verticalPath):
     verticalImg = cv.LoadImage(verticalPath)
     thisPatient = Patient(horizontalImg, verticalImg)
     if DEBUG:
-        # show both pictures with the rectangles on them
-        pass
-        
-    
-
+        # show the variables as they have been populated
+        print "Showing patient's horizontal image..."
+        cv.ShowImage("Horizontal",thisPatient.getHorizontal().facePhoto)
+        cv.WaitKey(0)
+        cv.DestroyWindow("Horizonatl")
+        print "Showing patient's vertical image..."
+        cv.ShowImage("Vertical",thisPatient.getVertical().facePhoto)
+        cv.WaitKey(0)
+        cv.DestroyWindow("Vertical")
+        print "Showing photo of the patient's horizontal left eye..."
+        cv.ShowImage("Horizontal Left Eye",thisPatient.horizontal.left.eyePhoto)
+        cv.WaitKey(0)
+        cv.DestroyWindow("Horizontal Left Eye")
+        print "Showing photo of the patient's horizonal right eye..."
+        cv.ShowImage("Vertical Right Eye",thisPatient.horizontal.right.eyePhoto)
+        cv.WaitKey(0)
+        cv.DestroyWindow("Horizontal Right Eye")
+        # ISSUE: These two print statemtents are not actually printing
+        print "Here's our left region again: " + str(thisPatient.horizontal.left.eyeRegion)
+        print "Here's our right region again: " + str(thisPatient.horizontal.right.eyeRegion)
+ 
 
 def resetEyes(horizontalTuple, verticalTuple):
     """ Resets the eye regions to whatever 

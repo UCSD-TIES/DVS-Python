@@ -38,6 +38,8 @@ class FacePhoto():
         # Initialize the other attributes to None so that they exist
         self.left = None
         self.right = None
+        if DEBUG:
+            print "In the facePhoto __init__"
         # Set attributes intialized to None by finding them.
         self.findEyes()
 
@@ -146,7 +148,12 @@ class FacePhoto():
                 
         #calls set eyes if two regions found, otherwise returns false
         if len(eyes) == 2:
-            self.setEyes(eyes[0][0], eyes[1][0])
+            if DEBUG:
+                print "There are two eyes - detectEyes"
+            # x, y, w, h
+            left = (eyes[0][0][0], eyes[0][0][1], eyes[0][0][1] + eyes[0][0][2],
+                     eyes[0][0][0] + eyes[0][0][3])
+            self.setEyes(left, eyes[1][0])
             return True
         if DEBUG:
             print "Found more or less than 2 eyes, returning false"
@@ -167,7 +174,8 @@ class FacePhoto():
         """
         # really takes in four points per region
         # place eye region here
-        print str(region)
+        if DEBUG:
+            print str(region)
         eye = cv2.cv.GetSubRect(self.facePhoto, region)
         return eye
 
@@ -191,12 +199,16 @@ class FacePhoto():
 
     def setEyes(self, leftRegion, rightRegion):
         """ Sets or resets both eye objects """
+        if DEBUG:
+            print "We're here in setEyes now"
         self.setLeftEye(leftRegion)
         self.setRightEye(rightRegion)
         return "setEyes successfully called"
         
     def setLeftEye(self,region):
         """ Constructs a new Eye object and stores it in left """
+        if DEBUG:
+            print "And we're setting the left eye now"
         # Crop out a photo of the eye to pass the Eye constructor
         left_eyePhoto = self.eyeRemove(region)
         # Constructs the left eye
@@ -205,6 +217,8 @@ class FacePhoto():
 
     def setRightEye(self,region):
         """ Constructs a new Eye object and stores it in right """
+        if DEBUG:
+            print "And we're setting the right eye now"
         # Crop out a photo of the eye to pass the Eye constructor
         right_eyePhoto = self.eyeRemove(region)
         # Constructs the right eye
