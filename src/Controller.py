@@ -92,7 +92,7 @@ def resetEyes(horizontalTuple, verticalTuple):
 
     Return:
         ?
-    """
+    """ 
 
 ######################Testing ######################
 # The following code replicates calls from the UI layer
