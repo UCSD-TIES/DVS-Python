@@ -73,12 +73,11 @@ class MyFrame(wx.Frame):
         
         vertiBtn = wx.Button(self.panel, label='Vertical')
         vertiBtn.Bind(wx.EVT_BUTTON, self.vertOpenFile)
-  
-        #####################################################
+
         # Confirm Button
         confBtn = wx.Button(self.panel, label='Confirm')
         confBtn.Bind(wx.EVT_BUTTON, lambda event: self.checkConf(event, self.horPhotoTxt.GetValue(),self.vertPhotoTxt.GetValue()))
-        #####################################################
+
 
 #------------------------------------------------------------------------------
 
@@ -143,7 +142,6 @@ class MyFrame(wx.Frame):
         self.panel.SetSizer(self.full)
         self.panel.Layout()
 
-    ##################################################
     def checkConf(self, event, horiImg, vertImg):
         if horiImg == '' and vertImg == '':
             errorTxt1 = "No Images Detected, Please Enter Images"
@@ -160,7 +158,6 @@ class MyFrame(wx.Frame):
             errMsg3 = wx.MessageDialog(self, errorTxt3, "No Vertical Image", wx.OK)
             errMsg3.ShowModal()
             errMsg3.Destroy()
-    ###################################################
 
 #---------------------------------------------------------------------------
         

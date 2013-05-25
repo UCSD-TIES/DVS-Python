@@ -25,7 +25,7 @@ class My_Frame(wx.Frame):
                  style=wx.CAPTION | wx.STAY_ON_TOP):     
 
         size = wx.DisplaySize()
-        wx.Frame.__init__(self, parent, id, 'Digital Vision Screening', pos, size, style)
+        wx.Frame.__init__(self, parent, id, 'Digital Vision Screening', pos, size)
 
         sizer_h = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -54,7 +54,6 @@ class User_Interaction0(wx.Panel):
         self.createWidgets()
 
         self.Show(True)        
-        self.Show(True)
 
     def createWidgets(self):
         # Welcome message

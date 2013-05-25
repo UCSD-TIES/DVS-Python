@@ -197,7 +197,7 @@ class User_Interaction0(wx.Panel):
             errMsg3.Destroy()
         else:
             self.Hide()
-            self.GetParent().panel0.ShowYourself()
+            self.GetParent().panel1.ShowYourself()
     ###################################################
 
 #---------------------------------------------------------------------------
@@ -295,6 +295,7 @@ class User_Interaction0(wx.Panel):
     def OnCancelAndExit(self, event):
         self.GetParent().ShutDown()
 
+#-------------------------------------------------------------------
 
 class User_Interaction1(wx.Panel):
 
