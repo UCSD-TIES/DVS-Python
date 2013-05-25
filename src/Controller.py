@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 """" This code drives the image analysis and detection and serves as glue
 between the classes (Model in MVC) and the UI(View in MVC)
 """
@@ -23,7 +25,7 @@ DEBUG = False
 """
 Controller PsuedoCode
 thisPatient =  new Patient(Horizontal(photo from UI),   Vertical(photo from UI));
-  // pass regions that horizontal and vertical’s  regions to the UI
+  // pass regions that horizontal and verticalâ€™s  regions to the UI
   if user confirms
      continue
   else if user resets regions

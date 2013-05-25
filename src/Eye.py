@@ -3,7 +3,7 @@
 """
 
 from Pupil import *
-import cv
+import cv2.cv as cv
 
 DEBUG = False
 
