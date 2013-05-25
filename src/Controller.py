@@ -136,3 +136,5 @@ cv.Rectangle(verticalPhoto, (vRight[0],vRight[1]),(vRight[2],vRight[3]),
 cv.ShowImage("Vertical with eyes",verticalPhoto)
 cv.WaitKey(0)
 cv.DestroyWindow("Vertical with eyes")
+
+
