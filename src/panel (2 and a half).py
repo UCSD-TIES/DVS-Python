@@ -1,5 +1,7 @@
-#!/user/bin/env python
 import wx, os
+import sys
+import guitest
+from Controller import *
 
 # file filter for pictures: bitmap and jpeg files
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
@@ -7,56 +9,69 @@ IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
           "Raw Files |*.cr2; *crw|" \
           "All Files |*.*"
 
-class MyFrame(wx.Frame):
-    def __init__(self, parent, title):
-        wx.Frame.__init__(self, parent, title=title, pos=(0,0), size=wx.DisplaySize())
-        self.panel = wx.Panel(self)
+class My_App(wx.App):
 
-        self.CreateStatusBar()
-        
+    def OnInit(self):
+        self.frame = My_Frame(None)
+        self.frame.Show()
+        self.SetTopWindow(self.frame)
+        return True
+
+
+class My_Frame(wx.Frame):
+
+    def __init__(self, image, parent=None,id=-1, title='Generic Title',
+                 pos=wx.DefaultPosition, style=wx.CAPTION | wx.STAY_ON_TOP):     
+
+        size = wx.DisplaySize()
+        wx.Frame.__init__(self, parent, id, 'Digital Vision Screening',
+                          pos, size)
+
+        sizer_h = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.panel0 = User_Interaction0(self)       
+        sizer_h.Add(self.panel0, 1, wx.EXPAND)
+
+        self.panel1 = User_Interaction1(self)       
+        sizer_h.Add(self.panel1, 1, wx.EXPAND)
+
+        self.SetSizer(sizer_h)
+
+        self.panel0.ShowYourself()
+
+    def ShutDown(self):
+        self.Destroy()
+
+
+class User_Interaction0(wx.Panel):
+
+    def __init__(self, parent, id=-1):
+
+        wx.Panel.__init__(self, parent, id)
         self.PhotoMaxSize = 440
-        
-        # Setting up the menu.
-        filemenu = wx.Menu()
-
-        #wx.ID_ABOUT and wx.ID_EXIT are standard IDs provided by wxWidget
-        menuAbout = filemenu.Append(wx.ID_ABOUT, "&About"," Information about this program")
-        filemenu.AppendSeparator()
-        menuExit = filemenu.Append(wx.ID_EXIT,"&Exit"," Terminate the program")
-
-        # Creating the menubar.
-        menuBar = wx.MenuBar()
-        menuBar.Append(filemenu, "&File")
-        self.SetMenuBar(menuBar)
-
-        # Set events.
-        self.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
-        self.Bind(wx.EVT_MENU, self.OnExit, menuExit)
 
         # Passes to createWidgets method definition
         self.createWidgets()
 
-        self.panel.Show(True)        
+        self.Show(True)        
         self.Show(True)
-
-#----------------------------------------------------------------------------
 
     def createWidgets(self):
         # Welcome message
         welcome = "Welcome to DVS!"
         welcomeFont = wx.Font(13, wx.NORMAL, wx.NORMAL, wx.BOLD)
-        welcomemsg = wx.StaticText(self.panel, -1, welcome)
+        welcomemsg = wx.StaticText(self, -1, welcome)
         welcomemsg.SetFont(welcomeFont)
 
         # Horizontal Image
         horImg = wx.EmptyImage(440,440)
-        self.horImgCtrl = wx.StaticBitmap(self.panel, wx.ID_ANY,
+        self.horImgCtrl = wx.StaticBitmap(self, wx.ID_ANY,
                                   wx.BitmapFromImage(horImg))
 
         # Displays path of horizontal image
-        self.horPhotoTxt = wx.TextCtrl(self.panel, size=(350,-1))
+        self.horPhotoTxt = wx.TextCtrl(self, size=(350,-1))
 
-        horiBtn = wx.Button(self.panel, label='Horizontal')
+        horiBtn = wx.Button(self, label='Horizontal')
         horiBtn.Bind(wx.EVT_BUTTON, self.horOpenFile)
 
 
@@ -65,19 +80,20 @@ class MyFrame(wx.Frame):
         # in Python :/ So I made an exact replica of a method.. haha. Might
         # be helpful to differentiate, however.
         vertImg = wx.EmptyImage(440,440)
-        self.vertImgCtrl = wx.StaticBitmap(self.panel, wx.ID_ANY,
+        self.vertImgCtrl = wx.StaticBitmap(self, wx.ID_ANY,
                                         wx.BitmapFromImage(vertImg))
 
         # Displays path of vertical image
-        self.vertPhotoTxt = wx.TextCtrl(self.panel, size=(350,-1))
+        self.vertPhotoTxt = wx.TextCtrl(self, size=(350,-1))
         
-        vertiBtn = wx.Button(self.panel, label='Vertical')
+        vertiBtn = wx.Button(self, label='Vertical')
         vertiBtn.Bind(wx.EVT_BUTTON, self.vertOpenFile)
 
-        # Confirm Button
-        confBtn = wx.Button(self.panel, label='Confirm')
-        confBtn.Bind(wx.EVT_BUTTON, lambda event: self.checkConf(event, self.horPhotoTxt.GetValue(),self.vertPhotoTxt.GetValue()))
 
+        self.Raise()
+        self.SetPosition((0,0))
+        self.Fit()  
+        self.Hide()
 
 #------------------------------------------------------------------------------
 
@@ -97,17 +113,17 @@ class MyFrame(wx.Frame):
         # This aligns the whole layout vertically, including header, body,
         # and bottom line (staticLine).
         self.full.Add(self.header, 0, wx.ALL | wx.CENTER, 5)
-        self.full.Add(wx.StaticLine(self.panel, wx.ID_ANY),
+        self.full.Add(wx.StaticLine(self, wx.ID_ANY),
                       0, wx.ALL|wx.EXPAND, 5)
         self.full.Add(self.body, 0, wx.ALL | wx.CENTER, 5)
-        self.full.Add(wx.StaticLine(self.panel, wx.ID_ANY),
+        self.full.Add(wx.StaticLine(self, wx.ID_ANY),
                         0, wx.ALL|wx.EXPAND, 5)
         self.full.Add(self.footer, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
         # This centers the welcome message ("Welcome to DVS!") and puts
         # it at the top.
         self.header.Add(welcomemsg, 0, wx.ALL | wx.EXPAND | wx.CENTER, 5)
-        self.footer.Add(confBtn, 0, wx.ALL | wx.EXPAND, 5)
+        #self.footer.Add(confBtn, 0, wx.ALL | wx.EXPAND, 5)
 
         # This portions the left side of the layout, including left
         # image, left browse button (horizontal button), and left text
@@ -139,9 +155,31 @@ class MyFrame(wx.Frame):
         self.vertBrowseAndText.Add(self.vertPhotoTxt, 0, wx.ALL | wx.RIGHT, 5)
         self.vertBrowseAndText.Add(vertiBtn, 0, wx.ALL | wx.RIGHT, 5)
 
-        self.panel.SetSizer(self.full)
-        self.panel.Layout()
+        # build the bottom row
+        btnBack = wx.Button(self, -1, 'Back')
+        self.Bind(wx.EVT_BUTTON, self.OnBack, id=btnBack.GetId())
+        btnNext = wx.Button(self, -1, 'Next')
+        #self.Bind(wx.EVT_BUTTON, self.OnNext, id=btnNext.GetId())
+        btnNext.Bind(wx.EVT_BUTTON, lambda event:
+                     self.checkConf(event, self.horPhotoTxt.GetValue(),
+                                    self.vertPhotoTxt.GetValue()))
+        
+        btnCancelExit = wx.Button(self, -1, 'Cancel and Exit')
+        self.Bind(wx.EVT_BUTTON, self.OnCancelAndExit, id=btnCancelExit.GetId())
+        rowbottomsizer = wx.BoxSizer(wx.HORIZONTAL)
+        rowbottomsizer.Add(btnBack, 0, wx.ALIGN_LEFT)
+        rowbottomsizer.AddSpacer(5)
+        rowbottomsizer.Add(btnNext, 0)
+        rowbottomsizer.AddSpacer(5)
+        rowbottomsizer.AddStretchSpacer(1)
+        rowbottomsizer.Add(btnCancelExit, 0, wx.ALIGN_RIGHT)
+        self.footer.Add(rowbottomsizer, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=15)
 
+
+        self.SetSizer(self.full)
+        self.Layout()
+
+    ##################################################
     def checkConf(self, event, horiImg, vertImg):
         if horiImg == '' and vertImg == '':
             errorTxt1 = "No Images Detected, Please Enter Images"
@@ -158,6 +196,11 @@ class MyFrame(wx.Frame):
             errMsg3 = wx.MessageDialog(self, errorTxt3, "No Vertical Image", wx.OK)
             errMsg3.ShowModal()
             errMsg3.Destroy()
+        else:
+            self.Hide()
+            self.EyeDetect()
+            self.GetParent().panel1.ShowYourself()
+    ###################################################
 
 #---------------------------------------------------------------------------
         
@@ -199,7 +242,7 @@ class MyFrame(wx.Frame):
         horImg = horImg.Scale(NewhorW,NewhorH)
 
         self.horImgCtrl.SetBitmap(wx.BitmapFromImage(horImg))
-        self.panel.Refresh()
+        self.Refresh()
 
 
     def vertOpenFile(self, event):
@@ -230,82 +273,121 @@ class MyFrame(wx.Frame):
         vertImg = vertImg.Scale(NewvertW,NewvertH)
 
         self.vertImgCtrl.SetBitmap(wx.BitmapFromImage(vertImg))
-        self.panel.Refresh()
+        self.Refresh()
 
-        
-if __name__ == '__main__':
-    app = wx.App(False)
-    frame = MyFrame(None, 'Digital Vision Screening')
+#------
+    def EyeDetect(self):
+        horFilepath = self.horPhotoTxt.GetValue()
+        vertFilepath = self.vertPhotoTxt.GetValue()
+        thisPatient = detectEyes( horFilepath, vertFilepath )
+
+
+    def ShowYourself(self):
+        self.Raise()
+        self.SetPosition((0,0))
+        self.Fit()
+        self.GetParent().GetSizer().Show(self)
+        self.GetParent().GetSizer().Layout()
+
+
+    def OnBack(self, event):
+        self.Hide()
+        self.GetParent().panel1.ShowYourself()
+        self.GetParent().GetSizer().Layout()
+
+    def OnNext(self, event):
+        self.Hide()
+        self.GetParent().panel1.ShowYourself()
+        self.GetParent().GetSizer().Layout()
+
+    def OnCancelAndExit(self, event):
+        self.GetParent().ShutDown()
+
+#-------------------------------------------------------------------
+
+class User_Interaction1(wx.Panel):
+
+    def __init__(self, parent, id=-1):
+
+        wx.Panel.__init__(self, parent, id)
+
+        # master sizer for the whole panel
+        mastersizer = wx.BoxSizer(wx.VERTICAL)
+        #mastersizer.SetMinSize((475, 592))
+        mastersizer.AddSpacer(15)
+
+
+        # build the top row
+        txtHeader = wx.StaticText(self, -1, 'Read about This Boring\nProgram', (0, 0))
+        font = wx.Font(16, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        txtHeader.SetFont(font)
+        txtOutOf = wx.StaticText(self, -1, '2 out of 7', (0, 0))                
+        rowtopsizer = wx.BoxSizer(wx.HORIZONTAL)
+        rowtopsizer.Add(txtHeader, 3, wx.ALIGN_LEFT) 
+        rowtopsizer.Add((0,0), 1)  
+        rowtopsizer.Add(txtOutOf, 0, wx.ALIGN_RIGHT) 
+        mastersizer.Add(rowtopsizer, 0, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=15) 
+
+
+        # build the middle row
+        text = 'PANEL 1\n\n'
+        text = text + 'This could be a giant blob of boring text.\n'
+
+        txtBasic = wx.StaticText(self, -1, text)
+        font = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.NORMAL)
+        txtBasic.SetFont(font)
+        mastersizer.Add(txtBasic, 1, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=15)  
+
+
+        # build the bottom row
+        btnBack = wx.Button(self, -1, 'Back')
+        self.Bind(wx.EVT_BUTTON, self.OnBack, id=btnBack.GetId())
+        btnNext = wx.Button(self, -1, 'Next')
+        self.Bind(wx.EVT_BUTTON, self.OnNext, id=btnNext.GetId())
+        btnCancelExit = wx.Button(self, -1, 'Cancel and Exit')
+        self.Bind(wx.EVT_BUTTON, self.OnCancelAndExit, id=btnCancelExit.GetId())
+        rowbottomsizer = wx.BoxSizer(wx.HORIZONTAL)
+        rowbottomsizer.Add(btnBack, 0, wx.ALIGN_LEFT)
+        rowbottomsizer.AddSpacer(5)
+        rowbottomsizer.Add(btnNext, 0)
+        rowbottomsizer.AddSpacer(5)
+        rowbottomsizer.AddStretchSpacer(1)
+        rowbottomsizer.Add(btnCancelExit, 0, wx.ALIGN_RIGHT)
+        mastersizer.Add(rowbottomsizer, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=15)
+
+        # finish master sizer
+        mastersizer.AddSpacer(15)   
+        self.SetSizer(mastersizer)
+
+        self.Raise()
+        self.SetPosition((0,0))
+        self.Fit()  
+        self.Hide()
+
+
+    def ShowYourself(self):
+        self.Raise()
+        self.SetPosition((0,0))
+        self.Fit()
+        self.GetParent().GetSizer().Show(self)
+
+
+    def OnBack(self, event):
+        self.Hide()
+        self.GetParent().panel0.ShowYourself()
+
+    def OnNext(self, event):
+        self.Hide()
+        self.GetParent().panel0.ShowYourself()
+
+    def OnCancelAndExit(self, event):
+        self.GetParent().ShutDown()
+
+
+def main():
+    app = My_App(redirect = False)
     app.MainLoop()
 
 
-#old stuff
-"""
-import wx, os
-class MyFrame(wx.Frame):
-    def __init__(self, parent, title):
-        wx.Frame.__init__(self, parent, title=title, pos = (0, 0), size=wx.DisplaySize())
-        panel = wx.Panel(self)
-
-        IMGMASK = "JPEG Files |*.jpg|" \
-                  ".BMP Files |*.bmp|" \
-                  "All Files |*.*"
-
-        # frame size = (width, length)
-        horizontal = wx.Button(panel, 1, 'Horizontal', (50, 130), (110, -1))
-        vertical = wx.Button(panel, 2, 'Vertical', (400, 130), (110, -1))
-
-        self.Bind(wx.EVT_BUTTON, self.openFile, horizontal)
-        self.Bind(wx.EVT_BUTTON, self.openFile, vertical)
-
-        #Welcome message
-        welcome = 'Welcome to DVS!'
-        # SetPointSize(self, 20)
-        wx.StaticText(panel, -1, welcome, pos=(250,10))
-
-        # Setting up the menu.
-        filemenu = wx.Menu()
-
-        #wx.ID_ABOUT and wx.ID_EXIT are standard IDs provided by wxWIdget
-        menuAbout = filemenu.Append(wx.ID_ABOUT, "&About"," Information about this program")
-        filemenu.AppendSeparator()
-        menuExit = filemenu.Append(wx.ID_EXIT,"&Exit"," Terminate the program")
-
-        # Creating the menubar.
-        menuBar = wx.MenuBar()
-        menuBar.Append(filemenu, "&File")
-        self.SetMenuBar(menuBar)
-
-        # Set events.
-        self.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
-        self.Bind(wx.EVT_MENU, self.OnExit, menuExit)
-
-    	#Button to close
-        xButton=wx.Button(panel,label="Close", pos=(500,600))
-        xButton.Bind(wx.EVT_BUTTON, self.OnExit)
-        
-        self.Show(True)
-
-    #add image in screens
-
-    def OnAbout(self,e):
-        # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
-        dlg = wx.MessageDialog( self, "A small text editor", "About Sample Editor", wx.OK )
-        dlg.ShowModal() # Show it
-        dlg.Destroy() # finally destroy it when finished.
-
-    def OnExit(self,e):
-        self.Close(True) # Close the frame.
-
-
-    def openFile(self, event):
-        dlg = wx.FileDialog(self, "Choose a file", os.getcwd(), "", "*.*", wx.OPEN)
-        if dlg.ShowModal() == wx.ID_OK:
-            path = dlg.GetPath()
-            mypath = os.path.basename(path)
-        dlg.Destroy()
-
-app = wx.App(False)
-frame = MyFrame(None, 'Digital Vision Screening')
-app.MainLoop()
-"""
+if __name__ == '__main__':
+    main()

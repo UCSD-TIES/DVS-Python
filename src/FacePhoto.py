@@ -11,11 +11,11 @@ from Eye import *
 """
 # NOTE: photoImg is a photo of a face
 
-DEBUG = True
+DEBUG = False
 
 class FacePhoto():
     """ This class has attributes:
-        photo facePhoto - a photo of the whole face
+        IplImage facePhoto - a photo of the whole face
         Eye left - the left eye object
         Eye right - the right eye object
     """
@@ -38,6 +38,10 @@ class FacePhoto():
         # Initialize the other attributes to None so that they exist
         self.left = None
         self.right = None
+        """
+        if DEBUG:
+            print "In the facePhoto __init__"
+        """
         # Set attributes intialized to None by finding them.
         self.findEyes()
 
@@ -102,6 +106,11 @@ class FacePhoto():
         faces = cv.HaarDetectObjects(smallImage, faceCascade, cv.CreateMemStorage(0),
                                     haar_scale, min_neighbors, haar_flags, min_size)
 
+
+        # Saving the face region points so we can use them to calculate
+        # non-relative eye points
+        pt1 = (0,0)
+        pt2 = (0,0)
         # If faces are found
         if faces:
             for ((x, y, w, h), n) in faces:
@@ -113,40 +122,58 @@ class FacePhoto():
                 face_region = cv.GetSubRect(image,(x,int(y + (h/4)),w,int(h/2)))
                 cv.SetImageROI(image, (pt1[0], pt1[1], pt2[0] - pt1[0],
                                       int((pt2[1] - pt1[1]) * 0.7)))
-
+            if DEBUG:
+                print "First face point: " + str(pt1)
+                print "Second face point: " + str(pt2)
+                
         # If there are no faces found there's no reason to continue
         else:
             if DEBUG:
                 print "No faces found, returning false"
-            return False
+            return False  
       
 
         # NOTE: This returns the eye regions we're interested in
         eyes = cv.HaarDetectObjects(image, eyeCascade, cv.CreateMemStorage(0),
                                    haar_scale, min_neighbors, haar_flags, (15,15))
 
+        
         if DEBUG:
+            print "Eyes: " + str(eyes)
             ## Draw rectangles around the eyes found ##
             if eyes:
                 # For each eye found
                 for eye in eyes:
+                    print "In findEyes() we are drawing a rectangle around: " + str((eye[0][0], eye[0][1],
+                                 eye[0][0] + eye[0][2],eye[0][1] + eye[0][3]))
                     # Draw a rectangle around the eye
                     cv.Rectangle(image,(eye[0][0], eye[0][1]),
                                  (eye[0][0] + eye[0][2],eye[0][1] + eye[0][3]),
                                  cv.RGB(255, 0, 0), 1, 8, 0)
-
-        
-        if DEBUG:
             # Display the image with bounding boxes
             cv.ShowImage("Face with Eyes", image)
 
             # Destroy the window when the user presses any key
             cv.WaitKey(0)
             cv.DestroyWindow("Face with Eyes")
-                
+        
+
+        cv.ResetImageROI(image)
         #calls set eyes if two regions found, otherwise returns false
         if len(eyes) == 2:
-            self.setEyes(eyes[0][0], eyes[1][0])
+            if DEBUG:
+                print "There are two eyes - detectEyes"
+            # x, y, w, h
+            left = (eyes[0][0][0] + pt1[0] , eyes[0][0][1] +pt1[1],
+                    eyes[0][0][0] + eyes[0][0][3] + pt1[0],
+                    eyes[0][0][1] + eyes[0][0][2] + pt1[1])
+            right = (eyes[1][0][0] + pt1[0] , eyes[1][0][1] +pt1[1],
+                    eyes[1][0][0] + eyes[1][0][3] + pt1[0],
+                    eyes[1][0][1] + eyes[1][0][2] + pt1[1])
+            if DEBUG:
+                print "left: " + str(left)
+                print "right: " + str(right)
+            self.setEyes(left, right)
             return True
         if DEBUG:
             print "Found more or less than 2 eyes, returning false"
@@ -167,8 +194,14 @@ class FacePhoto():
         """
         # really takes in four points per region
         # place eye region here
-        print str(region)
-        eye = cv2.cv.GetSubRect(self.facePhoto, region)
+        crop = (region[0],region[1], region[2] - region[0], region[3] - region[1])
+        if DEBUG:
+            print "Region passed to eye remove: " + str(region)
+            print "And here's crop: " + str(crop)
+            cv.ShowImage("We're cropping", self.facePhoto)
+            cv.WaitKey(0)
+            cv.DestroyWindow("We're cropping")
+        eye = cv.GetSubRect(self.facePhoto, crop)
         return eye
 
 ##################### Getters ############################
@@ -191,24 +224,30 @@ class FacePhoto():
 
     def setEyes(self, leftRegion, rightRegion):
         """ Sets or resets both eye objects """
+        if DEBUG:
+            print "We're here in setEyes now"
         self.setLeftEye(leftRegion)
         self.setRightEye(rightRegion)
         return "setEyes successfully called"
         
     def setLeftEye(self,region):
         """ Constructs a new Eye object and stores it in left """
+        if DEBUG:
+            print "And we're setting the left eye now"
         # Crop out a photo of the eye to pass the Eye constructor
         left_eyePhoto = self.eyeRemove(region)
         # Constructs the left eye
-        left = Eye(left_eyePhoto, region)
+        self.left = Eye(left_eyePhoto, region)
         return "setLeftEye successfully called"
 
     def setRightEye(self,region):
         """ Constructs a new Eye object and stores it in right """
+        if DEBUG:
+            print "And we're setting the right eye now"
         # Crop out a photo of the eye to pass the Eye constructor
         right_eyePhoto = self.eyeRemove(region)
         # Constructs the right eye
-        right = Eye(right_eyePhoto, region)
+        self.right = Eye(right_eyePhoto, region)
         return "setRightEye successfully called"
 
 

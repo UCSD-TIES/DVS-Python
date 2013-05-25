@@ -2,7 +2,8 @@
     This class inherits from it's parent FacePhoto
 """
 from FacePhoto import *
-import cv2, cv
+import cv2.cv as cv
+import cv2
 import numpy as np
 
 class VerticalPhoto(FacePhoto,object):

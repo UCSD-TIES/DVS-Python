@@ -1,3 +1,4 @@
+# NOTE: THIS CODE HAS BEEN REFACTORED. DO NOT USE THIS CODE. USE THE CLASS STRUCT
 # Core Code: Eye Detection algorithm written by Janne Parkkila
 # More Info: http://japskua.wordpress.com/about/
 # Blog Post with code: http://japskua.wordpress.com/2010/08/04/detecting-eyes-with-python-opencv/
