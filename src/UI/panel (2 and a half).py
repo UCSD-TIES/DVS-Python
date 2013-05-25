@@ -1,7 +1,7 @@
 import wx, os
 import sys
 import guitest
-#from Controller import *
+from Controller import *
 
 
 # file filter for pictures: bitmap and jpeg files
@@ -199,6 +199,7 @@ class User_Interaction0(wx.Panel):
             errMsg3.Destroy()
         else:
             self.Hide()
+            self.EyeDetect()
             self.GetParent().panel1.ShowYourself()
     ###################################################
 
