@@ -85,8 +85,8 @@ class FacePhoto():
         min_size = (20,20)
         image_scale = 2
         haar_scale = 1.2
-        min_neighbors = 2
-        haar_flags = 0
+        min_neighbors = 3
+        haar_flags = cv.CV_HAAR_DO_CANNY_PRUNING
 
         # Allocate the temporary images
         gray = cv.CreateImage((image.width, image.height), 8, 1)
@@ -135,7 +135,7 @@ class FacePhoto():
 
         # NOTE: This returns the eye regions we're interested in
         eyes = cv.HaarDetectObjects(image, eyeCascade, cv.CreateMemStorage(0),
-                                   haar_scale, min_neighbors, haar_flags, (15,15))
+                                   1.3, min_neighbors, haar_flags, (15,15))
 
         
         if DEBUG:
