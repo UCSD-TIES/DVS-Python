@@ -68,7 +68,7 @@ class User_Interaction0(wx.Panel):
                                   wx.BitmapFromImage(horImg))
 
         # Displays path of horizontal image
-        self.horPhotoTxt = wx.TextCtrl(self, size=(350,-1))
+        self.horPhotoTxt = wx.TextCtrl(self, size=(350,-1), style=wx.TE_READONLY)
 
         horiBtn = wx.Button(self, label='Horizontal')
         horiBtn.Bind(wx.EVT_BUTTON, self.horOpenFile)
@@ -83,7 +83,7 @@ class User_Interaction0(wx.Panel):
                                         wx.BitmapFromImage(vertImg))
 
         # Displays path of vertical image
-        self.vertPhotoTxt = wx.TextCtrl(self, size=(350,-1))
+        self.vertPhotoTxt = wx.TextCtrl(self, size=(350,-1), style=wx.TE_READONLY)
         
         vertiBtn = wx.Button(self, label='Vertical')
         vertiBtn.Bind(wx.EVT_BUTTON, self.vertOpenFile)
