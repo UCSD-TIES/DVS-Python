@@ -3,7 +3,6 @@ import sys
 import guitest
 from Controller import *
 
-
 # file filter for pictures: bitmap and jpeg files
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
           "|*.jpg; *.jpeg; *.jpe; *.jfif|" \

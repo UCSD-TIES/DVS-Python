@@ -1,6 +1,7 @@
 import wx, os
 import sys
 import guitest
+#from Controller import *                 import for later backend stuff
 
 # file filter for pictures: bitmap and jpeg files
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
@@ -163,6 +164,10 @@ class User_Interaction0(wx.Panel):
                      self.checkConf(event, self.horPhotoTxt.GetValue(),
                                     self.vertPhotoTxt.GetValue()))
         
+        #Reset Button
+        btnReset = wx.Button(self, -1, 'Reset')
+        btnReset.Bind(wx.EVT_BUTTON, lambda event: self.onReset())
+        
         btnCancelExit = wx.Button(self, -1, 'Cancel and Exit')
         self.Bind(wx.EVT_BUTTON, self.OnCancelAndExit, id=btnCancelExit.GetId())
         rowbottomsizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -197,6 +202,7 @@ class User_Interaction0(wx.Panel):
             errMsg3.Destroy()
         else:
             self.Hide()
+            self.EyeDetect()
             self.GetParent().panel1.ShowYourself()
     ###################################################
 
@@ -273,6 +279,15 @@ class User_Interaction0(wx.Panel):
         self.vertImgCtrl.SetBitmap(wx.BitmapFromImage(vertImg))
         self.Refresh()
 
+    #Resets path and image
+    def onReset(self):
+        self.horPhotoTxt.SetValue('')
+        self.vertPhotoTxt.SetValue('')
+        horImg = wx.EmptyImage(440,440)
+        self.horImgCtrl.SetBitmap(wx.BitmapFromImage(horImg))
+        vertImg = wx.EmptyImage(440,440)
+        self.vertImgCtrl.SetBitmap(wx.BitmapFromImage(vertImg))
+        self.Refresh()
 
     def ShowYourself(self):
         self.Raise()
@@ -356,6 +371,11 @@ class User_Interaction1(wx.Panel):
         self.Fit()  
         self.Hide()
 
+#---------------------------------------------------------------
+    def EyeDetect(self):
+        horFilepath = self.horPhotoTxt.GetValue()
+        vertFilepath = self.vertPhotoTxt.GetValue()
+        thisPatient = detectEyes( horFilepath, vertFilepath )
 
     def ShowYourself(self):
         self.Raise()
