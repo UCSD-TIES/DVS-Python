@@ -9,8 +9,8 @@ DEBUG = False
 
 class Eye:
     """ This class has attributes :
-      img eyePhoto - a cropped photo of the left eye
-      region eyeRegion - a region that represents the exact location of the eye
+      IplImage eyePhoto - a cropped photo of the eye
+      tuple eyeRegion - a region that represents the exact location of the eye
       Pupil eyePupil - the eye's pupil
       region eyeSclera - the eye's sclera region
       point top - the keypoint of the eye located at the highest point at which
