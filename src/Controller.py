@@ -9,7 +9,7 @@ from Eye import *
 from Pupil import *
 import cv2.cv as cv
 
-DEBUG = False
+DEBUG = True
 
 def detectEyes(horizontalPath, verticalPath):
     """ Detects the eyes in both images and passes back a tuple of coordinates
@@ -74,7 +74,7 @@ def drawOnEyes(patient):
     """
 
 ######################Testing ######################
-    '''
+    
 # The following code replicates calls from the UI layer
 patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/Obama.jpg",
            "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/ObamaRotated.jpg")
@@ -84,9 +84,10 @@ horizontalPhoto = patient.getHorizontal()
 hLeft = patient.getEyeRegion(True,True)
 hRight = patient.getEyeRegion(True,False)
 # Draw Left and right eyes
-cv.Rectangle(horizontalPhoto, (hLeft[0],hLeft[1]),(hLeft[2],hLeft[3]),
+if hLeft != None and hRight != None:
+    cv.Rectangle(horizontalPhoto, (hLeft[0],hLeft[1]),(hLeft[2],hLeft[3]),
              cv.RGB(255,0,0,), 1, 8, 0)
-cv.Rectangle(horizontalPhoto, (hRight[0],hRight[1]),(hRight[2],hRight[3]),
+    cv.Rectangle(horizontalPhoto, (hRight[0],hRight[1]),(hRight[2],hRight[3]),
              cv.RGB(255,0,0,), 1, 8, 0)
 # Display the image
 cv.ShowImage("Horizontal with eyes",horizontalPhoto)
@@ -98,13 +99,14 @@ verticalPhoto = patient.getVertical()
 vLeft = patient.getEyeRegion(False,True)
 vRight = patient.getEyeRegion(False,False)
 # Draw Left and right eyes
-cv.Rectangle(verticalPhoto, (vLeft[0],vLeft[1]),(vLeft[2],vLeft[3]),
+if vLeft != None and vRight != None:
+    cv.Rectangle(verticalPhoto, (vLeft[0],vLeft[1]),(vLeft[2],vLeft[3]),
              cv.RGB(255,0,0,), 1, 8, 0)
-cv.Rectangle(verticalPhoto, (vRight[0],vRight[1]),(vRight[2],vRight[3]),
+    cv.Rectangle(verticalPhoto, (vRight[0],vRight[1]),(vRight[2],vRight[3]),
              cv.RGB(255,0,0,), 1, 8, 0)
 # Display the image
 cv.ShowImage("Vertical with eyes",verticalPhoto)
 cv.WaitKey(0)
 cv.DestroyWindow("Vertical with eyes")
-'''
+
 

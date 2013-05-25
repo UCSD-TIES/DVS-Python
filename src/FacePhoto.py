@@ -11,7 +11,7 @@ from Eye import *
 """
 # NOTE: photoImg is a photo of a face
 
-DEBUG = False
+DEBUG = True
 
 class FacePhoto():
     """ This class has attributes:

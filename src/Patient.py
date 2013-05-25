@@ -34,14 +34,14 @@ class Patient:
             region - the region of the eye specified
         """
         if horizontal:
-            if left:
+            if left and self.horizontal.left != None:
                 return self.horizontal.left.eyeRegion
-            else:
+            elif self.horizontal.right != None:
                 return self.horizontal.right.eyeRegion
         else:
-            if left:
+            if left and self.vertical.left != None:
                 return self.vertical.left.eyeRegion
-            else:
+            elif self.vertical.right != None:
                 return self.vertical.right.eyeRegion
 
     def analyzeEyes(self):

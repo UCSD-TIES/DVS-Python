@@ -63,16 +63,18 @@ class Eye:
         Return:
             bool - True if there were no issues. False for any error
         """
+        """
         # find pupil code goes here
         eye = cv.GetMat(self.eyePhoto)
         if not eye:
             return False
         eyeArr = np.asarray(eye)
         gray = cv2.cvtColor(eyeArr, cv.CV_BGR2GRAY)
-        cv.threshold(gray, gray, 220, 255, cv.THRESH_BINARY)
+        cv2.threshold(gray, gray, 220, 255, cv2.THRESH_BINARY)
         std.vector<std.vector<cv2.cv.Point>> contours
-        cv.findContours(gray.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE)
-        cv.drawContours(gray, contours, -1, CV+RGB(255,255,255), -1)
+        cv2.findContours(gray.clone(), contours, cv2.CV_RETR_EXTERNAL,
+                         cv2.CV_CHAIN_APPROX_NONE)
+        cv2.drawContours(gray, contours, -1, CV+RGB(255,255,255), -1)
         for i in range(0, contours.size()):
             area = cv.contourArea(contours[i])
             rect = cv.boundingRect(contours[i])
@@ -83,6 +85,7 @@ class Eye:
                 cv2.cv.circle(src, cv.point(rect.x + radius, rect.y + radius, CV_RGB(255,0,0), 2))
         region = None
         self.setPupil(region)
+        """
         return "findPupil successfully called"
 
     def findSclera(self):
