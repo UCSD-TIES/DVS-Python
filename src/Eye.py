@@ -3,8 +3,8 @@
 """
 
 from Pupil import *
-import cv
-
+import cv2
+#import std
 DEBUG = False
 
 class Eye:
@@ -63,6 +63,23 @@ class Eye:
         """
         # find pupil code goes here
         # Dummy code to make the var region exist
+        eye = cv2.cv.getMat(self.eyePhoto)
+        if eye.empty():
+            return -1
+        #cv2.cv.CreateMat() gray
+        cv2.cv.cvtColor(~eye, gray, CV_BGR2GRAY)
+        cv2.cv.threshold(gray, gray, 220, 255, cv2.cv.THRESH_BINARY)
+        std.vector<std.vector<cv2.cv.Point>> contours
+        cv.findContours(gray.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE)
+        cv.drawContours(gray, contours, -1, CV+RGB(255,255,255), -1)
+        for i in range(0, contours.size()):
+            area = cv.contourArea(contours[i])
+            rect = cv.boundingRect(contours[i])
+            radius = rect.width/2
+            if area >= 30 and \
+            std.abs(1-(rect.width / rect.height)) < .2 and \
+            std.abs(1 - (area/(CV_PI * std.pow(radius, 2)))) <= .2:
+                cv2.cv.circle(src, cv2.cv.point(rect.x + radius, rect.y + radius, CV_RGB(255,0,0), 2))
         region = None
         self.setPupil(region)
         return "findPupil successfully called"
