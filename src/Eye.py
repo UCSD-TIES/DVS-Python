@@ -4,12 +4,18 @@
 
 from Pupil import *
 <<<<<<< HEAD
+<<<<<<< HEAD
 import cv2.cv as cv
 
 =======
 import cv2
 #import std
 >>>>>>> d5ef9ee54e98edc77a514fad84f74b400c41cca0
+=======
+import cv2.cv as cv
+import cv2
+
+>>>>>>> cb8161e45b0a986b0ec97006c0e887d75d974d7b
 DEBUG = False
 
 class Eye:
@@ -67,13 +73,11 @@ class Eye:
             bool - True if there were no issues. False for any error
         """
         # find pupil code goes here
-        # Dummy code to make the var region exist
-        eye = cv2.cv.getMat(self.eyePhoto)
-        if eye.empty():
-            return -1
-        #cv2.cv.CreateMat() gray
-        cv2.cv.cvtColor(~eye, gray, CV_BGR2GRAY)
-        cv2.cv.threshold(gray, gray, 220, 255, cv2.cv.THRESH_BINARY)
+        eye = cv.GetMat(self.eyePhoto)
+        if not eye:
+            return False
+        gray = cv2.cvtColor(eye, cv.CV_BGR2GRAY)
+        cv.threshold(gray, gray, 220, 255, cv.THRESH_BINARY)
         std.vector<std.vector<cv2.cv.Point>> contours
         cv.findContours(gray.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE)
         cv.drawContours(gray, contours, -1, CV+RGB(255,255,255), -1)
@@ -84,7 +88,7 @@ class Eye:
             if area >= 30 and \
             std.abs(1-(rect.width / rect.height)) < .2 and \
             std.abs(1 - (area/(CV_PI * std.pow(radius, 2)))) <= .2:
-                cv2.cv.circle(src, cv2.cv.point(rect.x + radius, rect.y + radius, CV_RGB(255,0,0), 2))
+                cv2.cv.circle(src, cv.point(rect.x + radius, rect.y + radius, CV_RGB(255,0,0), 2))
         region = None
         self.setPupil(region)
         return "findPupil successfully called"
