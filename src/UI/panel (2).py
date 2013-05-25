@@ -161,7 +161,7 @@ class User_Interaction0(wx.Panel):
         btnNext = wx.Button(self, -1, 'Next')
         #self.Bind(wx.EVT_BUTTON, self.OnNext, id=btnNext.GetId())
         btnNext.Bind(wx.EVT_BUTTON, lambda event:
-                     self.checkConf(event, self.horPhotoTxt.GetValue(),
+                     self.onNext(event, self.horPhotoTxt.GetValue(),
                                     self.vertPhotoTxt.GetValue()))
         
         #Reset Button
@@ -183,30 +183,12 @@ class User_Interaction0(wx.Panel):
         self.SetSizer(self.full)
         self.Layout()
 
-    ##################################################
-    def checkConf(self, event, horiImg, vertImg):
-        if horiImg == '' and vertImg == '':
-            errorTxt1 = "No Images Detected, Please Enter Images"
-            errMsg1 = wx.MessageDialog(self, errorTxt1, "No Images Detected", wx.OK)
-            errMsg1.ShowModal()
-            errMsg1.Destroy()
-        elif horiImg == '':
-            errorTxt2 = "No Horizontal Image Detected, Please Enter a Horizontal Image"
-            errMsg2 = wx.MessageDialog(self, errorTxt2, "No Horizontal Image", wx.OK)
-            errMsg2.ShowModal()
-            errMsg2.Destroy()
-        elif vertImg == '':
-            errorTxt3 = "No Vertical Image Detected, Please Enter a Vertical Image"
-            errMsg3 = wx.MessageDialog(self, errorTxt3, "No Vertical Image", wx.OK)
-            errMsg3.ShowModal()
-            errMsg3.Destroy()
-        else:
-            self.Hide()
-            self.EyeDetect()
-            self.GetParent().panel1.ShowYourself()
-    ###################################################
 
 #---------------------------------------------------------------------------
+    def EyeDetect(self):
+        horFilepath = self.horPhotoTxt.GetValue()
+        vertFilepath = self.vertPhotoTxt.GetValue()
+        thisPatient = detectEyes( horFilepath, vertFilepath )
         
     def OnAbout(self,e):
         # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
@@ -296,13 +278,29 @@ class User_Interaction0(wx.Panel):
         self.GetParent().GetSizer().Show(self)
         self.GetParent().GetSizer().Layout()
 
+    def onNext(self, event, horiImg, vertImg):
+        if horiImg == '' and vertImg == '':
+            errorTxt1 = "No Images Detected, Please Enter Images"
+            errMsg1 = wx.MessageDialog(self, errorTxt1, "No Images Detected", wx.OK)
+            errMsg1.ShowModal()
+            errMsg1.Destroy()
+        elif horiImg == '':
+            errorTxt2 = "No Horizontal Image Detected, Please Enter a Horizontal Image"
+            errMsg2 = wx.MessageDialog(self, errorTxt2, "No Horizontal Image", wx.OK)
+            errMsg2.ShowModal()
+            errMsg2.Destroy()
+        elif vertImg == '':
+            errorTxt3 = "No Vertical Image Detected, Please Enter a Vertical Image"
+            errMsg3 = wx.MessageDialog(self, errorTxt3, "No Vertical Image", wx.OK)
+            errMsg3.ShowModal()
+            errMsg3.Destroy()
+        else:
+            self.Hide()
+            self.EyeDetect()
+            self.GetParent().panel1.ShowYourself()
+            self.GetParent().GetSizer().Show(self)
 
     def OnBack(self, event):
-        self.Hide()
-        self.GetParent().panel1.ShowYourself()
-        self.GetParent().GetSizer().Layout()
-
-    def OnNext(self, event):
         self.Hide()
         self.GetParent().panel1.ShowYourself()
         self.GetParent().GetSizer().Layout()
