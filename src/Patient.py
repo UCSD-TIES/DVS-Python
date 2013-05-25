@@ -12,8 +12,37 @@ class Patient:
         """ Initialize the horizontal and vertical attributes by creating
             HorizontalPhoto and VerticalPhoto objects
         """
-        horizontal = HorizontalPhoto(horizontalImg)
-        vertical = VerticalPhoto(verticalImg)
+        self.horizontal = HorizontalPhoto(horizontalImg)
+        self.vertical = VerticalPhoto(verticalImg)
+
+    def getHorizontal(self):
+        return self.horizontal.facePhoto
+
+    def getVertical(self):
+        return self.vertical.facePhoto
+        
+
+    def getEyeRegion(self,horizontal, left):
+        """ Returns the region of the eye specified.
+
+        Args:
+            bool horizontal - if true, work with the horizontal photo
+                                otherwise vertical
+            bool left - if true get left eye else right
+
+        Return:
+            region - the region of the eye specified
+        """
+        if horizontal:
+            if left:
+                return self.horizontal.left.eyeRegion
+            else:
+                return self.horizontal.right.eyeRegion
+        else:
+            if left:
+                return self.vertical.left.eyeRegion
+            else:
+                return self.vertical.right.eyeRegion
 
     def analyzeEyes(self):
         """ Analyze all eye diseases and return the results """ 
@@ -37,17 +66,7 @@ class Patient:
         # cataracts logic goes here
         return "Cataracts detection called"
 
-    def getHorizontal(self):
-        return horizontal
 
-    def getVertical(self):
-        return vertical
-
-    def setHorizontal(self, photo):
-        self.horizontal = photo
-
-    def setVertical(self,photo):
-        self.vertical = photo
 
 
 

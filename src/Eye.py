@@ -5,7 +5,7 @@
 from Pupil import *
 import cv
 
-DEBUG = True
+DEBUG = False
 
 class Eye:
     """ This class has attributes :
