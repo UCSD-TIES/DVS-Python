@@ -3,10 +3,20 @@
 """
 
 from Pupil import *
+<<<<<<< HEAD
+<<<<<<< HEAD
+import cv2.cv as cv
+
+=======
+import cv2
+#import std
+>>>>>>> d5ef9ee54e98edc77a514fad84f74b400c41cca0
+=======
 import cv2.cv as cv
 import cv2
 import numpy as np
 
+>>>>>>> cb8161e45b0a986b0ec97006c0e887d75d974d7b
 DEBUG = False
 
 class Eye:
