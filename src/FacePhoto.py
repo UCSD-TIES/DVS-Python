@@ -136,6 +136,7 @@ class FacePhoto():
                                    haar_scale, min_neighbors, haar_flags, (15,15))
 
         if DEBUG:
+            print "Eyes: " + str(eyes)
             ## Draw rectangles around the eyes found ##
             if eyes:
                 # For each eye found
@@ -155,16 +156,23 @@ class FacePhoto():
             # Destroy the window when the user presses any key
             cv.WaitKey(0)
             cv.DestroyWindow("Face with Eyes")
-                
+
+        cv.ResetImageROI(image)
         #calls set eyes if two regions found, otherwise returns false
         if len(eyes) == 2:
             if DEBUG:
                 print "There are two eyes - detectEyes"
             # x, y, w, h
-            #left = (eyes[0][0][0] + pt1[0] , eyes[0][0][1] +pt1[1],
-            #        eyes[0][0][0] + eyes[0][0][3] + pt2[0],
-            #        eyes[0][0][1] + eyes[0][0][2] + pt2[1])
-            self.setEyes(eyes[0][0], eyes[1][0])
+            left = (eyes[0][0][0] + pt1[0] , eyes[0][0][1] +pt1[1],
+                    eyes[0][0][0] + eyes[0][0][3] + pt1[0],
+                    eyes[0][0][1] + eyes[0][0][2] + pt1[1])
+            right = (eyes[1][0][0] + pt1[0] , eyes[1][0][1] +pt1[1],
+                    eyes[1][0][0] + eyes[1][0][3] + pt1[0],
+                    eyes[1][0][1] + eyes[1][0][2] + pt1[1])
+            if DEBUG:
+                print "left: " + str(left)
+                print "right: " + str(right)
+            self.setEyes(left, right)
             return True
         if DEBUG:
             print "Found more or less than 2 eyes, returning false"
@@ -192,8 +200,8 @@ class FacePhoto():
             cv.ShowImage("We're cropping", self.facePhoto)
             cv.WaitKey(0)
             cv.DestroyWindow("We're cropping")
-        #eye = cv.GetSubRect(self.facePhoto, crop)
-        eye = cv.GetSubRect(self.facePhoto,(50,0,50,100))
+        eye = cv.GetSubRect(self.facePhoto, crop)
+        #eye = cv.GetSubRect(self.facePhoto,(50,0,50,100))
         return eye
 
 ##################### Getters ############################
