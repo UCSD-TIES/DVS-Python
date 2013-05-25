@@ -3,14 +3,19 @@
 """
 
 from Pupil import *
+<<<<<<< HEAD
 import cv2.cv as cv
 
+=======
+import cv2
+#import std
+>>>>>>> d5ef9ee54e98edc77a514fad84f74b400c41cca0
 DEBUG = False
 
 class Eye:
     """ This class has attributes :
-      img eyePhoto - a cropped photo of the left eye
-      region eyeRegion - a region that represents the exact location of the eye
+      IplImage eyePhoto - a cropped photo of the eye
+      tuple eyeRegion - a region that represents the exact location of the eye
       Pupil eyePupil - the eye's pupil
       region eyeSclera - the eye's sclera region
       point top - the keypoint of the eye located at the highest point at which
@@ -63,6 +68,23 @@ class Eye:
         """
         # find pupil code goes here
         # Dummy code to make the var region exist
+        eye = cv2.cv.getMat(self.eyePhoto)
+        if eye.empty():
+            return -1
+        #cv2.cv.CreateMat() gray
+        cv2.cv.cvtColor(~eye, gray, CV_BGR2GRAY)
+        cv2.cv.threshold(gray, gray, 220, 255, cv2.cv.THRESH_BINARY)
+        std.vector<std.vector<cv2.cv.Point>> contours
+        cv.findContours(gray.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE)
+        cv.drawContours(gray, contours, -1, CV+RGB(255,255,255), -1)
+        for i in range(0, contours.size()):
+            area = cv.contourArea(contours[i])
+            rect = cv.boundingRect(contours[i])
+            radius = rect.width/2
+            if area >= 30 and \
+            std.abs(1-(rect.width / rect.height)) < .2 and \
+            std.abs(1 - (area/(CV_PI * std.pow(radius, 2)))) <= .2:
+                cv2.cv.circle(src, cv2.cv.point(rect.x + radius, rect.y + radius, CV_RGB(255,0,0), 2))
         region = None
         self.setPupil(region)
         return "findPupil successfully called"

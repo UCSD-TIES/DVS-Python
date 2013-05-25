@@ -15,7 +15,7 @@ DEBUG = False
 
 class FacePhoto():
     """ This class has attributes:
-        photo facePhoto - a photo of the whole face
+        IplImage facePhoto - a photo of the whole face
         Eye left - the left eye object
         Eye right - the right eye object
     """
