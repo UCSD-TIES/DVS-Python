@@ -107,6 +107,7 @@ def drawOnEyes(patient):
     """
 
 ######################Testing ######################
+    '''
 # The following code replicates calls from the UI layer
 patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/Obama.jpg",
            "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/ObamaRotated.jpg")
@@ -138,5 +139,5 @@ cv.Rectangle(verticalPhoto, (vRight[0],vRight[1]),(vRight[2],vRight[3]),
 cv.ShowImage("Vertical with eyes",verticalPhoto)
 cv.WaitKey(0)
 cv.DestroyWindow("Vertical with eyes")
-
+'''
 
