@@ -5,6 +5,7 @@
 from Pupil import *
 import cv2.cv as cv
 import cv2
+import numpy as np
 
 DEBUG = False
 
@@ -66,7 +67,8 @@ class Eye:
         eye = cv.GetMat(self.eyePhoto)
         if not eye:
             return False
-        gray = cv2.cvtColor(eye, cv.CV_BGR2GRAY)
+        eyeArr = np.asarray(eye)
+        gray = cv2.cvtColor(eyeArr, cv.CV_BGR2GRAY)
         cv.threshold(gray, gray, 220, 255, cv.THRESH_BINARY)
         std.vector<std.vector<cv2.cv.Point>> contours
         cv.findContours(gray.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE)
