@@ -90,6 +90,10 @@ class User_Interaction0(wx.Panel):
         vertiBtn.Bind(wx.EVT_BUTTON, self.vertOpenFile)
 
 
+        #Reset Button
+        btnReset = wx.Button(self, -1, 'Reset')
+        btnReset.Bind(wx.EVT_BUTTON, lambda event: self.onReset())
+
         self.Raise()
         self.SetPosition((0,0))
         self.Fit()  
@@ -116,14 +120,16 @@ class User_Interaction0(wx.Panel):
         self.full.Add(wx.StaticLine(self, wx.ID_ANY),
                       0, wx.ALL|wx.EXPAND, 5)
         self.full.Add(self.body, 0, wx.ALL | wx.CENTER, 5)
+        self.full.Add(btnReset, 0, wx.CENTER, 5)
+        self.full.AddSpacer(15)
         self.full.Add(wx.StaticLine(self, wx.ID_ANY),
                         0, wx.ALL|wx.EXPAND, 5)
+        self.full.AddSpacer(15)
         self.full.Add(self.footer, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
 
         # This centers the welcome message ("Welcome to DVS!") and puts
         # it at the top.
         self.header.Add(welcomemsg, 0, wx.ALL | wx.EXPAND | wx.CENTER, 5)
-        #self.footer.Add(confBtn, 0, wx.ALL | wx.EXPAND, 5)
 
         # This portions the left side of the layout, including left
         # image, left browse button (horizontal button), and left text
@@ -155,18 +161,14 @@ class User_Interaction0(wx.Panel):
         self.vertBrowseAndText.Add(self.vertPhotoTxt, 0, wx.ALL | wx.RIGHT, 5)
         self.vertBrowseAndText.Add(vertiBtn, 0, wx.ALL | wx.RIGHT, 5)
 
+
         # build the bottom row
         btnBack = wx.Button(self, -1, 'Back')
         self.Bind(wx.EVT_BUTTON, self.OnBack, id=btnBack.GetId())
         btnNext = wx.Button(self, -1, 'Next')
-        #self.Bind(wx.EVT_BUTTON, self.OnNext, id=btnNext.GetId())
         btnNext.Bind(wx.EVT_BUTTON, lambda event:
                      self.onNext(event, self.horPhotoTxt.GetValue(),
                                     self.vertPhotoTxt.GetValue()))
-        
-        #Reset Button
-        btnReset = wx.Button(self, -1, 'Reset')
-        btnReset.Bind(wx.EVT_BUTTON, lambda event: self.onReset())
         
         btnCancelExit = wx.Button(self, -1, 'Cancel and Exit')
         self.Bind(wx.EVT_BUTTON, self.OnCancelAndExit, id=btnCancelExit.GetId())
