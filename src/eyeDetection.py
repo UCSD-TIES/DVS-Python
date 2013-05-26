@@ -1,3 +1,4 @@
+# NOTE: THIS CODE HAS BEEN REFACTORED. DO NOT USE THIS CODE. USE THE CLASS STRUCT
 # Core Code: Eye Detection algorithm written by Janne Parkkila
 # More Info: http://japskua.wordpress.com/about/
 # Blog Post with code: http://japskua.wordpress.com/2010/08/04/detecting-eyes-with-python-opencv/
@@ -24,8 +25,8 @@ def DetectEyes(image, faceCascade, eyeCascade):
    min_size = (20,20)
    image_scale = 2
    haar_scale = 1.2
-   min_neighbors = 2
-   haar_flags = 0
+   min_neighbors = 3
+   haar_flags = cv.CV_HAAR_DO_CANNY_PRUNING
 
    # Allocate the temporary images
    gray = cv.CreateImage((image.width, image.height), 8, 1)
@@ -66,7 +67,7 @@ int((pt2[1] - pt1[1]) * 0.7)))
    # NOTE: This returns the eye regions we're interested in
    eyes = cv.HaarDetectObjects(image, eyeCascade,
 cv.CreateMemStorage(0),
-haar_scale, min_neighbors,
+1.3, min_neighbors,
 haar_flags, (15,15))
 
    ## Draw rectangles around the eyes found ##
@@ -94,8 +95,11 @@ cv.RGB(255, 0, 0), 1, 8, 0)
 fileLocation = raw_input("Please designate the full path" +
                          "to the file you want to analyze\n")
 # Load the image the user chose
-# TODO: Add IO error checking here
-img = cv.LoadImage(fileLocation)
+try:
+   img = cv.LoadImage(fileLocation)
+except IOError as e:
+   print "File name error:", e
+   sys.exit("File Name error")
 
 #NOTE: You may need to modify this path to point to the dir with your cascades
 faceCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_frontalface_default.xml")
