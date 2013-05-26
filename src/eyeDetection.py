@@ -102,8 +102,13 @@ except IOError as e:
    sys.exit("File Name error")
 
 #NOTE: You may need to modify this path to point to the dir with your cascades
-faceCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_frontalface_default.xml")
-eyeCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_eye.xml")
+# Check for OS version
+if sys.platform == 'win32': # Windows
+   faceCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_frontalface_default.xml")
+   eyeCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_eye.xml")
+elif sys.platform == 'darwin': # OSX
+   faceCascade = cv.Load("/opt/local/share/opencv/haarcascades/haarcascade_frontalface_default.xml")
+   eyeCascade = cv.Load("/opt/local/share/opencv/haarcascades/haarcascade_eye.xml")
 
 # Detect the eyes and make an image with bounding boxes on it
 image = DetectEyes(img, faceCascade, eyeCascade)
