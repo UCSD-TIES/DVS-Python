@@ -11,7 +11,7 @@ from Eye import *
 """
 # NOTE: photoImg is a photo of a face
 
-DEBUG = True
+DEBUG = False
 
 class FacePhoto():
     """ This class has attributes:
@@ -141,23 +141,54 @@ class FacePhoto():
         if DEBUG:
             print "Eyes: " + str(eyes)
             ## Draw rectangles around the eyes found ##
+            
             if eyes:
                 # For each eye found
                 for eye in eyes:
-                    print "In findEyes() we are drawing a rectangle around: " + str((eye[0][0], eye[0][1],
+                    print "In findEyes() we are drawing a rectangle around: " + \
+                                 str((eye[0][0], eye[0][1],
                                  eye[0][0] + eye[0][2],eye[0][1] + eye[0][3]))
                     # Draw a rectangle around the eye
                     cv.Rectangle(image,(eye[0][0], eye[0][1]),
                                  (eye[0][0] + eye[0][2],eye[0][1] + eye[0][3]),
                                  cv.RGB(255, 0, 0), 1, 8, 0)
             # Display the image with bounding boxes
-            cv.ShowImage("Face with Eyes", image)
+            cv.ShowImage("Face with Eyes before overdetection correction", image)
 
             # Destroy the window when the user presses any key
             cv.WaitKey(0)
-            cv.DestroyWindow("Face with Eyes")
+            cv.DestroyWindow("Face with Eyes before overdetection correction")
+            
+            
+        # loop through eyes to find rectangles inside one another and
+        # eliminate the larger ones
+        if len(eyes) >= 2:
+            for thisEye in eyes:
+                for thatEye in eyes:
+                    if DEBUG:
+                        print "thisEye: " + str((thisEye[0][0], thisEye[0][1],
+                                 thisEye[0][0] + thisEye[0][2],
+                                 thisEye[0][1] + thisEye[0][3]))
+                        print "thatEye: " + str((thatEye[0][0], thatEye[0][1],
+                                 thatEye[0][0] + thatEye[0][2],
+                                 thatEye[0][1] + thatEye[0][3]))
+                    if thisEye == thatEye:
+                        if DEBUG:
+                            print "breaking"
+                        continue
+                    elif thisEye[0][0] > thatEye[0][0] and \
+                         thisEye[0][1] > thatEye[0][1] and \
+                         (thisEye[0][0] + thisEye[0][2]) < \
+                         (thatEye[0][0] + thatEye[0][2]) and \
+                         (thisEye[0][1] + thisEye[0][3]) < \
+                         (thatEye[0][1] + thatEye[0][3]):
+                        # thisEye is inside thatEye
+                        if DEBUG:
+                            print "removing " + str(thatEye) + " from eyes"
+                        eyes.remove(thatEye)
+        if DEBUG:
+            print "Eyes after looping: " + str(eyes)
         
-
         cv.ResetImageROI(image)
         #calls set eyes if two regions found, otherwise returns false
         if len(eyes) == 2:

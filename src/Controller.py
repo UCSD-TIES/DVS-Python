@@ -9,7 +9,7 @@ from Eye import *
 from Pupil import *
 import cv2.cv as cv
 
-DEBUG = True
+DEBUG = False
 
 def detectEyes(horizontalPath, verticalPath):
     """ Detects the eyes in both images and passes back a tuple of coordinates
