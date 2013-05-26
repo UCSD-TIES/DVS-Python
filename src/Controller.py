@@ -29,17 +29,15 @@ def detectEyes(horizontalPath, verticalPath):
     horizontalImg = cv.LoadImage(horizontalPath)
     verticalImg = cv.LoadImage(verticalPath)
     thisPatient = Patient(horizontalImg, verticalImg)
-    return thisPatient
-
     if DEBUG:
         
         # show the variables as they have been populated
         print "Showing patient's horizontal image..."
-        cv.ShowImage("Horizontal",thisPatient.getHorizontal().facePhoto)
+        cv.ShowImage("Horizontal",thisPatient.getHorizontal())
         cv.WaitKey(0)
         cv.DestroyWindow("Horizonatl")
         print "Showing patient's vertical image..."
-        cv.ShowImage("Vertical",thisPatient.getVertical().facePhoto)
+        cv.ShowImage("Vertical",thisPatient.getVertical())
         cv.WaitKey(0)
         cv.DestroyWindow("Vertical")
         print "Showing photo of the patient's horizontal left eye..."
@@ -56,6 +54,8 @@ def detectEyes(horizontalPath, verticalPath):
         print "Attributes: " + str(thisPatient.__dict__)
         print "Here's our left region again: " + str(thisPatient.horizontal.left.eyeRegion)
         print "Here's our right region again: " + str(thisPatient.horizontal.right.eyeRegion)
+
+    return thisPatient
 
 def resetEyes(horizontalTuple, verticalTuple):
     """ Resets the eye regions to whatever 
@@ -76,7 +76,7 @@ def drawOnEyes(patient):
 ######################Testing ######################
     
 # The following code replicates calls from the UI layer
-patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/Obama.jpg",
+patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/OldNHappy.jpg",
            "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/ObamaRotated.jpg")
 #TODO: Encapsulate these calls.
 # Take the horizontal image and draw bounding eye boxes
