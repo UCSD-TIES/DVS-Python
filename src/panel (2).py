@@ -35,6 +35,9 @@ class My_Frame(wx.Frame):
         self.panel1 = User_Interaction1(self)       
         sizer_h.Add(self.panel1, 1, wx.EXPAND)
 
+        self.panel2 = User_Interaction2(self)
+        sizer_h.Add(self.panel2, 0, wx.EXPAND)
+
         self.SetSizer(sizer_h)
 
         self.panel0.ShowYourself()
@@ -163,8 +166,6 @@ class User_Interaction0(wx.Panel):
 
 
         # build the bottom row
-        btnBack = wx.Button(self, -1, 'Back')
-        self.Bind(wx.EVT_BUTTON, self.OnBack, id=btnBack.GetId())
         btnNext = wx.Button(self, -1, 'Next')
         btnNext.Bind(wx.EVT_BUTTON, lambda event:
                      self.onNext(event, self.horPhotoTxt.GetValue(),
@@ -173,7 +174,6 @@ class User_Interaction0(wx.Panel):
         btnCancelExit = wx.Button(self, -1, 'Cancel and Exit')
         self.Bind(wx.EVT_BUTTON, self.OnCancelAndExit, id=btnCancelExit.GetId())
         rowbottomsizer = wx.BoxSizer(wx.HORIZONTAL)
-        rowbottomsizer.Add(btnBack, 0, wx.ALIGN_LEFT)
         rowbottomsizer.AddSpacer(5)
         rowbottomsizer.Add(btnNext, 0)
         rowbottomsizer.AddSpacer(5)
@@ -302,11 +302,6 @@ class User_Interaction0(wx.Panel):
             self.GetParent().panel1.ShowYourself()
             self.GetParent().GetSizer().Layout()
 
-    def OnBack(self, event):
-        self.Hide()
-        self.GetParent().panel1.ShowYourself()
-        self.GetParent().GetSizer().Layout()
-
     def OnCancelAndExit(self, event):
         self.GetParent().ShutDown()
 
@@ -376,25 +371,103 @@ class User_Interaction1(wx.Panel):
         horFilepath = self.horPhotoTxt.GetValue()
         vertFilepath = self.vertPhotoTxt.GetValue()
         thisPatient = detectEyes( horFilepath, vertFilepath )
+        
+    def ShowYourself(self):
+        self.Raise()
+        self.SetPosition((0,0))
+        self.Fit()
+        self.GetParent().GetSizer().Show(self)
+        self.GetParent().GetSizer().Layout()
+
+    def OnBack(self, event):
+        self.Hide()
+        self.GetParent().panel0.ShowYourself()
+        self.GetParent().GetSizer().Layout()
+
+    def OnNext(self, event):
+        self.Hide()
+        self.GetParent().panel2.ShowYourself()
+        self.GetParent().GetSizer().Layout()
+
+    def OnCancelAndExit(self, event):
+        self.GetParent().ShutDown()
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------
+class User_Interaction2(wx.Panel):
+
+    def __init__(self, parent, id=-1):
+
+        wx.Panel.__init__(self, parent, id)
+
+        # master sizer for the whole panel
+        mastersizer = wx.BoxSizer(wx.VERTICAL)
+        #mastersizer.SetMinSize((475, 592))
+        mastersizer.AddSpacer(15)
+
+
+        # build the top row
+        txtHeader = wx.StaticText(self, -1, 'Read about This Boring\nProgram', (0, 0))
+        font = wx.Font(16, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        txtHeader.SetFont(font)
+        txtOutOf = wx.StaticText(self, -1, '2 out of 7', (0, 0))                
+        rowtopsizer = wx.BoxSizer(wx.HORIZONTAL)
+        rowtopsizer.Add(txtHeader, 3, wx.ALIGN_LEFT) 
+        rowtopsizer.Add((0,0), 1)  
+        rowtopsizer.Add(txtOutOf, 0, wx.ALIGN_RIGHT) 
+        mastersizer.Add(rowtopsizer, 0, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=15) 
+
+
+        # build the middle row
+        text = 'PANEL 2\n\n'
+        text = text + 'This could be a giant blob of boring text.\n'
+
+        txtBasic = wx.StaticText(self, -1, text)
+        font = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.NORMAL)
+        txtBasic.SetFont(font)
+        mastersizer.Add(txtBasic, 1, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=15)  
+
+
+        # build the bottom row
+        btnBack = wx.Button(self, -1, 'Back')
+        self.Bind(wx.EVT_BUTTON, self.OnBack, id=btnBack.GetId())
+        btnCancelExit = wx.Button(self, -1, 'Cancel and Exit')
+        self.Bind(wx.EVT_BUTTON, self.OnCancelAndExit, id=btnCancelExit.GetId())
+        rowbottomsizer = wx.BoxSizer(wx.HORIZONTAL)
+        rowbottomsizer.Add(btnBack, 0, wx.ALIGN_LEFT)
+        rowbottomsizer.AddSpacer(5)
+        rowbottomsizer.AddStretchSpacer(1)
+        rowbottomsizer.Add(btnCancelExit, 0, wx.ALIGN_RIGHT)
+        mastersizer.Add(rowbottomsizer, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=15)
+
+        # finish master sizer
+        mastersizer.AddSpacer(15)   
+        self.SetSizer(mastersizer)
+
+        self.Raise()
+        self.SetPosition((0,0))
+        self.Fit()  
+        self.Hide()
+
+#---------------------------------------------------------------
+    def EyeDetect(self):
+        horFilepath = self.horPhotoTxt.GetValue()
+        vertFilepath = self.vertPhotoTxt.GetValue()
+        thisPatient = detectEyes( horFilepath, vertFilepath )
 
     def ShowYourself(self):
         self.Raise()
         self.SetPosition((0,0))
         self.Fit()
         self.GetParent().GetSizer().Show(self)
-
+        self.GetParent().GetSizer().Layout()
 
     def OnBack(self, event):
         self.Hide()
-        self.GetParent().panel0.ShowYourself()
-
-    def OnNext(self, event):
-        self.Hide()
-        self.GetParent().panel0.ShowYourself()
+        self.GetParent().panel1.ShowYourself()
+        self.GetParent().GetSizer().Layout()
 
     def OnCancelAndExit(self, event):
         self.GetParent().ShutDown()
-
 
 def main():
     app = My_App(redirect = False)
