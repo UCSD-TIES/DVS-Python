@@ -17,48 +17,54 @@ class My_App(wx.App):
         self.SetTopWindow(self.frame)
         return True
 
-
+# This is the frame
 class My_Frame(wx.Frame):
 
     def __init__(self, image, parent=None,id=-1, title='Generic Title',
                  pos=wx.DefaultPosition, style=wx.CAPTION | wx.STAY_ON_TOP):     
 
+        # This is the title of the window
         size = wx.DisplaySize()
         wx.Frame.__init__(self, parent, id, 'Digital Vision Screening',
                           pos, size)
 
         sizer_h = wx.BoxSizer(wx.HORIZONTAL)
 
+        # This is the first panel
         self.panel0 = User_Interaction0(self)       
         sizer_h.Add(self.panel0, 1, wx.EXPAND)
 
+        # This is the second panel
         self.panel1 = User_Interaction1(self)       
         sizer_h.Add(self.panel1, 1, wx.EXPAND)
 
+        # This is the third panel
         self.panel2 = User_Interaction2(self)
         sizer_h.Add(self.panel2, 1, wx.EXPAND)
 
         self.SetSizer(sizer_h)
 
+        # Starts by showing the first panel
         self.panel0.ShowYourself()
 
     def ShutDown(self):
         self.Destroy()
 
-
+# Content of the first panel
 class User_Interaction0(wx.Panel):
 
     def __init__(self, parent, id=-1):
 
         wx.Panel.__init__(self, parent, id)
+
+        # Largest photo allowed
         self.PhotoMaxSize = 440
 
         # Passes to createWidgets method definition
         self.createWidgets()
-
         self.Show(True)        
-        self.Show(True)
 
+    # Puts everything on the first panel
     def createWidgets(self):
         # Welcome message
         welcome = "Welcome to DVS!"
@@ -66,14 +72,15 @@ class User_Interaction0(wx.Panel):
         welcomemsg = wx.StaticText(self, -1, welcome)
         welcomemsg.SetFont(welcomeFont)
 
-        # Horizontal Image
+        # Horizontal Image starts as an empty image
         horImg = wx.EmptyImage(440,440)
         self.horImgCtrl = wx.StaticBitmap(self, wx.ID_ANY,
                                   wx.BitmapFromImage(horImg))
 
-        # Displays path of horizontal image
+        # Displays path of horizontal image, uneditable
         self.horPhotoTxt = wx.TextCtrl(self, size=(350,-1), style=wx.TE_READONLY)
 
+        # Button to upload a horizontal photo
         horiBtn = wx.Button(self, label='Horizontal')
         horiBtn.Bind(wx.EVT_BUTTON, self.horOpenFile)
 
@@ -86,14 +93,15 @@ class User_Interaction0(wx.Panel):
         self.vertImgCtrl = wx.StaticBitmap(self, wx.ID_ANY,
                                         wx.BitmapFromImage(vertImg))
 
-        # Displays path of vertical image
+        # Displays path of vertical image, uneditable
         self.vertPhotoTxt = wx.TextCtrl(self, size=(350,-1), style=wx.TE_READONLY)
-        
+
+        # Button for the vertical image
         vertiBtn = wx.Button(self, label='Vertical')
         vertiBtn.Bind(wx.EVT_BUTTON, self.vertOpenFile)
 
 
-        #Reset Button
+        # Reset Button
         btnReset = wx.Button(self, -1, 'Reset')
         btnReset.Bind(wx.EVT_BUTTON, lambda event: self.onReset())
 
@@ -165,14 +173,17 @@ class User_Interaction0(wx.Panel):
         self.vertBrowseAndText.Add(vertiBtn, 0, wx.ALL | wx.RIGHT, 5)
 
 
-        # build the bottom row
+        # Build the bottom row
+        # Button to move onto next panel
         btnNext = wx.Button(self, -1, 'Next')
         btnNext.Bind(wx.EVT_BUTTON, lambda event:
                      self.onNext(event, self.horPhotoTxt.GetValue(),
                                     self.vertPhotoTxt.GetValue()))
-        
+
+        # Button to cancel operation and exit program
         btnCancelExit = wx.Button(self, -1, 'Cancel and Exit')
         self.Bind(wx.EVT_BUTTON, self.OnCancelAndExit, id=btnCancelExit.GetId())
+        
         rowbottomsizer = wx.BoxSizer(wx.HORIZONTAL)
         rowbottomsizer.AddSpacer(5)
         rowbottomsizer.Add(btnNext, 0)
@@ -191,7 +202,8 @@ class User_Interaction0(wx.Panel):
         horFilepath = self.horPhotoTxt.GetValue()
         vertFilepath = self.vertPhotoTxt.GetValue()
         thisPatient = detectEyes( horFilepath, vertFilepath )
-        
+
+    # About is supposed to be in menu bar, but we deleted the bar for now        
     def OnAbout(self,e):
         # A message dialog box with an OK button. wx.OK is a standard ID in wxWidgets.
         aboutText = "Eye Diagnostic Program: Please Enter a Vertical and Horizontal Photo"
@@ -199,20 +211,24 @@ class User_Interaction0(wx.Panel):
         dlg.ShowModal() # Show it
         dlg.Destroy() # finally destroy it when finished.
 
+    # Exits the program
     def OnExit(self,e):
         self.Close(True) # Close the frame.
- 
+
+    # Uploads a horizontal image
     def horOpenFile(self, event):
+        # Pops up box for user to upload image
         horDlg = wx.FileDialog(self, "Choose a file", os.getcwd(), "", IMGMASK,
                             wx.OPEN)
-        if horDlg.ShowModal() == wx.ID_OK:
+        if horDlg.ShowModal() == wx.ID_OK:      # Uploads when the user clicks OK
             horPath = horDlg.GetPath()
-            self.horPhotoTxt.SetValue(horPath)
-            self.horOnPaint()                  # moved to make code more stable
+            self.horPhotoTxt.SetValue(horPath)  # Changes text in textbox to file path
+            self.horOnPaint()                   # moved to make code more stable
         # Can't load image from file '': file does not exist
 
         horDlg.Destroy()
 
+    # To display the uploaded horizontal image
     def horOnPaint(self):
         horFilepath = self.horPhotoTxt.GetValue()
         horImg = wx.Image(horFilepath, wx.BITMAP_TYPE_ANY)
@@ -232,18 +248,19 @@ class User_Interaction0(wx.Panel):
         self.horImgCtrl.SetBitmap(wx.BitmapFromImage(horImg))
         self.Refresh()
 
-
+    # Uploads a vertical image
     def vertOpenFile(self, event):
+        # Pops up box for user to upload image
         vertDlg = wx.FileDialog(self, "Choose a file", os.getcwd(), "", IMGMASK,
                             wx.OPEN)
-        if vertDlg.ShowModal() == wx.ID_OK:
+        if vertDlg.ShowModal() == wx.ID_OK:      # Uploads when user clicks OK
             vertPath = vertDlg.GetPath()
-            self.vertPhotoTxt.SetValue(vertPath)
-            self.vertOnPaint()             # moved to make code more stable
+            self.vertPhotoTxt.SetValue(vertPath) # Changes textbox to file path
+            self.vertOnPaint()                   # moved to make code more stable
 
         vertDlg.Destroy()
-        #self.OnPaint2()
-
+        
+    # To display the uploaded vertical image
     def vertOnPaint(self):
         vertFilepath = self.vertPhotoTxt.GetValue()
         vertImg = wx.Image(vertFilepath, wx.BITMAP_TYPE_ANY)
@@ -265,13 +282,19 @@ class User_Interaction0(wx.Panel):
 
     #Resets path and image
     def onReset(self):
+        # Clears the file paths
         self.horPhotoTxt.SetValue('')
         self.vertPhotoTxt.SetValue('')
+
+        # Changes images to blank images
         horImg = wx.EmptyImage(440,440)
         self.horImgCtrl.SetBitmap(wx.BitmapFromImage(horImg))
         vertImg = wx.EmptyImage(440,440)
         self.vertImgCtrl.SetBitmap(wx.BitmapFromImage(vertImg))
+
+        # Refreshes the page
         self.Refresh()
+
 
     def ShowYourself(self):
         self.Raise()
@@ -280,28 +303,35 @@ class User_Interaction0(wx.Panel):
         self.GetParent().GetSizer().Show(self)
         self.GetParent().GetSizer().Layout()
 
+    # Moves onto the next panel when conditions are satisfied, takes in
+    # horizontal and vertical image file path
     def onNext(self, event, horiImg, vertImg):
+        # When no image is entered, use this error message
         if horiImg == '' and vertImg == '':
             errorTxt1 = "No Images Detected, Please Enter Images"
             errMsg1 = wx.MessageDialog(self, errorTxt1, "No Images Detected", wx.OK)
             errMsg1.ShowModal()
             errMsg1.Destroy()
+        # When no horizontal image is entered
         elif horiImg == '':
             errorTxt2 = "No Horizontal Image Detected, Please Enter a Horizontal Image"
             errMsg2 = wx.MessageDialog(self, errorTxt2, "No Horizontal Image", wx.OK)
             errMsg2.ShowModal()
             errMsg2.Destroy()
+        # When no vertical image is entered
         elif vertImg == '':
             errorTxt3 = "No Vertical Image Detected, Please Enter a Vertical Image"
             errMsg3 = wx.MessageDialog(self, errorTxt3, "No Vertical Image", wx.OK)
             errMsg3.ShowModal()
             errMsg3.Destroy()
+        # Move to next panel and run eye detection
         else:
             self.Hide()
             self.EyeDetect()
             self.GetParent().panel1.ShowYourself()
             self.GetParent().GetSizer().Layout()
 
+    # Exits the operation
     def OnCancelAndExit(self, event):
         self.GetParent().ShutDown()
 
