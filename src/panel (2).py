@@ -198,9 +198,12 @@ class User_Interaction0(wx.Panel):
 
 
 #---------------------------------------------------------------------------
+    # calls face and eye detections script from back-end
     def EyeDetect(self):
+        #stores file paths to input into detectEyes()
         horFilepath = self.horPhotoTxt.GetValue()
         vertFilepath = self.vertPhotoTxt.GetValue()
+        # stores returned Patient object
         thisPatient = detectEyes( horFilepath, vertFilepath )
 
     # About is supposed to be in menu bar, but we deleted the bar for now        
@@ -397,6 +400,7 @@ class User_Interaction1(wx.Panel):
         self.Hide()
 
 #---------------------------------------------------------------
+    # calls face and eye detection script from back-end
     def EyeDetect(self):
         horFilepath = self.horPhotoTxt.GetValue()
         vertFilepath = self.vertPhotoTxt.GetValue()
@@ -480,6 +484,7 @@ class User_Interaction2(wx.Panel):
         self.Hide()
 
 #---------------------------------------------------------------
+    # calls face and eye detection script from back-end
     def EyeDetect(self):
         horFilepath = self.horPhotoTxt.GetValue()
         vertFilepath = self.vertPhotoTxt.GetValue()
@@ -492,6 +497,7 @@ class User_Interaction2(wx.Panel):
         self.GetParent().GetSizer().Show(self)
         self.GetParent().GetSizer().Layout()
 
+    # back button click-event function
     def OnBack(self, event):
         self.Hide()
         self.GetParent().panel1.ShowYourself()
@@ -502,7 +508,7 @@ class User_Interaction2(wx.Panel):
 
 def main():
     app = My_App(redirect = False)
-    app.MainLoop()
+    app.MainLoop()                  # stays in My_App unless exited
 
 
 if __name__ == '__main__':
