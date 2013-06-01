@@ -36,7 +36,7 @@ class My_Frame(wx.Frame):
         sizer_h.Add(self.panel1, 1, wx.EXPAND)
 
         self.panel2 = User_Interaction2(self)
-        sizer_h.Add(self.panel2, 0, wx.EXPAND)
+        sizer_h.Add(self.panel2, 1, wx.EXPAND)
 
         self.SetSizer(sizer_h)
 
@@ -442,6 +442,7 @@ class User_Interaction2(wx.Panel):
         # finish master sizer
         mastersizer.AddSpacer(15)   
         self.SetSizer(mastersizer)
+        self.Layout()
 
         self.Raise()
         self.SetPosition((0,0))
