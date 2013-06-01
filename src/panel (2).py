@@ -300,7 +300,7 @@ class User_Interaction0(wx.Panel):
             self.Hide()
             self.EyeDetect()
             self.GetParent().panel1.ShowYourself()
-            self.GetParent().GetSizer().Show(self)
+            self.GetParent().GetSizer().Layout()
 
     def OnBack(self, event):
         self.Hide()
