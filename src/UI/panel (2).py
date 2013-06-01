@@ -1,7 +1,7 @@
 import wx, os
 import sys
 import guitest
-#from Controller import *                 import for later backend stuff
+from Controller import *                 #import for backend stuff
 
 # file filter for pictures: bitmap and jpeg files
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
@@ -187,9 +187,13 @@ class User_Interaction0(wx.Panel):
 
 
 #---------------------------------------------------------------------------
+
     def EyeDetect(self):
+        # calls face and eye detection scripts from back-end
+        # stores file paths to input into detectEyes()
         horFilepath = self.horPhotoTxt.GetValue()
         vertFilepath = self.vertPhotoTxt.GetValue()
+        # stores returned Patient object
         thisPatient = detectEyes( horFilepath, vertFilepath )
         
     def OnAbout(self,e):
@@ -296,11 +300,11 @@ class User_Interaction0(wx.Panel):
             errMsg3 = wx.MessageDialog(self, errorTxt3, "No Vertical Image", wx.OK)
             errMsg3.ShowModal()
             errMsg3.Destroy()
-       # else:
-        #    self.Hide()
-         #   self.EyeDetect()
-          #  self.GetParent().panel1.ShowYourself()
-           # self.GetParent().GetSizer().Show(self)
+        else:
+            self.Hide()
+            self.EyeDetect()  # if no errs detected, then run eyeDetect script
+            self.GetParent().panel1.ShowYourself()
+            self.GetParent().GetSizer().Show(self)
 
     def OnBack(self, event):
         self.Hide()
@@ -371,11 +375,7 @@ class User_Interaction1(wx.Panel):
         self.Fit()  
         self.Hide()
 
-#---------------------------------------------------------------
-    def EyeDetect(self):
-        horFilepath = self.horPhotoTxt.GetValue()
-        vertFilepath = self.vertPhotoTxt.GetValue()
-        thisPatient = detectEyes( horFilepath, vertFilepath )
+
 
     def ShowYourself(self):
         self.Raise()
