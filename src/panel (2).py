@@ -68,7 +68,7 @@ class User_Interaction0(wx.Panel):
     def createWidgets(self):
         # Welcome message
         welcome = "Welcome to DVS!"
-        welcomeFont = wx.Font(13, wx.NORMAL, wx.NORMAL, wx.BOLD)
+        welcomeFont = wx.Font(16, wx.NORMAL, wx.NORMAL, wx.BOLD)
         welcomemsg = wx.StaticText(self, -1, welcome)
         welcomemsg.SetFont(welcomeFont)
 
@@ -146,7 +146,8 @@ class User_Interaction0(wx.Panel):
         # image, left browse button (horizontal button), and left text
         # control box, which contains the path of the horizontal image.
         self.body.Add(self.leftSizer, 0, wx.LEFT | wx.EXPAND, 5)
-        self.leftSizer.Add(self.horImgCtrl, 0, wx.ALL | wx.LEFT, 5)
+        self.leftSizer.Add(self.horImgCtrl, 0, wx.LEFT, 5)
+        self.horImgCtrl.SetMinSize(self.GetSize())
 
         # Within the leftSizer container, we have a miniature sizer, called
         # horBrowseAndText, which allows us to format the text control box
@@ -162,7 +163,8 @@ class User_Interaction0(wx.Panel):
         # right browse button (vertical button), and right text control box,
         # which contains the path of the horizontal image.
         self.body.Add(self.rightSizer, 0, wx.RIGHT | wx.EXPAND, 5)
-        self.rightSizer.Add(self.vertImgCtrl, 0, wx.ALL | wx.RIGHT, 5)
+        self.rightSizer.Add(self.vertImgCtrl, 0, wx.RIGHT, 5)
+        self.vertImgCtrl.SetMinSize(self.GetSize())
 
         # Within the rightSizer container, we have a miniature sizer called
         # vertBrowseAndText, which allows us to format the text control box
