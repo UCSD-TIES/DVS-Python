@@ -1,7 +1,7 @@
 import wx, os
 import sys
 import guitest
-#from Controller import *                 import for later backend stuff
+from Controller import *              #   import for later backend stuff
 
 # file filter for pictures: bitmap and jpeg files
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
@@ -296,11 +296,11 @@ class User_Interaction0(wx.Panel):
             errMsg3 = wx.MessageDialog(self, errorTxt3, "No Vertical Image", wx.OK)
             errMsg3.ShowModal()
             errMsg3.Destroy()
-       # else:
-        #    self.Hide()
-         #   self.EyeDetect()
-          #  self.GetParent().panel1.ShowYourself()
-           # self.GetParent().GetSizer().Show(self)
+        else:
+            self.Hide()
+            self.EyeDetect()
+            self.GetParent().panel1.ShowYourself()
+            self.GetParent().GetSizer().Show(self)
 
     def OnBack(self, event):
         self.Hide()
