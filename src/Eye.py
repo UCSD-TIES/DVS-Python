@@ -7,7 +7,7 @@ import cv2.cv as cv
 import cv2
 import numpy as np
 
-DEBUG = False
+DEBUG = True
 
 class Eye:
     """ This class has attributes :
@@ -63,14 +63,17 @@ class Eye:
         Return:
             bool - True if there were no issues. False for any error
         """
-        """
-        # find pupil code goes here
         eye = cv.GetMat(self.eyePhoto)
         if not eye:
             return False
         eyeArr = np.asarray(eye)
+        if DEBUG:
+            print "Pretty much every line in this algorithm is a syntax error"
+            print "We have the eye as an array: " + str(eyeArr)
         gray = cv2.cvtColor(eyeArr, cv.CV_BGR2GRAY)
+        # ERROR: Cannot convert > length 1 array to scalar
         cv2.threshold(gray, gray, 220, 255, cv2.THRESH_BINARY)
+        # ERROR: This is c++ syntax, not Python
         std.vector<std.vector<cv2.cv.Point>> contours
         cv2.findContours(gray.clone(), contours, cv2.CV_RETR_EXTERNAL,
                          cv2.CV_CHAIN_APPROX_NONE)
@@ -85,7 +88,6 @@ class Eye:
                 cv2.cv.circle(src, cv.point(rect.x + radius, rect.y + radius, CV_RGB(255,0,0), 2))
         region = None
         self.setPupil(region)
-        """
         return "findPupil successfully called"
 
     def findSclera(self):
