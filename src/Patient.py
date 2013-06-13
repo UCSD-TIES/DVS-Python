@@ -44,6 +44,28 @@ class Patient:
             elif self.vertical.right != None:
                 return self.vertical.right.eyeRegion
 
+    def getEyePhoto(self,horizontal,left):
+        """ Returns the photo of the eye specified.
+
+        Args:
+            bool horizontal - if true, work with the horizontal photo
+                                otherwise vertical
+            bool left - if true get left eye else right
+
+        Return:
+            region - the region of the eye specified
+        """
+        if horizontal:
+            if left and self.horizontal.left != None:
+                return self.horizontal.left.eyePhoto
+            elif self.horizontal.right != None:
+                return self.horizontal.right.eyePhoto
+        else:
+            if left and self.vertical.left != None:
+                return self.vertical.left.eyePhoto
+            elif self.vertical.right != None:
+                return self.vertical.right.eyePhoto
+
     def analyzeEyes(self):
         """ Analyze all eye diseases and return the results """ 
         results = self.strabismus()
