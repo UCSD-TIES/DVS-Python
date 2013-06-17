@@ -242,7 +242,6 @@ class FacePhoto():
         eye = face.crop(region)
         if DEBUG:
             print "After crop we have type: " + str(type(eye))
-            eye.show()
         return eye
 
 ##################### Getters ############################

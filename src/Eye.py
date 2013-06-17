@@ -91,9 +91,7 @@ class Eye:
         # Invert the Image
         inverted_image = PIL.ImageOps.invert(self.eyePhoto)
         if DEBUG:
-            cv.ShowImage("Inverted Image",inverted_image)
-            cv.WaitKey(0)
-            cv.DestroyWindow("Inverted Image")
+            inverted_image.show()
         # TODO
         # Convert to grayscale
         gray = cv2.cvtColor(eyeArr, cv.CV_BGR2GRAY)
