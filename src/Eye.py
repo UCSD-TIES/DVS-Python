@@ -6,12 +6,14 @@ from Pupil import *
 import cv2.cv as cv
 import cv2
 import numpy as np
+from PIL import Image
+import PIL.ImageOps
 
 DEBUG = True
 
 class Eye:
     """ This class has attributes :
-      IplImage eyePhoto - a cropped photo of the eye
+      PIL  eyePhoto - a cropped photo of the eye
       tuple eyeRegion - a region that represents the exact location of the eye
       Pupil eyePupil - the eye's pupil
       region eyeSclera - the eye's sclera region
@@ -31,9 +33,8 @@ class Eye:
         if DEBUG:
             print "We're here in eye's __init__"
             print "And our region is: " + str(region)
-            cv.ShowImage("Cropped Eye Photo", photo)
-            cv.WaitKey(0)
-            cv.DestroyWindow("Cropped Eye Photo")
+            print "This photo is a " + str(type(photo))
+            photo.show()
         # Initalize whole eye attributes to the values passed in
         self.eyePhoto = photo
         self.eyeRegion = region
@@ -54,8 +55,18 @@ class Eye:
     def findPupil(self):
         """ Detects a pupil in a photo of an eye and constructs a Pupil object
 
-        Uses opencv libarary methods to detect a pupil. Then initializes eyePupil
-        by constructing a new pupil object. Returns false if any errors are encountered
+        Uses opencv libarary methods to detect a pupil. Algorithm found here:
+        http://opencv-code.com/tutorials/pupil-detection-from-an-eye-image/
+        Algorithm Overview:
+            Load the source image.
+            Invert it.
+            Convert to grayscale.
+            Convert to binary image by thresholding it.
+            Find all blobs.
+            Remove noise by filling holes in each blob.
+            Get blob which is big enough and has round shape.
+        Then initializes eyePupil by constructing a new pupil object. 
+        Returns false if any errors are encountered
 
         Args:
             None
@@ -63,6 +74,8 @@ class Eye:
         Return:
             bool - True if there were no issues. False for any error
         """
+        # Load the source image into a cv mat
+        '''
         eye = cv.GetMat(self.eyePhoto)
         if not eye:
             return False
@@ -70,14 +83,31 @@ class Eye:
         if DEBUG:
             print "Pretty much every line in this algorithm is a syntax error"
             print "We have the eye as an array: " + str(eyeArr)
+        '''
+        if DEBUG:
+            print "Finding the pupil begins..."
+            print "Inverting the Image"
+            print type(self.eyePhoto)
+        # Invert the Image
+        inverted_image = PIL.ImageOps.invert(self.eyePhoto)
+        if DEBUG:
+            cv.ShowImage("Inverted Image",inverted_image)
+            cv.WaitKey(0)
+            cv.DestroyWindow("Inverted Image")
+        # TODO
+        # Convert to grayscale
         gray = cv2.cvtColor(eyeArr, cv.CV_BGR2GRAY)
+        # Convert to binary image by thresholding it
         # ERROR: Cannot convert > length 1 array to scalar
         cv2.threshold(gray, gray, 220, 255, cv2.THRESH_BINARY)
         # ERROR: This is c++ syntax, not Python
+        # Find all blobs 
         std.vector<std.vector<cv2.cv.Point>> contours
         cv2.findContours(gray.clone(), contours, cv2.CV_RETR_EXTERNAL,
                          cv2.CV_CHAIN_APPROX_NONE)
+        # Fill in holes in the blobs
         cv2.drawContours(gray, contours, -1, CV+RGB(255,255,255), -1)
+        # Loop through the blobs to find one of the right shape/size
         for i in range(0, contours.size()):
             area = cv.contourArea(contours[i])
             rect = cv.boundingRect(contours[i])
@@ -86,6 +116,7 @@ class Eye:
             std.abs(1-(rect.width / rect.height)) < .2 and \
             std.abs(1 - (area/(CV_PI * std.pow(radius, 2)))) <= .2:
                 cv2.cv.circle(src, cv.point(rect.x + radius, rect.y + radius, CV_RGB(255,0,0), 2))
+        # Do the various setting that needs to be done for the class structure
         region = None
         self.setPupil(region)
         return "findPupil successfully called"

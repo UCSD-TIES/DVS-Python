@@ -28,7 +28,7 @@ def detectEyes(horizontalPath, verticalPath):
     # Load the images
     horizontalImg = cv.LoadImage(horizontalPath)
     verticalImg = cv.LoadImage(verticalPath)
-    thisPatient = Patient(horizontalImg, verticalImg)
+    thisPatient = Patient(horizontalImg, horizontalPath, verticalImg, verticalPath)
     if DEBUG:
         
         # show the variables as they have been populated

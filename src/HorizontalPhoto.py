@@ -6,7 +6,7 @@ from FacePhoto import *
 class HorizontalPhoto(FacePhoto):
 
     # Simply inherits all methods from FacePhoto
-    def __init__(self, photo):
+    def __init__(self, photo, path):
         """ Initialize the attributes of a FacePhoto
 
             This calls FacePhoto's __init__
@@ -19,6 +19,6 @@ class HorizontalPhoto(FacePhoto):
               None
         """
         # call FacePhoto(super)'s  init
-        FacePhoto.__init__(self, photo)
+        FacePhoto.__init__(self, photo, path)
 
         

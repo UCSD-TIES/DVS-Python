@@ -8,7 +8,7 @@ import numpy as np
 
 class VerticalPhoto(FacePhoto,object):
 
-    def __init__(self, photo):
+    def __init__(self, photo, path):
         """ Initialize the attributes of a FacePhoto
 
             This constructor rotates the photo so that we can process
@@ -26,7 +26,7 @@ class VerticalPhoto(FacePhoto,object):
         #       up or upside
         photo = self.rotateImage(photo,90)
         # call FacePhoto(super)'s  init
-        super(VerticalPhoto,self).__init__(photo)
+        super(VerticalPhoto,self).__init__(photo,path)
 
     def rotateImage(self, image, angle):
         image0 = image

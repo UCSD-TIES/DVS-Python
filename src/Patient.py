@@ -8,12 +8,12 @@ class Patient:
       HorizontalPhoto horizontal - an horizontal image object
       VerticalPhoto vertical - a vertical image object
     """
-    def __init__(self, horizontalImg, verticalImg):
+    def __init__(self, horizontalImg, horizontalPath, verticalImg, verticalPath):
         """ Initialize the horizontal and vertical attributes by creating
             HorizontalPhoto and VerticalPhoto objects
         """
-        self.horizontal = HorizontalPhoto(horizontalImg)
-        self.vertical = VerticalPhoto(verticalImg)
+        self.horizontal = HorizontalPhoto(horizontalImg, horizontalPath)
+        self.vertical = VerticalPhoto(verticalImg, verticalPath)
 
     def getHorizontal(self):
         return self.horizontal.facePhoto

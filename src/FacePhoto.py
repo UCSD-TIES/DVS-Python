@@ -4,6 +4,7 @@ import time
 import Image
 import sys
 from Eye import *
+import PIL
 """ A class to perform actions on a photo of a face
     This class has two child classes:
       HorizonalPhoto
@@ -16,13 +17,14 @@ DEBUG = True
 class FacePhoto():
     """ This class has attributes:
         IplImage facePhoto - a photo of the whole face
+        string path - the path to the photo of the whole face
         Eye left - the left eye object
         Eye right - the right eye object
     """
 
     #TODO: Error checking and raising is not accounted for in psudeoclasses
 
-    def __init__(self, photoImg):
+    def __init__(self, photoImg, photoPath):
         """ Initializes eye objects
 
         Calls findEyes() to initialize the eye attributes.
@@ -35,6 +37,7 @@ class FacePhoto():
         """
         # Initialize the face photo to the value passed in
         self.facePhoto = photoImg
+        self.path = photoPath
         # Initialize the other attributes to None so that they exist
         self.left = None
         self.right = None
@@ -225,14 +228,21 @@ class FacePhoto():
         """
         # really takes in four points per region
         # place eye region here
+        face = Image.open(self.path)
         crop = (region[0],region[1], region[2] - region[0], region[3] - region[1])
         if DEBUG:
             print "Region passed to eye remove: " + str(region)
             print "And here's crop: " + str(crop)
+            print "Before crop we have type: " + str(type(self.facePhoto))
+            print self.facePhoto
             cv.ShowImage("We're cropping", self.facePhoto)
             cv.WaitKey(0)
             cv.DestroyWindow("We're cropping")
-        eye = cv.GetSubRect(self.facePhoto, crop)
+        #eye = cv.GetSubRect(self.facePhoto, crop)
+        eye = face.crop(region)
+        if DEBUG:
+            print "After crop we have type: " + str(type(eye))
+            eye.show()
         return eye
 
 ##################### Getters ############################
