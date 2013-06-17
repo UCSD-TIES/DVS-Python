@@ -94,11 +94,16 @@ class Eye:
             inverted_image.show()
         # TODO
         # Convert to grayscale
-        gray = cv2.cvtColor(eyeArr, cv.CV_BGR2GRAY)
-        # Convert to binary image by thresholding it
-        # ERROR: Cannot convert > length 1 array to scalar
-        cv2.threshold(gray, gray, 220, 255, cv2.THRESH_BINARY)
-        # ERROR: This is c++ syntax, not Python
+        gray_image = PIL.ImageOps.grayscale(inverted_image)
+        if DEBUG:
+            gray_image.show()
+        # Convert to binary image (pure black and) by thresholding it
+        # NOTE: The 220 on the line below is a hardcoded threshold. 
+        #       Adjust it if pupil detection is working badly
+        lut = [255 if v > 220 else 0 for v in range(256)]
+        threshold = gray_image.point(lut, "1")
+        if DEBUG:
+            threshold.show()
         # Find all blobs 
         std.vector<std.vector<cv2.cv.Point>> contours
         cv2.findContours(gray.clone(), contours, cv2.CV_RETR_EXTERNAL,
