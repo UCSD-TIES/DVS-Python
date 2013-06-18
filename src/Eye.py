@@ -34,7 +34,7 @@ class Eye:
             print "We're here in eye's __init__"
             print "And our region is: " + str(region)
             print "This photo is a " + str(type(photo))
-            photo.show()
+            #photo.show()
         # Initalize whole eye attributes to the values passed in
         self.eyePhoto = photo
         self.eyeRegion = region
@@ -74,20 +74,50 @@ class Eye:
         Return:
             bool - True if there were no issues. False for any error
         """
-        # Load the source image into a cv mat
-        '''
+        # Load the source image and convert to cv mat
         eye = cv.GetMat(self.eyePhoto)
+        if DEBUG:
+            print "EYE: " + str(eye)
+        # Get width and height for the inversion
+        rows = eye.rows
+        cols = eye.cols
         if not eye:
             return False
+        # Convert to a numpy array
         eyeArr = np.asarray(eye)
+
+        # Invert the photo
+        for i in range(0,rows):
+            for j in range(0,cols):
+                for k in range(0,3):
+                    eyeArr[i][j][k] = 255 - eyeArr[i][j][k]
+
+        # Convert to grayscale
+        imgray = cv2.cvtColor(eyeArr,cv2.COLOR_BGR2GRAY)
         if DEBUG:
-            print "Pretty much every line in this algorithm is a syntax error"
-            print "We have the eye as an array: " + str(eyeArr)
+            cv.ShowImage("grayscale", cv.fromarray(imgray))
+            cv.WaitKey(0)
+            cv.DestroyWindow("grayscale")
+
+        # Convert to binary image (pure black and) by thresholding it
+        # NOTE: The 220 on the line below is a hardcoded threshold. 
+        #       You may need to djust it if pupil detection is working badly
+        ret,thresh = cv2.threshold(imgray,220,255,0)
+        if DEBUG:
+            cv.ShowImage("Binary", cv.fromarray(thresh))
+            cv.WaitKey(0)
+            cv.DestroyWindow("Binary")
+
+        # Find countours in the image
+        contours, hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
+        # Draw the contours in blue
+        cv2.drawContours(imgray,contours,-1,(0,255,0),-1)
+        if DEBUG:
+            cv.ShowImage("Contours", cv.fromarray(imgray))
+            cv.WaitKey(0)
+            cv.DestroyWindow("Contours")
+
         '''
-        if DEBUG:
-            print "Finding the pupil begins..."
-            print "Inverting the Image"
-            print type(self.eyePhoto)
         # Invert the Image
         inverted_image = PIL.ImageOps.invert(self.eyePhoto)
         if DEBUG:
@@ -105,9 +135,10 @@ class Eye:
         if DEBUG:
             threshold.show()
         # Find all blobs 
-        std.vector<std.vector<cv2.cv.Point>> contours
-        cv2.findContours(gray.clone(), contours, cv2.CV_RETR_EXTERNAL,
-                         cv2.CV_CHAIN_APPROX_NONE)
+        # Convert the PIL image to a numpy array
+        thresh = np.array(threshold)
+        contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        # TODO
         # Fill in holes in the blobs
         cv2.drawContours(gray, contours, -1, CV+RGB(255,255,255), -1)
         # Loop through the blobs to find one of the right shape/size
@@ -122,6 +153,7 @@ class Eye:
         # Do the various setting that needs to be done for the class structure
         region = None
         self.setPupil(region)
+        '''
         return "findPupil successfully called"
 
     def findSclera(self):
