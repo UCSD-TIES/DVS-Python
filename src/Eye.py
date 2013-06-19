@@ -8,8 +8,15 @@ import cv2
 import numpy as np
 from PIL import Image
 import PIL.ImageOps
+import math
 
 DEBUG = True
+
+# Descriptive Variables for tweakable constants
+LOWER_RED_RANGE = np.array((100,0,0))
+UPPER_RED_RANGE = np.array((255,255,255))
+ERODE_ITERATIONS = 1
+DILATE_ITERATIONS = 1
 
 class Eye:
     """ This class has attributes :
@@ -78,27 +85,13 @@ class Eye:
         eye = cv.GetMat(self.eyePhoto)
         if DEBUG:
             print "EYE: " + str(eye)
-        # Get width and height for the inversion
-        #rows = eye.rows
-        #cols = eye.cols
         if not eye:
             return False
         # Convert to a numpy array
         eyeArr = np.asarray(eye)
 
-
-        # Convert to grayscale
-        '''
-        imgray = cv2.cvtColor(eyeArr,cv2.COLOR_BGR2GRAY)
-        if DEBUG:
-            cv.ShowImage("grayscale", cv.fromarray(imgray))
-            cv.WaitKey(0)
-            cv.DestroyWindow("grayscale")
-        '''
-
         # Find the red in the photo
-        thresh = cv2.inRange(eyeArr,np.array((100,0,0)),np.array((255,255,255)))
-        #ret,thresh = cv2.threshold(imgray,220,255,0)
+        thresh = cv2.inRange(eyeArr,LOWER_RED_RANGE,UPPER_RED_RANGE)
         if DEBUG:
             cv.ShowImage("Binary", cv.fromarray(thresh))
             cv.WaitKey(0)
@@ -116,14 +109,63 @@ class Eye:
             cv.WaitKey(0)
             cv.DestroyWindow("Inverted Thresh")
 
-        # Find countours in the image
-        contours, hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-        # Draw the contours in blue
-        cv2.drawContours(thresh,contours,-1,(255,255,255),-1)
+
+        # Erode and dilate the image to get rid of noise
+        erode = cv2.erode(thresh,None,iterations = ERODE_ITERATIONS)
         if DEBUG:
-            cv.ShowImage("Contours", cv.fromarray(thresh))
+            cv.ShowImage("Erode", cv.fromarray(erode))
+            cv.WaitKey(0)
+            cv.DestroyWindow("Erode")
+        dilate = cv2.dilate(erode,None,iterations = DILATE_ITERATIONS)
+        if DEBUG:
+            cv.ShowImage("Dilate", cv.fromarray(dilate))
+            cv.WaitKey(0)
+            cv.DestroyWindow("Dilate")
+
+        # Find countours in the image
+        contours, hierarchy = cv2.findContours(dilate,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
+        
+        # Draw the contours in white
+        cv2.drawContours(dilate,contours,-1,(255,255,255),-1)
+        if DEBUG:
+            cv.ShowImage("Contours", cv.fromarray(dilate))
             cv.WaitKey(0)
             cv.DestroyWindow("Contours")
+
+        '''
+        if DEBUG:
+            print "--------------Pupil Extraction from blobs detected--------------"
+
+        # Loop through the blobs to find one of the right shape/size
+        for i in range(0, len(contours)):
+            area = cv2.contourArea(contours[i])
+            rect = cv2.boundingRect(contours[i])
+            x = rect[0]
+            y = rect[1]
+            width = rect[2]
+            height = rect[3]
+            radius = width/2
+            if DEBUG:
+                print "Rect = " + str(rect)
+                print "Area = " + str(area)
+                print "First abs = " + str(abs(1-(width / height)))
+                print "pi * r squared = " + str(math.pi * math.pow(radius,2))
+            if area >= 30 and \
+            abs(1-(width / height)) < .2 and \
+            abs(1 - (area/((math.pi) * math.pow(radius, 2)))) <= .2:
+                if DEBUG:
+                    print "Found a circle here guys!!!!!!!!!!!!!"
+                cv2.cv.circle(eye, cv.point(x + radius, y + radius, CV_RGB(255,0,0), 2))
+
+        if DEBUG:
+            cv.ShowImage("Pupil Circled", eye)
+            cv.WaitKey(0)
+            cv.DestroyWindow("Pupil Circled")
+        '''
+
+        # Do the various setting that needs to be done for the class structure
+        region = None
+        self.setPupil(region)
 
         '''
         # Invert the Image
