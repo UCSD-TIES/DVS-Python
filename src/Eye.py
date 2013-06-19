@@ -111,9 +111,9 @@ class Eye:
         # Find countours in the image
         contours, hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
         # Draw the contours in blue
-        cv2.drawContours(imgray,contours,-1,(0,255,0),-1)
+        cv2.drawContours(thresh,contours,-1,(255,255,255),-1)
         if DEBUG:
-            cv.ShowImage("Contours", cv.fromarray(imgray))
+            cv.ShowImage("Contours", cv.fromarray(thresh))
             cv.WaitKey(0)
             cv.DestroyWindow("Contours")
 
