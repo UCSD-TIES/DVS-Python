@@ -77,7 +77,7 @@ def drawOnEyes(patient):
 
 # The following code replicates calls from the UI layer
 patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/redface3.PNG",
-           "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/ObamaRotated.jpg")
+           "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/redface9.PNG")
 #TODO: Encapsulate these calls.
 # Take the horizontal image and draw bounding eye boxes
 horizontalPhoto = patient.getHorizontal()
@@ -109,7 +109,8 @@ cv.ShowImage("Vertical with eyes",verticalPhoto)
 cv.WaitKey(0)
 cv.DestroyWindow("Vertical with eyes")
 
-#Display the eyes only of the
+#Display the eyes only of the horizontal photo
+'''
 hLeftEyePhoto = patient.getEyePhoto(True,True)
 hRightEyePhoto = patient.getEyePhoto(True,False)
 cv.ShowImage("Horizontal's Left Eye",hLeftEyePhoto)
@@ -119,5 +120,6 @@ cv.DestroyWindow("Horizontal's Left Eye")
 cv.ShowImage("Horizontal's Right Eye",hRightEyePhoto)
 cv.WaitKey(0)
 cv.DestroyWindow("Horizontal's Right Eye")
+'''
 
 

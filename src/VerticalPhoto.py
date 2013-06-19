@@ -24,7 +24,7 @@ class VerticalPhoto(FacePhoto,object):
         # Rotate photo
         # NOTE: Not sure if this will rotate the photo to be right side
         #       up or upside
-        photo = self.rotateImage(photo,90)
+        photo = self.rotateImage(photo,270)
         # call FacePhoto(super)'s  init
         super(VerticalPhoto,self).__init__(photo,path)
 
