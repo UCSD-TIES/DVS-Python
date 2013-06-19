@@ -79,34 +79,42 @@ class Eye:
         if DEBUG:
             print "EYE: " + str(eye)
         # Get width and height for the inversion
-        rows = eye.rows
-        cols = eye.cols
+        #rows = eye.rows
+        #cols = eye.cols
         if not eye:
             return False
         # Convert to a numpy array
         eyeArr = np.asarray(eye)
 
-        # Invert the photo
-        for i in range(0,rows):
-            for j in range(0,cols):
-                for k in range(0,3):
-                    eyeArr[i][j][k] = 255 - eyeArr[i][j][k]
 
         # Convert to grayscale
+        '''
         imgray = cv2.cvtColor(eyeArr,cv2.COLOR_BGR2GRAY)
         if DEBUG:
             cv.ShowImage("grayscale", cv.fromarray(imgray))
             cv.WaitKey(0)
             cv.DestroyWindow("grayscale")
+        '''
 
-        # Convert to binary image (pure black and) by thresholding it
-        # NOTE: The 220 on the line below is a hardcoded threshold. 
-        #       You may need to djust it if pupil detection is working badly
-        ret,thresh = cv2.threshold(imgray,220,255,0)
+        # Find the red in the photo
+        thresh = cv2.inRange(eyeArr,np.array((100,0,0)),np.array((255,255,255)))
+        #ret,thresh = cv2.threshold(imgray,220,255,0)
         if DEBUG:
             cv.ShowImage("Binary", cv.fromarray(thresh))
             cv.WaitKey(0)
             cv.DestroyWindow("Binary")
+
+
+        # Invert the threshholded photo
+        rows = len(thresh)
+        for i in range(0,rows):
+            for j in range(0,len(thresh[i])):
+                thresh[i][j] = 255 - thresh[i][j]
+
+        if DEBUG:
+            cv.ShowImage("Inverted Thresh", cv.fromarray(thresh))
+            cv.WaitKey(0)
+            cv.DestroyWindow("Inverted Thresh")
 
         # Find countours in the image
         contours, hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)

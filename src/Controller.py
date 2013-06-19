@@ -76,7 +76,7 @@ def drawOnEyes(patient):
 ######################Testing ######################
 
 # The following code replicates calls from the UI layer
-patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/404.jpg",
+patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/redface3.PNG",
            "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/ObamaRotated.jpg")
 #TODO: Encapsulate these calls.
 # Take the horizontal image and draw bounding eye boxes
