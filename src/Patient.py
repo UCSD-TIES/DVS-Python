@@ -20,6 +20,35 @@ class Patient:
 
     def getVertical(self):
         return self.vertical.facePhoto
+
+    def getPupilRegion(self,horizontal, left):
+        """ Returns the pupil region of the eye specified.
+
+        Args:
+            bool horizontal - if true, work with the horizontal photo
+                                otherwise vertical
+            bool left - if true get left eye else right
+
+        Return:
+            tuple - a tuple representing the circle found by pupil detection,
+                    of the form (CenterX, CenterY, radius)
+        """
+        if horizontal:
+            if left and self.horizontal.left != None and self.horizontal.left.eyePupil != None:
+                return self.horizontal.left.eyePupil.pupil
+            elif self.horizontal.right != None and self.horizontal.right.eyePupil != None:
+                return self.horizontal.right.eyePupil.pupil
+            else:
+                # Default return
+                return None
+        else:
+            if left and self.vertical.left != None and self.vertical.left.eyePupil != None:
+                return self.vertical.left.eyePupil.pupil
+            elif self.vertical.right != None and self.vertical.right.eyePupil != None:
+                return self.vertical.right.eyePupil.pupil
+            else:
+                #Default Return
+                return None
         
 
     def getEyeRegion(self,horizontal, left):
@@ -38,11 +67,17 @@ class Patient:
                 return self.horizontal.left.eyeRegion
             elif self.horizontal.right != None:
                 return self.horizontal.right.eyeRegion
+            else:
+                #Default Return
+                return None
         else:
             if left and self.vertical.left != None:
                 return self.vertical.left.eyeRegion
             elif self.vertical.right != None:
                 return self.vertical.right.eyeRegion
+            else:
+                #Default Return
+                return None
 
     def getEyePhoto(self,horizontal,left):
         """ Returns the photo of the eye specified.
@@ -60,11 +95,17 @@ class Patient:
                 return self.horizontal.left.eyePhoto
             elif self.horizontal.right != None:
                 return self.horizontal.right.eyePhoto
+            else:
+                #Default Return
+                return None
         else:
             if left and self.vertical.left != None:
                 return self.vertical.left.eyePhoto
             elif self.vertical.right != None:
                 return self.vertical.right.eyePhoto
+            else:
+                #Default Return
+                return None
 
     def analyzeEyes(self):
         """ Analyze all eye diseases and return the results """ 

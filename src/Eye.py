@@ -214,7 +214,7 @@ class Eye:
                 if DEBUG:
                     print "Final Circle = " + str(finalCircle)
                     print "We're drawin some circles now"
-                draw_circles(finalCircle,eye)
+                    draw_circles(finalCircle,eye)
 
         if DEBUG:
             cv.ShowImage("Eye with Circles",eye)

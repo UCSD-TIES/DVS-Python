@@ -76,6 +76,7 @@ def drawOnEyes(patient):
 ######################Testing ######################
 
 # The following code replicates calls from the UI layer
+print "Making patient object..."
 patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/redface3.PNG",
            "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/redface9.PNG")
 
@@ -84,11 +85,25 @@ horizontalPhoto = patient.getHorizontal()
 hLeft = patient.getEyeRegion(True,True)
 hRight = patient.getEyeRegion(True,False)
 # Draw Left and right eyes
+print "Drawing bounding boxes for the horizontal photo..."
 if hLeft != None and hRight != None:
     cv.Rectangle(horizontalPhoto, (hLeft[0],hLeft[1]),(hLeft[2],hLeft[3]),
              cv.RGB(255,0,0,), 1, 8, 0)
     cv.Rectangle(horizontalPhoto, (hRight[0],hRight[1]),(hRight[2],hRight[3]),
              cv.RGB(255,0,0,), 1, 8, 0)
+# Draw the Left and Right pupils
+hLeftPupil = patient.getPupilRegion(True,True)
+hRightPupil = patient.getPupilRegion(True,False)
+if hLeftPupil != None:
+    x = int(hLeft[0] + hLeftPupil[0])
+    y = int(hLeft[1] + hLeftPupil[1])
+    cv.Circle(horizontalPhoto, (x, y), hLeftPupil[2], (0, 0, 255), 3, 8, 0)
+if hRightPupil != None:
+    x = int(hRight[0] + hRightPupil[0])
+    y = int(hRight[1] + hRightPupil[1])
+    cv.Circle(horizontalPhoto, (x, y), hRightPupil[2], (0, 0, 255), 3, 8, 0)
+
+
 # Display the image
 cv.ShowImage("Horizontal with eyes",horizontalPhoto)
 cv.WaitKey(0)
@@ -98,12 +113,26 @@ cv.DestroyWindow("Horizontal with eyes")
 verticalPhoto = patient.getVertical()
 vLeft = patient.getEyeRegion(False,True)
 vRight = patient.getEyeRegion(False,False)
+print "Drawing bounding boxes for the vertical photo..."
 # Draw Left and right eyes
 if vLeft != None and vRight != None:
     cv.Rectangle(verticalPhoto, (vLeft[0],vLeft[1]),(vLeft[2],vLeft[3]),
              cv.RGB(255,0,0,), 1, 8, 0)
     cv.Rectangle(verticalPhoto, (vRight[0],vRight[1]),(vRight[2],vRight[3]),
              cv.RGB(255,0,0,), 1, 8, 0)
+
+# Draw the left and right Pupils
+vLeftPupil = patient.getPupilRegion(False,True)
+vRightPupil = patient.getPupilRegion(False,False)
+if vLeftPupil != None:
+    x = int(vLeft[0] + vLeftPupil[0])
+    y = int(vLeft[1] + vLeftPupil[1])
+    cv.Circle(horizontalPhoto, (x, y), vLeftPupil[2], (0, 0, 255), 3, 8, 0)
+if vRightPupil != None:
+    x = int(vRight[0] + vRightPupil[0])
+    y = int(vRight[1] + vRightPupil[1])
+    cv.Circle(horizontalPhoto, (x, y), vRightPupil[2], (0, 0, 255), 3, 8, 0)
+
 # Display the image
 cv.ShowImage("Vertical with eyes",verticalPhoto)
 cv.WaitKey(0)
