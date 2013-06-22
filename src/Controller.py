@@ -35,7 +35,7 @@ def detectEyes(horizontalPath, verticalPath):
         print "Showing patient's horizontal image..."
         cv.ShowImage("Horizontal",thisPatient.getHorizontal())
         cv.WaitKey(0)
-        cv.DestroyWindow("Horizonatl")
+        cv.DestroyWindow("Horizontal")
         print "Showing patient's vertical image..."
         cv.ShowImage("Vertical",thisPatient.getVertical())
         cv.WaitKey(0)
@@ -45,7 +45,7 @@ def detectEyes(horizontalPath, verticalPath):
         cv.WaitKey(0)
         cv.DestroyWindow("Horizontal Left Eye")
         print "Showing photo of the patient's horizonal right eye..."
-        cv.ShowImage("Vertical Right Eye",thisPatient.horizontal.right.eyePhoto)
+        cv.ShowImage("Horizontal Right Eye",thisPatient.horizontal.right.eyePhoto)
         cv.WaitKey(0)
         cv.DestroyWindow("Horizontal Right Eye")
         
@@ -78,7 +78,7 @@ def drawOnEyes(patient):
 # The following code replicates calls from the UI layer
 patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/redface3.PNG",
            "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/redface9.PNG")
-#TODO: Encapsulate these calls.
+
 # Take the horizontal image and draw bounding eye boxes
 horizontalPhoto = patient.getHorizontal()
 hLeft = patient.getEyeRegion(True,True)
@@ -110,16 +110,18 @@ cv.WaitKey(0)
 cv.DestroyWindow("Vertical with eyes")
 
 #Display the eyes only of the horizontal photo
-'''
-hLeftEyePhoto = patient.getEyePhoto(True,True)
-hRightEyePhoto = patient.getEyePhoto(True,False)
-cv.ShowImage("Horizontal's Left Eye",hLeftEyePhoto)
-cv.WaitKey(0)
-cv.DestroyWindow("Horizontal's Left Eye")
+if DEBUG:
+    hLeftEyePhoto = patient.getEyePhoto(True,True)
+    hRightEyePhoto = patient.getEyePhoto(True,False)
+    cv.ShowImage("Horizontal's Left Eye",hLeftEyePhoto)
+    cv.WaitKey(0)
+    cv.DestroyWindow("Horizontal's Left Eye")
 
-cv.ShowImage("Horizontal's Right Eye",hRightEyePhoto)
-cv.WaitKey(0)
-cv.DestroyWindow("Horizontal's Right Eye")
-'''
+    cv.ShowImage("Horizontal's Right Eye",hRightEyePhoto)
+    cv.WaitKey(0)
+    cv.DestroyWindow("Horizontal's Right Eye")
+    
+    print "Horizontal Left Pupil: " + str( patient.horizontal.left.eyePupil.pupil)
+    print "Horizontal Right Pupil: " + str( patient.horizontal.right.eyePupil.pupil)
 
 

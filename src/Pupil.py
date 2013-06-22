@@ -17,6 +17,8 @@ class Pupil:
     self.pupil = pupilRegion
     # Initialize the other attributes to None so that they exist
     self.center = None
+    if pupilRegion != None:
+      self.center = (pupilRegion[0], pupilRegion[1])
     crescent = None
     # Set the attributes initialized to None by finding them
     self.findCenter()

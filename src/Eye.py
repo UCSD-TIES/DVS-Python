@@ -11,7 +11,7 @@ import PIL.ImageOps
 import math
 from sys import maxint
 
-DEBUG = True
+DEBUG = False
 
 # Descriptive Variables for tweakable constants
 LOWER_RED_RANGE = np.array((100,0,0))
@@ -208,6 +208,7 @@ class Eye:
                     minDist = dist
                     minCircleIndex = i
 
+            finalCircle = None
             if minCircleIndex != -1:
                 finalCircle = np.array([[storage[minCircleIndex, 0, 0], storage[minCircleIndex, 0, 1],storage[minCircleIndex, 0, 2]]])
                 if DEBUG:
@@ -220,41 +221,17 @@ class Eye:
             cv.WaitKey(0)
             cv.DestroyWindow("Eye with Circles")
 
-        '''
-        if DEBUG:
-            print "--------------Pupil Extraction from blobs detected--------------"
-
-        # Loop through the blobs to find one of the right shape/size
-        for i in range(0, len(contours)):
-            area = cv2.contourArea(contours[i])
-            rect = cv2.boundingRect(contours[i])
-            x = rect[0]
-            y = rect[1]
-            width = rect[2]
-            height = rect[3]
-            radius = width/2
-            if DEBUG:
-                print "Rect = " + str(rect)
-                print "Area = " + str(area)
-                print "First abs = " + str(abs(1-(width / height)))
-                print "pi * r squared = " + str(math.pi * math.pow(radius,2))
-            if area >= 30 and \
-            abs(1-(width / height)) < .2 and \
-            abs(1 - (area/((math.pi) * math.pow(radius, 2)))) <= .2:
-                if DEBUG:
-                    print "Found a circle here guys!!!!!!!!!!!!!"
-                cv2.cv.circle(eye, cv.point(x + radius, y + radius, CV_RGB(255,0,0), 2))
-
-        if DEBUG:
-            cv.ShowImage("Pupil Circled", eye)
-            cv.WaitKey(0)
-            cv.DestroyWindow("Pupil Circled")
-        '''
-
         # Do the various setting that needs to be done for the class structure
-        region = None
-        self.setPupil(region)
-        return "findPupil successfully called"
+        if finalCircle != None:
+            # The pupil region is stored as a tuple : (centerXCoor, centerYCoor, radius)
+            region = (finalCircle[0,0], finalCircle[0,1], finalCircle[0,2])
+            self.setPupil(region)
+            return True
+        else:
+            region = None
+            self.setPupil(region)
+            # A pupil was not found
+            return False
 
     def findSclera(self):
         """ Detects a sclera in a photo of an eye and sets the sclera region
