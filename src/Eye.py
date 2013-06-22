@@ -18,6 +18,18 @@ UPPER_RED_RANGE = np.array((255,255,255))
 ERODE_ITERATIONS = 1
 DILATE_ITERATIONS = 1
 
+############## Utility  Methods ###################
+def draw_circles(storage, output):
+    for i in xrange(len(storage) - 1):
+        radius = storage[i, 0, 2]
+        center = (storage[i, 0, 0], storage[i, 0, 1])
+
+        print (radius, center)
+
+        cv.Circle(output, center, radius, (0, 0, 255), 3, 8, 0)
+
+############## Eye Class ###################
+
 class Eye:
     """ This class has attributes :
       PIL  eyePhoto - a cropped photo of the eye
@@ -124,13 +136,43 @@ class Eye:
 
         # Find countours in the image
         contours, hierarchy = cv2.findContours(dilate,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-        
+
         # Draw the contours in white
         cv2.drawContours(dilate,contours,-1,(255,255,255),-1)
         if DEBUG:
             cv.ShowImage("Contours", cv.fromarray(dilate))
             cv.WaitKey(0)
             cv.DestroyWindow("Contours")
+
+        smooth = cv.fromarray(dilate)
+        cv.Smooth(cv.fromarray(dilate),smooth,cv.CV_GAUSSIAN,9,9)
+        if DEBUG:
+            cv.ShowImage("Smooth", smooth)
+            cv.WaitKey(0)
+            cv.DestroyWindow("Smooth")
+
+        cv.Canny(smooth, smooth, 32, 2)
+        if DEBUG:
+            cv.ShowImage("Canny", smooth)
+            cv.WaitKey(0)
+            cv.DestroyWindow("Canny")
+
+        storage = cv.CreateMat((self.eyePhoto).width, 1, cv.CV_32FC3)
+        cv.HoughCircles(smooth, storage, cv.CV_HOUGH_GRADIENT, 1, 32.0, 10, 1, 10, 550)
+
+        if DEBUG:
+            print "STORAGE: " + str(storage)
+            print np.asarray(storage)
+            
+        if storage.rows != 0 and storage.cols != 0:
+            if DEBUG:
+                print "We're drawin some circles now"
+            draw_circles(np.asarray(storage),eye)
+
+        if DEBUG:
+            cv.ShowImage("Eye with Circles",eye)
+            cv.WaitKey(0)
+            cv.DestroyWindow("Eye with Circles")
 
         '''
         if DEBUG:
@@ -166,44 +208,6 @@ class Eye:
         # Do the various setting that needs to be done for the class structure
         region = None
         self.setPupil(region)
-
-        '''
-        # Invert the Image
-        inverted_image = PIL.ImageOps.invert(self.eyePhoto)
-        if DEBUG:
-            inverted_image.show()
-        # TODO
-        # Convert to grayscale
-        gray_image = PIL.ImageOps.grayscale(inverted_image)
-        if DEBUG:
-            gray_image.show()
-        # Convert to binary image (pure black and) by thresholding it
-        # NOTE: The 220 on the line below is a hardcoded threshold. 
-        #       Adjust it if pupil detection is working badly
-        lut = [255 if v > 220 else 0 for v in range(256)]
-        threshold = gray_image.point(lut, "1")
-        if DEBUG:
-            threshold.show()
-        # Find all blobs 
-        # Convert the PIL image to a numpy array
-        thresh = np.array(threshold)
-        contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-        # TODO
-        # Fill in holes in the blobs
-        cv2.drawContours(gray, contours, -1, CV+RGB(255,255,255), -1)
-        # Loop through the blobs to find one of the right shape/size
-        for i in range(0, contours.size()):
-            area = cv.contourArea(contours[i])
-            rect = cv.boundingRect(contours[i])
-            radius = rect.width/2
-            if area >= 30 and \
-            std.abs(1-(rect.width / rect.height)) < .2 and \
-            std.abs(1 - (area/(CV_PI * std.pow(radius, 2)))) <= .2:
-                cv2.cv.circle(src, cv.point(rect.x + radius, rect.y + radius, CV_RGB(255,0,0), 2))
-        # Do the various setting that needs to be done for the class structure
-        region = None
-        self.setPupil(region)
-        '''
         return "findPupil successfully called"
 
     def findSclera(self):
@@ -292,4 +296,7 @@ class Eye:
         self.bottom = newBottom
         self.inner = newInner
         self.outer = newOuter
+
+
+
 
