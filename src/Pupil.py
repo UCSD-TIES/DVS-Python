@@ -21,26 +21,8 @@ class Pupil:
       self.center = (pupilRegion[0], pupilRegion[1])
     crescent = None
     # Set the attributes initialized to None by finding them
-    self.findCenter()
     self.findCrescent()
 
-
-  def findCenter(self):
-    """ Calculates the center of a pupil region and sets the centerpoint
-
-    Calculates the center of a pupil from it's region and then sets the point
-    center. Returns false if any errors are encountered
-
-    Args:
-      None
-
-    Return:
-      bool - True if there were no issues. False for any error
-    """
-    # calculate the centerpoint
-    # make a dummy var so that centerpoint exists
-    centerpoint = (0,0)
-    self.setCenter(centerpoint)
 
   def findCrescent(self):
     """ Detects a crescent within a pupil region.
