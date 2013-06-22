@@ -9,23 +9,40 @@ import numpy as np
 from PIL import Image
 import PIL.ImageOps
 import math
+from sys import maxint
 
 DEBUG = True
 
 # Descriptive Variables for tweakable constants
 LOWER_RED_RANGE = np.array((100,0,0))
 UPPER_RED_RANGE = np.array((255,255,255))
+
 ERODE_ITERATIONS = 1
 DILATE_ITERATIONS = 1
 
+
+CIRCLE_RESOLUTION_RATIO = 1
+# The minimum distance between circle centerpoints
+CIRCLE_MIN_DISTANCE = 32
+# I'm not exactly sure what the THRESHOLD ones do. See link for more info:
+# http://www.adaptive-vision.com/en/technical_data/documentation/3.0/filters/FeatureDetection/cvHoughCircles.html
+CIRCLE_THRESHOLD_1 = 10
+# The accumulator threshold. The higher this is the less circles you get.
+CIRCLE_THRESHOLD_2 = 2
+CIRCLE_MIN_RADIUS = 10
+CIRCLE_MAX_RADIUS = 500
+
+
 ############## Utility  Methods ###################
 def draw_circles(storage, output):
-    for i in xrange(len(storage) - 1):
-        radius = storage[i, 0, 2]
-        center = (storage[i, 0, 0], storage[i, 0, 1])
-
-        print (radius, center)
-
+    if DEBUG:
+        print "We are in draw_circles"
+    for i in range(0,len(storage)):
+        radius = storage[i, 2]
+        center = (storage[i, 0], storage[i, 1])
+        if DEBUG:
+            print "Radius: " + str(radius)
+            print "Center: " + str(center)
         cv.Circle(output, center, radius, (0, 0, 255), 3, 8, 0)
 
 ############## Eye Class ###################
@@ -158,16 +175,45 @@ class Eye:
             cv.DestroyWindow("Canny")
 
         storage = cv.CreateMat((self.eyePhoto).width, 1, cv.CV_32FC3)
-        cv.HoughCircles(smooth, storage, cv.CV_HOUGH_GRADIENT, 1, 32.0, 10, 1, 10, 550)
+        CIRCLE_MAX_RADIUS = self.eyePhoto.width
+        cv.HoughCircles(smooth, storage, cv.CV_HOUGH_GRADIENT, CIRCLE_RESOLUTION_RATIO, CIRCLE_MIN_DISTANCE, 
+            CIRCLE_THRESHOLD_1, CIRCLE_THRESHOLD_2, CIRCLE_MIN_RADIUS, CIRCLE_MAX_RADIUS)
 
         if DEBUG:
             print "STORAGE: " + str(storage)
             print np.asarray(storage)
             
         if storage.rows != 0 and storage.cols != 0:
+            # NOTE: Each circle is stored as centerX, centerY, radius
+            storage = np.asarray(storage)
+
+            # Find the most centered circle
+            centerX = self.eyePhoto.width / 2
+            centerY = self.eyePhoto.height / 2
             if DEBUG:
-                print "We're drawin some circles now"
-            draw_circles(np.asarray(storage),eye)
+                print "CenterX = " + str(centerX)
+                print "CenterY = " + str(centerY)
+            minDist = maxint
+            minCircleIndex = -1
+            for i in range(len(storage) - 1):
+                #radius = storage[i, 0, 2]
+                if DEBUG:
+                    print "We're on circle elimination with i = "  + str(i)
+                    print "MinDist = " + str(minDist)
+                    print "minCircleIndex = " + str(minCircleIndex)
+                x = storage[i, 0, 0]
+                y = storage[i, 0, 1]
+                dist = math.hypot(centerX-x, centerY-y)
+                if dist < minDist:
+                    minDist = dist
+                    minCircleIndex = i
+
+            if minCircleIndex != -1:
+                finalCircle = np.array([[storage[minCircleIndex, 0, 0], storage[minCircleIndex, 0, 1],storage[minCircleIndex, 0, 2]]])
+                if DEBUG:
+                    print "Final Circle = " + str(finalCircle)
+                    print "We're drawin some circles now"
+                draw_circles(finalCircle,eye)
 
         if DEBUG:
             cv.ShowImage("Eye with Circles",eye)
