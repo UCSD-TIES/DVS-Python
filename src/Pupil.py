@@ -4,8 +4,9 @@ own crescent region
 
 class Pupil:
   """ This class has attributes:
-      region pupil - the region of the pupil
-      point center - the center point of the pupil region
+      tuple pupil - a tuple representing the circluar region of the pupil. The tuple
+                    is formatted as such: (centerX, centerY, radius)
+      tuple center - the center point of the pupil region formatted as (x,y)
       region crescent - the region of the pupil's crescent
   """
 
@@ -44,11 +45,11 @@ class Pupil:
 #################### Getters ##################################
 
   def getPupilRegion(self):
-    """ Returns a region representing the pupil """
+    """ Returns a tuple representing the pupil """
     return self.pupil
 
   def getCenter(self):
-    """ Returns a point representing the center of the pupil """
+    """ Returns a tuple representing the center of the pupil """
     return self.center
 
   def getCrescent(self):
@@ -58,11 +59,11 @@ class Pupil:
 #################### Setters ##################################
 
   def setPupilRegion(self,newRegion):
-    """ Sets the pupil's region to the region passed in as argument """
+    """ Sets the pupil's region to the tuple passed in as argument """
     self.pupil = newRegion
 
   def setCenter(self,newCenter):
-    """ Sets the pupil's center to the point passed in as arguments """
+    """ Sets the pupil's center to the tuple passed in as arguments """
     self.center = newCenter
 
   def setCrescent(self,newCrescent):
