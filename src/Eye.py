@@ -263,6 +263,14 @@ class Eye:
         Return:
             bool - True if there were no issues. False for any error.
         """
+        # Get eye photo into a mat or array format
+        # Threshold photo to leave only white highlighted
+        # Draw contours to fill in the holes in the blobs
+        # Eliminate blobs found that are not sclera
+            # Blobs that are too small
+            # Blobs that are not centered enough
+        # Store the region of the sclera found
+
         # find sclera code goes here
         # Dummy code to make the var region exist
         region = None
@@ -281,6 +289,17 @@ class Eye:
         Return:
             bool - True if there were no issues. False for any error.
         """
+        # If the sclera regions have been found
+            # For the sclera region(s):
+                # Top = find the topmost (lowest y value point)
+                # Bottom = find the point with highest y value
+                # if this is the left eye
+                    # inner = point with highest x value
+                    # outer = point with lowest x value
+                # else its a right eye
+                    # inner = point with lowest x value
+                    # outer = point with highest x value
+                    
         # find top, bottom, inner, and outer logic goes here
         # Dummy code to make the vars exist
         topPoint = 0
