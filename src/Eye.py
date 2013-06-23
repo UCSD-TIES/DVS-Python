@@ -13,14 +13,17 @@ from sys import maxint
 
 DEBUG = False
 
-# Descriptive Variables for tweakable constants
+########## Descriptive Variables for tweakable constants ###############
+
+# Threshold parameters
 LOWER_RED_RANGE = np.array((100,0,0))
 UPPER_RED_RANGE = np.array((255,255,255))
 
+# Erode and dilate parameters
 ERODE_ITERATIONS = 1
 DILATE_ITERATIONS = 1
 
-
+# Circle detection parameters
 CIRCLE_RESOLUTION_RATIO = 1
 # The minimum distance between circle centerpoints
 CIRCLE_MIN_DISTANCE = 32
@@ -32,6 +35,19 @@ CIRCLE_THRESHOLD_2 = 2
 CIRCLE_MIN_RADIUS = 10
 CIRCLE_MAX_RADIUS = 500
 
+# Circle drawing parameters
+CIRCLE_COLOR = (0, 0, 255)
+THICKNESS = 3
+LINE_TYPE = 8
+SHIFT = 0
+
+# Smooth parameters
+APERTURE_WIDTH = 9
+APERTURE_HEIGHT = 9
+
+# Canny parameters
+CANNY_THRESHOLD_1 = 32
+CANNY_THRESHOLD_2 = 2
 
 ############## Utility  Methods ###################
 def draw_circles(storage, output):
@@ -43,7 +59,8 @@ def draw_circles(storage, output):
         if DEBUG:
             print "Radius: " + str(radius)
             print "Center: " + str(center)
-        cv.Circle(output, center, radius, (0, 0, 255), 3, 8, 0)
+        cv.Circle(output, center, radius, CIRCLE_COLOR, 
+            THICKNESS, LINE_TYPE, SHIFT)
 
 ############## Eye Class ###################
 
@@ -162,13 +179,14 @@ class Eye:
             cv.DestroyWindow("Contours")
 
         smooth = cv.fromarray(dilate)
-        cv.Smooth(cv.fromarray(dilate),smooth,cv.CV_GAUSSIAN,9,9)
+        cv.Smooth(cv.fromarray(dilate),smooth,
+            cv.CV_GAUSSIAN,APERTURE_WIDTH,APERTURE_HEIGHT)
         if DEBUG:
             cv.ShowImage("Smooth", smooth)
             cv.WaitKey(0)
             cv.DestroyWindow("Smooth")
 
-        cv.Canny(smooth, smooth, 32, 2)
+        cv.Canny(smooth, smooth, CANNY_THRESHOLD_1, CANNY_THRESHOLD_2)
         if DEBUG:
             cv.ShowImage("Canny", smooth)
             cv.WaitKey(0)
@@ -203,7 +221,7 @@ class Eye:
                     print "minCircleIndex = " + str(minCircleIndex)
                 x = storage[i, 0, 0]
                 y = storage[i, 0, 1]
-                dist = math.hypot(centerX-x, centerY-y)
+                dist = math.hypot(centerX - x, centerY - y)
                 if dist < minDist:
                     minDist = dist
                     minCircleIndex = i

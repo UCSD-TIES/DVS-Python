@@ -11,6 +11,11 @@ import cv2.cv as cv
 
 DEBUG = False
 
+CIRCLE_COLOR = (0, 255, 0)
+THICKNESS = 1
+LINE_TYPE = 8
+SHIFT = 0
+
 def detectEyes(horizontalPath, verticalPath):
     """ Detects the eyes in both images and passes back a tuple of coordinates
 
@@ -97,11 +102,13 @@ hRightPupil = patient.getPupilRegion(True,False)
 if hLeftPupil != None:
     x = int(hLeft[0] + hLeftPupil[0])
     y = int(hLeft[1] + hLeftPupil[1])
-    cv.Circle(horizontalPhoto, (x, y), hLeftPupil[2], (0, 0, 255), 3, 8, 0)
+    cv.Circle(horizontalPhoto, (x, y), hLeftPupil[2], 
+        CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
 if hRightPupil != None:
     x = int(hRight[0] + hRightPupil[0])
     y = int(hRight[1] + hRightPupil[1])
-    cv.Circle(horizontalPhoto, (x, y), hRightPupil[2], (0, 0, 255), 3, 8, 0)
+    cv.Circle(horizontalPhoto, (x, y), hRightPupil[2], 
+    CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
 
 
 # Display the image
@@ -127,11 +134,13 @@ vRightPupil = patient.getPupilRegion(False,False)
 if vLeftPupil != None:
     x = int(vLeft[0] + vLeftPupil[0])
     y = int(vLeft[1] + vLeftPupil[1])
-    cv.Circle(horizontalPhoto, (x, y), vLeftPupil[2], (0, 0, 255), 3, 8, 0)
+    cv.Circle(horizontalPhoto, (x, y), vLeftPupil[2], 
+        CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
 if vRightPupil != None:
     x = int(vRight[0] + vRightPupil[0])
     y = int(vRight[1] + vRightPupil[1])
-    cv.Circle(horizontalPhoto, (x, y), vRightPupil[2], (0, 0, 255), 3, 8, 0)
+    cv.Circle(horizontalPhoto, (x, y), vRightPupil[2], 
+        CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
 
 # Display the image
 cv.ShowImage("Vertical with eyes",verticalPhoto)
