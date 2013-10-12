@@ -39,5 +39,3 @@ class DocString:
         # Short comments describing functionality can be written like this.
         awesome = awesomeLevel
         return True
-
-#sample
