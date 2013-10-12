@@ -1,7 +1,7 @@
 import cv2.cv as cv
 import cv2
 import time
-import Image
+from PIL import Image
 import sys
 from Eye import *
 import PIL
