@@ -80,7 +80,7 @@ def drawOnEyes(patient):
     """
 
 ######################Testing ######################
-
+"""
 # The following code replicates calls from the UI layer
 print "Making patient object..."
 patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/redface3.PNG",
@@ -165,4 +165,4 @@ if DEBUG:
 
 '''
 
-
+"""

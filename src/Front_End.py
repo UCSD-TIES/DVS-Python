@@ -203,11 +203,13 @@ class User_Interaction0(wx.Panel):
 #---------------------------------------------------------------------------
     # calls face and eye detections script from back-end
     def EyeDetect(self):
-        #stores file paths to input into detectEyes()
+        # stores file paths to input into detectEyes()
         horFilepath = self.horPhotoTxt.GetValue()
         vertFilepath = self.vertPhotoTxt.GetValue()
         # stores returned Patient object
         thisPatient = detectEyes( horFilepath, vertFilepath )
+        # Returns patient object to pass into onNext method
+        return thisPatient
 
     # About is supposed to be in menu bar, but we deleted the bar for now        
     def OnAbout(self,e):
@@ -333,7 +335,8 @@ class User_Interaction0(wx.Panel):
         # Move to next panel and run eye detection
         else:
             self.Hide()
-            #self.EyeDetect()
+            thisPatient = self.EyeDetect()
+            #print(thisPatient.getHorizontal())
             self.GetParent().panel1.ShowYourself()
             self.GetParent().GetSizer().Layout()
 
@@ -404,11 +407,12 @@ class User_Interaction1(wx.Panel):
 
 #---------------------------------------------------------------
     # calls face and eye detection script from back-end
+    '''
     def EyeDetect(self):
         horFilepath = self.horPhotoTxt.GetValue()
         vertFilepath = self.vertPhotoTxt.GetValue()
         thisPatient = detectEyes( horFilepath, vertFilepath )
-        
+    '''
     def ShowYourself(self):
         self.Raise()
         self.SetPosition((0,0))
