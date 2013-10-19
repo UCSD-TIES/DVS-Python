@@ -1,6 +1,7 @@
 """" This code drives the image analysis and detection and serves as glue
 between the classes (Model in MVC) and the UI(View in MVC)
 """
+
 from Patient import *
 from FacePhoto import *
 from HorizontalPhoto import *
@@ -84,7 +85,7 @@ def drawOnEyes(patient):
 print "Making patient object..."
 patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/redface3.PNG",
            "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/redface9.PNG")
-
+'''
 # Take the horizontal image and draw bounding eye boxes
 horizontalPhoto = patient.getHorizontal()
 hLeft = patient.getEyeRegion(True,True)
@@ -161,5 +162,7 @@ if DEBUG:
     
     print "Horizontal Left Pupil: " + str( patient.horizontal.left.eyePupil.pupil)
     print "Horizontal Right Pupil: " + str( patient.horizontal.right.eyePupil.pupil)
+
+'''
 
 
