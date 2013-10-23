@@ -1,10 +1,13 @@
-""" A class to perform actions on a vertical photo of a face
+""" A class to perform actions on a vertical photo of a face 
+    where the eyes are along a vertical axis
     This class inherits from it's parent FacePhoto
 """
 from FacePhoto import *
 import cv2.cv as cv
 import cv2
 import numpy as np
+
+DEBUG = False
 
 class VerticalPhoto(FacePhoto,object):
 
@@ -25,10 +28,16 @@ class VerticalPhoto(FacePhoto,object):
         # NOTE: Not sure if this will rotate the photo to be right side
         #       up or upside
         photo = self.rotateImage(photo,270)
+        if DEBUG:
+            cv.ShowImage("Rotated Image (in VerticalPhoto init)",photo) 
+            cv.WaitKey(0)
+            cv.DestroyWindow("Rotated Image (in VerticalPhoto init)")
         # call FacePhoto(super)'s  init
         super(VerticalPhoto,self).__init__(photo,path)
 
     def rotateImage(self, image, angle):
+        if DEBUG:
+            print "We are now rotating this photo"
         image0 = image
         if hasattr(image, 'shape'):
             image_center = tuple(np.array(image.shape)/2)
