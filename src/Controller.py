@@ -1,6 +1,7 @@
 """" This code drives the image analysis and detection and serves as glue
 between the classes (Model in MVC) and the UI(View in MVC)
 """
+
 from Patient import *
 from FacePhoto import *
 from HorizontalPhoto import *
@@ -164,6 +165,5 @@ cv.DestroyWindow("Horizontal's Right Eye")
 
 print "Horizontal Left Pupil: " + str( patient.horizontal.left.eyePupil.pupil)
 print "Horizontal Right Pupil: " + str( patient.horizontal.right.eyePupil.pupil)
-
 
 
