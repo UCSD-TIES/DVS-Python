@@ -140,16 +140,11 @@ def drawOnEyes(thisPatient):
 
 # The following code replicates calls from the UI layer
 print "Making patient object..."
-<<<<<<< HEAD
-patient = detectEyes("/Users/Citrus/Downloads/eerie.jpg",
-           "/Users/Citrus/Downloads/eerie.jpg")
 
-=======
 # Horizontal photos have the eyes along a horizontal axis
 patient = makePatient("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/red06.jpg",
            "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/red11.jpg")
    
->>>>>>> dc24a34e57da9e38d3895883294930ccba2d30f3
 # Take the horizontal image and draw bounding eye boxes
 horizontalPhoto = patient.getHorizontal()
 

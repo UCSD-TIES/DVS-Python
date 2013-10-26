@@ -202,12 +202,12 @@ class User_Interaction0(wx.Panel):
 
 #---------------------------------------------------------------------------
     # calls face and eye detections script from back-end
-    def EyeDetect(self):
-        # stores file paths to input into detectEyes()
+    def patientMake(self):
+        # stores file paths to input into makePatient()
         horFilepath = self.horPhotoTxt.GetValue()
         vertFilepath = self.vertPhotoTxt.GetValue()
         # stores returned Patient object
-        thisPatient = detectEyes( horFilepath, vertFilepath )
+        thisPatient = makePatient( horFilepath, vertFilepath )
         # Returns patient object to pass into onNext method
         return thisPatient
 
@@ -335,10 +335,11 @@ class User_Interaction0(wx.Panel):
         # Move to next panel and run eye detection
         else:
             self.Hide()
-            thisPatient = self.EyeDetect()
+            patientFrame1 = self.patientMake()
             #print(thisPatient.getHorizontal())
             self.GetParent().panel1.ShowYourself()
             self.GetParent().GetSizer().Layout()
+            return patientFrame1
 
     # Exits the operation
     def OnCancelAndExit(self, event):

@@ -67,16 +67,14 @@ class FacePhoto():
         #imcolor = cv.LoadImage(self.path)
         imcolor = self.facePhoto
 
-<<<<<<< HEAD
         #NOTE: You may need to modify this path to point to the dir with your cascades
         faceCascade = cv.Load("/usr/local/Cellar/opencv/2.4.6.1/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml")
         eyeCascade = cv.Load("/usr/local/Cellar/opencv/2.4.6.1/share/OpenCV/haarcascades/haarcascade_eye.xml")
-=======
+
         # NOTE: You may need to modify this path to point to the dir with this file on your comp
         haarEyes = cv.Load("C:\opencv\data\haarcascades\haarcascade_eye.xml")
         storage = cv.CreateMemStorage()
         detectedEyes = cv.HaarDetectObjects(imcolor,haarEyes,storage)
->>>>>>> dc24a34e57da9e38d3895883294930ccba2d30f3
 
         if DEBUG:
             print "detectedEyes = " + str(detectedEyes)
