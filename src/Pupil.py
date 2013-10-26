@@ -2,6 +2,8 @@
 own crescent region
 """
 
+DEBUG = False
+
 class Pupil:
   """ This class has attributes:
       tuple pupil - a tuple representing the circluar region of the pupil. The tuple

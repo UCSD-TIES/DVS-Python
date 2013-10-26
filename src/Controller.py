@@ -17,18 +17,15 @@ THICKNESS = 1
 LINE_TYPE = 8
 SHIFT = 0
 
-def detectEyes(horizontalPath, verticalPath):
-    """ Detects the eyes in both images and passes back a tuple of coordinates
+def makePatient(horizontalPath, verticalPath):
+    """ Makes and returns a patient object
 
     Args:
         string horizontalPath - the full path to the horizontal photo
         string verticalPath - the full path to the vertical photo
 
     Return:
-        The coordinates of the eyes for horizontal and vertical
-        Tuple of :
-            tuple horizontalTuple - (leftCoordinates, rightCoordinates)
-            tuple verticalTuple - (leftCoordinates, rightCoordinates)
+        Patient - the patient object created
 
     """
     # Load the images
@@ -64,18 +61,76 @@ def detectEyes(horizontalPath, verticalPath):
 
     return thisPatient
 
-def resetEyes(horizontalTuple, verticalTuple):
+def resetEyes(thisPatient, horizontalTuple, verticalTuple):
     """ Resets the eye regions to whatever 
 
     Args:
+        Patient thisPatient - the patient to change
         tuple horizontalTuple - (leftCoordinates, rightCoordinates)
         tuple verticalTuple - (leftCoordinates, rightCoordinates)
+        where leftCoordinates and rightCoordinates are formatted as 
+        (topLeftX, topLeftY, bottomRightX, bottomRightY)
+
 
     Return:
-        ?
+        None
     """
+    # Set horizontal photo data?
+    if horizontalTuple != None:
+        # Set left eye coords?
+        if horizontalTuple[0] != None:
+            # I'm just gunna go direct because this isn't final code
+            # TODO: write the appropriate methods for this
+            thisPatient.horizontal.left.setEyeRegion(horizontalTuple[0])
+        # Set right eye coords?
+        if horizontalTuple[1] != None:
+            thisPatient.horizontal.right.setEyeRegion(horizontalTuple[1])
 
-def drawOnEyes(patient):
+    # Set vert photo data?
+    if verticalTuple != None:
+        # Set left eye coords?
+        if verticalTuple[0] != None:
+            thisPatient.vertical.left.setEyeRegion(verticalTuple[0])
+        # Set right eye coords?
+        if verticalTuple[1] != None:
+            thisPatient.vertical.right.setEyeRegion(verticalTuple[1])
+
+def resetPupils(thisPatient, horizontalTuple, verticalTuple):
+    """ Resets (or sets) the pupil regions in the eyes
+
+    If a tuple is passed in as None then that portion of the 
+    data will not get reset.
+
+    Args:
+        tuple horizontalTuple - (leftPupil,rightPupil)
+        tuple verticalTuple - (leftPupil, rightPupil)
+        where leftPupil and rightPupil are of the form
+        (centerX, centerY, radius)
+
+    Return:
+        None
+    """
+    # Set horizontal photo data?
+    if horizontalTuple != None:
+        # Set left pupil coords?
+        if horizontalTuple[0] != None:
+            # I'm just gunna go direct because this isn't final code
+            # TODO: write the appropriate methods for this
+            thisPatient.horizontal.left.setPupil(horizontalTuple[0])
+        # Set right pupil coords?
+        if horizontalTuple[1] != None:
+            thisPatient.horizontal.right.setPupil(horizontalTuple[1])
+
+    # Set vert photo data?
+    if verticalTuple != None:
+        # Set left pupil coords?
+        if verticalTuple[0] != None:
+            thisPatient.vertical.left.setPupil(verticalTuple[0])
+        # Set right pupil coords?
+        if verticalTuple[1] != None:
+            thisPatient.vertical.right.setPupil(verticalTuple[1])
+
+def drawOnEyes(thisPatient):
     """ Draws rectangles around the facephoto of a horizontal and vertical photo
         and displays them in succession
     """
@@ -86,11 +141,17 @@ def drawOnEyes(patient):
 # The following code replicates calls from the UI layer
 print "Making patient object..."
 # Horizontal photos have the eyes along a horizontal axis
-patient = detectEyes("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/red06.jpg",
+patient = makePatient("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/red06.jpg",
            "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/red11.jpg")
    
 # Take the horizontal image and draw bounding eye boxes
 horizontalPhoto = patient.getHorizontal()
+
+# Reset the eye regions and pupil regions
+resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
+resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
+
+
 hLeft = patient.getEyeRegion(True,True)
 hRight = patient.getEyeRegion(True,False)
 # Draw Left and right eyes

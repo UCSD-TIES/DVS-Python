@@ -116,8 +116,6 @@ class FacePhoto():
             photo eyePhoto - a photo of just the eye
         """
         # really takes in four points per region
-        # place eye region here
-        #face = Image.open(self.path)
         crop = (region[0],region[1], region[2] - region[0], region[3] - region[1])
         if DEBUG:
             print "Region passed to eye remove: " + str(region)
