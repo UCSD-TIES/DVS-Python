@@ -2,10 +2,11 @@
 own crescent region
 """
 
-DEBUG = False
+DEBUG = True
 
 class Pupil:
   """ This class has attributes:
+      PIL pupilPhoto - a cropped photo showing only the pupil
       tuple pupil - a tuple representing the circluar region of the pupil. The tuple
                     is formatted as such: (centerX, centerY, radius)
       tuple center - the center point of the pupil region formatted as (x,y)
@@ -16,10 +17,12 @@ class Pupil:
       region crescent - the region of the pupil's crescent
   """
 
-  def __init__(self, pupilRegion):
+  def __init__(self, newPupilPhoto, pupilRegion):
     """ Initilaizes a pupil's region then calls findCenter and
         findCrescent() in an attempt to set the remaing attributes.
     """
+    # Set the cropped photo of the pupil
+    self.pupilPhoto = newPupilPhoto
     # Set the pupil region to the region passed in
     self.pupil = pupilRegion
     # Initialize the other attributes to None so that they exist
@@ -31,7 +34,7 @@ class Pupil:
     crescent = None
     # Set the attributes initialized to None by finding them
     self.findCrescent()
-    self.findWhiteDot
+    self.findWhiteDot()
 
   def findWhiteDot(self):
     """ Detects a whiteDot within a pupil region.
@@ -96,6 +99,7 @@ class Pupil:
 
   def setPupilRegion(self,newRegion):
     """ Sets the pupil's region to the tuple passed in as argument """
+
     self.pupil = newRegion
 
   def setCenter(self,newCenter):

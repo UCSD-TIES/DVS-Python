@@ -11,7 +11,7 @@ import PIL.ImageOps
 import math
 from sys import maxint
 
-DEBUG = False
+DEBUG = True
 
 ########## Descriptive Variables for tweakable constants ###############
 
@@ -239,6 +239,35 @@ class Eye:
             # A pupil was not found
             return False
 
+    def pupilRemove(self, region):
+        """ Crops the eye photo to show only the pupil
+            and then returns it.
+
+        Args:
+            tuple region - the coordinates of the pupil circle in
+            the form (centerX, centerY, radius)
+
+        Return:
+            photo  - TODO: I'm not sure of the type
+        """
+        # Converting to (topLeftX, topLeftY, bottomRightX, bottomRightY)
+        crop = (region[0]-region[2],region[1]-region[2], region[0] + region[2], region[0] + region[2])
+        if DEBUG:
+            print "Region passed to pupil remove: " + str(region)
+            print "And here's crop: " + str(crop)
+            print "Before crop we have type: " + str(type(self.eyePhoto))
+            print self.eyePhoto
+            cv.ShowImage("We're cropping", self.eyePhoto)
+            cv.WaitKey(0)
+            cv.DestroyWindow("We're cropping")
+        pupil = cv.GetSubRect(self.eyePhoto, crop)
+        if DEBUG:
+            print "After crop we have type: " + str(type(pupil))
+            cv.ShowImage("Cropped", pupil)
+            cv.WaitKey(0)
+            cv.DestroyWindow("Cropped")
+        return pupil
+
    
         
 #################### Getters ##################################
@@ -270,7 +299,8 @@ class Eye:
     def setPupil(self,region):
         """ Sets eyePupil to a new Pupil object constructed from
             the region passed in as argument"""
-        self.eyePupil = Pupil(region)
+        pupilPhoto = self.pupilRemove(region)
+        self.eyePupil = Pupil(pupilPhoto, region)
 
     
 
