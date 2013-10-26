@@ -72,8 +72,8 @@ class FacePhoto():
         # Load the image the user chose
 
         #NOTE: You may need to modify this path to point to the dir with your cascades
-        faceCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_frontalface_default.xml")
-        eyeCascade = cv.Load("C:/opencv/data/haarcascades/haarcascade_eye.xml")
+        faceCascade = cv.Load("/usr/local/Cellar/opencv/2.4.6.1/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml")
+        eyeCascade = cv.Load("/usr/local/Cellar/opencv/2.4.6.1/share/OpenCV/haarcascades/haarcascade_eye.xml")
 
         # Detect the eyes and make an image with bounding boxes on it
         image = self.DetectEyes(self.facePhoto, faceCascade, eyeCascade)
