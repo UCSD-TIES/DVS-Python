@@ -9,6 +9,7 @@ from VerticalPhoto import *
 from Eye import *
 from Pupil import *
 import cv2.cv as cv
+import os
 
 DEBUG = False
 
@@ -142,8 +143,11 @@ def drawOnEyes(thisPatient):
 print "Making patient object..."
 
 # Horizontal photos have the eyes along a horizontal axis
-patient = makePatient("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/red06.jpg",
-           "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/red11.jpg")
+cwd = os.path.dirname(os.path.abspath(sys.argv[0]))
+cwd += "/pics/BoldRedEye.jpg"
+patient = makePatient(cwd, cwd)
+
+
    
 # Take the horizontal image and draw bounding eye boxes
 horizontalPhoto = patient.getHorizontal()
