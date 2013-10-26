@@ -1,6 +1,6 @@
 import wx, os
 import sys
-import guitest
+#import guitest
 from Controller import *              #   import for later backend stuff
 
 # file filter for pictures: bitmap and jpeg files
@@ -332,7 +332,7 @@ class User_Interaction0(wx.Panel):
         # Move to next panel and run eye detection
         else:
             self.Hide()
-            self.EyeDetect()
+            #self.EyeDetect()
             self.GetParent().panel1.ShowYourself()
             self.GetParent().GetSizer().Layout()
 
@@ -355,7 +355,7 @@ class User_Interaction1(wx.Panel):
 
 
         # build the top row
-        txtHeader = wx.StaticText(self, -1, 'Read about This Boring\nProgram', (0, 0))
+        txtHeader = wx.StaticText(self, -1, 'Read about This \nProgram', (0, 0))
         font = wx.Font(16, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         txtHeader.SetFont(font)
         txtOutOf = wx.StaticText(self, -1, '2 out of 7', (0, 0))                
@@ -368,7 +368,7 @@ class User_Interaction1(wx.Panel):
 
         # build the middle row
         text = 'PANEL 1\n\n'
-        text = text + 'This could be a giant blob of boring text.\n'
+        text = text + 'This could be a giant blob of text.\n'
 
         txtBasic = wx.StaticText(self, -1, text)
         font = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.NORMAL)

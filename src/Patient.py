@@ -3,6 +3,8 @@
 from HorizontalPhoto import *
 from VerticalPhoto import *
 
+DEBUG = False
+
 class Patient:
     """ This class has attributes:
       HorizontalPhoto horizontal - an horizontal image object
@@ -14,6 +16,9 @@ class Patient:
         """
         self.horizontal = HorizontalPhoto(horizontalImg, horizontalPath)
         self.vertical = VerticalPhoto(verticalImg, verticalPath)
+
+
+#################### Getters ##################################
 
     def getHorizontal(self):
         return self.horizontal.facePhoto
@@ -107,6 +112,12 @@ class Patient:
                 #Default Return
                 return None
 
+#################### Setters ##################################
+
+
+
+################## Disease Detection ##########################
+
     def analyzeEyes(self):
         """ Analyze all eye diseases and return the results """ 
         results = self.strabismus()
@@ -115,7 +126,28 @@ class Patient:
         return results
 
     def strabismus(self):
-        """ Analyze this patient for signs of strabismus """
+        """ Analyze this patient for signs of strabismus
+
+        Detect strabismus, also known as lazy eye, by calculating 
+        difference between the relative position of the white dot 
+        in the pupil and the outer edges of the pupil. If the dot
+        is in a different location on one eye then the patient may 
+        have strabismus.
+
+        NOTE: This method will do nothing unless the patient has both
+        photos, both leftEye and rightEye != None in each photo and 
+        for each eye pupil and whiteDot != None
+
+        Args:
+            None
+
+        Return:
+            None
+
+        NOTE: It might be useful to make the calculations for this
+        apparent to the user so they can judge for themself how accurate
+        the program's result is. Maybe by returning something?
+        """
         # strabismus detection logic goes here
         return "Strabismus detection called"
 
@@ -125,7 +157,12 @@ class Patient:
         return "Astigmatism detection called"
 
     def cataracts(self):
-        """ Analyze this patient for signs of cataracts """
+        """ Analyze this patient for signs of cataracts 
+
+        Detect milky patches on the eye. If the patient has cataracts it will
+        probably thrown pupil, whiteDot, crescent, and sclera detection off so
+        it might be a good idea to work just from the original photo of the eye
+        """
         # cataracts logic goes here
         return "Cataracts detection called"
 

@@ -2,11 +2,17 @@
 own crescent region
 """
 
+DEBUG = False
+
 class Pupil:
   """ This class has attributes:
       tuple pupil - a tuple representing the circluar region of the pupil. The tuple
                     is formatted as such: (centerX, centerY, radius)
       tuple center - the center point of the pupil region formatted as (x,y)
+      tuple whiteDot - a tuple representing the circular region of the white dot created 
+                      in the center of the pupil by the light from the flash. The tuple is 
+                      formatted as such: (centerX, centerY, radius)
+      tuple whiteDotCenter - the center of the whiteDot formatted as (x,y)
       region crescent - the region of the pupil's crescent
   """
 
@@ -20,9 +26,31 @@ class Pupil:
     self.center = None
     if pupilRegion != None:
       self.center = (pupilRegion[0], pupilRegion[1])
+    self.whiteDot = None
+    self.whiteDotCenter = None
     crescent = None
     # Set the attributes initialized to None by finding them
     self.findCrescent()
+    self.findWhiteDot
+
+  def findWhiteDot(self):
+    """ Detects a whiteDot within a pupil region.
+
+    Uses opencv libarary methods to detect the white dot in the center of the 
+    pupil caused by the reflection of the flash. Then initializes whiteDot
+    to the region found and sets whiteDotCenter. Returns false if any errors are encountered
+
+    Args:
+      None
+
+    Return:
+      bool - True if there were no issues. False for any error
+    """
+    whiteDot = None
+    self.setWhiteDot(whiteDot)
+    if self.whiteDot != None:
+      self.whiteDotCenter = (self.whiteDot[0], self.whiteDot[1])
+
 
 
   def findCrescent(self):
@@ -52,6 +80,14 @@ class Pupil:
     """ Returns a tuple representing the center of the pupil """
     return self.center
 
+  def getWhiteDot(self):
+    """ Returns a tuple representing the whiteDot """
+    return self.whiteDot
+
+  def getWhiteDotCenter(self):
+    """ Returns a tuple representing the center of the whiteDot """
+    return self.whiteDotCenter
+
   def getCrescent(self):
     """ Returns a region representing the crescent """
     return self.crescent
@@ -63,8 +99,16 @@ class Pupil:
     self.pupil = newRegion
 
   def setCenter(self,newCenter):
-    """ Sets the pupil's center to the tuple passed in as arguments """
+    """ Sets the pupil's center to the tuple passed in as argument """
     self.center = newCenter
+
+  def setwhiteDot(self,newRegion):
+    """ Sets the whiteDot's region to the tuple passed in as argument """
+    self.whiteDot = newRegion
+
+  def setWhiteDotCenter(self,newCenter):
+    """ Sets the whiteDot's center to the tuple passed in as argument """
+    self.WhiteDotCenter = newCenter
 
   def setCrescent(self,newCrescent):
     """ Sets the pupil's crescent to the region passed in as argument """

@@ -1,6 +1,7 @@
 """" This code drives the image analysis and detection and serves as glue
 between the classes (Model in MVC) and the UI(View in MVC)
 """
+
 from Patient import *
 from FacePhoto import *
 from HorizontalPhoto import *
@@ -16,26 +17,23 @@ THICKNESS = 1
 LINE_TYPE = 8
 SHIFT = 0
 
-def detectEyes(horizontalPath, verticalPath):
-    """ Detects the eyes in both images and passes back a tuple of coordinates
+def makePatient(horizontalPath, verticalPath):
+    """ Makes and returns a patient object
 
     Args:
         string horizontalPath - the full path to the horizontal photo
         string verticalPath - the full path to the vertical photo
 
     Return:
-        The coordinates of the eyes for horizontal and vertical
-        Tuple of :
-            tuple horizontalTuple - (leftCoordinates, rightCoordinates)
-            tuple verticalTuple - (leftCoordinates, rightCoordinates)
+        Patient - the patient object created
 
     """
     # Load the images
     horizontalImg = cv.LoadImage(horizontalPath)
     verticalImg = cv.LoadImage(verticalPath)
     thisPatient = Patient(horizontalImg, horizontalPath, verticalImg, verticalPath)
+    
     if DEBUG:
-        
         # show the variables as they have been populated
         print "Showing patient's horizontal image..."
         cv.ShowImage("Horizontal",thisPatient.getHorizontal())
@@ -46,6 +44,7 @@ def detectEyes(horizontalPath, verticalPath):
         cv.WaitKey(0)
         cv.DestroyWindow("Vertical")
         print "Showing photo of the patient's horizontal left eye..."
+        print thisPatient.horizontal.left.eyePhoto
         cv.ShowImage("Horizontal Left Eye",thisPatient.horizontal.left.eyePhoto)
         cv.WaitKey(0)
         cv.DestroyWindow("Horizontal Left Eye")
@@ -62,31 +61,103 @@ def detectEyes(horizontalPath, verticalPath):
 
     return thisPatient
 
-def resetEyes(horizontalTuple, verticalTuple):
+def resetEyes(thisPatient, horizontalTuple, verticalTuple):
     """ Resets the eye regions to whatever 
 
     Args:
+        Patient thisPatient - the patient to change
         tuple horizontalTuple - (leftCoordinates, rightCoordinates)
         tuple verticalTuple - (leftCoordinates, rightCoordinates)
+        where leftCoordinates and rightCoordinates are formatted as 
+        (topLeftX, topLeftY, bottomRightX, bottomRightY)
+
 
     Return:
-        ?
+        None
     """
+    # Set horizontal photo data?
+    if horizontalTuple != None:
+        # Set left eye coords?
+        if horizontalTuple[0] != None:
+            # I'm just gunna go direct because this isn't final code
+            # TODO: write the appropriate methods for this
+            thisPatient.horizontal.left.setEyeRegion(horizontalTuple[0])
+        # Set right eye coords?
+        if horizontalTuple[1] != None:
+            thisPatient.horizontal.right.setEyeRegion(horizontalTuple[1])
 
-def drawOnEyes(patient):
+    # Set vert photo data?
+    if verticalTuple != None:
+        # Set left eye coords?
+        if verticalTuple[0] != None:
+            thisPatient.vertical.left.setEyeRegion(verticalTuple[0])
+        # Set right eye coords?
+        if verticalTuple[1] != None:
+            thisPatient.vertical.right.setEyeRegion(verticalTuple[1])
+
+def resetPupils(thisPatient, horizontalTuple, verticalTuple):
+    """ Resets (or sets) the pupil regions in the eyes
+
+    If a tuple is passed in as None then that portion of the 
+    data will not get reset.
+
+    Args:
+        tuple horizontalTuple - (leftPupil,rightPupil)
+        tuple verticalTuple - (leftPupil, rightPupil)
+        where leftPupil and rightPupil are of the form
+        (centerX, centerY, radius)
+
+    Return:
+        None
+    """
+    # Set horizontal photo data?
+    if horizontalTuple != None:
+        # Set left pupil coords?
+        if horizontalTuple[0] != None:
+            # I'm just gunna go direct because this isn't final code
+            # TODO: write the appropriate methods for this
+            thisPatient.horizontal.left.setPupil(horizontalTuple[0])
+        # Set right pupil coords?
+        if horizontalTuple[1] != None:
+            thisPatient.horizontal.right.setPupil(horizontalTuple[1])
+
+    # Set vert photo data?
+    if verticalTuple != None:
+        # Set left pupil coords?
+        if verticalTuple[0] != None:
+            thisPatient.vertical.left.setPupil(verticalTuple[0])
+        # Set right pupil coords?
+        if verticalTuple[1] != None:
+            thisPatient.vertical.right.setPupil(verticalTuple[1])
+
+def drawOnEyes(thisPatient):
     """ Draws rectangles around the facephoto of a horizontal and vertical photo
         and displays them in succession
     """
 
 ######################Testing ######################
 
+
 # The following code replicates calls from the UI layer
 print "Making patient object..."
+<<<<<<< HEAD
 patient = detectEyes("/Users/Citrus/Downloads/eerie.jpg",
            "/Users/Citrus/Downloads/eerie.jpg")
 
+=======
+# Horizontal photos have the eyes along a horizontal axis
+patient = makePatient("C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/red06.jpg",
+           "C:/Users/Shannon/Documents/GitHub/DVS-Python/Faces/red11.jpg")
+   
+>>>>>>> dc24a34e57da9e38d3895883294930ccba2d30f3
 # Take the horizontal image and draw bounding eye boxes
 horizontalPhoto = patient.getHorizontal()
+
+# Reset the eye regions and pupil regions
+resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
+resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
+
+
 hLeft = patient.getEyeRegion(True,True)
 hRight = patient.getEyeRegion(True,False)
 # Draw Left and right eyes
@@ -148,18 +219,18 @@ cv.WaitKey(0)
 cv.DestroyWindow("Vertical with eyes")
 
 #Display the eyes only of the horizontal photo
-if DEBUG:
-    hLeftEyePhoto = patient.getEyePhoto(True,True)
-    hRightEyePhoto = patient.getEyePhoto(True,False)
-    cv.ShowImage("Horizontal's Left Eye",hLeftEyePhoto)
-    cv.WaitKey(0)
-    cv.DestroyWindow("Horizontal's Left Eye")
+#if DEBUG: 
+hLeftEyePhoto = patient.getEyePhoto(True,True)
+hRightEyePhoto = patient.getEyePhoto(True,False)
+cv.ShowImage("Horizontal's Left Eye",hLeftEyePhoto)
+cv.WaitKey(0)
+cv.DestroyWindow("Horizontal's Left Eye")
 
-    cv.ShowImage("Horizontal's Right Eye",hRightEyePhoto)
-    cv.WaitKey(0)
-    cv.DestroyWindow("Horizontal's Right Eye")
-    
-    print "Horizontal Left Pupil: " + str( patient.horizontal.left.eyePupil.pupil)
-    print "Horizontal Right Pupil: " + str( patient.horizontal.right.eyePupil.pupil)
+cv.ShowImage("Horizontal's Right Eye",hRightEyePhoto)
+cv.WaitKey(0)
+cv.DestroyWindow("Horizontal's Right Eye")
+
+print "Horizontal Left Pupil: " + str( patient.horizontal.left.eyePupil.pupil)
+print "Horizontal Right Pupil: " + str( patient.horizontal.right.eyePupil.pupil)
 
 
