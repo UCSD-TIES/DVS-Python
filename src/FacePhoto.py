@@ -5,6 +5,8 @@ from PIL import Image
 import sys
 from Eye import *
 import PIL
+import os
+
 """ A class to perform actions on a photo of a face
     This class has two child classes:
       HorizonalPhoto
@@ -67,12 +69,18 @@ class FacePhoto():
         #imcolor = cv.LoadImage(self.path)
         imcolor = self.facePhoto
 
+        #Path setups
+        cwd = os.path.dirname(os.path.abspath(sys.argv[0]))
+        cwd += "/opencv/haarcascades/"
+        frontalface = cwd + "haarcascade_frontalface_default.xml"
+        eye = cwd + "haarcascade_eye.xml"
+
         #NOTE: You may need to modify this path to point to the dir with your cascades
-        faceCascade = cv.Load("/usr/local/Cellar/opencv/2.4.6.1/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml")
-        eyeCascade = cv.Load("/usr/local/Cellar/opencv/2.4.6.1/share/OpenCV/haarcascades/haarcascade_eye.xml")
+        faceCascade = cv.Load(frontalface)
+        eyeCascade = cv.Load(eye)
 
         # NOTE: You may need to modify this path to point to the dir with this file on your comp
-        haarEyes = cv.Load("C:\opencv\data\haarcascades\haarcascade_eye.xml")
+        haarEyes = cv.Load(eye)
         storage = cv.CreateMemStorage()
         detectedEyes = cv.HaarDetectObjects(imcolor,haarEyes,storage)
 
