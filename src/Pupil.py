@@ -106,7 +106,7 @@ class Pupil:
     """ Sets the pupil's center to the tuple passed in as argument """
     self.center = newCenter
 
-  def setwhiteDot(self,newRegion):
+  def setWhiteDot(self,newRegion):
     """ Sets the whiteDot's region to the tuple passed in as argument """
     self.whiteDot = newRegion
 
