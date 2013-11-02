@@ -10,6 +10,8 @@ IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
           "Raw Files |*.cr2; *crw|" \
           "All Files |*.*"
 
+patient = None
+
 class My_App(wx.App):
 
     def OnInit(self):
@@ -115,7 +117,6 @@ class User_Interaction0(wx.Panel):
 
         # Resolve Layout Issues
         self.full = wx.BoxSizer(wx.VERTICAL)
-        
         self.header = wx.BoxSizer(wx.HORIZONTAL)
         self.body = wx.BoxSizer(wx.HORIZONTAL)
         self.leftSizer = wx.BoxSizer(wx.VERTICAL)
@@ -335,11 +336,12 @@ class User_Interaction0(wx.Panel):
         # Move to next panel and run eye detection
         else:
             self.Hide()
-            patientFrame1 = self.patientMake()
+            global patient
+            patient = self.patientMake()
             #print(thisPatient.getHorizontal())
             self.GetParent().panel1.ShowYourself()
             self.GetParent().GetSizer().Layout()
-            return patientFrame1
+            
 
     # Exits the operation
     def OnCancelAndExit(self, event):
@@ -360,12 +362,12 @@ class User_Interaction1(wx.Panel):
 
 
         # build the top row
-        txtHeader = wx.StaticText(self, -1, 'Read about This \nProgram', (0, 0))
+        txtHeader = wx.StaticText(self, -1, 'Are these the eyes?')
         font = wx.Font(16, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         txtHeader.SetFont(font)
         txtOutOf = wx.StaticText(self, -1, '2 out of 7', (0, 0))                
         rowtopsizer = wx.BoxSizer(wx.HORIZONTAL)
-        rowtopsizer.Add(txtHeader, 3, wx.ALIGN_LEFT) 
+        rowtopsizer.Add(txtHeader, 0, wx.ALL | wx.EXPAND | wx.CENTER, 5)
         rowtopsizer.Add((0,0), 1)  
         rowtopsizer.Add(txtOutOf, 0, wx.ALIGN_RIGHT) 
         mastersizer.Add(rowtopsizer, 0, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=15) 
@@ -407,13 +409,6 @@ class User_Interaction1(wx.Panel):
         self.Hide()
 
 #---------------------------------------------------------------
-    # calls face and eye detection script from back-end
-    '''
-    def EyeDetect(self):
-        horFilepath = self.horPhotoTxt.GetValue()
-        vertFilepath = self.vertPhotoTxt.GetValue()
-        thisPatient = detectEyes( horFilepath, vertFilepath )
-    '''
     def ShowYourself(self):
         self.Raise()
         self.SetPosition((0,0))
@@ -425,7 +420,9 @@ class User_Interaction1(wx.Panel):
         self.Hide()
         self.GetParent().panel0.ShowYourself()
         self.GetParent().GetSizer().Layout()
-
+        global patient
+        patient = None
+        
     def OnNext(self, event):
         self.Hide()
         self.GetParent().panel2.ShowYourself()
@@ -492,11 +489,6 @@ class User_Interaction2(wx.Panel):
         self.Hide()
 
 #---------------------------------------------------------------
-    # calls face and eye detection script from back-end
-    def EyeDetect(self):
-        horFilepath = self.horPhotoTxt.GetValue()
-        vertFilepath = self.vertPhotoTxt.GetValue()
-        thisPatient = detectEyes( horFilepath, vertFilepath )
 
     def ShowYourself(self):
         self.Raise()

@@ -138,7 +138,7 @@ def drawOnEyes(thisPatient):
 
 ######################Testing ######################
 
-
+'''
 # The following code replicates calls from the UI layer
 print "Making patient object..."
 
@@ -151,7 +151,7 @@ patient = makePatient(cwd, cwd)
    
 # Take the horizontal image and draw bounding eye boxes
 horizontalPhoto = patient.getHorizontal()
-'''
+
 # Reset the eye regions and pupil regions
 resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
 resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
