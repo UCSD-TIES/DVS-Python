@@ -12,6 +12,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
+TEST = True
 
 CIRCLE_COLOR = (0, 255, 0)
 THICKNESS = 1
@@ -138,98 +139,95 @@ def drawOnEyes(thisPatient):
 
 ######################Testing ######################
 
+if (TEST):
+    # The following code replicates calls from the UI layer
+    print "Making patient object..."
 
-# The following code replicates calls from the UI layer
-print "Making patient object..."
+    # Horizontal photos have the eyes along a horizontal axis
+    cwd = os.path.dirname(os.path.abspath(sys.argv[0]))
+    cwd += "/pics/Red06.jpg"
+    patient = makePatient(cwd, cwd)
 
-# Horizontal photos have the eyes along a horizontal axis
-cwd = os.path.dirname(os.path.abspath(sys.argv[0]))
-cwd += "/pics/BoldRedEye.jpg"
-patient = makePatient(cwd, cwd)
+    # Take the horizontal image and draw bounding eye boxes
+    horizontalPhoto = patient.getHorizontal()
 
-
-   
-# Take the horizontal image and draw bounding eye boxes
-horizontalPhoto = patient.getHorizontal()
-'''
-# Reset the eye regions and pupil regions
-resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
-resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
+    # Reset the eye regions and pupil regions
+    # resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
+    # resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
 
 
-hLeft = patient.getEyeRegion(True,True)
-hRight = patient.getEyeRegion(True,False)
-# Draw Left and right eyes
-print "Drawing bounding boxes for the horizontal photo..."
-if hLeft != None and hRight != None:
-    cv.Rectangle(horizontalPhoto, (hLeft[0],hLeft[1]),(hLeft[2],hLeft[3]),
-             cv.RGB(255,0,0,), 1, 8, 0)
-    cv.Rectangle(horizontalPhoto, (hRight[0],hRight[1]),(hRight[2],hRight[3]),
-             cv.RGB(255,0,0,), 1, 8, 0)
-# Draw the Left and Right pupils
-hLeftPupil = patient.getPupilRegion(True,True)
-hRightPupil = patient.getPupilRegion(True,False)
-if hLeftPupil != None:
-    x = int(hLeft[0] + hLeftPupil[0])
-    y = int(hLeft[1] + hLeftPupil[1])
-    cv.Circle(horizontalPhoto, (x, y), hLeftPupil[2], 
-        CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
-if hRightPupil != None:
-    x = int(hRight[0] + hRightPupil[0])
-    y = int(hRight[1] + hRightPupil[1])
-    cv.Circle(horizontalPhoto, (x, y), hRightPupil[2], 
-    CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
-
-
-# Display the image
-cv.ShowImage("Horizontal with eyes",horizontalPhoto)
-cv.WaitKey(0)
-cv.DestroyWindow("Horizontal with eyes")
-
-# Do the same for vertical
-verticalPhoto = patient.getVertical()
-vLeft = patient.getEyeRegion(False,True)
-vRight = patient.getEyeRegion(False,False)
-print "Drawing bounding boxes for the vertical photo..."
-# Draw Left and right eyes
-if vLeft != None and vRight != None:
-    cv.Rectangle(verticalPhoto, (vLeft[0],vLeft[1]),(vLeft[2],vLeft[3]),
-             cv.RGB(255,0,0,), 1, 8, 0)
-    cv.Rectangle(verticalPhoto, (vRight[0],vRight[1]),(vRight[2],vRight[3]),
-             cv.RGB(255,0,0,), 1, 8, 0)
-
-# Draw the left and right Pupils
-vLeftPupil = patient.getPupilRegion(False,True)
-vRightPupil = patient.getPupilRegion(False,False)
-if vLeftPupil != None:
-    x = int(vLeft[0] + vLeftPupil[0])
-    y = int(vLeft[1] + vLeftPupil[1])
-    cv.Circle(horizontalPhoto, (x, y), vLeftPupil[2], 
-        CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
-if vRightPupil != None:
-    x = int(vRight[0] + vRightPupil[0])
-    y = int(vRight[1] + vRightPupil[1])
-    cv.Circle(horizontalPhoto, (x, y), vRightPupil[2], 
+    hLeft = patient.getEyeRegion(True,True)
+    hRight = patient.getEyeRegion(True,False)
+    # Draw Left and right eyes
+    print "Drawing bounding boxes for the horizontal photo..."
+    if hLeft != None and hRight != None:
+        cv.Rectangle(horizontalPhoto, (hLeft[0],hLeft[1]),(hLeft[2],hLeft[3]),
+                 cv.RGB(255,0,0,), 1, 8, 0)
+        cv.Rectangle(horizontalPhoto, (hRight[0],hRight[1]),(hRight[2],hRight[3]),
+                 cv.RGB(255,0,0,), 1, 8, 0)
+    # Draw the Left and Right pupils
+    hLeftPupil = patient.getPupilRegion(True,True)
+    hRightPupil = patient.getPupilRegion(True,False)
+    if hLeftPupil != None:
+        x = int(hLeft[0] + hLeftPupil[0])
+        y = int(hLeft[1] + hLeftPupil[1])
+        cv.Circle(horizontalPhoto, (x, y), hLeftPupil[2], 
+            CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
+    if hRightPupil != None:
+        x = int(hRight[0] + hRightPupil[0])
+        y = int(hRight[1] + hRightPupil[1])
+        cv.Circle(horizontalPhoto, (x, y), hRightPupil[2], 
         CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
 
-# Display the image
-cv.ShowImage("Vertical with eyes",verticalPhoto)
-cv.WaitKey(0)
-cv.DestroyWindow("Vertical with eyes")
 
-#Display the eyes only of the horizontal photo
-#if DEBUG: 
-hLeftEyePhoto = patient.getEyePhoto(True,True)
-hRightEyePhoto = patient.getEyePhoto(True,False)
-cv.ShowImage("Horizontal's Left Eye",hLeftEyePhoto)
-cv.WaitKey(0)
-cv.DestroyWindow("Horizontal's Left Eye")
+    # Display the image
+    cv.ShowImage("Horizontal with eyes",horizontalPhoto)
+    cv.WaitKey(0)
+    cv.DestroyWindow("Horizontal with eyes")
 
-cv.ShowImage("Horizontal's Right Eye",hRightEyePhoto)
-cv.WaitKey(0)
-cv.DestroyWindow("Horizontal's Right Eye")
+    # Do the same for vertical
+    verticalPhoto = patient.getVertical()
+    vLeft = patient.getEyeRegion(False,True)
+    vRight = patient.getEyeRegion(False,False)
+    print "Drawing bounding boxes for the vertical photo..."
+    # Draw Left and right eyes
+    if vLeft != None and vRight != None:
+        cv.Rectangle(verticalPhoto, (vLeft[0],vLeft[1]),(vLeft[2],vLeft[3]),
+                 cv.RGB(255,0,0,), 1, 8, 0)
+        cv.Rectangle(verticalPhoto, (vRight[0],vRight[1]),(vRight[2],vRight[3]),
+                 cv.RGB(255,0,0,), 1, 8, 0)
 
-print "Horizontal Left Pupil: " + str( patient.horizontal.left.eyePupil.pupil)
-print "Horizontal Right Pupil: " + str( patient.horizontal.right.eyePupil.pupil)
-'''
+    # Draw the left and right Pupils
+    vLeftPupil = patient.getPupilRegion(False,True)
+    vRightPupil = patient.getPupilRegion(False,False)
+    if vLeftPupil != None:
+        x = int(vLeft[0] + vLeftPupil[0])
+        y = int(vLeft[1] + vLeftPupil[1])
+        cv.Circle(horizontalPhoto, (x, y), vLeftPupil[2], 
+            CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
+    if vRightPupil != None:
+        x = int(vRight[0] + vRightPupil[0])
+        y = int(vRight[1] + vRightPupil[1])
+        cv.Circle(horizontalPhoto, (x, y), vRightPupil[2], 
+            CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
+
+    # Display the image
+    cv.ShowImage("Vertical with eyes",verticalPhoto)
+    cv.WaitKey(0)
+    cv.DestroyWindow("Vertical with eyes")
+
+    #Display the eyes only of the horizontal photo
+    #if DEBUG: 
+    hLeftEyePhoto = patient.getEyePhoto(True,True)
+    hRightEyePhoto = patient.getEyePhoto(True,False)
+    cv.ShowImage("Horizontal's Left Eye",hLeftEyePhoto)
+    cv.WaitKey(0)
+    cv.DestroyWindow("Horizontal's Left Eye")
+
+    cv.ShowImage("Horizontal's Right Eye",hRightEyePhoto)
+    cv.WaitKey(0)
+    cv.DestroyWindow("Horizontal's Right Eye")
+
+    print "Horizontal Left Pupil: " + str( patient.horizontal.left.eyePupil.pupil)
+    print "Horizontal Right Pupil: " + str( patient.horizontal.right.eyePupil.pupil)
 

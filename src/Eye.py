@@ -251,7 +251,7 @@ class Eye:
             photo  - TODO: I'm not sure of the type
         """
         # Converting to (topLeftX, topLeftY, bottomRightX, bottomRightY)
-        crop = (region[0]-region[2],region[1]-region[2], region[0] + region[2], region[0] + region[2])
+        crop = (region[0]-region[2],region[1]-region[2], region[0] + region[2], region[1] + region[2])
         if DEBUG:
             print "Region passed to pupil remove: " + str(region)
             print "And here's crop: " + str(crop)
