@@ -1,6 +1,7 @@
 """ A class to perform actions on an eye. A pupil can get its own center and its
 own crescent region
 """
+from Eye import *
 import cv2.cv as cv
 import cv2
 import numpy as np
@@ -9,7 +10,6 @@ import PIL.ImageOps
 import math
 from sys import maxint
 
-from Eye import draw_circles
 
 DEBUG = True
 
