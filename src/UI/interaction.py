@@ -7,36 +7,35 @@ IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
 
 class interaction:
 
-    uploadText = ""
+    upPath = ""
 
     def __init__(self):
-        uploadText = "Please upload an image."
-
-
-    def getFilePath(self):
-        return self.uploadText
+      upPath = ""
 
 
 
-##########################BUTTONS##############################
+# BUTTONS
+
     # upload button
-    def upload(self, page, imgCtrl):
-       #Pops up box for user to upload image
-       upBox = wx.FileDialog(page, "Choose an image.", os.getcwd(), "",
-                             IMGMASK, wx.OPEN)
-       if upBox.ShowModal() == wx.ID_OK:
-          upPath = upBox.GetPath()
-          self.upPaint(upPath, imgCtrl)
-       else:
-          uploadText = "Please upload an image."
+    def upload(self, page, imgCtrl, text):
+      # pops up box for user to upload image
+      upBox = wx.FileDialog(page, "Choose an image.", os.getcwd(), "",
+                            IMGMASK, wx.OPEN)
+      if upBox.ShowModal() == wx.ID_OK:
+        self.upPath = upBox.GetPath()
+        self.upPaint(self.upPath, imgCtrl)
+        text.SetValue(self.upPath)
+          
 
+    # display the uploaded picture
     def upPaint(self, upPath, imgCtrl):
       newImg = wx.Image(upPath, wx.BITMAP_TYPE_ANY)
-      # scale the image, preserving the aspect ratio
+      
       width = newImg.GetWidth()
       height = newImg.GetHeight()
       maxSize = 440
 
+      # scale the image to preserving the aspect ratio
       if width > height and width > maxSize:
         newWidth = maxSize
         newHeight = height / (width / float(maxSize))

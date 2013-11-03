@@ -32,7 +32,9 @@ class page(wx.Panel):
 
 		# Displays path of horizontal image, uneditable
 		horPhotoTxt = wx.TextCtrl(page, size=(350,-1), style=wx.TE_READONLY)
+		horPhotoTxt.SetValue("Please upload an image.")
 		verPhotoTxt = wx.TextCtrl(page, size=(350,-1), style=wx.TE_READONLY)
+		verPhotoTxt.SetValue("Please upload an image.")
 
 		nextBtn = wx.Button(page, label='Next')
 		#btnNext.Bind(wx.EVT_BUTTON, lambda event:
@@ -42,13 +44,12 @@ class page(wx.Panel):
 		# Button to upload a horizontal photo
 		horiBtn = wx.Button(page, label='Horizontal')
 		horiBtn.Bind(wx.EVT_BUTTON,
-					lambda event: interact.upload(page,verImgCtrl))
-		horPhotoTxt.SetValue(interact.getFilePath())
+					lambda event: interact.upload(page,verImgCtrl, horPhotoTxt))
 
 		# Button to upload a vertical photo
 		vertBtn = wx.Button(page, label='Vertical')
 		vertBtn.Bind(wx.EVT_BUTTON, 
-					lambda event: interact.upload(page,horImgCtrl))
+					lambda event: interact.upload(page,horImgCtrl, verPhotoTxt))
 
 		# Adding items into the grids
 		mainGrid.AddMany([(menu),(pics),(upload)])
