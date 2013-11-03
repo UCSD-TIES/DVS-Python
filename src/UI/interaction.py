@@ -5,7 +5,7 @@ IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
           "Raw Files |*.cr2; *crw|" \
           "All Files |*.*"
 
-class UI_Buttons:
+class interaction:
 
     uploadText = ""
 
