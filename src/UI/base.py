@@ -16,7 +16,8 @@ base = wx.Frame(None, -1, 'Digital Vision Screening',
 #add things to panel, then add to the sizers
 
 #initialize pages from page class
-page(base)
+#see page.py constructor for parameter usage
+page1 = page(base, 1)
 
 #setup base frame
 base.Centre()

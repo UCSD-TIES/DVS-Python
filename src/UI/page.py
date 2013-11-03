@@ -2,17 +2,22 @@ import wx, os
 from interaction import *
 
 class page(wx.Panel):
-	def __init__(self, parent):
-		page = wx.Panel(parent)
-		#interact = interaction()
-		self.pageSetUp(page)
+	def __init__(self, parent, pageNum):
+		if pageNum == 1:
+			page = wx.Panel(parent)
+			self.pageSetUp(page)
+		elif pageNum == 2:
+			page = wx.Panel(parent)
+			self.pageSetUp(page)
 
 	def pageSetUp(self, page):
-		#most outer sizer
+		# instantiate the most outer sizer
 		vbox = wx.BoxSizer(wx.VERTICAL)
+		# instantiate the class for interactivity
+		interact = interaction()
 
-		#mainGrid has three FlexGrids inside it
-		#wx.FlexGridSizer(rows, cols, vgap, hgap)
+		# mainGrid has three FlexGrids inside it
+		# wx.FlexGridSizer(rows, cols, vgap, hgap)
 		mainGrid = wx.FlexGridSizer(3, 1, 5, 5)
 		menu = wx.FlexGridSizer(1, 3, 5, 5)
 		pics = wx.FlexGridSizer(1, 2, 5, 5)
@@ -24,27 +29,28 @@ class page(wx.Panel):
 		horImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
 
 		title = wx.StaticText(page, label="Welcome to DVS")
-		#empty = wx.StaticText(page, label="empty")
 
 		# Displays path of horizontal image, uneditable
 		horPhotoTxt = wx.TextCtrl(page, size=(350,-1), style=wx.TE_READONLY)
 		verPhotoTxt = wx.TextCtrl(page, size=(350,-1), style=wx.TE_READONLY)
 
-
 		nextBtn = wx.Button(page, label='Next')
-
-		# Makes an Instance of UI_Button to call button methods with
-		#interact = interaction()
+		#btnNext.Bind(wx.EVT_BUTTON, lambda event:
+     	#self.onNext(event, self.horPhotoTxt.GetValue(),
+        #			self.vertPhotoTxt.GetValue()))
 
 		# Button to upload a horizontal photo
 		horiBtn = wx.Button(page, label='Horizontal')
-		#horiBtn.Bind(wx.EVT_BUTTON, lambda event: interact.upload(page))
-		#horPhotoTxt.SetValue(interact.getFilePath())
+		horiBtn.Bind(wx.EVT_BUTTON,
+					lambda event: interact.upload(page,verImgCtrl))
+		horPhotoTxt.SetValue(interact.getFilePath())
 
 		# Button to upload a vertical photo
 		vertBtn = wx.Button(page, label='Vertical')
-		#vertBtn.Bind(wx.EVT_BUTTON, lambda event: interact.upload(page))
+		vertBtn.Bind(wx.EVT_BUTTON, 
+					lambda event: interact.upload(page,horImgCtrl))
 
+		# Adding items into the grids
 		mainGrid.AddMany([(menu),(pics),(upload)])
 
 		menu.AddMany([(title),(680,0),(nextBtn)])
