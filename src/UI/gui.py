@@ -1,5 +1,6 @@
 import wx, os
 #from Controller import *
+from UI_Buttons import *
 
 app = wx.App()
 
@@ -35,11 +36,16 @@ verPhotoTxt = wx.TextCtrl(panel, size=(350,-1), style=wx.TE_READONLY)
 
 
 submitBtn = wx.Button(panel, label='Submit')
+# Makes an Instance of UI_Button to call button methods with
+UI_button = UI_Buttons()
 # Button to upload a horizontal photo
 horiBtn = wx.Button(panel, label='Horizontal')
+horiBtn.Bind(wx.EVT_BUTTON, lambda event: UI_button.upload(panel))
 # horiBtn.Bind(wx.EVT_BUTTON, self.horOpenFile)
+horPhotoTxt.SetValue(UI_button.getFilePath())
 # Button to upload a vertical photo
 vertBtn = wx.Button(panel, label='Vertical')
+vertBtn.Bind(wx.EVT_BUTTON, lambda event: UI_button.upload(panel))
 # vertBtn.Bind(wx.EVT_BUTTON, self.horOpenFile)
 
 mainGrid.AddMany([(menu),(pics),(upload)])
