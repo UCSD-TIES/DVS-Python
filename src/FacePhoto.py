@@ -14,7 +14,7 @@ import os
 """
 # NOTE: photoImg is a photo of a face
 
-DEBUG = True
+DEBUG = False
 
 class FacePhoto():
     """ This class has attributes:

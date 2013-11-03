@@ -118,6 +118,7 @@ class Eye:
         # Load the source image and convert to cv mat
         eye = cv.GetMat(self.eyePhoto)
         if DEBUG:
+            print "We're here in findPupil()"
             print "EYE: " + str(eye)
         if not eye:
             return False
@@ -251,7 +252,27 @@ class Eye:
             photo  - TODO: I'm not sure of the type
         """
         # Converting to (topLeftX, topLeftY, bottomRightX, bottomRightY)
-        crop = (region[0]-region[2],region[1]-region[2], region[0] + region[2], region[1] + region[2])
+        if region[0]-region[2] < 0:
+            topLeftX = 0
+        else:
+            topLeftX = region[0]-region[2]
+
+        if region[1]-region[2] < 0:
+            topLeftY = 0
+        else:
+            topLeftY = region[1]-region[2]
+
+        if region[0]+region[2] < 0:
+            bottomRightX = 0
+        else:
+            bottomRightX = region[0]+region[2]
+
+        if region[1]+region[2] < 0:
+            bottomRightY = 0
+        else:
+            bottomRightY = region[1]+region[2] 
+
+        crop = (topLeftX, topLeftY, bottomRightX, bottomRightY)
         if DEBUG:
             print "Region passed to pupil remove: " + str(region)
             print "And here's crop: " + str(crop)
@@ -260,13 +281,21 @@ class Eye:
             cv.ShowImage("We're cropping", self.eyePhoto)
             cv.WaitKey(0)
             cv.DestroyWindow("We're cropping")
-        pupil = cv.GetSubRect(self.eyePhoto, crop)
-        if DEBUG:
-            print "After crop we have type: " + str(type(pupil))
-            cv.ShowImage("Cropped", pupil)
-            cv.WaitKey(0)
-            cv.DestroyWindow("Cropped")
-        return pupil
+        if crop[0] < 0:
+            crop[0] = 0
+        if crop[1] < 0:
+            crop[1] = 0
+        if crop[2] < 0:
+            crop[2] = abs(crop[2])
+        else:
+            pupil = cv.GetSubRect(self.eyePhoto, crop)
+            if DEBUG:
+                print "After crop we have type: " + str(type(pupil))
+                cv.ShowImage("Cropped", pupil)
+                cv.WaitKey(0)
+                cv.DestroyWindow("Cropped")
+            return pupil
+        return None
 
    
         
