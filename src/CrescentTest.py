@@ -6,15 +6,15 @@ import PIL.ImageOps
 import math
 from sys import maxint
 
-im = cv2.imread('C:\Users\Brian H. Nguyen\DVS-Python\src\pics\star.jpg')
+im = cv2.imread('C:/Users/Brian H. Nguyen/DVS-Python/src/pics/redeye1.PNG')
 print type(im)
-#mim = cv.GetMat(im)
-#imarr = np.asarray(mim)
-#print type(imarr)
-#print imarr
 imgray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
-cv.ShowImage("Test", cv.fromarray(imgray))
-cv.WaitKey(0)
-cv.DestroyWindow("Test")
 ret,thresh = cv2.threshold(imgray,127,255,0)
 contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+cv.ShowImage("Test", cv.fromarray(thresh))
+cnt = contours[0]
+len(cnt)
+cv2.drawContours(im,contours,-1,(0,255,0),-1)
+cv.ShowImage("Test", cv.fromarray(im))
+cv.WaitKey(0)
+cv.DestroyWindow("Test")
