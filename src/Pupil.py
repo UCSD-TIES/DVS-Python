@@ -111,7 +111,7 @@ class Pupil:
       bool - True if there were no issues. False for any error
     """
     # Load the source image and convert to cv mat
-    pupil = cv.getMat(self.pupilPhoto)
+    pupil = cv.GetMat(self.pupilPhoto)
     if DEBUG:
         print "Pupil: " + str(pupil)
     if not pupil:
@@ -263,10 +263,29 @@ class Pupil:
     Return:
       bool - True if there were no issues. False for any error
     """
-    # crescent finding logic goes here
-    # dummy variable
-    crescentRegion = None
-    self.setCrescent(crescentRegion)
+    if DEBUG:
+        print "self.pupilPhoto is of type: " + str(type(self.pupilPhoto))
+    # Currently self.pupilPhoto is stored as a cvmat so we need to convert to a 
+    # numpy array before working with it.
+    im = np.asarray(self.pupilPhoto)
+    imgray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
+    # TODO Take away magic 127,255,0 numbers here and make pretty
+    # Variables at the top
+    ret,thresh = cv2.threshold(imgray,127,255,0)
+    contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    if DEBUG:
+        cv.ShowImage("Thresholded", cv.fromarray(thresh))
+        cv.WaitKey(0)
+        cv.DestroyWindow("Thresholded")
+        cnt = contours[0]
+        len(cnt)
+        cv2.drawContours(im,contours,-1,(0,255,0),-1)
+    if DEBUG:
+        cv.ShowImage("Coutours", cv.fromarray(im))
+        cv.WaitKey(0)
+        cv.DestroyWindow("Contours")
+    # find the area of the crescent
+    # store the area of the crescent
 
 #################### Getters ##################################
 

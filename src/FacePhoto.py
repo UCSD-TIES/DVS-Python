@@ -43,10 +43,8 @@ class FacePhoto():
         # Initialize the other attributes to None so that they exist
         self.left = None
         self.right = None
-        """
         if DEBUG:
             print "In the facePhoto __init__"
-        """
         # Set attributes intialized to None by finding them.
         self.findEyes()
 
