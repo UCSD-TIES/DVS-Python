@@ -251,7 +251,7 @@ class Eye:
         Return:
             photo  - TODO: I'm not sure of the type
         """
-        # Converting to (topLeftX, topLeftY, bottomRightX, bottomRightY)
+        # Converting to (topLeftX, topLeftY, width, height)
         if region[0]-region[2] < 0:
             topLeftX = 0
         else:
@@ -262,17 +262,19 @@ class Eye:
         else:
             topLeftY = region[1]-region[2]
 
-        if region[0]+region[2] < 0:
-            bottomRightX = 0
+        if region[2] < 0:
+            width = 0
         else:
-            bottomRightX = region[0]+region[2]
+            width = 2 * region[2]
 
-        if region[1]+region[2] < 0:
-            bottomRightY = 0
+        if region[2] < 0:
+            height = 0
         else:
-            bottomRightY = region[1]+region[2] 
+            height = 2 * region[2] 
 
-        crop = (topLeftX, topLeftY, bottomRightX, bottomRightY)
+        # These calculations will often give long (decimal) values. Pixel based coordinates
+        # must be ints so we cast them
+        crop = (np.int(topLeftX), np.int(topLeftY), np.int(width), np.int(height))
         if DEBUG:
             print "Region passed to pupil remove: " + str(region)
             print "And here's crop: " + str(crop)

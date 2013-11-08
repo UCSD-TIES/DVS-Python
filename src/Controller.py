@@ -76,7 +76,7 @@ def resetEyes(thisPatient, horizontalTuple, verticalTuple):
 
     Return:
         None
-    """
+    """  
     # Set horizontal photo data?
     if horizontalTuple != None:
         # Set left eye coords?
@@ -145,7 +145,7 @@ if (TEST):
 
     # Horizontal photos have the eyes along a horizontal axis
     cwd = os.path.dirname(os.path.abspath(sys.argv[0]))
-    cwd += "/pics/redface3.png"
+    cwd += "/pics/Red06.jpg"
     patient = makePatient(cwd, cwd)
 
     # Take the horizontal image and draw bounding eye boxes
