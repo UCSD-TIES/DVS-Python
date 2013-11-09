@@ -8,13 +8,24 @@ from sys import maxint
 
 im = cv2.imread('/Users/AndreyDenisevich/DVS-Python/src/pics/redeye1.PNG')
 print type(im)
-imgray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
+imblur = cv2.blur(im,(3,3))
+imgray = cv2.cvtColor(imblur,cv2.COLOR_BGR2GRAY)
 ret,thresh = cv2.threshold(imgray,127,255,0)
 contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 cv.ShowImage("Test", cv.fromarray(thresh))
+
+max_area = 0
+for cnt in contours:
+    area = cv2.contourArea(cnt)
+    if area > max_area:
+        max_area = area
+        best_cnt = cnt
+
 cnt = contours[0]
 len(cnt)
 cv2.drawContours(im,contours,-1,(0,255,0),-1)
 cv.ShowImage("Testing", cv.fromarray(im))
 cv.WaitKey(0)
 cv.DestroyWindow("Testing")
+cv.WaitKey(0)
+cv.DestroyAllWindows()
