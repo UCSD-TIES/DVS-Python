@@ -45,7 +45,7 @@ class page(wx.Panel):
                 #self.onNext(event, self.horPhotoTxt.GetValue(),
                 #self.vertPhotoTxt.GetValue()))
 		resetBtn = wx.Button(page, label='Reset')
-		resetBtn.Bind(wx.EVT_BUTTON,lambda event: interact.reset(horImgCtrl, verImgCtrl, horPhotoTxt, verPhotoTxt))
+		resetBtn.Bind(wx.EVT_BUTTON,lambda event: interact.reset(page, horImgCtrl, verImgCtrl, horPhotoTxt, verPhotoTxt))
                 
 		# Button to upload a horizontal photo
 		horiBtn = wx.Button(page, label='Horizontal')
