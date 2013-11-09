@@ -174,11 +174,16 @@ if (TEST):
         y = int(hLeft[1] + hLeftPupil[1])
         cv.Circle(horizontalPhoto, (x, y), hLeftPupil[2], 
             CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
+            #pupil area for crescent ratio
+        aRight = math.pow(hLeftPupil[2],2) * 3.14
     if hRightPupil != None:
         x = int(hRight[0] + hRightPupil[0])
         y = int(hRight[1] + hRightPupil[1])
         cv.Circle(horizontalPhoto, (x, y), hRightPupil[2], 
         CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
+        #pupil area for crescent ratio
+        aRight = math.pow(hRightPupil[2],2) * 3.14
+
 
 
     # Display the image
@@ -228,6 +233,9 @@ if (TEST):
     cv.ShowImage("Horizontal's Right Eye",hRightEyePhoto)
     cv.WaitKey(0)
     cv.DestroyWindow("Horizontal's Right Eye")
+    
+    cv.WaitKey(0)
+    cv.DestroyAllWindows()
 
     print "Horizontal Left Pupil: " + str( patient.horizontal.left.eyePupil.pupil)
     print "Horizontal Right Pupil: " + str( patient.horizontal.right.eyePupil.pupil)

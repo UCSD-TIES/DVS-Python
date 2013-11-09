@@ -6,7 +6,7 @@ import PIL.ImageOps
 import math
 from sys import maxint
 
-im = cv2.imread('C:/Users/Shannon/Documents/GitHub/DVS-Python/src/pics/redeye1.PNG')
+im = cv2.imread('/Users/AndreyDenisevich/DVS-Python/src/pics/redeye1.PNG')
 print type(im)
 imgray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
 ret,thresh = cv2.threshold(imgray,127,255,0)
