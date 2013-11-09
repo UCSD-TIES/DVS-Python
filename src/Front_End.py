@@ -1,7 +1,7 @@
 import wx, os
 #import sys
 #import guitest
-from Controller import *              #   import for later backend stuff
+#from Controller import *              #   import for later backend stuff
 
 
 # file filter for pictures: bitmap and jpeg files

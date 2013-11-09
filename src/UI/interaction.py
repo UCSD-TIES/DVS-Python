@@ -23,7 +23,7 @@ class interaction:
                             IMGMASK, wx.OPEN)
       if upBox.ShowModal() == wx.ID_OK:
         self.upPath = upBox.GetPath()
-        self.upPaint(self.upPath, imgCtrl)
+        self.upPaint(page, self.upPath, imgCtrl)
         text.SetValue(self.upPath)
           
     # reset button
@@ -38,7 +38,7 @@ class interaction:
         page.Refresh()
 
     # display the uploaded picture
-    def upPaint(self, upPath, imgCtrl):
+    def upPaint(self, page, upPath, imgCtrl):
       newImg = wx.Image(upPath, wx.BITMAP_TYPE_ANY)
       
       width = newImg.GetWidth()
@@ -46,6 +46,7 @@ class interaction:
       maxSize = 440
 
       # scale the image to preserving the aspect ratio
+      '''
       if width > height and width > maxSize:
         newWidth = maxSize
         newHeight = height / (width / float(maxSize))
@@ -63,9 +64,19 @@ class interaction:
         newWidth = width * (height / float(maxSize))
       elif height == maxSize:
         newHeight = maxSize
+      '''
 
+      # This scaling works, but may have problems in future
+      if width > height:
+          newWidth = maxSize
+          newHeight = maxSize * height/ width
+      else:
+          newHeight = maxSize
+          newWidth = maxSize * width/ height
+          
       newImg = newImg.Scale(newWidth,newHeight)
       imgCtrl.SetBitmap(wx.BitmapFromImage(newImg))
+      page.Refresh()
 
 
 # page movement functions
