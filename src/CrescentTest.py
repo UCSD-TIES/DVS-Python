@@ -20,12 +20,23 @@ for cnt in contours:
     if area > max_area:
         max_area = area
         best_cnt = cnt
+        
+#find centroids of best_cnt
+M = cv2.moments(best_cnt)
+cx,cy = int(M['m10']/M['m00']), int(M['m01']/M['m00'])
+cv2.circle(imblur, (cx,cy),5,255,-1)
+
+#show it, or exit on waitkey
+cv2.imshow('imblur',imblur)
+cv2.imshow('thresh', thresh)
+if cv2.waitKey(33) == 27:
+    cv.DestroyAllWindows()
 
 cnt = contours[0]
 len(cnt)
 cv2.drawContours(im,contours,-1,(0,255,0),-1)
-cv.ShowImage("Testing", cv.fromarray(im))
-cv.WaitKey(0)
-cv.DestroyWindow("Testing")
+#cv.ShowImage("Testing", cv.fromarray(im))
+#cv.WaitKey(0)
+#cv.DestroyWindow("Testing")
 cv.WaitKey(0)
 cv.DestroyAllWindows()
