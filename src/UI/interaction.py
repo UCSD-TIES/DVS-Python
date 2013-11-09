@@ -16,7 +16,7 @@ class interaction:
 
 # BUTTONS
 
-    # upload button
+    # upload button, 1st page
     def upload(self, page, imgCtrl, text):
       # pops up box for user to upload image
       upBox = wx.FileDialog(page, "Choose an image.", os.getcwd(), "",
@@ -26,7 +26,7 @@ class interaction:
         self.upPaint(page, self.upPath, imgCtrl)
         text.SetValue(self.upPath)
           
-    # reset button
+    # reset button, 1st page
     def reset(self, page, imgCtrl1, imgCtrl2, text1, text2):
         empty = wx.EmptyImage(440,440)     # Create empty image
         # Sets the 2 image controls to empty
@@ -77,6 +77,37 @@ class interaction:
       newImg = newImg.Scale(newWidth,newHeight)
       imgCtrl.SetBitmap(wx.BitmapFromImage(newImg))
       page.Refresh()
+
+    # Next Button for first page
+    def next1(self, hPhotoTxt, vPhotoTxt, page, frame):
+        pleaseText = "Please upload an image."
+        if hPhotoTxt == pleaseText and vPhotoTxt == pleaseText:
+            errorTxt1 = "No Images Detected, Please Enter Images"
+            errMsg1 = wx.MessageDialog(page, errorTxt1, "No Images Detected", wx.OK)
+            errMsg1.ShowModal()
+            errMsg1.Destroy()
+        # When no horizontal image is entered
+        elif hPhotoTxt == pleaseText:
+            errorTxt2 = "No Horizontal Image Detected, Please Enter a Horizontal Image"
+            errMsg2 = wx.MessageDialog(page, errorTxt2, "No Horizontal Image", wx.OK)
+            errMsg2.ShowModal()
+            errMsg2.Destroy()
+        # When no vertical image is entered
+        elif vPhotoTxt == pleaseText:
+            errorTxt3 = "No Vertical Image Detected, Please Enter a Vertical Image"
+            errMsg3 = wx.MessageDialog(page, errorTxt3, "No Vertical Image", wx.OK)
+            errMsg3.ShowModal()
+            errMsg3.Destroy()
+        # Move to next panel
+        else:
+            page.Hide()
+            page2 = page(frame, 2)
+            
+            
+            
+
+        
+        
 
 
 # page movement functions

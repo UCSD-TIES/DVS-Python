@@ -5,6 +5,7 @@ from page import *
 
 app = wx.App()
 
+
 #main frame setup, holds everything
 #wx.Frame(parent, id=-1, title=EmptyString, pos=DefaultPosition,
 #	size=DefaultSize, style=DEFAULT_FRAME_STYLE, name=FrameNameStr)

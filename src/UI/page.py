@@ -2,15 +2,16 @@ import wx, os
 from interaction import *
 
 class page(wx.Panel):
+        # Parent = frame
 	def __init__(self, parent, pageNum):
 		if pageNum == 1:
 			page = wx.Panel(parent)
-			self.pageSetUp(page)
+			self.pageSetUp(page, parent)
 		elif pageNum == 2:
 			page = wx.Panel(parent)
-			self.pageSetUp(page)
+			self.pageSetUp2(page)
 
-	def pageSetUp(self, page):
+	def pageSetUp(self, page, frame):
 		# instantiate the most outer sizer
 		vbox = wx.BoxSizer(wx.VERTICAL)
 		# instantiate the class for interactivity
@@ -44,6 +45,7 @@ class page(wx.Panel):
 		#btnNext.Bind(wx.EVT_BUTTON, lambda event:
                 #self.onNext(event, self.horPhotoTxt.GetValue(),
                 #self.vertPhotoTxt.GetValue()))
+		nextBtn.Bind(wx.EVT_BUTTON,lambda event: interact.next1(horPhotoTxt.GetValue(), verPhotoTxt.GetValue(), page, frame))
 
 		# Button to clear pictures and paths
 		resetBtn = wx.Button(page, label='Reset')
@@ -71,4 +73,19 @@ class page(wx.Panel):
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)
-		
+
+        def pageSetUp2(self, page):
+		# instantiate the most outer sizer
+                vbox = wx.BoxSizer(wx.VERTICAL)
+                # instantiate the class for interactivity
+                interact = interaction()
+
+                ##############SIZERS#####################
+                # mainGrid has three FlexGrids inside it
+                # wx.FlexGridSizer(rows, cols, vgap, hgap)
+                mainGrid = wx.FlexGridSizer(3, 1, 5, 5)
+
+                title = wx.StaticText(page, label="Are these the eyes?")
+                mainGrid.Add(title)
+
+                self.Show()
