@@ -26,6 +26,15 @@ class interaction:
         self.upPaint(self.upPath, imgCtrl)
         text.SetValue(self.upPath)
           
+    # reset button
+    def reset(self, imgCtrl1, imgCtrl2, text1, text2):
+        empty = wx.EmptyImage(440,440)     # Create empty image
+        # Sets the 2 image controls to empty
+        imgCtrl1.SetBitmap(wx.BitmapFromImage(empty))
+        imgCtrl2.SetBitmap(wx.BitmapFromImage(empty))
+        # Resets path names
+        text1.SetValue("Please upload an image.")
+        text2.SetValue("Please upload an image.")
 
     # display the uploaded picture
     def upPaint(self, upPath, imgCtrl):

@@ -16,13 +16,15 @@ class page(wx.Panel):
 		# instantiate the class for interactivity
 		interact = interaction()
 
+                ##############SIZERS#####################
 		# mainGrid has three FlexGrids inside it
 		# wx.FlexGridSizer(rows, cols, vgap, hgap)
 		mainGrid = wx.FlexGridSizer(3, 1, 5, 5)
-		menu = wx.FlexGridSizer(1, 3, 5, 5)
+		menu = wx.FlexGridSizer(1, 5, 5, 5)
 		pics = wx.FlexGridSizer(1, 2, 5, 5)
 		upload = wx.FlexGridSizer(1, 4, 5, 5)
 
+                ###############COMPONENTS################
 		verImg = wx.EmptyImage(440,440)
 		verImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(verImg))
 		horImg = wx.EmptyImage(440,440)
@@ -36,26 +38,31 @@ class page(wx.Panel):
 		verPhotoTxt = wx.TextCtrl(page, size=(350,-1), style=wx.TE_READONLY)
 		verPhotoTxt.SetValue("Please upload an image.")
 
+
+                ###################BUTTONS####################
 		nextBtn = wx.Button(page, label='Next')
 		#btnNext.Bind(wx.EVT_BUTTON, lambda event:
-     	#self.onNext(event, self.horPhotoTxt.GetValue(),
-        #			self.vertPhotoTxt.GetValue()))
-
+                #self.onNext(event, self.horPhotoTxt.GetValue(),
+                #self.vertPhotoTxt.GetValue()))
+		resetBtn = wx.Button(page, label='Reset')
+		resetBtn.Bind(wx.EVT_BUTTON,lambda event: interact.reset(horImgCtrl, verImgCtrl, horPhotoTxt, verPhotoTxt))
+                
 		# Button to upload a horizontal photo
 		horiBtn = wx.Button(page, label='Horizontal')
 		horiBtn.Bind(wx.EVT_BUTTON,
-					lambda event: interact.upload(page,verImgCtrl, horPhotoTxt))
+					lambda event: interact.upload(page,horImgCtrl, horPhotoTxt))
 
 		# Button to upload a vertical photo
 		vertBtn = wx.Button(page, label='Vertical')
 		vertBtn.Bind(wx.EVT_BUTTON, 
-					lambda event: interact.upload(page,horImgCtrl, verPhotoTxt))
+					lambda event: interact.upload(page,verImgCtrl, verPhotoTxt))
 
+                ###################ADDING_STUFF#################
 		# Adding items into the grids
 		mainGrid.AddMany([(menu),(pics),(upload)])
 
-		menu.AddMany([(title),(680,0),(nextBtn)])
-		pics.AddMany([(verImgCtrl),(horImgCtrl)])
+		menu.AddMany([(title),(315,0), (resetBtn), (320,0),(nextBtn)])
+		pics.AddMany([(horImgCtrl),(verImgCtrl)])
 		upload.AddMany([(horPhotoTxt),(horiBtn),(verPhotoTxt),(vertBtn)])
 
 
