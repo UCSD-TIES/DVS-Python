@@ -82,7 +82,7 @@ class Pupil:
     crescent = None
     # Set the attributes initialized to None by finding them
     self.findCrescent()
-    self.findWhiteDot()
+    #self.findWhiteDot()
 
   def findWhiteDot(self):
     ## The code here is based on findPupil() from Eye.py
@@ -110,8 +110,8 @@ class Pupil:
     Return:
       bool - True if there were no issues. False for any error
     """
-    # Load the source image and convert to cv mat
-    pupil = cv.GetMat(self.pupilPhoto)
+    # pupilPhoto is being stored as a mat so there is no need to convert it.
+    #pupil = cv.GetMat(self.pupilPhoto)
     if DEBUG:
         print "Pupil: " + str(pupil)
     if not pupil:

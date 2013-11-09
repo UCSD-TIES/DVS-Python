@@ -116,14 +116,16 @@ class Eye:
             bool - True if there were no issues. False for any error
         """
         # Load the source image and convert to cv mat
-        eye = cv.GetMat(self.eyePhoto)
+        # eyePhoto is already stored as a mat. There is no need to convert
+        #eye = cv.GetMat(self.eyePhoto)
         if DEBUG:
             print "We're here in findPupil()"
-            print "EYE: " + str(eye)
-        if not eye:
+            print "EYE: " + str(self.eyePhoto)
+            print "The type of eyePhoto is: " + str(type(self.eyePhoto))
+        if not self.eyePhoto:
             return False
         # Convert to a numpy array
-        eyeArr = np.asarray(eye)
+        eyeArr = np.asarray(self.eyePhoto)
 
         # Find the red in the photo
         thresh = cv2.inRange(eyeArr,LOWER_RED_RANGE,UPPER_RED_RANGE)
@@ -221,10 +223,10 @@ class Eye:
                 if DEBUG:
                     print "Final Circle = " + str(finalCircle)
                     print "We're drawin some circles now"
-                    draw_circles(finalCircle,eye)
+                    draw_circles(finalCircle,self.eyePhoto)
 
         if DEBUG:
-            cv.ShowImage("Eye with Circles",eye)
+            cv.ShowImage("Eye with Circles",self.eyePhoto)
             cv.WaitKey(0)
             cv.DestroyWindow("Eye with Circles")
 

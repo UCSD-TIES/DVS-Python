@@ -109,8 +109,8 @@ def resetPupils(thisPatient, horizontalTuple, verticalTuple):
         where leftPupil and rightPupil are of the form
         (centerX, centerY, radius)
 
-    Return:
-        None
+    Return: 
+        None 
     """
     # Set horizontal photo data?
     if horizontalTuple != None:
@@ -152,7 +152,7 @@ if (TEST):
     horizontalPhoto = patient.getHorizontal()
 
     # Reset the eye regions and pupil regions
-    print "HHHHHHHHHHHHHHHHHHHHHHHHHHHResetting the eye regions and the pupil regions "
+    print "Resetting the eye regions and the pupil regions "
     resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
     resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
 

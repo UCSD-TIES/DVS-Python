@@ -6,7 +6,7 @@ import PIL.ImageOps
 import math
 from sys import maxint
 
-im = cv2.imread('C:/Users/Brian H. Nguyen/DVS-Python/src/pics/redeye1.PNG')
+im = cv2.imread('C:/Users/Shannon/Documents/GitHub/DVS-Python/src/pics/redeye1.PNG')
 print type(im)
 imgray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
 ret,thresh = cv2.threshold(imgray,127,255,0)
@@ -15,6 +15,6 @@ cv.ShowImage("Test", cv.fromarray(thresh))
 cnt = contours[0]
 len(cnt)
 cv2.drawContours(im,contours,-1,(0,255,0),-1)
-cv.ShowImage("Test", cv.fromarray(im))
+cv.ShowImage("Testing", cv.fromarray(im))
 cv.WaitKey(0)
-cv.DestroyWindow("Test")
+cv.DestroyWindow("Testing")
