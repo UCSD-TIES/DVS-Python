@@ -1,30 +1,35 @@
-import wx, os
-#from Controller import *
-from interaction import *
+import wx
 from page import *
 
-app = wx.App()
+class base(wx.Frame):
+	def __init__(self, parent, id, title, pos, size, style):
+		#main frame setup, holds everything
+		#wx.Frame(parent, id=-1, title=EmptyString, pos=DefaultPosition,
+		#		size=DefaultSize, style=DEFAULT_FRAME_STYLE, name=FrameNameStr)
+		base = wx.Frame(parent, id, title, pos, size, style)
+		pageSizer = wx.BoxSizer(wx.VERTICAL)
+		base.SetSizer(pageSizer)
+		#add things to panel, then add to the sizers
+
+		#initialize pages from page class
+		#see page.py constructor for parameter usage
+		page1inst = page(base, 1)
+		#page2inst = page(base, 2)
+
+		page1obj = page1inst.getPage()
+		#page2obj = page2inst.getPage()
+		#page2obj.Hide()
+		#page2inst.ShowYourself()
 
 
-#main frame setup, holds everything
-#wx.Frame(parent, id=-1, title=EmptyString, pos=DefaultPosition,
-#	size=DefaultSize, style=DEFAULT_FRAME_STYLE, name=FrameNameStr)
-base = wx.Frame(None, -1, 'Digital Vision Screening',
-	pos = wx.DefaultPosition,
-	size = (1000,600),
-	style = wx.DEFAULT_FRAME_STYLE)
+		pageSizer.Add(page1obj, 1, wx.EXPAND)
+		pageSizer.Add(page2obj, 1, wx.EXPAND)
 
-#add things to panel, then add to the sizers
+		#page3.GetParent().GetSizer().Show(page2)
+		#page3.GetParent().GetSizer().Layout()
 
-#initialize pages from page class
-#see page.py constructor for parameter usage
-page1 = page(base, 1)
 
-#setup base frame
-base.Centre()
-#base.Maximize()
-base.Show()
-
-# The mainloop is an endless cycle. It catches and dispatches all events 
-# that exist during the life of our application.
-app.MainLoop()
+		#setup base frame
+		base.Centre()
+		#base.Maximize()
+		base.Show()
