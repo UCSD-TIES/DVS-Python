@@ -9,6 +9,7 @@ from PIL import Image
 import PIL.ImageOps
 import math
 from sys import maxint
+import os
 
 
 DEBUG = True
@@ -71,6 +72,10 @@ class Pupil:
     """
     # Set the cropped photo of the pupil
     self.pupilPhoto = newPupilPhoto
+    # Write the pupilPhoto to disk in order to debug the
+    # single-segment buffer object error findCrescent is currently doing
+    print "PupilPhoto is of type: " + str(type(newPupilPhoto))
+    cv2.imwrite("PUPILPHOTO.jpg",np.asarray(newPupilPhoto))
     # Set the pupil region to the region passed in
     self.pupil = pupilRegion
     # Initialize the other attributes to None so that they exist
@@ -267,7 +272,11 @@ class Pupil:
         print "self.pupilPhoto is of type: " + str(type(self.pupilPhoto))
     # Currently self.pupilPhoto is stored as a cvmat so we need to convert to a 
     # numpy array before working with it.
-    im = np.asarray(self.pupilPhoto)
+    #im = np.asarray(self.pupilPhoto)
+
+    # read the im from disc using relative paths
+    im = cv2.imread("C:/Users/Shannon/Documents/Github/DVS-Python/src/PUPILPHOTO.jpg")
+
     if DEBUG:
         print "im is of type: " + str(type(im))
     imblur = cv2.blur(im,(3,3))
@@ -277,6 +286,8 @@ class Pupil:
     ret,thresh = cv2.threshold(imgray,127,255,0)
     contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     if DEBUG:
+        print "Contours is of type: " + str(type(contours))
+        print "Contours is of id: " + str(hex(id(contours)))
         print "Countours: " + str(contours)
         cv.ShowImage("Thresholded", cv.fromarray(thresh))
         cv.WaitKey(0)
