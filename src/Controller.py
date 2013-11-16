@@ -83,19 +83,31 @@ def resetEyes(thisPatient, horizontalTuple, verticalTuple):
         if horizontalTuple[0] != None:
             # I'm just gunna go direct because this isn't final code
             # TODO: write the appropriate methods for this
-            thisPatient.horizontal.left.setEyeRegion(horizontalTuple[0])
+            if thisPatient.horizontal.left != None:
+                thisPatient.horizontal.left.setEyeRegion(horizontalTuple[0])
+            else:
+                print "Error: thisPatient.horizontal.left == None"
         # Set right eye coords?
         if horizontalTuple[1] != None:
-            thisPatient.horizontal.right.setEyeRegion(horizontalTuple[1])
+            if thisPatient.horizontal.right != None:
+                thisPatient.horizontal.right.setEyeRegion(horizontalTuple[1])
+            else:
+                print "Error: thisPatient.horizontal.right == None"
 
     # Set vert photo data?
     if verticalTuple != None:
         # Set left eye coords?
         if verticalTuple[0] != None:
-            thisPatient.vertical.left.setEyeRegion(verticalTuple[0])
+            if thisPatient.vertical.left != None:
+                thisPatient.vertical.left.setEyeRegion(verticalTuple[0])
+            else:
+                print "Error: thisPatient.vertical.left == None"
         # Set right eye coords?
         if verticalTuple[1] != None:
-            thisPatient.vertical.right.setEyeRegion(verticalTuple[1])
+            if thisPatient.vertical.right != None:
+                thisPatient.vertical.right.setEyeRegion(verticalTuple[1])
+            else:
+                print "Error: thisPatient.vertical.right == None"
 
 def resetPupils(thisPatient, horizontalTuple, verticalTuple):
     """ Resets (or sets) the pupil regions in the eyes
@@ -144,17 +156,19 @@ if (TEST):
     print "Making patient object..."
 
     # Horizontal photos have the eyes along a horizontal axis
-    cwd = os.path.dirname(os.path.abspath(sys.argv[0]))
-    cwd += "/pics/Red06.jpg"
-    patient = makePatient(cwd, cwd)
+    horiz = os.path.dirname(os.path.abspath(sys.argv[0]))
+    horiz += "/pics/Red06.jpg"
+    vert = os.path.dirname(os.path.abspath(sys.argv[0]))
+    vert += "/pics/Red11.jpg"
+    patient = makePatient(horiz, vert)
 
     # Take the horizontal image and draw bounding eye boxes
     horizontalPhoto = patient.getHorizontal()
 
     # Reset the eye regions and pupil regions
     print "Resetting the eye regions and the pupil regions "
-    resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
-    resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
+    #resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
+    #resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
 
 
     hLeft = patient.getEyeRegion(True,True)

@@ -12,7 +12,7 @@ from sys import maxint
 import os
 
 
-DEBUG = True
+DEBUG = False
 
 ########## Descriptive Variables for tweakable constants ###############
 ### I just directly copied them from the Eye.py for now,
@@ -74,7 +74,8 @@ class Pupil:
     self.pupilPhoto = newPupilPhoto
     # Write the pupilPhoto to disk in order to debug the
     # single-segment buffer object error findCrescent is currently doing
-    print "PupilPhoto is of type: " + str(type(newPupilPhoto))
+    if DEBUG:
+        print "PupilPhoto is of type: " + str(type(newPupilPhoto))
     cv2.imwrite("PUPILPHOTO.jpg",np.asarray(newPupilPhoto))
     # Set the pupil region to the region passed in
     self.pupil = pupilRegion
