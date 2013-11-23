@@ -1,17 +1,14 @@
 import wx, os
-from page import *
 
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
 		  "|*.jpg; *.jpeg; *.jpe; *.jfif|" \
 		  "Raw Files |*.cr2; *crw|" \
 		  "All Files |*.*"
 
-class interaction:
+class interaction():
 	upPath = ""
 	def __init__(self):
 		upPath = ""
-
-
 
 # BUTTONS
 
@@ -78,9 +75,9 @@ class interaction:
 	  page.Refresh()
 
 	# Next Button for first page
-	def next1(self, hPhotoTxt, vPhotoTxt, page, base):
-		pleaseText = "Please upload an image."
+	def next1(self, hPhotoTxt, vPhotoTxt, page1, page2):
 		'''
+		pleaseText = "Please upload an image."
 		if hPhotoTxt == pleaseText and vPhotoTxt == pleaseText:
 			errorTxt1 = "No Images Detected, Please Enter Images"
 			errMsg1 = wx.MessageDialog(page, errorTxt1, "No Images Detected", wx.OK)
@@ -101,9 +98,13 @@ class interaction:
 		# Move to next panel
 		else:
 		'''
-		page.Hide()
-		page2inst = page(base, 2)
-		page2inst.ShowYourself()
+		page1.Hide()
+		page2.Raise()
+		page2.SetPosition((0,0))
+		page2.Fit()
+		page2.GetParent().GetSizer().Show(page2)
+		page2.GetParent().GetSizer().Layout()
+		
 
 
 # page movement functions

@@ -4,25 +4,30 @@ from interaction import *
 class page(wx.Panel):
 	# Parent = frame
 
-	def __init__(self, parent, pageNum):
+	def __init__(self, parent, baseSizer):
+		self.page1 = wx.Panel(parent)
+		self.pageSetUp(self.page1)
+		baseSizer.Add(self.page1, 1, wx.EXPAND)
+		self.page2 = wx.Panel(parent)
+		self.pageSetUp2(self.page2)
+		baseSizer.Add(self.page2, 1, wx.EXPAND)
+		self.ShowYourself(self.page2)
+		self.page2.Hide()
+
+	def getPage(self, pageNum):
 		if pageNum == 1:
-			self.page = wx.Panel(parent)
-			self.pageSetUp(self.page, parent)
+			return self.page1
 		elif pageNum == 2:
-			self.page = wx.Panel(parent)
-			self.pageSetUp2(self.page)
+			return self.page2
 
-	def getPage(self):
-		return self.page
+	def ShowYourself(self, page):
+		page.Raise()
+		page.SetPosition((0,0))
+		page.Fit()
+		page.GetParent().GetSizer().Show(page)
+		page.GetParent().GetSizer().Layout()
 
-	def ShowYourself(self):
-		self.page.Raise()
-		self.page.SetPosition((0,0))
-		self.page.Fit()
-		self.page.GetParent().GetSizer().Show(self.page)
-		self.page.GetParent().GetSizer().Layout()
-
-	def pageSetUp(self, page, frame):
+	def pageSetUp(self, page):
 		# instantiate the most outer sizer
 		vbox = wx.BoxSizer(wx.VERTICAL)
 		# instantiate the class for interactivity
@@ -57,7 +62,7 @@ class page(wx.Panel):
 				#self.onNext(event, self.horPhotoTxt.GetValue(),
 				#self.vertPhotoTxt.GetValue()))
 		nextBtn.Bind(wx.EVT_BUTTON,
-			lambda event: interact.next1(horPhotoTxt.GetValue(), verPhotoTxt.GetValue(), page, frame))
+			lambda event: interact.next1(horPhotoTxt.GetValue(), verPhotoTxt.GetValue(), self.page1, self.page2))
 
 		# Button to clear pictures and paths
 		resetBtn = wx.Button(page, label='Reset')
@@ -81,7 +86,6 @@ class page(wx.Panel):
 		menu.AddMany([(title),(315,0),(resetBtn), (301,0),(nextBtn)])
 		pics.AddMany([(horImgCtrl),(verImgCtrl)])
 		upload.AddMany([(horPhotoTxt),(horiBtn),(verPhotoTxt),(vertBtn)])
-
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)
