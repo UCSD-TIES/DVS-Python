@@ -253,27 +253,39 @@ class Eye:
         Return:
             photo  - TODO: I'm not sure of the type
         """
+
+        maxX = self.eyePhoto.rows
+        maxY = self.eyePhoto.cols
+
         # Converting to (topLeftX, topLeftY, width, height)
+        # and boundary checking
         if region[0]-region[2] < 0:
             topLeftX = 0
+        elif region[0]-region[2] > maxX:
+            topLeftX = maxX
         else:
             topLeftX = region[0]-region[2]
 
         if region[1]-region[2] < 0:
             topLeftY = 0
+        elif region[1]-region[2] > maxY:
+            topLeftY = maxY
         else:
             topLeftY = region[1]-region[2]
 
         if region[2] < 0:
             width = 0
+            height = 0
+        elif topLeftX + (2 * region[2]) > maxX: 
+            width = maxX - topLeftX
         else:
             width = 2 * region[2]
 
-        if region[2] < 0:
-            height = 0
+        if topLeftY + (2 * region[2]) > maxY: 
+            height = maxY - topLeftY
         else:
-            height = 2 * region[2] 
-
+            height = 2 * region[2]
+        
         # These calculations will often give long (decimal) values. Pixel based coordinates
         # must be ints so we cast them
         crop = (np.int(topLeftX), np.int(topLeftY), np.int(width), np.int(height))
@@ -282,6 +294,7 @@ class Eye:
             print "And here's crop: " + str(crop)
             print "Before crop we have type: " + str(type(self.eyePhoto))
             print self.eyePhoto
+            print "The num of rows is " + str(self.eyePhoto.rows)
             cv.ShowImage("We're cropping", self.eyePhoto)
             cv.WaitKey(0)
             cv.DestroyWindow("We're cropping")
