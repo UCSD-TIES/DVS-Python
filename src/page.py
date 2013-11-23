@@ -1,6 +1,5 @@
 import wx, os
 from interaction import *
-from Controller import *
 
 class page(wx.Panel):
 	# Parent = frame
@@ -83,7 +82,7 @@ class page(wx.Panel):
 		# Adding items into the grids
 		mainGrid.AddMany([(menu),(upload),(pics)])
 
-		menu.AddMany([(title),(315,0),(resetBtn), (301,0),(nextBtn)])
+		menu.AddMany([(title),(315,0),(resetBtn), (275,0),(nextBtn)])
 		pics.AddMany([(horImgCtrl),(verImgCtrl)])
 		upload.AddMany([(horPhotoTxt),(horiBtn),(verPhotoTxt),(vertBtn)])
 
@@ -100,9 +99,24 @@ class page(wx.Panel):
 		# mainGrid has three FlexGrids inside it
 		# wx.FlexGridSizer(rows, cols, vgap, hgap)
 		mainGrid = wx.FlexGridSizer(3, 1, 5, 5)
+		menu = wx.FlexGridSizer(1, 5, 5, 5)
+		pics = wx.FlexGridSizer(1, 2, 5, 5)
+
+		###############COMPONENTS################
+		verImg = wx.EmptyImage(440,440)
+		verImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(verImg))
+		horImg = wx.EmptyImage(440,440)
+		horImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
 
 		title = wx.StaticText(page, label="Are these the eyes?")
-		mainGrid.Add(title)
+
+		yesBtn = wx.Button(page, label='Yes')
+
+		noBtn = wx.Button(page, label='No')
+
+		mainGrid.AddMany([(menu),(pics)])
+		menu.AddMany([(title),(560,0),(yesBtn),(noBtn)])
+		pics.AddMany([(horImgCtrl),(verImgCtrl)])
 
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
