@@ -2,7 +2,6 @@ import wx, os
 from interaction import *
 
 class page(wx.Panel):
-	# Parent = frame
 
 	def __init__(self, parent, baseSizer):
 		self.page1 = wx.Panel(parent)
