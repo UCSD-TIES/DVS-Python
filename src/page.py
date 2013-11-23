@@ -1,5 +1,6 @@
 import wx, os
 from interaction import *
+from Controller import *
 
 class page(wx.Panel):
 	# Parent = frame
@@ -11,7 +12,6 @@ class page(wx.Panel):
 		self.page2 = wx.Panel(parent)
 		self.pageSetUp2(self.page2)
 		baseSizer.Add(self.page2, 1, wx.EXPAND)
-		self.ShowYourself(self.page2)
 		self.page2.Hide()
 
 	def getPage(self, pageNum):

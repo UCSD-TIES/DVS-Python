@@ -99,23 +99,19 @@ class interaction():
 		else:
 		'''
 		page1.Hide()
-		page2.Raise()
-		page2.SetPosition((0,0))
-		page2.Fit()
-		page2.GetParent().GetSizer().Show(page2)
-		page2.GetParent().GetSizer().Layout()
+		self.ShowYourself(page2)
 		
 
 
 # page movement functions
-'''
-	def ShowYourself(self):
-		self.Raise()
-		self.SetPosition((0,0))
-		self.Fit()
-		self.GetParent().GetSizer().Show(self)
-		self.GetParent().GetSizer().Layout()
 
+	def ShowYourself(self, page):
+		page.Raise()
+		page.SetPosition((0,0))
+		page.Fit()
+		page.GetParent().GetSizer().Show(page)
+		page.GetParent().GetSizer().Layout()
+'''
 	def OnBack(self, event):
 		self.Hide()
 		self.GetParent().panel0.ShowYourself()
