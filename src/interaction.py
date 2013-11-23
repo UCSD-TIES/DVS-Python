@@ -1,17 +1,14 @@
 import wx, os
-from page import *
 
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
 		  "|*.jpg; *.jpeg; *.jpe; *.jfif|" \
 		  "Raw Files |*.cr2; *crw|" \
 		  "All Files |*.*"
 
-class interaction:
+class interaction():
 	upPath = ""
 	def __init__(self):
 		upPath = ""
-
-
 
 # BUTTONS
 
@@ -78,9 +75,9 @@ class interaction:
 	  page.Refresh()
 
 	# Next Button for first page
-	def next1(self, hPhotoTxt, vPhotoTxt, page, base):
-		pleaseText = "Please upload an image."
+	def next1(self, hPhotoTxt, vPhotoTxt, page1, page2):
 		'''
+		pleaseText = "Please upload an image."
 		if hPhotoTxt == pleaseText and vPhotoTxt == pleaseText:
 			errorTxt1 = "No Images Detected, Please Enter Images"
 			errMsg1 = wx.MessageDialog(page, errorTxt1, "No Images Detected", wx.OK)
@@ -101,20 +98,20 @@ class interaction:
 		# Move to next panel
 		else:
 		'''
-		page.Hide()
-		page2inst = page(base, 2)
-		page2inst.ShowYourself()
+		page1.Hide()
+		self.ShowYourself(page2)
+		
 
 
 # page movement functions
-'''
-	def ShowYourself(self):
-		self.Raise()
-		self.SetPosition((0,0))
-		self.Fit()
-		self.GetParent().GetSizer().Show(self)
-		self.GetParent().GetSizer().Layout()
 
+	def ShowYourself(self, page):
+		page.Raise()
+		page.SetPosition((0,0))
+		page.Fit()
+		page.GetParent().GetSizer().Show(page)
+		page.GetParent().GetSizer().Layout()
+'''
 	def OnBack(self, event):
 		self.Hide()
 		self.GetParent().panel0.ShowYourself()

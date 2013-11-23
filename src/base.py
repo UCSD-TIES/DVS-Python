@@ -13,22 +13,9 @@ class base(wx.Frame):
 
 		#initialize pages from page class
 		#see page.py constructor for parameter usage
-		page1inst = page(base, 1)
-		#page2inst = page(base, 2)
 
-		page1obj = page1inst.getPage()
-		#page2obj = page2inst.getPage()
-		#page2obj.Hide()
-		#page2inst.ShowYourself()
-
-
-		pageSizer.Add(page1obj, 1, wx.EXPAND)
-		pageSizer.Add(page2obj, 1, wx.EXPAND)
-
-		#page3.GetParent().GetSizer().Show(page2)
-		#page3.GetParent().GetSizer().Layout()
-
-
+		page(base, pageSizer)
+		#put pages into a vector so all pages can modified at once
 		#setup base frame
 		base.Centre()
 		#base.Maximize()

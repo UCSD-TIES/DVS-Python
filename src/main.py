@@ -1,8 +1,5 @@
 import wx, os
-#from Controller import *
-from interaction import *
 from base import *
-from page import *
 
 app = wx.App()
 
