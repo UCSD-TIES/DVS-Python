@@ -302,8 +302,7 @@ if (TEST):
     cv.WaitKey(0)
     cv.DestroyWindow("Horizontal's Right Eye")
     
-    cv.WaitKey(0)
-    cv.DestroyAllWindows()
+
 
     print "\nHorizontal Left Pupil: "
     patient.horizontal.left.eyePupil.toString()
