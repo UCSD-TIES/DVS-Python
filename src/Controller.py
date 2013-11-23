@@ -251,6 +251,13 @@ if (TEST):
     cv.WaitKey(0)
     cv.DestroyAllWindows()
 
-    print "Horizontal Left Pupil: " + str( patient.horizontal.left.eyePupil.pupil)
-    print "Horizontal Right Pupil: " + str( patient.horizontal.right.eyePupil.pupil)
+    print "\nHorizontal Left Pupil: "
+    patient.horizontal.left.eyePupil.toString()
+    print "\nHorizontal Right Pupil: "
+    patient.horizontal.right.eyePupil.toString()
+
+    print "\nVertical Left Pupil: "
+    patient.vertical.left.eyePupil.toString()
+    print "\nVertical Right Pupil: "
+    patient.vertical.right.eyePupil.toString()
 

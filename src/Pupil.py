@@ -63,7 +63,7 @@ class Pupil:
                       in the center of the pupil by the light from the flash. The tuple is 
                       formatted as such: (centerX, centerY, radius)
       tuple whiteDotCenter - the center of the whiteDot formatted as (x,y)
-      region crescent - the region of the pupil's crescent
+      float crescent - the area of the pupil's crescent region
   """
 
   def __init__(self, newPupilPhoto, pupilRegion):
@@ -85,7 +85,7 @@ class Pupil:
       self.center = (pupilRegion[0], pupilRegion[1])
     self.whiteDot = None
     self.whiteDotCenter = None
-    crescent = None
+    self.crescent = None
     # Set the attributes initialized to None by finding them
     self.findCrescent()
     #self.findWhiteDot()
@@ -261,7 +261,7 @@ class Pupil:
     """ Detects a crescent within a pupil region.
 
     Uses opencv libarary methods to detect a crescent. Then initializes crescent
-    to the region found. Returns false if any errors are encountered
+    to the area of the region found. Returns false if any errors are encountered
 
     Args:
       None
@@ -307,14 +307,19 @@ class Pupil:
             max_area = area
             best_cnt = cnt
             
-    #find centroids of best_cnt
-    M = cv2.moments(best_cnt)
-    cx,cy = int(M['m10']/M['m00']), int(M['m01']/M['m00'])
-    cv2.circle(imblur, (cx,cy),5,255,-1)
+    #set the max_area found into the actual structure
+    self.setCrescent(max_area)
+
+    
 
     #show it, or exit on waitkey
     #cv2.imshow('imblur',imblur)
     if DEBUG:
+        #find centroids of best_cnt
+        M = cv2.moments(best_cnt)
+        cx,cy = int(M['m10']/M['m00']), int(M['m01']/M['m00'])
+        cv2.circle(imblur, (cx,cy),5,255,-1)
+
         cv2.imshow('thresh', thresh)
         if cv2.waitKey(33) == 27:
             cv.DestroyAllWindows()
@@ -328,6 +333,13 @@ class Pupil:
         #cv.DestroyWindow("Testing")
         cv.WaitKey(0)
         cv.DestroyAllWindows()
+
+  def toString(self):
+    print "tuple pupil(in the form (centerX, centerY, radius)): " + str(self.pupil)
+    print "tuple center(in the form (centerX, centerY, radius)): " + str(self.center)
+    print "tuple whiteDot(in the form (centerX, centerY, radius)): " + str(self.whiteDot)
+    print "tuple whiteDotCenter(in the form (x,y)): " + str(self.whiteDotCenter)
+    print "float crescent (the area of the crescent): " + str(self.crescent)
     
 
 #################### Getters ##################################
