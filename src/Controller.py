@@ -144,6 +144,58 @@ def resetPupils(thisPatient, horizontalTuple, verticalTuple):
         if verticalTuple[1] != None:
             thisPatient.vertical.right.setPupil(verticalTuple[1])
 
+def resetWhiteDot(thisPatient, horizontalTuple, verticalTuple):
+    """ Resets the eye regions to whatever 
+
+    Args:
+        Patient thisPatient - the patient to change
+        tuple horizontalTuple - (leftCoordinates, rightCoordinates)
+        tuple verticalTuple - (leftCoordinates, rightCoordinates)
+        where leftCoordinates and rightCoordinates are formatted as 
+        (topLeftX, topLeftY, bottomRightX, bottomRightY)
+
+
+    Return:
+        None
+    """  
+    if thisPatient.horizontal.left.eyePupil == None:
+        print "Error: thisPatient.horizontal.left.eyePupil == None"
+        return
+    # Set horizontal photo data?
+    if horizontalTuple != None:
+        # Set left eye coords?
+        if horizontalTuple[0] != None:
+            # I'm just gunna go direct because this isn't final code
+            # TODO: write the appropriate methods for this
+            if thisPatient.horizontal.left != None:
+                thisPatient.horizontal.left.eyePupil.setwhiteDot(horizontalTuple[0])
+            else:
+                print "Error: thisPatient.horizontal.left == None"
+        # Set right eye coords?
+        if horizontalTuple[1] != None:
+            if thisPatient.horizontal.right != None:
+                thisPatient.horizontal.right.eyePupil.setwhiteDot(horizontalTuple[1])
+            else:
+                print "Error: thisPatient.horizontal.right == None"
+
+    if thisPatient.horizontal.right.eyePupil == None:
+        print "Error: thisPatient.horizontal.left.eyePupil == None"
+        return
+    # Set vert photo data?
+    if verticalTuple != None:
+        # Set left eye coords?
+        if verticalTuple[0] != None:
+            if thisPatient.vertical.left != None:
+                thisPatient.vertical.left.eyePupil.setwhiteDot(verticalTuple[0])
+            else:
+                print "Error: thisPatient.vertical.left == None"
+        # Set right eye coords?
+        if verticalTuple[1] != None:
+            if thisPatient.vertical.right != None:
+                thisPatient.vertical.right.eyePupil.setwhiteDot(verticalTuple[1])
+            else:
+                print "Error: thisPatient.vertical.right == None"
+
 def drawOnEyes(thisPatient):
     """ Draws rectangles around the facephoto of a horizontal and vertical photo
         and displays them in succession
@@ -169,6 +221,8 @@ if (TEST):
     print "Resetting the eye regions and the pupil regions "
     #resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
     #resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
+
+    resetWhiteDot(patient, ((100, 100, 10), (150, 150, 10)), ((100, 100,10),(150,150,10,10)))
 
 
     hLeft = patient.getEyeRegion(True,True)

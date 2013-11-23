@@ -88,7 +88,7 @@ class Eye:
         self.eyePupil = None
  
         # Set the rest of the attributes by finding them
-        self.findPupil()
+        # self.findPupil()
 
 
 ################# Utility Methods #########################################

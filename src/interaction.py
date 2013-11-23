@@ -9,6 +9,7 @@ class interaction():
 	upPath = ""
 	def __init__(self):
 		upPath = ""
+		patient = None
 
 # BUTTONS
 

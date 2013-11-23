@@ -4,6 +4,7 @@ from interaction import *
 class page(wx.Panel):
 
 	def __init__(self, parent, baseSizer):
+		self.interact = interaction()
 		self.page1 = wx.Panel(parent)
 		self.pageSetUp(self.page1)
 		baseSizer.Add(self.page1, 1, wx.EXPAND)
@@ -29,7 +30,7 @@ class page(wx.Panel):
 		# instantiate the most outer sizer
 		vbox = wx.BoxSizer(wx.VERTICAL)
 		# instantiate the class for interactivity
-		interact = interaction()
+
 
 		##############SIZERS#####################
 		# mainGrid has three FlexGrids inside it
@@ -60,22 +61,22 @@ class page(wx.Panel):
 				#self.onNext(event, self.horPhotoTxt.GetValue(),
 				#self.vertPhotoTxt.GetValue()))
 		nextBtn.Bind(wx.EVT_BUTTON,
-			lambda event: interact.next1(horPhotoTxt.GetValue(), verPhotoTxt.GetValue(), self.page1, self.page2))
+			lambda event: self.interact.next1(horPhotoTxt.GetValue(), verPhotoTxt.GetValue(), self.page1, self.page2))
 
 		# Button to clear pictures and paths
 		resetBtn = wx.Button(page, label='Reset')
 		resetBtn.Bind(wx.EVT_BUTTON,
-			lambda event: interact.reset(page, horImgCtrl, verImgCtrl, horPhotoTxt, verPhotoTxt))
+			lambda event: self.interact.reset(page, horImgCtrl, verImgCtrl, horPhotoTxt, verPhotoTxt))
 				
 		# Button to upload a horizontal photo
 		horiBtn = wx.Button(page, label='Horizontal')
 		horiBtn.Bind(wx.EVT_BUTTON,
-			lambda event: interact.upload(page, horImgCtrl, horPhotoTxt))
+			lambda event: self.interact.upload(page, horImgCtrl, horPhotoTxt))
 
 		# Button to upload a vertical photo
 		vertBtn = wx.Button(page, label='Vertical')
 		vertBtn.Bind(wx.EVT_BUTTON, 
-			lambda event: interact.upload(page, verImgCtrl, verPhotoTxt))
+			lambda event: self.interact.upload(page, verImgCtrl, verPhotoTxt))
 
 		###################ADDING_STUFF#################
 		# Adding items into the grids
@@ -92,7 +93,6 @@ class page(wx.Panel):
 		# instantiate the most outer sizer
 		vbox = wx.BoxSizer(wx.VERTICAL)
 		# instantiate the class for interactivity
-		interact = interaction()
 
 		##############SIZERS#####################
 		# mainGrid has three FlexGrids inside it
