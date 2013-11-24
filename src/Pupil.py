@@ -59,9 +59,6 @@ class Pupil:
       tuple pupil - a tuple representing the circluar region of the pupil. The tuple
                     is formatted as such: (centerX, centerY, radius)
       tuple center - the center point of the pupil region formatted as (x,y)
-      tuple whiteDot - a tuple representing the circular region of the white dot created 
-                      in the center of the pupil by the light from the flash. The tuple is 
-                      formatted as such: (centerX, centerY, radius)
       tuple whiteDotCenter - the center of the whiteDot formatted as (x,y)
       float crescent - the area of the pupil's crescent region
   """
@@ -83,12 +80,11 @@ class Pupil:
     self.center = None
     if pupilRegion != None:
       self.center = (pupilRegion[0], pupilRegion[1])
-    self.whiteDot = None
     self.whiteDotCenter = None
     self.crescent = None
     # Set the attributes initialized to None by finding them
     self.findCrescent()
-    #self.findWhiteDot()
+    self.findWhiteDot()
 
   def findWhiteDot(self):
     ## The code here is based on findPupil() from Eye.py
@@ -116,144 +112,92 @@ class Pupil:
     Return:
       bool - True if there were no issues. False for any error
     """
-    # pupilPhoto is being stored as a mat so there is no need to convert it.
-    #pupil = cv.GetMat(self.pupilPhoto)
-    if DEBUG:
-        print "Pupil: " + str(pupil)
-    if not pupil:
-        print "CANT FIND IMAGE!"
-        return False
     
-    # Convert to a numpy array
-    pupilArr = np.asarray(pupil)
+    # Image Processing
     
-    # Grayscale Image
-    gray = cv2.cvtColor(pupilArr, cv.CV_BGR2GRAY)
-     
-    # Erode and dilate the image to get rid of noise
-    erode = cv2.erode(gray,None,iterations = ERODE_ITERATIONS)
+    # read the im from disc using absolute path
+    im = cv2.imread("C:/Users/Shannon/Documents/Github/DVS-Python/src/PUPILPHOTO.jpg")
+
     if DEBUG:
-        cv.ShowImage("Erode", cv.fromarray(erode))
+        print "im is of type: " + str(type(im))
+    im2 = im.copy()
+    imblur = cv2.blur(im,(3,3))
+    imgray = cv2.cvtColor(imblur,cv2.COLOR_BGR2GRAY)
+
+    if DEBUG:
+        cv.ShowImage("Grayscaled", cv.fromarray(imgray)) # Grayscale Picture
         cv.WaitKey(0)
-        cv.DestroyWindow("Erode")
-    dilate = cv2.dilate(erode,None,iterations = DILATE_ITERATIONS)
+        cv.DestroyWindow("Grayscaled")
+    ret,thresh = cv2.threshold(imgray,127,255,0)  # ret : type float. thresh: type :numpy.ndarray
+    
     if DEBUG:
-        cv.ShowImage("Dilate", cv.fromarray(dilate))
-        cv.WaitKey(0)
-        cv.DestroyWindow("Dilate")
-    
-    
-    ## Plz add convolution here!! 
-    ## Don't forget to change the input to thresh if u do convolution
-    
-    
-    # Find the white in the photo (to binary image)
-    thresh = cv2.inRange(erode,LOWER_WHITE_RANGE,UPPER_WHITE_RANGE)
-    if DEBUG:
-        cv.ShowImage("Binary", cv.fromarray(thresh))
+        cv.ShowImage("Binary", cv.fromarray(thresh))    # Binary Picture
         cv.WaitKey(0)
         cv.DestroyWindow("Binary")
+    
+    contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    if DEBUG:
+        print("Number of Contours Found: " + str(len(contours)))
+        cv2.drawContours(im,contours,-1,(0,255,0),0)  # Final argument for drawContours() : 0 = Outline, -1 = Fill-In
+        cv.ShowImage("All Contours", cv.fromarray(im))
+        cv.WaitKey(0)
+        cv.DestroyWindow("All Contours")
+
+    # Finding center coordinates of photo
+    photoCenterX = len(im[0])/2
+    photoCenterY = len(im)/2
+
+    if DEBUG:
+        print("Photo's Center Coordinates: (" + str(photoCenterX) + ", " + str(photoCenterY) + ")" )
+
+
+    min_area = maxint
+
+    
+    ## This is finding WhiteDot by comparing contour centroids
+    shortestDist = maxint
+    closestCnt = contours[0];
+    closestX = closestY = 0
+    for cnt in contours:
+        M = cv2.moments(cnt)
+        ## Ignores all contours with M00 = 0, 
+        ## because that will cause divide by 0 error
+        if (M['m00'] != 0.0):
+            centroid_x = int(M['m10']/M['m00'])
+            centroid_y = int(M['m01']/M['m00'])
+            if DEBUG:
+                print cnt
+                print("\n")
+                print M['m10'], M['m00']
+                print M['m01'], M['m00']
+                print ("\n\n")
         
-    # Invert the threshholded photo
-    ## Question: Do we need the invert?? I left in here since was in findPupil...
-    rows = len(thresh)
-    for i in range(0,rows):
-        for j in range(0,len(thresh[i])):
-            thresh[i][j] = 255 - thresh[i][j]
-    
-    if DEBUG:
-        cv.ShowImage("Inverted Thresh", cv.fromarray(thresh))
-        cv.WaitKey(0)
-        cv.DestroyWindow("Inverted Thresh")
-    
-    # Find countours in the image
-    contours, hierarchy = cv2.findContours(dilate,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-    
-    # Draw the contours in white
-    cv2.drawContours(dilate,contours,-1,(255,255,255),-1)
-    if DEBUG:
-        cv.ShowImage("Contours", cv.fromarray(dilate))
-        cv.WaitKey(0)
-        cv.DestroyWindow("Contours")
-
-    smooth = cv.fromarray(dilate)
-    cv.Smooth(cv.fromarray(dilate),smooth, cv.CV_GAUSSIAN,APERTURE_WIDTH,APERTURE_HEIGHT)
-    if DEBUG:
-        cv.ShowImage("Smooth", smooth)
-        cv.WaitKey(0)
-        cv.DestroyWindow("Smooth")
-    
-    ## Canny -> finds the edges in the image
-    ## Reference : http://docs.opencv.org/modules/imgproc/doc/feature_detection.html
-    cv.Canny(smooth, smooth, CANNY_THRESHOLD_1, CANNY_THRESHOLD_2)
-    if DEBUG:
-        cv.ShowImage("Canny", smooth)
-        cv.WaitKey(0)
-        cv.DestroyWindow("Canny")
-
-    storage = cv.CreateMat((self.eyePhoto).width, 1, cv.CV_32FC3)
-    CIRCLE_MAX_RADIUS = self.eyePhoto.width
-    cv.HoughCircles(smooth, storage, cv.CV_HOUGH_GRADIENT, CIRCLE_RESOLUTION_RATIO, CIRCLE_MIN_DISTANCE, 
-        CIRCLE_THRESHOLD_1, CIRCLE_THRESHOLD_2, CIRCLE_MIN_RADIUS, CIRCLE_MAX_RADIUS)
-    if DEBUG:
-        print "STORAGE: " + str(storage)
-        print np.asarray(storage)
-    
-    if storage.rows != 0 and storage.cols != 0:
-        # NOTE: Each circle is stored as centerX, centerY, radius
-        storage = np.asarray(storage)
-
-        # Find the most centered circle
-        centerX = self.eyePhoto.width / 2
-        centerY = self.eyePhoto.height / 2
-        if DEBUG:
-            print "CenterX = " + str(centerX)
-            print "CenterY = " + str(centerY)
-        minDist = maxint
-        minCircleIndex = -1
-        for i in range(len(storage) - 1):
-            #radius = storage[i, 0, 2]
+            dist = np.sqrt(np.square(centroid_x - photoCenterX) + np.square(centroid_y - photoCenterY))
             if DEBUG:
-                print "We're on circle elimination with i = "  + str(i)
-                print "MinDist = " + str(minDist)
-                print "minCircleIndex = " + str(minCircleIndex)
-            x = storage[i, 0, 0]
-            y = storage[i, 0, 1]
-            dist = math.hypot(centerX - x, centerY - y)
-            if dist < minDist:
-                minDist = dist
-                minCircleIndex = i
-        finalCircle = None
-        if minCircleIndex != -1:
-            finalCircle = np.array([[storage[minCircleIndex, 0, 0], storage[minCircleIndex, 0, 1],storage[minCircleIndex, 0, 2]]])
-            if DEBUG:
-                print "Final Circle = " + str(finalCircle)
-                print "We're drawin some circles now"
-                draw_circles(finalCircle,pupil)
-    if DEBUG:
-        cv.ShowImage("Pupil with Circles",pupil)
+                print ("Distance to center = " + str(dist))
+
+            ## At the end of the loop, the closest contour to center of image is stored
+            if (dist < shortestDist):
+                closestX = centroid_x
+                closestY = centroid_y
+                shortestDist = dist
+                closestCnt = cnt
+
+    self.setWhiteDotCenter( (closestX,closestY) )
+
+    if DEBUG:           
+        #print (shortestDist)
+        print ("Closest Contour: (" + str(closestX) + ", " + str(closestY) + ")")
+        
+        ## This only prints the one contour that is passed, on top of the image
+        cv2.drawContours(im,[closestCnt],0,(255,0,0),-1)
+        cv2.drawContours(im2, [closestCnt], 0, (255,0,0), 1)
+        cv.ShowImage("White Dot with Contours", cv.fromarray(im))
         cv.WaitKey(0)
-        cv.DestroyWindow("Pupil with Circles")
-    
-    # Do the various setting that needs to be done for the class structure
-    if finalCircle != None:
-        # The pupil region is stored as a tuple : (centerXCoor, centerYCoor, radius)
-        region = (finalCircle[0,0], finalCircle[0,1], finalCircle[0,2])
-        self.setPupil(region)
-        return True
-    else:
-        region = None
-        self.setPupil(region)
-        # A pupil was not found
-        return False 
-    
-    
-    '''
-    Placeholder if 
-    self.setWhiteDot(whiteDot)
-    if self.whiteDot != None:
-        self.whiteDotCenter = (self.whiteDot[0], self.whiteDot[1])
-    '''
+        cv.DestroyWindow("White Dot with Contours")
+        cv.ShowImage("White Dot only", cv.fromarray(im2))
+        cv.WaitKey(0)
+        cv.DestroyWindow("White Dot only")
 
 
 
@@ -275,7 +219,7 @@ class Pupil:
     # numpy array before working with it.
     #im = np.asarray(self.pupilPhoto)
 
-    # read the im from disc using relative paths
+    # read the im from disc using absolute path
     im = cv2.imread("C:/Users/Shannon/Documents/Github/DVS-Python/src/PUPILPHOTO.jpg")
 
     if DEBUG:
@@ -337,7 +281,6 @@ class Pupil:
   def toString(self):
     print "tuple pupil(in the form (centerX, centerY, radius)): " + str(self.pupil)
     print "tuple center(in the form (centerX, centerY, radius)): " + str(self.center)
-    print "tuple whiteDot(in the form (centerX, centerY, radius)): " + str(self.whiteDot)
     print "tuple whiteDotCenter(in the form (x,y)): " + str(self.whiteDotCenter)
     print "float crescent (the area of the crescent): " + str(self.crescent)
     
@@ -351,10 +294,6 @@ class Pupil:
   def getCenter(self):
     """ Returns a tuple representing the center of the pupil """
     return self.center
-
-  def getWhiteDot(self):
-    """ Returns a tuple representing the whiteDot """
-    return self.whiteDot
 
   def getWhiteDotCenter(self):
     """ Returns a tuple representing the center of the whiteDot """
@@ -375,13 +314,9 @@ class Pupil:
     """ Sets the pupil's center to the tuple passed in as argument """
     self.center = newCenter
 
-  def setwhiteDot(self,newRegion):
-    """ Sets the whiteDot's region to the tuple passed in as argument """
-    self.whiteDot = newRegion
-
   def setWhiteDotCenter(self,newCenter):
     """ Sets the whiteDot's center to the tuple passed in as argument """
-    self.WhiteDotCenter = newCenter
+    self.whiteDotCenter = newCenter
 
   def setCrescent(self,newCrescent):
     """ Sets the pupil's crescent to the region passed in as argument """
