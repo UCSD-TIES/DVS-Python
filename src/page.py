@@ -57,16 +57,15 @@ class page(wx.Panel):
 
 		###################BUTTONS####################
 		nextBtn = wx.Button(page, label='Next')
-		#btnNext.Bind(wx.EVT_BUTTON, lambda event:
-				#self.onNext(event, self.horPhotoTxt.GetValue(),
-				#self.vertPhotoTxt.GetValue()))
 		nextBtn.Bind(wx.EVT_BUTTON,
-			lambda event: self.interact.next1(horPhotoTxt.GetValue(), verPhotoTxt.GetValue(), self.page1, self.page2))
+			lambda event: self.interact.next1(horPhotoTxt.GetValue(), 
+				verPhotoTxt.GetValue(), self.page1, self.page2))
 
 		# Button to clear pictures and paths
 		resetBtn = wx.Button(page, label='Reset')
 		resetBtn.Bind(wx.EVT_BUTTON,
-			lambda event: self.interact.reset(page, horImgCtrl, verImgCtrl, horPhotoTxt, verPhotoTxt))
+			lambda event: self.interact.reset(page, horImgCtrl, 
+				verImgCtrl, horPhotoTxt, verPhotoTxt))
 				
 		# Button to upload a horizontal photo
 		horiBtn = wx.Button(page, label='Horizontal')
@@ -82,7 +81,7 @@ class page(wx.Panel):
 		# Adding items into the grids
 		mainGrid.AddMany([(menu),(upload),(pics)])
 
-		menu.AddMany([(title),(315,0),(resetBtn), (275,0),(nextBtn)])
+		menu.AddMany([(title),(595,0),(resetBtn),(nextBtn)])
 		pics.AddMany([(horImgCtrl),(verImgCtrl)])
 		upload.AddMany([(horPhotoTxt),(horiBtn),(verPhotoTxt),(vertBtn)])
 

@@ -1,4 +1,6 @@
 import wx, os
+#from Controller import *
+#use makepatient method from controller
 
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
 		  "|*.jpg; *.jpeg; *.jpe; *.jfif|" \
@@ -6,9 +8,7 @@ IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
 		  "All Files |*.*"
 
 class interaction():
-	upPath = ""
 	def __init__(self):
-		upPath = ""
 		patient = None
 
 # BUTTONS
