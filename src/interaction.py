@@ -10,8 +10,8 @@ IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
 class interaction():
 	def __init__(self):
 		self.patient = None
-		self.horizontalPath = ""
-		self.verticalPath = ""
+		self.horizontalPath = None
+		self.verticalPath = None
 
 	# BUTTONS
 
@@ -21,13 +21,13 @@ class interaction():
 	  	upBox = wx.FileDialog(page, "Choose an image.", os.getcwd(), "",
 							IMGMASK, wx.OPEN)
 	  	if upBox.ShowModal() == wx.ID_OK:
-			self.upPath = upBox.GetPath()
-			self.upPaint(page, self.upPath, imgCtrl)
-			text.SetValue(self.upPath)
+			upPath = upBox.GetPath()
+			self.upPaint(page, upPath, imgCtrl)
+			text.SetValue(upPath)
 	  	if orientation == 0:
-	  		self.horizontalPath = self.upPath
+	  		self.horizontalPath = upPath
 	  	elif orientation == 1:
-	  		self.verticalPath = self.upPath
+	  		self.verticalPath = upPath
 		  
 	# reset button, 1st page
 	def reset(self, page, imgCtrl1, imgCtrl2, text1, text2):
@@ -105,12 +105,13 @@ class interaction():
 		# Move to next panel
 		else:
 		'''
-		self.patient = makePatient(self.horizontalPath, self.verticalPath) 
+		#self.patient = makePatient(self.horizontalPath, self.verticalPath) 
+
 		self.upPaint(page2, self.verticalPath, vImgCtrl)
 		self.upPaint(page2, self.horizontalPath, hImgCtrl)
 		page1.Hide()
 		self.ShowYourself(page2)
-
+		
 		
 
 
@@ -122,6 +123,7 @@ class interaction():
 		page.Fit()
 		page.GetParent().GetSizer().Show(page)
 		page.GetParent().GetSizer().Layout()
+		page.Refresh()
 	'''
 	def OnBack(self, event):
 		self.Hide()

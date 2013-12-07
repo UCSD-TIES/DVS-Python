@@ -61,30 +61,30 @@ class page(wx.Panel):
 		nextBtn = wx.Button(page, label='Next')
 		nextBtn.Bind(wx.EVT_BUTTON,
 			lambda event: self.interact.next1(horPhotoTxt.GetValue(), 
-				verPhotoTxt.GetValue(), self.page1, self.page2, self.horImgCtrl, self.verImgCtrl))
+				verPhotoTxt.GetValue(), self.page1, self.page2, self.hor2ImgCtrl, self.ver2ImgCtrl))
 
 		# Button to clear pictures and paths
 		resetBtn = wx.Button(page, label='Reset')
 		resetBtn.Bind(wx.EVT_BUTTON,
-			lambda event: self.interact.reset(page, horImgCtrl, 
-				verImgCtrl, horPhotoTxt, verPhotoTxt))
+			lambda event: self.interact.reset(page, self.horImgCtrl, 
+				self.verImgCtrl, horPhotoTxt, verPhotoTxt))
 				
 		# Button to upload a horizontal photo
 		horiBtn = wx.Button(page, label='Horizontal')
 		horiBtn.Bind(wx.EVT_BUTTON,
-			lambda event: self.interact.upload(page, horImgCtrl, horPhotoTxt, 0))
+			lambda event: self.interact.upload(page, self.horImgCtrl, horPhotoTxt, 0))
 
 		# Button to upload a vertical photo
 		vertBtn = wx.Button(page, label='Vertical')
 		vertBtn.Bind(wx.EVT_BUTTON, 
-			lambda event: self.interact.upload(page, verImgCtrl, verPhotoTxt, 1))
+			lambda event: self.interact.upload(page, self.verImgCtrl, verPhotoTxt, 1))
 
 		###################ADDING_STUFF#################
 		# Adding items into the grids
 		mainGrid.AddMany([(menu),(upload),(pics)])
 
 		menu.AddMany([(title),(595,0),(resetBtn),(nextBtn)])
-		pics.AddMany([(horImgCtrl),(verImgCtrl)])
+		pics.AddMany([(self.horImgCtrl),(self.verImgCtrl)])
 		upload.AddMany([(horPhotoTxt),(horiBtn),(verPhotoTxt),(vertBtn)])
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
@@ -104,9 +104,9 @@ class page(wx.Panel):
 
 		###############COMPONENTS################
 		verImg = wx.EmptyImage(440,440)
-		self.verImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(verImg))
+		self.ver2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(verImg))
 		horImg = wx.EmptyImage(440,440)
-		self.horImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
+		self.hor2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
 
 		#self.interact.upPaint(page, self.interact.verticalPath, verImgCtrl)
 		#self.interact.upPaint(page, self.interact.horizontalPath, horImgCtrl)
@@ -119,7 +119,7 @@ class page(wx.Panel):
 
 		mainGrid.AddMany([(menu),(pics)])
 		menu.AddMany([(title),(560,0),(yesBtn),(noBtn)])
-		pics.AddMany([(horImgCtrl),(verImgCtrl)])
+		pics.AddMany([(self.hor2ImgCtrl),(self.ver2ImgCtrl)])
 
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
