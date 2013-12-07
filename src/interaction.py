@@ -9,12 +9,14 @@ IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
 
 class interaction():
 	def __init__(self):
-		patient = None
+		self.patient = None
+		self.horizontalPath = None
+		self.verticalPath = None
 
 # BUTTONS
 
 	# upload button, 1st page
-	def upload(self, page, imgCtrl, text):
+	def upload(self, page, imgCtrl, text, orientation):
 	  # pops up box for user to upload image
 	  upBox = wx.FileDialog(page, "Choose an image.", os.getcwd(), "",
 							IMGMASK, wx.OPEN)
@@ -22,6 +24,10 @@ class interaction():
 		self.upPath = upBox.GetPath()
 		self.upPaint(page, self.upPath, imgCtrl)
 		text.SetValue(self.upPath)
+	  if orientation == 0:
+	  	self.horizontalPath = self.upPath
+	  else if orientation == 1:
+	  	self.verticalPath = self.upPath
 		  
 	# reset button, 1st page
 	def reset(self, page, imgCtrl1, imgCtrl2, text1, text2):
@@ -99,8 +105,10 @@ class interaction():
 		# Move to next panel
 		else:
 		'''
+		self.patient = makePatient(self.horizontalPath, self.verticalPath) 
 		page1.Hide()
 		self.ShowYourself(page2)
+
 		
 
 

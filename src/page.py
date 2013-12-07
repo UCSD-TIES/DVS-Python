@@ -70,12 +70,12 @@ class page(wx.Panel):
 		# Button to upload a horizontal photo
 		horiBtn = wx.Button(page, label='Horizontal')
 		horiBtn.Bind(wx.EVT_BUTTON,
-			lambda event: self.interact.upload(page, horImgCtrl, horPhotoTxt))
+			lambda event: self.interact.upload(page, horImgCtrl, horPhotoTxt, 0))
 
 		# Button to upload a vertical photo
 		vertBtn = wx.Button(page, label='Vertical')
 		vertBtn.Bind(wx.EVT_BUTTON, 
-			lambda event: self.interact.upload(page, verImgCtrl, verPhotoTxt))
+			lambda event: self.interact.upload(page, verImgCtrl, verPhotoTxt, 1))
 
 		###################ADDING_STUFF#################
 		# Adding items into the grids
@@ -105,6 +105,9 @@ class page(wx.Panel):
 		verImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(verImg))
 		horImg = wx.EmptyImage(440,440)
 		horImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
+
+        self.interact.upPaint(page, self.interact.verticalPath, verImgCtrl)
+        self.interact.upPaint(page, self.interact.horizontalPath, horImgCtrl)
 
 		title = wx.StaticText(page, label="Are these the eyes?")
 
