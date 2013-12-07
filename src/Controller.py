@@ -12,7 +12,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = True
+TEST = False
 
 CIRCLE_COLOR = (0, 255, 0)
 THICKNESS = 1
