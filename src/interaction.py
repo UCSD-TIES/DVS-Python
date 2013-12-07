@@ -105,8 +105,7 @@ class interaction():
 		# Move to next panel
 		else:
 		'''
-		#self.patient = makePatient(self.horizontalPath, self.verticalPath) 
-
+		#self.patient = makePatient(self.horizontalPath, self.verticalPath)
 		self.upPaint(page2, self.verticalPath, vImgCtrl)
 		self.upPaint(page2, self.horizontalPath, hImgCtrl)
 		page1.Hide()

@@ -111,7 +111,7 @@ class page(wx.Panel):
 		#self.interact.upPaint(page, self.interact.verticalPath, verImgCtrl)
 		#self.interact.upPaint(page, self.interact.horizontalPath, horImgCtrl)
 
-		title = wx.StaticText(page, label="Are these the eyes?")
+		title = wx.StaticText(page, label="Do the boxes frame the eyes?")
 
 		yesBtn = wx.Button(page, label='Yes')
 

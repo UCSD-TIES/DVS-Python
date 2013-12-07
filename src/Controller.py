@@ -199,6 +199,9 @@ def resetWhiteDot(thisPatient, horizontalTuple, verticalTuple):
 def drawOnEyes(thisPatient):
     """ Draws rectangles around the facephoto of a horizontal and vertical photo
         and displays them in succession
+
+    cv.Rectangle(image,(topleftX,topLeftY),(bottomRightX,bottomRightY),
+                cv.RGB(255,0,0),1,8,0)
     """
 
 ######################Testing ######################
