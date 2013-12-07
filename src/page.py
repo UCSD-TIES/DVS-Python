@@ -59,7 +59,7 @@ class page(wx.Panel):
 		nextBtn = wx.Button(page, label='Next')
 		nextBtn.Bind(wx.EVT_BUTTON,
 			lambda event: self.interact.next1(horPhotoTxt.GetValue(), 
-				verPhotoTxt.GetValue(), self.page1, self.page2))
+				verPhotoTxt.GetValue(), self.page1, self.page2, self.page2.horImgCtrl, self.page2.verImgCtrl))
 
 		# Button to clear pictures and paths
 		resetBtn = wx.Button(page, label='Reset')
@@ -106,8 +106,8 @@ class page(wx.Panel):
 		horImg = wx.EmptyImage(440,440)
 		horImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
 
-		self.interact.upPaint(page, self.interact.verticalPath, verImgCtrl)
-		self.interact.upPaint(page, self.interact.horizontalPath, horImgCtrl)
+		#self.interact.upPaint(page, self.interact.verticalPath, verImgCtrl)
+		#self.interact.upPaint(page, self.interact.horizontalPath, horImgCtrl)
 
 		title = wx.StaticText(page, label="Are these the eyes?")
 

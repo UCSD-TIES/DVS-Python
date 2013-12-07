@@ -82,7 +82,7 @@ class interaction():
 	  	page.Refresh()
 
 	# Next Button for first page
-	def next1(self, hPhotoTxt, vPhotoTxt, page1, page2):
+	def next1(self, hPhotoTxt, vPhotoTxt, page1, page2, hImgCtrl, vImgCtrl):
 		'''
 		pleaseText = "Please upload an image."
 		if hPhotoTxt == pleaseText and vPhotoTxt == pleaseText:
@@ -106,6 +106,8 @@ class interaction():
 		else:
 		'''
 		self.patient = makePatient(self.horizontalPath, self.verticalPath) 
+		self.upPaint(page2, self.verticalPath, vImgCtrl)
+		self.upPaint(page2, self.horizontalPath, hImgCtrl)
 		page1.Hide()
 		self.ShowYourself(page2)
 
