@@ -11,7 +11,7 @@ import PIL.ImageOps
 import math
 from sys import maxint
 
-DEBUG = False
+DEBUG = True
 
 ########## Descriptive Variables for tweakable constants ###############
 
@@ -254,8 +254,12 @@ class Eye:
             photo  - TODO: I'm not sure of the type
         """
 
-        maxX = self.eyePhoto.rows
+        # Should these be rows - 1 and cols -1 to avoid going 
+        # off the edge of the picture?
+        maxX = self.eyePhoto.rows 
         maxY = self.eyePhoto.cols
+
+        print "In pupilRemove starting boundary checking"
 
         # Converting to (topLeftX, topLeftY, width, height)
         # and boundary checking
@@ -273,9 +277,9 @@ class Eye:
         else:
             topLeftY = region[1]-region[2]
 
-        if region[2] < 0:
-            width = 0
-            height = 0
+        if region[2] <= 0:
+            width = 1
+            height = 1
         elif topLeftX + (2 * region[2]) > maxX: 
             width = maxX - topLeftX
         else:
@@ -285,10 +289,15 @@ class Eye:
             height = maxY - topLeftY
         else:
             height = 2 * region[2]
+
+        print "In pupilRemove ending boundary checking"
+
         
         # These calculations will often give long (decimal) values. Pixel based coordinates
         # must be ints so we cast them
         crop = (np.int(topLeftX), np.int(topLeftY), np.int(width), np.int(height))
+
+        print "In pupilRemove. Crop is: " + str(crop)
         if DEBUG:
             print "Region passed to pupil remove: " + str(region)
             print "And here's crop: " + str(crop)
@@ -298,21 +307,30 @@ class Eye:
             cv.ShowImage("We're cropping", self.eyePhoto)
             cv.WaitKey(0)
             cv.DestroyWindow("We're cropping")
+
+        '''
         if crop[0] < 0:
-            crop[0] = 0
+            crop[0] = 0  
         if crop[1] < 0:
             crop[1] = 0
+
         if crop[2] < 0:
             crop[2] = abs(crop[2])
+        elif crop[2] = 0:
+            crop[2] = 1
         else:
-            pupil = cv.GetSubRect(self.eyePhoto, crop)
-            if DEBUG:
-                print "After crop we have type: " + str(type(pupil))
-                cv.ShowImage("Cropped", pupil)
-                cv.WaitKey(0)
-                cv.DestroyWindow("Cropped")
-            return pupil
-        return None
+        '''
+        if DEBUG:
+            print "Finally doing cv subrect"
+
+       
+        pupil = cv.GetSubRect(self.eyePhoto, crop)
+        if DEBUG:
+            print "After crop we have type: " + str(type(pupil))
+            cv.ShowImage("Cropped", pupil)
+            cv.WaitKey(0)
+            cv.DestroyWindow("Cropped")
+        return pupil
 
    
         
@@ -345,7 +363,10 @@ class Eye:
     def setPupil(self,region):
         """ Sets eyePupil to a new Pupil object constructed from
             the region passed in as argument"""
+        print "Annnnnnnd, right here"
+        print "We're in set pupil just before pupilRemove and our region is: " + str(region)
         pupilPhoto = self.pupilRemove(region)
+        print "We're in setPupil just before making a new pupil object"
         self.eyePupil = Pupil(pupilPhoto, region)
 
     
