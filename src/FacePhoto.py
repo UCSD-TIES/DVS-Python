@@ -16,6 +16,7 @@ import os
 
 DEBUG = False
 
+
 class FacePhoto():
     """ This class has attributes:
         IplImage facePhoto - a photo of the whole face
@@ -169,6 +170,8 @@ class FacePhoto():
         """ Sets or resets both eye objects """
         if DEBUG:
             print "We're here in setEyes now"
+            print "leftregion: " + str(leftRegion)
+            print "rightRegion: " + str(rightRegion)
         self.setLeftEye(leftRegion)
         self.setRightEye(rightRegion)
         return "setEyes successfully called"

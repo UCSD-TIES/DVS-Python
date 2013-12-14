@@ -11,7 +11,7 @@ import PIL.ImageOps
 import math
 from sys import maxint
 
-DEBUG = True
+DEBUG = False
 
 ########## Descriptive Variables for tweakable constants ###############
 
@@ -192,6 +192,7 @@ class Eye:
             print "STORAGE: " + str(storage)
             print np.asarray(storage)
             
+        finalCircle = None
         if storage.rows != 0 and storage.cols != 0:
             # NOTE: Each circle is stored as centerX, centerY, radius
             storage = np.asarray(storage)
@@ -217,7 +218,6 @@ class Eye:
                     minDist = dist
                     minCircleIndex = i
 
-            finalCircle = None
             if minCircleIndex != -1:
                 finalCircle = np.array([[storage[minCircleIndex, 0, 0], storage[minCircleIndex, 0, 1],storage[minCircleIndex, 0, 2]]])
                 if DEBUG:
@@ -237,8 +237,8 @@ class Eye:
             self.setPupil(region)
             return True
         else:
-            region = None
-            self.setPupil(region)
+            #region = None
+            #self.setPupil(region)
             # A pupil was not found
             return False
 
@@ -259,7 +259,9 @@ class Eye:
         maxX = self.eyePhoto.rows 
         maxY = self.eyePhoto.cols
 
-        print "In pupilRemove starting boundary checking"
+        if DEBUG:
+            print "In pupilRemove starting boundary checking"
+            print "region: " + str(region)
 
         # Converting to (topLeftX, topLeftY, width, height)
         # and boundary checking

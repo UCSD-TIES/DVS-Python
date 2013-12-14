@@ -12,7 +12,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = False
+TEST = True 
 
 CIRCLE_COLOR = (0, 255, 0)
 THICKNESS = 1
@@ -78,7 +78,9 @@ def resetEyes(thisPatient, horizontalTuple, verticalTuple):
         None
     """  
     # Set horizontal photo data?
-    if horizontalTuple != None:
+    if horizontalTuple != None and thisPatient.horizontal != None:
+        thisPatient.horizontal.setEyes(horizontalTuple[0],horizontalTuple[1])
+        '''
         # Set left eye coords?
         if horizontalTuple[0] != None:
             # I'm just gunna go direct because this isn't final code
@@ -93,21 +95,29 @@ def resetEyes(thisPatient, horizontalTuple, verticalTuple):
                 thisPatient.horizontal.right.setEyeRegion(horizontalTuple[1])
             else:
                 print "Error: thisPatient.horizontal.right == None"
+        '''
 
     # Set vert photo data?
-    if verticalTuple != None:
+    if verticalTuple != None and thisPatient.vertical != None:
+        thisPatient.vertical.setEyes(verticalTuple[0],verticalTuple[1])
+        '''
         # Set left eye coords?
         if verticalTuple[0] != None:
+
+            
             if thisPatient.vertical.left != None:
                 thisPatient.vertical.left.setEyeRegion(verticalTuple[0])
             else:
                 print "Error: thisPatient.vertical.left == None"
+            
         # Set right eye coords?
+        
         if verticalTuple[1] != None:
             if thisPatient.vertical.right != None:
                 thisPatient.vertical.right.setEyeRegion(verticalTuple[1])
             else:
                 print "Error: thisPatient.vertical.right == None"
+        '''
 
 def resetPupils(thisPatient, horizontalTuple, verticalTuple):
     """ Resets (or sets) the pupil regions in the eyes
@@ -222,7 +232,7 @@ if (TEST):
 
     # Reset the eye regions and pupil regions
     print "Resetting the eye regions and the pupil regions "
-    #resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
+    resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
     #resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
 
     # We don't actually need the circle of the white dot  and findWhiteDot
@@ -311,12 +321,26 @@ if (TEST):
 
 
     print "\nHorizontal Left Pupil: "
-    patient.horizontal.left.eyePupil.toString()
+    if horizontal.left.eyePupil != None:
+        patient.horizontal.left.eyePupil.toString()
+    else:
+        print "Cannot print"
+
     print "\nHorizontal Right Pupil: "
-    patient.horizontal.right.eyePupil.toString()
+    if horizontal.right.eyePupil != None:
+        patient.horizontal.right.eyePupil.toString()
+    else:
+        print "Cannot print"
 
     print "\nVertical Left Pupil: "
-    patient.vertical.left.eyePupil.toString()
+    if vertical.left.eyePupil != None:
+        patient.vertical.left.eyePupil.toString()
+    else:
+        print "Cannot print"
+        
     print "\nVertical Right Pupil: "
-    patient.vertical.right.eyePupil.toString()
+    if vertical.right.eyePupil != None:
+        patient.vertical.right.eyePupil.toString()
+    else:
+        print "Cannot print"
 
