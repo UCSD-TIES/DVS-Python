@@ -12,7 +12,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = False 
+TEST = True 
 
 CIRCLE_COLOR = (0, 255, 0)
 THICKNESS = 1
@@ -62,6 +62,9 @@ def makePatient(horizontalPath, verticalPath):
         print "Here's our right region again: " + str(thisPatient.horizontal.right.eyeRegion)
 
     return thisPatient
+
+
+### Reset Methods ###
 
 def resetEyes(thisPatient, horizontalTuple, verticalTuple):
     """ Resets the eye regions to whatever 
@@ -206,6 +209,56 @@ def resetWhiteDot(thisPatient, horizontalTuple, verticalTuple):
             else:
                 print "Error: thisPatient.vertical.right == None"
 
+
+### Get Methods ###
+
+def getEyeCoors(thisPatient):
+    """ Returns a tuple of coordinates that represent the bounding rectangles
+        of the eyes. The tuple returned is formatted thus:
+
+        (horizontalLeft, horizontalRight, verticalLeft, verticalRight)
+
+         where each element in the tuple above is itself a tuple formatted as:
+
+        (topLeftX, topLeftY, width, height)
+
+        So if the bounding box for the horizontal photo's left eye had a top left 
+        corner with coordinates (50,20), a width of 30, and a height of 5 we would return:
+
+        ((50,20,30,5),(hrtlx,hrtly,hrw,hrh),(vltlx,vltly,vlw,vlh),(vrtlx,vrtly,vrw,vrh))
+
+    """
+
+    hLeft = patient.getEyeRegion(True,True)
+    hLeftWidth = hLeft[2] - hLeft[0]
+    hLeftHeight = hLeft[3] - hLeft[1]
+
+    hRight = patient.getEyeRegion(True,False)
+    hRightWidth = hRight[2] - hRight[0]
+    hRightHeight = hRight[3] - hRight[1]
+
+    vLeft = patient.getEyeRegion(False,True)
+    vLeftWidth = vLeft[2] - vLeft[0]
+    vLeftHeight = vLeft[3] - vLeft[1]
+
+    vRight = patient.getEyeRegion(False,False)
+    vRightWidth = vRight[2] - vRight[0]
+    vRightHeight = vRight[3] - vRight[1]
+
+    if DEBUG:
+        print hLeft
+        print hRight
+        print vLeft
+        print vRight
+
+        print "Done eyecoors"
+
+        print ((hLeft[0],hLeft[1],hLeftWidth,hLeftHeight),(hRight[0],hRight[1],hRightWidth,hRightHeight),
+               (vLeft[0],vLeft[1],vLeftWidth,vLeftHeight),(vRight[0],vRight[1],vRightWidth,vRightHeight))
+
+    return ((hLeft[0],hLeft[1],hLeftWidth,hLeftHeight),(hRight[0],hRight[1],hRightWidth,hRightHeight),
+        (vLeft[0],vLeft[1],vLeftWidth,vLeftHeight),(vRight[0],vRight[1],vRightWidth,vRightHeight))
+
 def drawOnEyes(thisPatient):
     """ Draws rectangles around the facephoto of a horizontal and vertical photo
         and displays them in succession
@@ -232,7 +285,7 @@ if (TEST):
 
     # Reset the eye regions and pupil regions
     print "Resetting the eye regions and the pupil regions "
-    resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
+    resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((101,101,151,151),(151,151,201,201)) )
     #resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
 
     # We don't actually need the circle of the white dot  and findWhiteDot
@@ -318,7 +371,7 @@ if (TEST):
     cv.WaitKey(0)
     cv.DestroyWindow("Horizontal's Right Eye")
     
-
+    getEyeCoors(patient)
 
     print "\nHorizontal Left Pupil: "
     if horizontal.left.eyePupil != None:
