@@ -229,21 +229,49 @@ def getEyeCoors(thisPatient):
 
     """
 
-    hLeft = patient.getEyeRegion(True,True)
-    hLeftWidth = hLeft[2] - hLeft[0]
-    hLeftHeight = hLeft[3] - hLeft[1]
+    hLeft = thisPatient.getEyeRegion(True,True)
+    hLeftX = 0
+    hLeftY = 0
+    hLeftWidth = 0
+    hLeftHeight = 0
+    if hLeft != None:
+        hLeftX = hLeft[0]
+        hLeftY = hLeft[1]
+        hLeftWidth = hLeft[2] - hLeft[0]
+        hLeftHeight = hLeft[3] - hLeft[1]
 
-    hRight = patient.getEyeRegion(True,False)
-    hRightWidth = hRight[2] - hRight[0]
-    hRightHeight = hRight[3] - hRight[1]
+    hRight = thisPatient.getEyeRegion(True,False)
+    hRightX = 0
+    hRightY = 0
+    hRightWidth = 0
+    hRightHeight = 0
+    if hRight != None:
+        hRightX = hRight[0]
+        hRightY = hRight[1]
+        hRightWidth = hRight[2] - hRight[0]
+        hRightHeight = hRight[3] - hRight[1]
 
-    vLeft = patient.getEyeRegion(False,True)
-    vLeftWidth = vLeft[2] - vLeft[0]
-    vLeftHeight = vLeft[3] - vLeft[1]
+    vLeft = thisPatient.getEyeRegion(False,True)
+    vLeftX = 0
+    vLeftY = 0
+    vLeftWidth = 0
+    vLeftHeight = 0
+    if vLeft != None:
+        vLeftX = vLeft[0]
+        vLeftY = vLeft[1]
+        vLeftWidth = vLeft[2] - vLeft[0]
+        vLeftHeight = vLeft[3] - vLeft[1]
 
-    vRight = patient.getEyeRegion(False,False)
-    vRightWidth = vRight[2] - vRight[0]
-    vRightHeight = vRight[3] - vRight[1]
+    vRight = thisPatient.getEyeRegion(False,False)
+    vRightX = 0
+    vRightY = 0
+    vRightWidth = 0
+    vRightHeight = 0
+    if vRight != None:
+        vRightX = vRight[0]
+        vRightY = vRight[1]
+        vRightWidth = vRight[2] - vRight[0]
+        vRightHeight = vRight[3] - vRight[1]
 
     if DEBUG:
         print hLeft
@@ -256,8 +284,8 @@ def getEyeCoors(thisPatient):
         print ((hLeft[0],hLeft[1],hLeftWidth,hLeftHeight),(hRight[0],hRight[1],hRightWidth,hRightHeight),
                (vLeft[0],vLeft[1],vLeftWidth,vLeftHeight),(vRight[0],vRight[1],vRightWidth,vRightHeight))
 
-    return ((hLeft[0],hLeft[1],hLeftWidth,hLeftHeight),(hRight[0],hRight[1],hRightWidth,hRightHeight),
-        (vLeft[0],vLeft[1],vLeftWidth,vLeftHeight),(vRight[0],vRight[1],vRightWidth,vRightHeight))
+    return ((hLeftX,hLeftY,hLeftWidth,hLeftHeight),(hRightX,hRightY,hRightWidth,hRightHeight),
+        (vLeftX,vLeftY,vLeftWidth,vLeftHeight),(vRightX,vRightY,vRightWidth,vRightHeight))
 
 def drawOnEyes(thisPatient):
     """ Draws rectangles around the facephoto of a horizontal and vertical photo
