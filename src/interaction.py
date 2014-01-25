@@ -109,9 +109,13 @@ class interaction():
 		self.upPaint(page2, self.verticalPath, vImgCtrl)
 		self.upPaint(page2, self.horizontalPath, hImgCtrl)
 		page1.Hide()
+		hImgCtrl.Bind(wx.EVT_PAINT, lambda event: self.OnPaint(hImgCtrl))
 		self.ShowYourself(page2)
-		
-		
+
+	def OnPaint(self, control):
+		draw = wx.PaintDC(control)
+		draw.SetBrush(wx.Brush('#000000', wx.TRANSPARENT))
+		draw.DrawRectangle(10, 10, 100, 100)	
 
 
 	# page movement functions
