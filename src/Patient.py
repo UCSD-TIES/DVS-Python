@@ -144,6 +144,17 @@ class Patient:
         Return:
             None
 
+            Pseudo Code - by David and Arvind            
+                                    
+            1. Detect face, eyes, then pupil
+            2. Detect White dot in both pupils
+            3. Calculate the distance from Pupil-center to White-dot-center for both Pupils
+            4. Calculate the angle of Pupil-center to White-dot-center line [ using numpy.arctan on (y component of distance) / (x component of distance) ]
+            5. Compare the two vectors from both pupils [ compare distances & angles ] 
+                1. For a healthy eye, the angles should be same (looking in the same direction)         
+                2. We could also measure the severeness of the off pupil-center and white-dot-center offset (healthy eye would have both in center)
+                3. If the White dot is not found (within the Pupil), severe Strabismus
+
         NOTE: It might be useful to make the calculations for this
         apparent to the user so they can judge for themself how accurate
         the program's result is. Maybe by returning something?
