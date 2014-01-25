@@ -12,6 +12,8 @@ class interaction():
 		self.patient = None
 		self.horizontalPath = None
 		self.verticalPath = None
+		self.hBitMap = None
+		self.vBitMap = None
 
 	# BUTTONS
 
@@ -22,11 +24,13 @@ class interaction():
 							IMGMASK, wx.OPEN)
 	  	if upBox.ShowModal() == wx.ID_OK:
 			upPath = upBox.GetPath()
-			self.upPaint(page, upPath, imgCtrl)
 			text.SetValue(upPath)
+		# 0 for horizontal, 1 for vertical
 	  	if orientation == 0:
+	  		self.upPaint(page, upPath, imgCtrl, orientation)
 	  		self.horizontalPath = upPath
 	  	elif orientation == 1:
+	  		self.upPaint(page, upPath, imgCtrl, orientation)
 	  		self.verticalPath = upPath
 		  
 	# reset button, 1st page
@@ -41,7 +45,7 @@ class interaction():
 		page.Refresh()
 
 	# display the uploaded picture
-	def upPaint(self, page, upPath, imgCtrl):
+	def upPaint(self, page, upPath, imgCtrl, orientation):
 		newImg = wx.Image(upPath, wx.BITMAP_TYPE_ANY)
 
 		width = newImg.GetWidth()
@@ -79,6 +83,10 @@ class interaction():
 		  
 	  	newImg = newImg.Scale(newWidth,newHeight)
 	  	imgCtrl.SetBitmap(wx.BitmapFromImage(newImg))
+	  	if orientation == 0:
+	  		self.hBitMap = wx.BitmapFromImage(newImg)
+	  	elif orientation == 1:
+	  		self.vBitMap = wx.BitmapFromImage(newImg)
 	  	page.Refresh()
 
 	# Next Button for first page
@@ -106,22 +114,30 @@ class interaction():
 		else:
 		'''
 		#self.patient = makePatient(self.horizontalPath, self.verticalPath)
-		self.upPaint(page2, self.verticalPath, vImgCtrl)
-		self.upPaint(page2, self.horizontalPath, hImgCtrl)
+		self.upPaint(page2, self.verticalPath, vImgCtrl, 1)
+		self.upPaint(page2, self.horizontalPath, hImgCtrl, 0)
 		page1.Hide()
-		hImgCtrl.Bind(wx.EVT_PAINT, lambda event: self.OnPaint(hImgCtrl))
+		#hImgCtrl.Bind(wx.EVT_PAINT, lambda event: self.OnPaint(hImgCtrl))
+		mdc = wx.MemoryDC()
+		mdc.SelectObject(self.hBitMap)
+		mdc.SetBrush(wx.Brush('#000000', wx.TRANSPARENT))
+		mdc.DrawRectangle(10, 10, 100, 100)
+		hImgCtrl.SetBitmap(self.hBitMap)
+		mdc.SelectObject(wx.NullBitmap)
 		self.ShowYourself(page2)
-
+'''
+	UNUSED
 	# Painting the Rectangle on the 2nd page
 	def OnPaint(self, control):
 		draw = wx.PaintDC(control)
+		draw.Clear()
 		draw.SetBrush(wx.Brush('#000000', wx.TRANSPARENT))
 		draw.DrawRectangle(10, 10, 100, 100)
-
+'''
     # The "No" button on page2
 	def No2(self, page2, page3, hImgCtrl, vImgCtrl):
-		self.upPaint(page3, self.verticalPath, vImgCtrl)
-		self.upPaint(page3, self.horizontalPath, hImgCtrl)
+		self.upPaint(page3, self.verticalPath, vImgCtrl, 1)
+		self.upPaint(page3, self.horizontalPath, hImgCtrl, 0)
 		page2.Hide()
 		self.ShowYourself(page3)
 
