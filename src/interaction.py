@@ -112,10 +112,19 @@ class interaction():
 		hImgCtrl.Bind(wx.EVT_PAINT, lambda event: self.OnPaint(hImgCtrl))
 		self.ShowYourself(page2)
 
+	# Painting the Rectangle on the 2nd page
 	def OnPaint(self, control):
 		draw = wx.PaintDC(control)
 		draw.SetBrush(wx.Brush('#000000', wx.TRANSPARENT))
-		draw.DrawRectangle(10, 10, 100, 100)	
+		draw.DrawRectangle(10, 10, 100, 100)
+
+    # The "No" button on page2
+	def No2(self, page2, page3, hImgCtrl, vImgCtrl):
+		self.upPaint(page3, self.verticalPath, vImgCtrl)
+		self.upPaint(page3, self.horizontalPath, hImgCtrl)
+		page2.Hide()
+		self.ShowYourself(page3)
+
 
 
 	# page movement functions

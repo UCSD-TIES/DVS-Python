@@ -4,16 +4,24 @@ from interaction import *
 class page(wx.Panel):
 
 	def __init__(self, parent, baseSizer):
+
+		#Image controls and interaction object
 		self.interact = interaction()
 		self.verImgCtrl = None
 		self.horImgCtrl = None
+
+		#page setups
 		self.page1 = wx.Panel(parent)
 		self.pageSetUp(self.page1)
 		baseSizer.Add(self.page1, 1, wx.EXPAND)
 		self.page2 = wx.Panel(parent)
 		self.pageSetUp2(self.page2)
 		baseSizer.Add(self.page2, 1, wx.EXPAND)
+		self.page3 = wx.Panel(parent)
+		self.pageSetUp3(self.page3)
+		baseSizer.Add(self.page3, 1, wx.EXPAND)
 		self.page2.Hide()
+		self.page3.Hide()
 
 	def getPage(self, pageNum):
 		if pageNum == 1:
@@ -28,6 +36,7 @@ class page(wx.Panel):
 		page.GetParent().GetSizer().Show(page)
 		page.GetParent().GetSizer().Layout()
 
+	# Set up for page 1
 	def pageSetUp(self, page):
 		# instantiate the most outer sizer
 		vbox = wx.BoxSizer(wx.VERTICAL)
@@ -90,10 +99,10 @@ class page(wx.Panel):
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)
 
+	# Set up for page 2
 	def pageSetUp2(self, page):
 		# instantiate the most outer sizer
 		vbox = wx.BoxSizer(wx.VERTICAL)
-		# instantiate the class for interactivity
 
 		##############SIZERS#####################
 		# mainGrid has three FlexGrids inside it
@@ -108,18 +117,45 @@ class page(wx.Panel):
 		horImg = wx.EmptyImage(440,440)
 		self.hor2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
 
-		#self.interact.upPaint(page, self.interact.verticalPath, verImgCtrl)
-		#self.interact.upPaint(page, self.interact.horizontalPath, horImgCtrl)
-
 		title = wx.StaticText(page, label="Do the boxes frame the eyes?")
 
 		yesBtn = wx.Button(page, label='Yes')
 
 		noBtn = wx.Button(page, label='No')
+		noBtn.Bind(wx.EVT_BUTTON,
+			lambda event: self.interact.No2(self.page2, self.page3, self.hor3ImgCtrl, self.ver3ImgCtrl))
 
 		mainGrid.AddMany([(menu),(pics)])
 		menu.AddMany([(title),(560,0),(yesBtn),(noBtn)])
 		pics.AddMany([(self.hor2ImgCtrl),(self.ver2ImgCtrl)])
+
+
+		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
+		page.SetSizer(vbox)
+
+	# Set up for page 3
+	def pageSetUp3(self, page):
+		# instantiate the most outer sizer
+		vbox = wx.BoxSizer(wx.VERTICAL)
+
+		##############SIZERS#####################
+		# mainGrid has three FlexGrids inside it
+		# wx.FlexGridSizer(rows, cols, vgap, hgap)
+		mainGrid = wx.FlexGridSizer(2, 1, 5, 5)
+		menu = wx.FlexGridSizer(1, 5, 5, 5)
+		pics = wx.FlexGridSizer(1, 2, 5, 5)
+
+		###############COMPONENTS################
+		verImg = wx.EmptyImage(440,440)
+		self.ver3ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(verImg))
+		horImg = wx.EmptyImage(440,440)
+		self.hor3ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
+
+		title = wx.StaticText(page, label="Please correct the eye detection.")
+
+		mainGrid.AddMany([(menu),(pics)])
+		menu.AddMany([(title),(560,0)])
+		pics.AddMany([(self.hor3ImgCtrl),(self.ver3ImgCtrl)])
 
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
