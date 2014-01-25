@@ -374,25 +374,25 @@ if (TEST):
     getEyeCoors(patient)
 
     print "\nHorizontal Left Pupil: "
-    if horizontal.left.eyePupil != None:
+    if patient.horizontal.left.eyePupil != None:
         patient.horizontal.left.eyePupil.toString()
     else:
         print "Cannot print"
 
     print "\nHorizontal Right Pupil: "
-    if horizontal.right.eyePupil != None:
+    if patient.horizontal.right.eyePupil != None:
         patient.horizontal.right.eyePupil.toString()
     else:
         print "Cannot print"
 
     print "\nVertical Left Pupil: "
-    if vertical.left.eyePupil != None:
+    if patient.vertical.left.eyePupil != None:
         patient.vertical.left.eyePupil.toString()
     else:
         print "Cannot print"
         
     print "\nVertical Right Pupil: "
-    if vertical.right.eyePupil != None:
+    if patient.vertical.right.eyePupil != None:
         patient.vertical.right.eyePupil.toString()
     else:
         print "Cannot print"
