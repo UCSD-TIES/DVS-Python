@@ -303,6 +303,13 @@ class Pupil:
     """ Returns a region representing the crescent """
     return self.crescent
 
+  def getPupilArea(self):
+    """ Returns a float representing the area of the pupil """
+    if self.pupil != None:
+        return math.pi * self.pupil[2] * self.pupil[2] # pi * r^2
+    else:
+        print "Error: Pupil is not defined"
+
 #################### Setters ##################################
 
   def setPupilRegion(self,newRegion):

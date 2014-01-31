@@ -291,16 +291,16 @@ class Eye:
             height = maxY - topLeftY
         else:
             height = 2 * region[2]
-
-        print "In pupilRemove ending boundary checking"
+        if DEBUG:
+            print "In pupilRemove ending boundary checking"
 
         
         # These calculations will often give long (decimal) values. Pixel based coordinates
         # must be ints so we cast them
         crop = (np.int(topLeftX), np.int(topLeftY), np.int(width), np.int(height))
 
-        print "In pupilRemove. Crop is: " + str(crop)
         if DEBUG:
+            print "In pupilRemove. Crop is: " + str(crop)
             print "Region passed to pupil remove: " + str(region)
             print "And here's crop: " + str(crop)
             print "Before crop we have type: " + str(type(self.eyePhoto))
@@ -365,10 +365,11 @@ class Eye:
     def setPupil(self,region):
         """ Sets eyePupil to a new Pupil object constructed from
             the region passed in as argument"""
-        print "Annnnnnnd, right here"
-        print "We're in set pupil just before pupilRemove and our region is: " + str(region)
+        if DEBUG:
+            print "We're in set pupil just before pupilRemove and our region is: " + str(region)
         pupilPhoto = self.pupilRemove(region)
-        print "We're in setPupil just before making a new pupil object"
+        if DEBUG:
+            print "We're in setPupil just before making a new pupil object"
         self.eyePupil = Pupil(pupilPhoto, region)
 
     

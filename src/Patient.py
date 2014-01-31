@@ -112,6 +112,15 @@ class Patient:
                 #Default Return
                 return None
 
+    def getAllPupils(self):
+        """ Returns a tuple of Pupil objects in the following order:
+        (horizLeft,horizRight,vertLeft,vertRight)
+
+        TODO: This function is crap obj oriented design and has no checks
+        """
+        return (self.horizontal.left.eyePupil,self.horizontal.right.eyePupil,
+            self.vertical.left.eyePupil, self.vertical.right.eyePupil)
+
 #################### Setters ##################################
 
 
@@ -121,8 +130,8 @@ class Patient:
     def analyzeEyes(self):
         """ Analyze all eye diseases and return the results """ 
         results = self.strabismus()
-        results.append(self.astigmatism())
-        results.append(self.cataracts())
+        results = results + " " + self.astigmatism(.17)
+        results = results + " " + self.cataracts()
         return results
 
     def strabismus(self):
@@ -151,9 +160,55 @@ class Patient:
         # strabismus detection logic goes here
         return "Strabismus detection called"
 
-    def astigmatism(self):
+    def astigmatism(self,threshold):
         """ Analyze this patient for signs of astigmatism """
         # astigmatism logic goes here
+        pupils = self.getAllPupils() #This call returns a tuple of Pupil objects
+        if DEBUG:
+            print str(pupils)
+
+        refErrs = []
+
+        for pupil in pupils:
+            if pupil == None:
+                print "Error: The horizontal photo's left pupil is not defined"
+            else:
+                refErrs.append( pupil.getCrescent() / pupil.getPupilArea()) # getPupilArea returns a float for the area of the pupil
+        if DEBUG:
+            print refErrs
+
+        # astigmatism is a difference in refractive error in the same eye
+        # between the horiz and ver photos
+        if abs(refErrs[0] - refErrs[2]) > threshold:
+            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
+           print "Refer for astigmatism, info below:\nhoriz left: " + str(refErrs[0]) + " vert left: " + str(refErrs[2]) + "\n"
+        if abs(refErrs[1] - refErrs[3]) > threshold:
+            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
+           print "Refer for astigmatism, info below:\nhoriz right: " + str(refErrs[1]) + " vert right: " + str(refErrs[3]) + "\n"
+
+        # anisometropia is a difference in refractive error 
+        # between the left and right eye in the same photo
+        if abs(refErrs[0] - refErrs[1]) > threshold:
+            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
+           print "Refer for anisometropia, info below:\nhoriz left: " + str(refErrs[0]) + " horizright: " + str(refErrs[1]) + "\n"
+        if abs(refErrs[2] - refErrs[3]) > threshold:
+            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
+           print "Refer for anisometropia, info below:\nvert left: " + str(refErrs[2]) + " vert right: " + str(refErrs[3]) + "\n"
+        
+
+
+        # for each pupil object
+        # refErr =  area of crescent / area of pupil
+        # if refractive error diff in horiz eyes
+        #    if DEBUG:
+        #      print "Patient has anisometropia"
+        #      print "in the following eye(s)"
+        #      print "With a refractive error of" + str(refErr)
+        # if refractive error diff in same eye between two pictures
+        #    if DEBUG:
+        #      print "Patient has astigmatism"
+        #      print "in the following eye(s)"
+        #      print "With a refractive error of" + str(refErr)
         return "Astigmatism detection called"
 
     def cataracts(self):

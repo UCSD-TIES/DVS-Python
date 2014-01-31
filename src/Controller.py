@@ -12,7 +12,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = False
+TEST = True
 
 CIRCLE_COLOR = (0, 255, 0)
 THICKNESS = 1
@@ -312,8 +312,8 @@ if (TEST):
     horizontalPhoto = patient.getHorizontal()
 
     # Reset the eye regions and pupil regions
-    print "Resetting the eye regions and the pupil regions "
-    resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((101,101,151,151),(151,151,201,201)) )
+    # print "Resetting the eye regions and the pupil regions..."
+    #resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((101,101,151,151),(151,151,201,201)) )
     #resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
 
     # We don't actually need the circle of the white dot  and findWhiteDot
@@ -424,4 +424,7 @@ if (TEST):
         patient.vertical.right.eyePupil.toString()
     else:
         print "Cannot print"
+
+    print "\nBeginning eye analysis..."
+    patient.analyzeEyes()
 
