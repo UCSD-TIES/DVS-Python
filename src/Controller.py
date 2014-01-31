@@ -13,6 +13,7 @@ import os
 
 DEBUG = False
 TEST = True
+PRINT = False
 
 CIRCLE_COLOR = (0, 255, 0)
 THICKNESS = 1
@@ -399,32 +400,33 @@ if (TEST):
     cv.WaitKey(0)
     cv.DestroyWindow("Horizontal's Right Eye")
     
-    getEyeCoors(patient)
+    if PRINT:
+        getEyeCoors(patient)
 
-    print "\nHorizontal Left Pupil: "
-    if patient.horizontal.left.eyePupil != None:
-        patient.horizontal.left.eyePupil.toString()
-    else:
-        print "Cannot print"
+        print "\nHorizontal Left Pupil: "
+        if patient.horizontal.left.eyePupil != None:
+            patient.horizontal.left.eyePupil.toString()
+        else:
+            print "Cannot print"
 
-    print "\nHorizontal Right Pupil: "
-    if patient.horizontal.right.eyePupil != None:
-        patient.horizontal.right.eyePupil.toString()
-    else:
-        print "Cannot print"
+        print "\nHorizontal Right Pupil: "
+        if patient.horizontal.right.eyePupil != None:
+            patient.horizontal.right.eyePupil.toString()
+        else:
+            print "Cannot print"
 
-    print "\nVertical Left Pupil: "
-    if patient.vertical.left.eyePupil != None:
-        patient.vertical.left.eyePupil.toString()
-    else:
-        print "Cannot print"
-        
-    print "\nVertical Right Pupil: "
-    if patient.vertical.right.eyePupil != None:
-        patient.vertical.right.eyePupil.toString()
-    else:
-        print "Cannot print"
+        print "\nVertical Left Pupil: "
+        if patient.vertical.left.eyePupil != None:
+            patient.vertical.left.eyePupil.toString()
+        else:
+            print "Cannot print"
+            
+        print "\nVertical Right Pupil: "
+        if patient.vertical.right.eyePupil != None:
+            patient.vertical.right.eyePupil.toString()
+        else:
+            print "Cannot print"
 
-    print "\nBeginning eye analysis..."
+    print "Beginning eye analysis...\n"
     patient.analyzeEyes()
 

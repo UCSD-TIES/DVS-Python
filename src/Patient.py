@@ -196,22 +196,30 @@ class Patient:
         if abs(refErrs[0] - refErrs[2]) > threshold:
             healthy = False
             #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
-            print "Refer for astigmatism, info below:\nhoriz left: " + str(refErrs[0]) + " vert left: " + str(refErrs[2]) + "\n"
+            print "Refer for astigmatism, info below:"
+            print "Diff in refractive error: " + str(abs(refErrs[0] - refErrs[2]))
+            print "horiz left: " + str(refErrs[0]) + " vert left: " + str(refErrs[2]) + "\n"
         if abs(refErrs[1] - refErrs[3]) > threshold:
             healthy = False
             #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
-            print "Refer for astigmatism, info below:\nhoriz right: " + str(refErrs[1]) + " vert right: " + str(refErrs[3]) + "\n"
+            print "Refer for astigmatism, info below:"
+            print "Diff in refractive error: " + str(abs(refErrs[1] - refErrs[3]))
+            print "horiz right: " + str(refErrs[1]) + " vert right: " + str(refErrs[3]) + "\n"
 
         # anisometropia is a difference in refractive error 
         # between the left and right eye in the same photo
         if abs(refErrs[0] - refErrs[1]) > threshold:
             healthy = False
             #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
-            print "Refer for anisometropia, info below:\nhoriz left: " + str(refErrs[0]) + " horizright: " + str(refErrs[1]) + "\n"
+            print "Refer for anisometropia, info below:"
+            print "Diff in refractive error: " + str(abs(refErrs[0] - refErrs[1]))
+            print "horiz left: " + str(refErrs[0]) + " horiz right: " + str(refErrs[1]) + "\n"
         if abs(refErrs[2] - refErrs[3]) > threshold:
             healthy = False
             #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
-            print "Refer for anisometropia, info below:\nvert left: " + str(refErrs[2]) + " vert right: " + str(refErrs[3]) + "\n"
+            print "Refer for anisometropia, info below:"
+            print "Diff in refractive error: " + str(abs(refErrs[2] - refErrs[3]))
+            print "vert left: " + str(refErrs[2]) + " vert right: " + str(refErrs[3]) + "\n"
         
         if healthy:
             print "No astigmatism or anisometropia detected with a threshold of refractive error of " + str(threshold)
