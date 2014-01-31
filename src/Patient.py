@@ -127,10 +127,18 @@ class Patient:
 
 ################## Disease Detection ##########################
 
-    def analyzeEyes(self):
-        """ Analyze all eye diseases and return the results """ 
+    def analyzeEyes(self,threshold):
+        """ Analyze all eye diseases and return the results 
+
+        Args:
+            float threshold - the threshold of refractive error 
+                              above which we will give a referral
+
+        Return:
+            TODO: dict????
+        """ 
         results = self.strabismus()
-        results = results + " " + self.astigmatism(.17)
+        results = results + " " + self.astigmatism(threshold)
         results = results + " " + self.cataracts()
         return results
 

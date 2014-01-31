@@ -428,5 +428,5 @@ if (TEST):
             print "Cannot print"
 
     print "Beginning eye analysis...\n"
-    patient.analyzeEyes()
+    patient.analyzeEyes(0.17)
 
