@@ -152,6 +152,10 @@ class interaction():
 		# Move to next panel
 		else:
 		'''
+		self.patient = makePatient(self.horizontalPath, self.verticalPath)
+		coors = getEyeCoors(self.patient)
+		print coors
+
 		# Paints the images of page 2 and hides the first page
 		self.upPaint(page2, self.verticalPath, vImgCtrl, 1)
 		self.upPaint(page2, self.horizontalPath, hImgCtrl, 0)
@@ -159,10 +163,19 @@ class interaction():
 
 		# Drawing rectangle with MemoryDC
 		mdc = wx.MemoryDC()
+		
 		mdc.SelectObject(self.hBitMap)    # sets a bitmap to e modified
-		mdc.SetBrush(wx.Brush('#000000', wx.TRANSPARENT))
-		mdc.DrawRectangle(10, 10, 100, 100)
+		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
+		mdc.DrawRectangle(coors[0][0], coors[0][1], coors[0][2], coors[0][3])
+		mdc.DrawRectangle(coors[1][0], coors[1][1], coors[1][2], coors[1][3])
 		hImgCtrl.SetBitmap(self.hBitMap)  # Sets modified bitmap back into the img ctrl
+
+		mdc.SelectObject(self.vBitMap)    # sets a bitmap to e modified
+		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
+		mdc.DrawRectangle(coors[2][0], coors[2][1], coors[2][2], coors[2][3])
+		mdc.DrawRectangle(coors[3][0], coors[3][1], coors[3][2], coors[3][3])
+		vImgCtrl.SetBitmap(self.vBitMap)  # Sets modified bitmap back into the img ctrl
+
 		mdc.SelectObject(wx.NullBitmap)   # MemoryDC must be set back to a null bitmap when done
 		self.ShowYourself(page2)          # Shows 2nd page
 	'''
