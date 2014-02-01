@@ -23,6 +23,20 @@ class page(wx.Panel):
 		self.page2.Hide()               # Pages that aren't page 1 start off hidden
 		self.page3.Hide()
 
+        ### Mouse event tests start
+	# Mouse event handler, on click
+	def mouseClick(self, event):
+                print "Mouse clicked"
+
+        # Mouse event handler, on drag
+        def mouseDrag(self, event):
+                if event.Dragging():
+                        x = event.GetX()
+                        y = event.GetY()
+                        print "Mouse dragged x:  %d, y: %d" % (x, y)
+
+        ### Mouse event tests end
+                
 	''' Unused
 	def getPage(self, pageNum):
 		if pageNum == 1:
@@ -39,7 +53,7 @@ class page(wx.Panel):
 		page.GetParent().GetSizer().Show(page)
 		page.GetParent().GetSizer().Layout()
 	'''
-	def pageSetUp(self, page):
+	def pageSetUp(self, page):                
 		# instantiate the most outer sizer
 		vbox = wx.BoxSizer(wx.VERTICAL)
 
@@ -103,6 +117,9 @@ class page(wx.Panel):
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)   # Adds everything to real main sizer
 		page.SetSizer(vbox)                                # Sets the main sizer as the page's sizer
 
+
+
+                
 	# Set up for page 2 - Most of it is the same as page 1
 	def pageSetUp2(self, page):
 		# instantiate the most outer sizer
@@ -138,7 +155,6 @@ class page(wx.Panel):
 		menu.AddMany([(title),(560,0),(yesBtn),(noBtn)])
 		pics.AddMany([(self.hor2ImgCtrl),(self.ver2ImgCtrl)])
 
-
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)
 
@@ -167,6 +183,12 @@ class page(wx.Panel):
 		menu.AddMany([(title),(560,0)])
 		pics.AddMany([(self.hor3ImgCtrl),(self.ver3ImgCtrl)])
 
+                # Mouse events, on click, on drag
+                self.ver3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.mouseClick)
+                self.ver3ImgCtrl.Bind(wx.EVT_MOTION, self.mouseDrag)
+
+                self.hor3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.mouseClick)
+                self.hor3ImgCtrl.Bind(wx.EVT_MOTION, self.mouseDrag)
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)
