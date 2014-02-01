@@ -183,10 +183,12 @@ class page(wx.Panel):
 		menu.AddMany([(title),(560,0)])
 		pics.AddMany([(self.hor3ImgCtrl),(self.ver3ImgCtrl)])
 
-                # Mouse events, on click, on drag
+                ### Mouse events, on click, on drag
+                # Mouse events for vertical image
                 self.ver3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.mouseClick)
                 self.ver3ImgCtrl.Bind(wx.EVT_MOTION, self.mouseDrag)
 
+                # Mouse events for horizontal image
                 self.hor3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.mouseClick)
                 self.hor3ImgCtrl.Bind(wx.EVT_MOTION, self.mouseDrag)
 
