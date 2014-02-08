@@ -2,6 +2,7 @@
 """
 from HorizontalPhoto import *
 from VerticalPhoto import *
+import math
 
 DEBUG = False
 
@@ -126,6 +127,69 @@ class Patient:
         return results
 
     def strabismus(self):
+        """
+
+    //Declared variables used in the algorithm
+        int lDistance;
+        int rDistance;
+        int dDistance;
+        int dThreshold = ...;      //upperbound margin of error between whiteDot distances
+        int lSlope;
+        int rSlope;
+        int dSlope;
+        int sThreshhold = ...;
+        int xDiff;
+        int xThreshold = ...;
+
+
+    //grabbing variables----------------------------------------------------------------------------
+        mat leftDot = leftpupil.getWhiteDotCenter();
+        mat rightDot = rightpupil.getWhiteDotCenter();
+        dotLeftX = leftDot(0);
+        dotLeftY = leftDot(1);
+        dotRightX = rigthDot(0);
+        dotLeftY = rightDot(1);
+
+        mat leftPup = leftpupil.getCenter();
+        mat rightPup = rightpupil.getCenter();
+        pupLeftX = leftPup(0);
+        pupLeftY = leftPup(0);
+        pupRightX = rightPup(1);
+        pupRightY = rightPup(1);
+
+
+    //1.)  calculating difference of distances----------------------------------------------------------------
+        //finding distances
+        lDistance = math.sqrt(math.pow((dotLeftX - pupLeftX), 2) + math.pow((dotLeftY - pupLeftY), 2));
+        rDistance = math.sqrt(math.pow((dotRightX - pupRightX), 2) + math.pow((dotLeftY - pupLeftY), 2));
+        dDistance = math.abs(lDistance - rDistance);         
+
+        //checks threshold distance
+        if dDistance > dThreshold:                            //dThreshold should be near 0
+            return true;
+
+    //2.)  calculating difference of slope--------------------------------------------------------------------
+        lSlope = div(pupLeftY, pupLeftX);
+        rSlope = div(pupRightY, pupRightX);
+        dSlope = math.abs(lSlope - rSlope);                   //sThreshold should be near 0
+
+        //checks threshold slope "distance"
+        if dSlope > sThreshhold:
+            return true;
+
+
+    //3.)  calculating difference of left x-axis------------------------------------------------------------------
+
+        xDiff = math.abs(dotLeftX - dotRightX);
+
+        //checks threshold x distance
+        if xDiff > xThreshold:
+            return true;
+
+
+        """
+
+
         """ Analyze this patient for signs of strabismus
 
         Detect strabismus, also known as lazy eye, by calculating 
