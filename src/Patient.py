@@ -140,7 +140,50 @@ class Patient:
         results = self.strabismus()
         results = results + " " + self.astigmatism(threshold)
         results = results + " " + self.cataracts()
+        results = results + " " + self.pupillaryDistance()
         return results
+
+    def pupillaryDistance(self):
+        """ Calculates the Pupillary Distance (PD), prints it, and returns it
+        """
+        pupils = self.getAllPupils()
+        hPD = 0
+        vPD = 0
+        # calculate PD from the horizontal photo
+        if pupils[0] != None and pupils[1] != None:
+            # These coordinates are relative to the pupil photo, not the photo at large
+            leftCenterX = pupils[0].getPupilRegion()[0]
+            leftCenterY = pupils[0].getPupilRegion()[1]
+            rightCenterX = pupils[1].getPupilRegion()[0]
+            rightCenterY = pupils[1].getPupilRegion()[1]
+            # Recalculating to make the coordinates relative to the facephoto, not the pupil photo
+            hLeft = self.getEyeRegion(True,True)
+            hRight = self.getEyeRegion(True,False)
+            relLeftCenterX = hLeft[0] + leftCenterX
+            relLeftCenterY = hLeft[1] + leftCenterY
+            relRightCenterX = hRight[0] + rightCenterX
+            relRightCenterY = hRight[1] + rightCenterY
+            hPD = math.sqrt((relLeftCenterX-relRightCenterX)**2 +(relLeftCenterY-relRightCenterY)**2)
+        #print "Horiz PD: " + str(hPD)
+
+        # calculate PD from the vertical photo
+        if pupils [2] != None and pupils[3] != None:
+            leftCenterX = pupils[2].getPupilRegion()[0]
+            leftCenterY = pupils[2].getPupilRegion()[1]
+            rightCenterX = pupils[3].getPupilRegion()[0]
+            rightCenterY = pupils[3].getPupilRegion()[1]
+            # Recalculating to make the coordinates relative to the facephoto, not the pupil photo
+            vLeft = self.getEyeRegion(False,True)
+            vRight = self.getEyeRegion(False,False)
+            relLeftCenterX = vLeft[0] + leftCenterX
+            relLeftCenterY = vLeft[1] + leftCenterY
+            relRightCenterX = vRight[0] + rightCenterX
+            relRightCenterY = vRight[1] + rightCenterY
+            vPD = math.sqrt((relLeftCenterX-relRightCenterX)**2 +(relLeftCenterY-relRightCenterY)**2)
+        #print "Vert PD: " + str(vPD)
+
+        return "Horiz PD: " + str(hPD) + " Vert PD: " + str(vPD)
+
 
     def strabismus(self):
         """ Analyze this patient for signs of strabismus
@@ -163,20 +206,45 @@ class Patient:
 
             Pseudo Code - by David and Arvind            
                                     
-            1. Detect face, eyes, then pupil
-            2. Detect White dot in both pupils
-            3. Calculate the distance from Pupil-center to White-dot-center for both Pupils
-            4. Calculate the angle of Pupil-center to White-dot-center line [ using numpy.arctan on (y component of distance) / (x component of distance) ]
-            5. Compare the two vectors from both pupils [ compare distances & angles ] 
-                1. For a healthy eye, the angles should be same (looking in the same direction)         
-                2. We could also measure the severeness of the off pupil-center and white-dot-center offset (healthy eye would have both in center)
-                3. If the White dot is not found (within the Pupil), severe Strabismus
+            1. Calculate the distance from Pupil-center to White-dot-center for both Pupils
+            2. Calculate the angle of Pupil-center to White-dot-center line [ using numpy.arctan on (y component of distance) / (x component of distance) ]
+            3. Compare the two vectors from both pupils [ compare distances & angles ] 
+                a. For a healthy eye, the angles should be same (looking in the same direction)         
+                b. We could also measure the severeness of the off pupil-center and white-dot-center offset (healthy eye would have both in center)
+                c. If the White dot is not found (within the Pupil), severe Strabismus
 
         NOTE: It might be useful to make the calculations for this
         apparent to the user so they can judge for themself how accurate
         the program's result is. Maybe by returning something?
         """
         # strabismus detection logic goes here
+        pupils = self.getAllPupils()
+
+        # Calculate strab for the horizontal photo
+        if pupils[0] != None and pupils[1] != None:
+            # These coordinates are relative to the pupil photo, not the photo at large
+            # Get the coordinates for the pupilCenter for both eyes
+            pleftCenterX = pupils[0].getPupilRegion()[0]
+            pleftCenterY = pupils[0].getPupilRegion()[1]
+
+            prightCenterX = pupils[1].getPupilRegion()[0]
+            prightCenterY = pupils[1].getPupilRegion()[1]
+
+            # Get the coordinates for the white dot for both eyes
+            wdleftCenterX = pupils[0].getWhiteDotCenter()[0]
+            wdleftCenterY = pupils[0].getWhiteDotCenter()[1]
+
+            wdrightCenterX = pupils[1].getWhiteDotCenter()[0]
+            wdrightCenterY = pupils[1].getWhiteDotCenter()[1]
+
+            leftDistance = math.sqrt((pleftCenterX-wdleftCenterX)**2 +(pleftCenterY-wdleftCenterY)**2)
+            rightDistance = math.sqrt((prightCenterX-wdrightCenterX)**2 +(prightCenterY-wdrightCenterY)**2)
+
+            # Calculate the angle of Pupil-center to White-dot-center line [ using numpy.arctan on (y component of distance) / (x component of distance) ]
+            # Compare the two vectors
+
+        # Calculate strab for the vertical photo
+
         return "Strabismus detection called"
 
     def astigmatism(self,threshold):
