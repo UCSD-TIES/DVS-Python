@@ -188,62 +188,87 @@ class Patient:
 
     def strabismus(self):
         """
+//possible error/situational cases:   - If distance between pupil and dot is minimal, and slope is 0 or undefined.
+                                      - check both X and Y "distances" in 3rd check
+                                      - in case of any center in "0" coordinates
+                                      - should probably not have negatives except in test 3
 
-    //Declared variables used in the algorithm
-        int lDistance;
-        int rDistance;
-        int dDistance;
-        int dThreshold = ...;      //upperbound margin of error between whiteDot distances
-        int lSlope;
-        int rSlope;
-        int dSlope;
-        int sThreshhold = ...;
-        int xDiff;
-        int xThreshold = ...;
+       #Threshold variables
+       dThreshold;
+       sThreshold;
+       xThreshold;
+       yThreshold;
 
+      
+       #Grabbing variables here ---------------------------------------------------------------------
 
-    //grabbing variables----------------------------------------------------------------------------
-        mat leftDot = leftpupil.getWhiteDotCenter();
-        mat rightDot = rightpupil.getWhiteDotCenter();
-        dotLeftX = leftDot(0);
-        dotLeftY = leftDot(1);
-        dotRightX = rigthDot(0);
-        dotLeftY = rightDot(1);
+       # strabismus detection logic goes here
+        pupils = self.getAllPupils()
 
-        mat leftPup = leftpupil.getCenter();
-        mat rightPup = rightpupil.getCenter();
-        pupLeftX = leftPup(0);
-        pupLeftY = leftPup(0);
-        pupRightX = rightPup(1);
-        pupRightY = rightPup(1);
+        # Calculate strab for the horizontal photo
+        if pupils[0] != None and pupils[1] != None:
+            # These coordinates are relative to the pupil photo, not the photo at large
+            # Get the coordinates for the pupilCenter for both eyes
+            pleftCenterX = pupils[0].getPupilRegion()[0]
+            pleftCenterY = pupils[0].getPupilRegion()[1]
+
+            prightCenterX = pupils[1].getPupilRegion()[0]
+            prightCenterY = pupils[1].getPupilRegion()[1]
+
+            # Get the coordinates for the white dot for both eyes
+            wdleftCenterX = pupils[0].getWhiteDotCenter()[0]
+            wdleftCenterY = pupils[0].getWhiteDotCenter()[1]
+
+            wdrightCenterX = pupils[1].getWhiteDotCenter()[0]
+            wdrightCenterY = pupils[1].getWhiteDotCenter()[1]
 
 
     //1.)  calculating difference of distances----------------------------------------------------------------
-        //finding distances
-        lDistance = math.sqrt(math.pow((dotLeftX - pupLeftX), 2) + math.pow((dotLeftY - pupLeftY), 2));
-        rDistance = math.sqrt(math.pow((dotRightX - pupRightX), 2) + math.pow((dotLeftY - pupLeftY), 2));
-        dDistance = math.abs(lDistance - rDistance);         
 
-        //checks threshold distance
-        if dDistance > dThreshold:                            //dThreshold should be near 0
-            return true;
+
+            leftDistance = math.sqrt((pleftCenterX-wdleftCenterX)**2 +(pleftCenterY-wdleftCenterY)**2)
+            rightDistance = math.sqrt((prightCenterX-wdrightCenterX)**2 +(prightCenterY-wdrightCenterY)**2)
+
+            # Calculate the slope of Pupil-center to White-dot-center line [ (y component of distance) / (x component of distance) ]
+            # Compare the two vectors
+
+            dDistance = math.abs(lDistance - rDistance); 
+
+            # checks threshold distance
+            if dDistance > dThreshold:                            //dThreshold should be near 0
+               return true;            
+    
+
 
     //2.)  calculating difference of slope--------------------------------------------------------------------
-        lSlope = div(pupLeftY, pupLeftX);
-        rSlope = div(pupRightY, pupRightX);
-        dSlope = math.abs(lSlope - rSlope);                   //sThreshold should be near 0
 
-        //checks threshold slope "distance"
-        if dSlope > sThreshhold:
-            return true;
+            lSlope = div(pLeftCenterY, pLeftCenterX);
+            rSlope = div(pRightCenterY, pRightCenterX);
+            dSlope = math.abs(lSlope - rSlope);
+
+            //checks threshold slope "distance"
+            if dSlope > sThreshhold:                   //sThreshold should be near 0
+                return true;
 
 
     //3.)  calculating difference of left x-axis------------------------------------------------------------------
 
-        xDiff = math.abs(dotLeftX - dotRightX);
+        lxDifference = math.abs(wdLeftCenterX - pLeftCenterX);
+        rxDifference = math.abs(wdRightCenterX - pRightCenterX);
+
+        xDifference = math.abs(lxDifference - rxDifference);
 
         //checks threshold x distance
-        if xDiff > xThreshold:
+        if xDifference > xThreshold:                              //xThreshold should be near 0
+            return true;
+
+        lyDistance = math.abs(wdLeftCenterY - pLeftCenterY);
+        ryDistance = math.abs(wdRightCenterY - pRightCenterY);
+
+        yDifference = math.abs(lyDifference - ryDistance);
+
+        //checks threshold y distance
+        if yDifference > yThreshold:                             //yThreshold should be near 0
             return true;
 
 
@@ -281,31 +306,7 @@ class Patient:
         apparent to the user so they can judge for themself how accurate
         the program's result is. Maybe by returning something?
         """
-        # strabismus detection logic goes here
-        pupils = self.getAllPupils()
 
-        # Calculate strab for the horizontal photo
-        if pupils[0] != None and pupils[1] != None:
-            # These coordinates are relative to the pupil photo, not the photo at large
-            # Get the coordinates for the pupilCenter for both eyes
-            pleftCenterX = pupils[0].getPupilRegion()[0]
-            pleftCenterY = pupils[0].getPupilRegion()[1]
-
-            prightCenterX = pupils[1].getPupilRegion()[0]
-            prightCenterY = pupils[1].getPupilRegion()[1]
-
-            # Get the coordinates for the white dot for both eyes
-            wdleftCenterX = pupils[0].getWhiteDotCenter()[0]
-            wdleftCenterY = pupils[0].getWhiteDotCenter()[1]
-
-            wdrightCenterX = pupils[1].getWhiteDotCenter()[0]
-            wdrightCenterY = pupils[1].getWhiteDotCenter()[1]
-
-            leftDistance = math.sqrt((pleftCenterX-wdleftCenterX)**2 +(pleftCenterY-wdleftCenterY)**2)
-            rightDistance = math.sqrt((prightCenterX-wdrightCenterX)**2 +(prightCenterY-wdrightCenterY)**2)
-
-            # Calculate the angle of Pupil-center to White-dot-center line [ using numpy.arctan on (y component of distance) / (x component of distance) ]
-            # Compare the two vectors
 
         # Calculate strab for the vertical photo
 
