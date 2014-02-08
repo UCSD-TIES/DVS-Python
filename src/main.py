@@ -9,7 +9,7 @@ app = wx.App()
 base(None, -1, 'Digital Vision Screening',
 	pos = wx.DefaultPosition,
 	size = (1000,600),
-	style = wx.DEFAULT_FRAME_STYLE)
+	style = wx.MINIMIZE_BOX | wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX)
 
 
 # The mainloop is an endless cycle. It catches and dispatches all events 

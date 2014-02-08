@@ -7,7 +7,7 @@ class base(wx.Frame):
 		#wx.Frame(parent, id=-1, title=EmptyString, pos=DefaultPosition,
 		#		size=DefaultSize, style=DEFAULT_FRAME_STYLE, name=FrameNameStr)
 		base = wx.Frame(parent, id, title, pos, size, style)
-		pageSizer = wx.BoxSizer(wx.VERTICAL)
+		pageSizer = wx.BoxSizer(wx.VERTICAL)        # Sizer for the frame
 		base.SetSizer(pageSizer)
 		#add things to panel, then add to the sizers
 

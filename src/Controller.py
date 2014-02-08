@@ -12,7 +12,8 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = True 
+TEST = False
+PRINT = False
 
 CIRCLE_COLOR = (0, 255, 0)
 THICKNESS = 1
@@ -62,6 +63,9 @@ def makePatient(horizontalPath, verticalPath):
         print "Here's our right region again: " + str(thisPatient.horizontal.right.eyeRegion)
 
     return thisPatient
+
+
+### Reset Methods ###
 
 def resetEyes(thisPatient, horizontalTuple, verticalTuple):
     """ Resets the eye regions to whatever 
@@ -206,6 +210,84 @@ def resetWhiteDot(thisPatient, horizontalTuple, verticalTuple):
             else:
                 print "Error: thisPatient.vertical.right == None"
 
+
+### Get Methods ###
+
+def getEyeCoors(thisPatient):
+    """ Returns a tuple of coordinates that represent the bounding rectangles
+        of the eyes. The tuple returned is formatted thus:
+
+        (horizontalLeft, horizontalRight, verticalLeft, verticalRight)
+
+         where each element in the tuple above is itself a tuple formatted as:
+
+        (topLeftX, topLeftY, width, height)
+
+        So if the bounding box for the horizontal photo's left eye had a top left 
+        corner with coordinates (50,20), a width of 30, and a height of 5 we would return:
+
+        ((50,20,30,5),(hrtlx,hrtly,hrw,hrh),(vltlx,vltly,vlw,vlh),(vrtlx,vrtly,vrw,vrh))
+
+    """
+
+    hLeft = thisPatient.getEyeRegion(True,True)
+    hLeftX = 0
+    hLeftY = 0
+    hLeftWidth = 0
+    hLeftHeight = 0
+    if hLeft != None:
+        hLeftX = hLeft[0]
+        hLeftY = hLeft[1]
+        hLeftWidth = hLeft[2] - hLeft[0]
+        hLeftHeight = hLeft[3] - hLeft[1]
+
+    hRight = thisPatient.getEyeRegion(True,False)
+    hRightX = 0
+    hRightY = 0
+    hRightWidth = 0
+    hRightHeight = 0
+    if hRight != None:
+        hRightX = hRight[0]
+        hRightY = hRight[1]
+        hRightWidth = hRight[2] - hRight[0]
+        hRightHeight = hRight[3] - hRight[1]
+
+    vLeft = thisPatient.getEyeRegion(False,True)
+    vLeftX = 0
+    vLeftY = 0
+    vLeftWidth = 0
+    vLeftHeight = 0
+    if vLeft != None:
+        vLeftX = vLeft[0]
+        vLeftY = vLeft[1]
+        vLeftWidth = vLeft[2] - vLeft[0]
+        vLeftHeight = vLeft[3] - vLeft[1]
+
+    vRight = thisPatient.getEyeRegion(False,False)
+    vRightX = 0
+    vRightY = 0
+    vRightWidth = 0
+    vRightHeight = 0
+    if vRight != None:
+        vRightX = vRight[0]
+        vRightY = vRight[1]
+        vRightWidth = vRight[2] - vRight[0]
+        vRightHeight = vRight[3] - vRight[1]
+
+    if DEBUG:
+        print hLeft
+        print hRight
+        print vLeft
+        print vRight
+
+        print "Done eyecoors"
+
+        print ((hLeft[0],hLeft[1],hLeftWidth,hLeftHeight),(hRight[0],hRight[1],hRightWidth,hRightHeight),
+               (vLeft[0],vLeft[1],vLeftWidth,vLeftHeight),(vRight[0],vRight[1],vRightWidth,vRightHeight))
+
+    return ((hLeftX,hLeftY,hLeftWidth,hLeftHeight),(hRightX,hRightY,hRightWidth,hRightHeight),
+        (vLeftX,vLeftY,vLeftWidth,vLeftHeight),(vRightX,vRightY,vRightWidth,vRightHeight))
+
 def drawOnEyes(thisPatient):
     """ Draws rectangles around the facephoto of a horizontal and vertical photo
         and displays them in succession
@@ -231,8 +313,8 @@ if (TEST):
     horizontalPhoto = patient.getHorizontal()
 
     # Reset the eye regions and pupil regions
-    print "Resetting the eye regions and the pupil regions "
-    resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((100,100,150,150),(150,150,200,200)) )
+    # print "Resetting the eye regions and the pupil regions..."
+    #resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((101,101,151,151),(151,151,201,201)) )
     #resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
 
     # We don't actually need the circle of the white dot  and findWhiteDot
@@ -318,29 +400,33 @@ if (TEST):
     cv.WaitKey(0)
     cv.DestroyWindow("Horizontal's Right Eye")
     
+    if PRINT:
+        getEyeCoors(patient)
 
+        print "\nHorizontal Left Pupil: "
+        if patient.horizontal.left.eyePupil != None:
+            patient.horizontal.left.eyePupil.toString()
+        else:
+            print "Cannot print"
 
-    print "\nHorizontal Left Pupil: "
-    if horizontal.left.eyePupil != None:
-        patient.horizontal.left.eyePupil.toString()
-    else:
-        print "Cannot print"
+        print "\nHorizontal Right Pupil: "
+        if patient.horizontal.right.eyePupil != None:
+            patient.horizontal.right.eyePupil.toString()
+        else:
+            print "Cannot print"
 
-    print "\nHorizontal Right Pupil: "
-    if horizontal.right.eyePupil != None:
-        patient.horizontal.right.eyePupil.toString()
-    else:
-        print "Cannot print"
+        print "\nVertical Left Pupil: "
+        if patient.vertical.left.eyePupil != None:
+            patient.vertical.left.eyePupil.toString()
+        else:
+            print "Cannot print"
+            
+        print "\nVertical Right Pupil: "
+        if patient.vertical.right.eyePupil != None:
+            patient.vertical.right.eyePupil.toString()
+        else:
+            print "Cannot print"
 
-    print "\nVertical Left Pupil: "
-    if vertical.left.eyePupil != None:
-        patient.vertical.left.eyePupil.toString()
-    else:
-        print "Cannot print"
-        
-    print "\nVertical Right Pupil: "
-    if vertical.right.eyePupil != None:
-        patient.vertical.right.eyePupil.toString()
-    else:
-        print "Cannot print"
+    print "Beginning eye analysis...\n"
+    patient.analyzeEyes(0.17)
 

@@ -113,18 +113,78 @@ class Patient:
                 #Default Return
                 return None
 
+    def getAllPupils(self):
+        """ Returns a tuple of Pupil objects in the following order:
+        (horizLeft,horizRight,vertLeft,vertRight)
+
+        TODO: This function is crap obj oriented design and has no checks
+        """
+        return (self.horizontal.left.eyePupil,self.horizontal.right.eyePupil,
+            self.vertical.left.eyePupil, self.vertical.right.eyePupil)
+
 #################### Setters ##################################
 
 
 
 ################## Disease Detection ##########################
 
-    def analyzeEyes(self):
-        """ Analyze all eye diseases and return the results """ 
+    def analyzeEyes(self,threshold):
+        """ Analyze all eye diseases and return the results 
+
+        Args:
+            float threshold - the threshold of refractive error 
+                              above which we will give a referral
+
+        Return:
+            TODO: dict????
+        """ 
         results = self.strabismus()
-        results.append(self.astigmatism())
-        results.append(self.cataracts())
+        results = results + " " + self.astigmatism(threshold)
+        results = results + " " + self.cataracts()
+        results = results + " " + self.pupillaryDistance()
         return results
+
+    def pupillaryDistance(self):
+        """ Calculates the Pupillary Distance (PD), prints it, and returns it
+        """
+        pupils = self.getAllPupils()
+        hPD = 0
+        vPD = 0
+        # calculate PD from the horizontal photo
+        if pupils[0] != None and pupils[1] != None:
+            # These coordinates are relative to the pupil photo, not the photo at large
+            leftCenterX = pupils[0].getPupilRegion()[0]
+            leftCenterY = pupils[0].getPupilRegion()[1]
+            rightCenterX = pupils[1].getPupilRegion()[0]
+            rightCenterY = pupils[1].getPupilRegion()[1]
+            # Recalculating to make the coordinates relative to the facephoto, not the pupil photo
+            hLeft = self.getEyeRegion(True,True)
+            hRight = self.getEyeRegion(True,False)
+            relLeftCenterX = hLeft[0] + leftCenterX
+            relLeftCenterY = hLeft[1] + leftCenterY
+            relRightCenterX = hRight[0] + rightCenterX
+            relRightCenterY = hRight[1] + rightCenterY
+            hPD = math.sqrt((relLeftCenterX-relRightCenterX)**2 +(relLeftCenterY-relRightCenterY)**2)
+        #print "Horiz PD: " + str(hPD)
+
+        # calculate PD from the vertical photo
+        if pupils [2] != None and pupils[3] != None:
+            leftCenterX = pupils[2].getPupilRegion()[0]
+            leftCenterY = pupils[2].getPupilRegion()[1]
+            rightCenterX = pupils[3].getPupilRegion()[0]
+            rightCenterY = pupils[3].getPupilRegion()[1]
+            # Recalculating to make the coordinates relative to the facephoto, not the pupil photo
+            vLeft = self.getEyeRegion(False,True)
+            vRight = self.getEyeRegion(False,False)
+            relLeftCenterX = vLeft[0] + leftCenterX
+            relLeftCenterY = vLeft[1] + leftCenterY
+            relRightCenterX = vRight[0] + rightCenterX
+            relRightCenterY = vRight[1] + rightCenterY
+            vPD = math.sqrt((relLeftCenterX-relRightCenterX)**2 +(relLeftCenterY-relRightCenterY)**2)
+        #print "Vert PD: " + str(vPD)
+
+        return "Horiz PD: " + str(hPD) + " Vert PD: " + str(vPD)
+
 
     def strabismus(self):
         """
@@ -208,16 +268,102 @@ class Patient:
         Return:
             None
 
+            Pseudo Code - by David and Arvind            
+                                    
+            1. Calculate the distance from Pupil-center to White-dot-center for both Pupils
+            2. Calculate the angle of Pupil-center to White-dot-center line [ using numpy.arctan on (y component of distance) / (x component of distance) ]
+            3. Compare the two vectors from both pupils [ compare distances & angles ] 
+                a. For a healthy eye, the angles should be same (looking in the same direction)         
+                b. We could also measure the severeness of the off pupil-center and white-dot-center offset (healthy eye would have both in center)
+                c. If the White dot is not found (within the Pupil), severe Strabismus
+
         NOTE: It might be useful to make the calculations for this
         apparent to the user so they can judge for themself how accurate
         the program's result is. Maybe by returning something?
         """
         # strabismus detection logic goes here
+        pupils = self.getAllPupils()
+
+        # Calculate strab for the horizontal photo
+        if pupils[0] != None and pupils[1] != None:
+            # These coordinates are relative to the pupil photo, not the photo at large
+            # Get the coordinates for the pupilCenter for both eyes
+            pleftCenterX = pupils[0].getPupilRegion()[0]
+            pleftCenterY = pupils[0].getPupilRegion()[1]
+
+            prightCenterX = pupils[1].getPupilRegion()[0]
+            prightCenterY = pupils[1].getPupilRegion()[1]
+
+            # Get the coordinates for the white dot for both eyes
+            wdleftCenterX = pupils[0].getWhiteDotCenter()[0]
+            wdleftCenterY = pupils[0].getWhiteDotCenter()[1]
+
+            wdrightCenterX = pupils[1].getWhiteDotCenter()[0]
+            wdrightCenterY = pupils[1].getWhiteDotCenter()[1]
+
+            leftDistance = math.sqrt((pleftCenterX-wdleftCenterX)**2 +(pleftCenterY-wdleftCenterY)**2)
+            rightDistance = math.sqrt((prightCenterX-wdrightCenterX)**2 +(prightCenterY-wdrightCenterY)**2)
+
+            # Calculate the angle of Pupil-center to White-dot-center line [ using numpy.arctan on (y component of distance) / (x component of distance) ]
+            # Compare the two vectors
+
+        # Calculate strab for the vertical photo
+
         return "Strabismus detection called"
 
-    def astigmatism(self):
+    def astigmatism(self,threshold):
         """ Analyze this patient for signs of astigmatism """
         # astigmatism logic goes here
+        pupils = self.getAllPupils() #This call returns a tuple of Pupil objects
+        if DEBUG:
+            print str(pupils)
+
+        refErrs = []
+
+        for pupil in pupils:
+            if pupil == None:
+                print "Error: The horizontal photo's left pupil is not defined"
+            else:
+                refErrs.append( pupil.getCrescent() / pupil.getPupilArea()) # getPupilArea returns a float for the area of the pupil
+        if DEBUG:
+            print refErrs
+
+        # flag to be set to false if any defects are found
+        healthy = True
+
+        # astigmatism is a difference in refractive error in the same eye
+        # between the horiz and ver photos
+        if abs(refErrs[0] - refErrs[2]) > threshold:
+            healthy = False
+            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
+            print "Refer for astigmatism, info below:"
+            print "Diff in refractive error: " + str(abs(refErrs[0] - refErrs[2]))
+            print "horiz left: " + str(refErrs[0]) + " vert left: " + str(refErrs[2]) + "\n"
+        if abs(refErrs[1] - refErrs[3]) > threshold:
+            healthy = False
+            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
+            print "Refer for astigmatism, info below:"
+            print "Diff in refractive error: " + str(abs(refErrs[1] - refErrs[3]))
+            print "horiz right: " + str(refErrs[1]) + " vert right: " + str(refErrs[3]) + "\n"
+
+        # anisometropia is a difference in refractive error 
+        # between the left and right eye in the same photo
+        if abs(refErrs[0] - refErrs[1]) > threshold:
+            healthy = False
+            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
+            print "Refer for anisometropia, info below:"
+            print "Diff in refractive error: " + str(abs(refErrs[0] - refErrs[1]))
+            print "horiz left: " + str(refErrs[0]) + " horiz right: " + str(refErrs[1]) + "\n"
+        if abs(refErrs[2] - refErrs[3]) > threshold:
+            healthy = False
+            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
+            print "Refer for anisometropia, info below:"
+            print "Diff in refractive error: " + str(abs(refErrs[2] - refErrs[3]))
+            print "vert left: " + str(refErrs[2]) + " vert right: " + str(refErrs[3]) + "\n"
+        
+        if healthy:
+            print "No astigmatism or anisometropia detected with a threshold of refractive error of " + str(threshold)
+
         return "Astigmatism detection called"
 
     def cataracts(self):
