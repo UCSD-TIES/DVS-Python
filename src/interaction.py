@@ -210,6 +210,22 @@ class interaction():
 		page.GetParent().GetSizer().Show(page)
 		page.GetParent().GetSizer().Layout()
 		page.Refresh()
+
+	### Mouse events
+	# Mouse event handler, on click press
+	def mousePress(self, event):
+                print "Mouse clicked"
+
+        # Mouse event handler, on click release
+
+        # Mouse event handler, on drag
+        def mouseDrag(self, event):
+                if event.Dragging():
+                        x = event.GetX()
+                        y = event.GetY()
+                        print "Mouse dragged x:  %d, y: %d" % (x, y)
+
+        ### Mouse event tests end
 	'''
 	def OnBack(self, event):
 		self.Hide()

@@ -22,21 +22,7 @@ class page(wx.Panel):
 		baseSizer.Add(self.page3, 1, wx.EXPAND)
 		self.page2.Hide()               # Pages that aren't page 1 start off hidden
 		self.page3.Hide()
-
-        ### Mouse event tests start
-	# Mouse event handler, on click
-	def mouseClick(self, event):
-                print "Mouse clicked"
-
-        # Mouse event handler, on drag
-        def mouseDrag(self, event):
-                if event.Dragging():
-                        x = event.GetX()
-                        y = event.GetY()
-                        print "Mouse dragged x:  %d, y: %d" % (x, y)
-
-        ### Mouse event tests end
-                
+      
 	''' Unused
 	def getPage(self, pageNum):
 		if pageNum == 1:
@@ -185,11 +171,11 @@ class page(wx.Panel):
 
                 ### Mouse events, on click, on drag
                 # Mouse events for vertical image
-                self.ver3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.mouseClick)
+                self.ver3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.mousePress)
                 self.ver3ImgCtrl.Bind(wx.EVT_MOTION, self.mouseDrag)
 
                 # Mouse events for horizontal image
-                self.hor3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.mouseClick)
+                self.hor3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.mousePress)
                 self.hor3ImgCtrl.Bind(wx.EVT_MOTION, self.mouseDrag)
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
