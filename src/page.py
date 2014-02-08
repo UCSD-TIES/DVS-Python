@@ -171,12 +171,14 @@ class page(wx.Panel):
 
                 ### Mouse events, on click, on drag
                 # Mouse events for vertical image
-                self.ver3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.mousePress)
-                self.ver3ImgCtrl.Bind(wx.EVT_MOTION, self.mouseDrag)
+                self.ver3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.interact.mousePress)
+                self.ver3ImgCtrl.Bind(wx.EVT_MOTION, self.interact.mouseDrag)
+                self.ver3ImgCtrl.Bind(wx.EVT_LEFT_UP, self.interact.mouseRelease)
 
                 # Mouse events for horizontal image
-                self.hor3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.mousePress)
-                self.hor3ImgCtrl.Bind(wx.EVT_MOTION, self.mouseDrag)
+                self.hor3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.interact.mousePress)
+                self.hor3ImgCtrl.Bind(wx.EVT_MOTION, self.interact.mouseDrag)
+                self.hor3ImgCtrl.Bind(wx.EVT_LEFT_UP, self.interact.mouseRelease)
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)

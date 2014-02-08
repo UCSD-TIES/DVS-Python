@@ -217,6 +217,8 @@ class interaction():
                 print "Mouse clicked"
 
         # Mouse event handler, on click release
+        def mouseRelease(self, event):
+                print "Mouse released"
 
         # Mouse event handler, on drag
         def mouseDrag(self, event):
