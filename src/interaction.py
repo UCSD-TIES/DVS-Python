@@ -17,6 +17,9 @@ class interaction():
 		self.hBitMap = None
 		self.vBitMap = None
 
+		self.startX = 0
+		self.startY = 0
+
 	# BUTTONS
 
 	# upload button, 1st page
@@ -214,20 +217,32 @@ class interaction():
 	### Mouse events
 	# Mouse event handler, on click press
 	def mousePress(self, event):
-                print "Mouse clicked"
+		#print "Mouse clicked"
+		self.startX = event.GetX()
+		self.startY = event.GetY()
 
-        # Mouse event handler, on click release
-        def mouseRelease(self, event):
-                print "Mouse released"
+	# Mouse event handler, on click release
+	def mouseRelease(self, event):
+		print "Mouse released"
 
-        # Mouse event handler, on drag
-        def mouseDrag(self, event):
-                if event.Dragging():
-                        x = event.GetX()
-                        y = event.GetY()
-                        print "Mouse dragged x:  %d, y: %d" % (x, y)
+	# Mouse event handler, on drag
+	def mouseDrag(self, event, imgCtrl):
+		if event.Dragging():
+			x = event.GetX()
+			y = event.GetY()
+			print "Mouse dragged x:  %d, y: %d" % (x, y)
+			mdc = wx.MemoryDC()
+			bdc = wx.BufferedDC(mdc)
+			bitmap = imgCtrl.GetBitmap()
+			bdc.SelectObject(bitmap)
+			bdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
+			bdc.DrawRectangle(self.startX, self.startY, x - self.startX, y - self.startY)
+			bdc.SelectObject(wx.NullBitmap)
+			imgCtrl.SetBitmap(bitmap)
 
-        ### Mouse event tests end
+
+
+	### Mouse event tests end
 	'''
 	def OnBack(self, event):
 		self.Hide()

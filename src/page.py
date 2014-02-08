@@ -169,16 +169,16 @@ class page(wx.Panel):
 		menu.AddMany([(title),(560,0)])
 		pics.AddMany([(self.hor3ImgCtrl),(self.ver3ImgCtrl)])
 
-                ### Mouse events, on click, on drag
-                # Mouse events for vertical image
-                self.ver3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.interact.mousePress)
-                self.ver3ImgCtrl.Bind(wx.EVT_MOTION, self.interact.mouseDrag)
-                self.ver3ImgCtrl.Bind(wx.EVT_LEFT_UP, self.interact.mouseRelease)
+		### Mouse events, on click, on drag
+		# Mouse events for vertical image
+		self.ver3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.interact.mousePress)
+		self.ver3ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.ver3ImgCtrl))
+		self.ver3ImgCtrl.Bind(wx.EVT_LEFT_UP, self.interact.mouseRelease)
 
-                # Mouse events for horizontal image
-                self.hor3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.interact.mousePress)
-                self.hor3ImgCtrl.Bind(wx.EVT_MOTION, self.interact.mouseDrag)
-                self.hor3ImgCtrl.Bind(wx.EVT_LEFT_UP, self.interact.mouseRelease)
+		# Mouse events for horizontal image
+		self.hor3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.interact.mousePress)
+		self.hor3ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event, self.hor3ImgCtrl))
+		self.hor3ImgCtrl.Bind(wx.EVT_LEFT_UP, self.interact.mouseRelease)
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)
