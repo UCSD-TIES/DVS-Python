@@ -12,6 +12,8 @@ class interaction():
 		self.patient = None          # This might not be used
 		self.horizontalPath = None   # Path of horizontal image
 		self.verticalPath = None     # Path of vertical image
+		self.heightRatio = None
+		self.widthRatio = None
 
 		# These bitmaps are needed to draw on, can't draw on img Ctrls
 		self.hBitMap = None
@@ -110,7 +112,11 @@ class interaction():
 	  	else:
 		  	newHeight = maxSize
 		  	newWidth = maxSize * width/ height
-		
+
+		self.heightRatio = float(newHeight)/float(height)
+		self.widthRatio = float(newWidth)/float(width)
+		print "OG Height:", height, "| OG Width", width, "| New Height:", newHeight, "| New Width:", newWidth
+		print "Height Ratio:", self.heightRatio, "| Width Ratio:", self.widthRatio
 		# Finishes scaling and sets img into the imgCtrl  
 	  	newImg = newImg.Scale(newWidth,newHeight)
 	  	imgCtrl.SetBitmap(wx.BitmapFromImage(newImg))
@@ -166,8 +172,8 @@ class interaction():
 		
 		mdc.SelectObject(self.hBitMap)    # sets a bitmap to e modified
 		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
-		mdc.DrawRectangle(coors[0][0], coors[0][1], coors[0][2], coors[0][3])
-		mdc.DrawRectangle(coors[1][0], coors[1][1], coors[1][2], coors[1][3])
+		mdc.DrawRectangle(coors[0][0]*self.widthRatio, coors[0][1]*self.heightRatio, coors[0][2], coors[0][3])
+		mdc.DrawRectangle(coors[1][0]*self.widthRatio, coors[1][1]*self.heightRatio, coors[1][2], coors[1][3])
 		hImgCtrl.SetBitmap(self.hBitMap)  # Sets modified bitmap back into the img ctrl
 
 		mdc.SelectObject(self.vBitMap)    # sets a bitmap to e modified
