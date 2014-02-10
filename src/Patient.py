@@ -17,6 +17,8 @@ class Patient:
         """
         self.horizontal = HorizontalPhoto(horizontalImg, horizontalPath)
         self.vertical = VerticalPhoto(verticalImg, verticalPath)
+        self.defects ={}
+        self.info = {}
 
 
 #################### Getters ##################################
@@ -122,6 +124,15 @@ class Patient:
         return (self.horizontal.left.eyePupil,self.horizontal.right.eyePupil,
             self.vertical.left.eyePupil, self.vertical.right.eyePupil)
 
+    def getInfo(self):
+        """ Returns a dict with info/measurements in it (if any) """
+        return self.info
+
+    def getDefects(self):
+        """ Returns a dict with info about defects found. If the dict is 
+            empty then the patient is healthy """
+        return self.defects
+
 #################### Setters ##################################
 
 
@@ -140,6 +151,7 @@ class Patient:
         """ 
         results = self.strabismus()
         results = results + " " + self.astigmatism(threshold)
+        results = results + " " + self.anisometropia(threshold)
         results = results + " " + self.cataracts()
         results = results + " " + self.pupillaryDistance()
         return results
@@ -182,95 +194,17 @@ class Patient:
             relRightCenterY = vRight[1] + rightCenterY
             vPD = math.sqrt((relLeftCenterX-relRightCenterX)**2 +(relLeftCenterY-relRightCenterY)**2)
         #print "Vert PD: " + str(vPD)
-
+        self.info["HorizPD"] = str(hPD)
+        self.info["VertPD"] = str(vPD)
         return "Horiz PD: " + str(hPD) + " Vert PD: " + str(vPD)
 
 
     def strabismus(self):
         """
-        //possible error/situational cases:   - If distance between pupil and dot is minimal, and slope is 0 or undefined.
+        # possible error/situational cases:   - If distance between pupil and dot is minimal, and slope is 0 or undefined.
                                       - check both X and Y "distances" in 3rd check
                                       - in case of any center in "0" coordinates
                                       - should probably not have negatives except in test 3
-
-       #Threshold variables
-       dThreshold;
-       sThreshold;
-       xThreshold;
-       yThreshold;
-
-      
-       #Grabbing variables here ---------------------------------------------------------------------
-
-       # strabismus detection logic goes here
-        pupils = self.getAllPupils()
-
-        # Calculate strab for the horizontal photo
-        if pupils[0] != None and pupils[1] != None:
-            # These coordinates are relative to the pupil photo, not the photo at large
-            # Get the coordinates for the pupilCenter for both eyes
-            pleftCenterX = pupils[0].getPupilRegion()[0]
-            pleftCenterY = pupils[0].getPupilRegion()[1]
-
-            prightCenterX = pupils[1].getPupilRegion()[0]
-            prightCenterY = pupils[1].getPupilRegion()[1]
-
-            # Get the coordinates for the white dot for both eyes
-            wdleftCenterX = pupils[0].getWhiteDotCenter()[0]
-            wdleftCenterY = pupils[0].getWhiteDotCenter()[1]
-
-            wdrightCenterX = pupils[1].getWhiteDotCenter()[0]
-            wdrightCenterY = pupils[1].getWhiteDotCenter()[1]
-
-
-         //1.)  calculating difference of distances----------------------------------------------------------------
-
-
-            leftDistance = math.sqrt((pleftCenterX-wdleftCenterX)**2 +(pleftCenterY-wdleftCenterY)**2)
-            rightDistance = math.sqrt((prightCenterX-wdrightCenterX)**2 +(prightCenterY-wdrightCenterY)**2)
-
-            # Calculate the slope of Pupil-center to White-dot-center line [ (y component of distance) / (x component of distance) ]
-            # Compare the two vectors
-
-            dDistance = math.abs(lDistance - rDistance); 
-
-            # checks threshold distance
-            if dDistance > dThreshold:                            //dThreshold should be near 0
-               return true;            
-    
-
-
-        //2.)  calculating difference of slope--------------------------------------------------------------------
-
-            lSlope = div(pLeftCenterY, pLeftCenterX);
-            rSlope = div(pRightCenterY, pRightCenterX);
-            dSlope = math.abs(lSlope - rSlope);
-
-            //checks threshold slope "distance"
-            if dSlope > sThreshhold:                   //sThreshold should be near 0
-                return true;
-
-
-        //3.)  calculating difference of left x-axis------------------------------------------------------------------
-
-            lxDifference = math.abs(wdLeftCenterX - pLeftCenterX);
-            rxDifference = math.abs(wdRightCenterX - pRightCenterX);
-
-            xDifference = math.abs(lxDifference - rxDifference);
-
-            //checks threshold x distance
-            if xDifference > xThreshold:                              //xThreshold should be near 0
-                return true;
-
-            lyDistance = math.abs(wdLeftCenterY - pLeftCenterY);
-            ryDistance = math.abs(wdRightCenterY - pRightCenterY);
-
-            yDifference = math.abs(lyDifference - ryDistance);
-
-            //checks threshold y distance
-            if yDifference > yThreshold:                             //yThreshold should be near 0
-                return true;
-
 
         """
 
@@ -348,49 +282,58 @@ class Patient:
 
         # checks threshold distance
         if dDistance > dThreshold:                            # dThreshold should be near 0
-           print "Refer for strabismus, info below:"
-           print "dDistance: " + str(dDistance) + "\n"
-           return "Patient has strab";            
+           self.defects["hasStrab"] = True
+           self.defects["strabDDistance"] = str(dDistance)
+           if DEBUG:
+               print "Refer for strabismus, info below:"
+               print "dDistance: " + str(dDistance) + "\n"
     
 
 
         # 2.)  calculating difference of slope--------------------------------------------------------------------
 
-        lSlope = div(pLeftCenterY, pLeftCenterX);
-        rSlope = div(pRightCenterY, pRightCenterX);
-        dSlope = math.abs(lSlope - rSlope);
+        lSlope = pleftCenterY / pleftCenterX;
+        rSlope = prightCenterY /prightCenterX;
+        dSlope = abs(lSlope - rSlope);
 
         # checks threshold slope "distance"
-        if dSlope > sThreshhold:                   # sThreshold should be near 0
-            print "Refer for strabismus, info below:"
-            print "dSlope: " + str(dSlope) + "\n"
-            return "Patient has strab";
+        if dSlope > sThreshold:                   # sThreshold should be near 0
+            self.defects["hasStrab"] = True
+            self.defects["strabDSlope"] = str(dSlope)
+            if DEBUG:
+                print "Refer for strabismus, info below:"
+                print "dSlope: " + str(dSlope) + "\n"
 
 
         # 3.)  calculating difference of left x-axis------------------------------------------------------------------
 
-        lxDifference = math.abs(wdLeftCenterX - pLeftCenterX);
-        rxDifference = math.abs(wdRightCenterX - pRightCenterX);
+        lxDifference = abs(wdleftCenterX - pleftCenterX);
+        rxDifference = abs(wdrightCenterX - prightCenterX);
 
-        xDifference = math.abs(lxDifference - rxDifference);
+        xDifference = abs(lxDifference - rxDifference);
 
         #checks threshold x distance
         if xDifference > xThreshold:                              # xThreshold should be near 0
-            print "Refer for strabismus, info below:"
-            print "xDifference: " + str(xDifference) + "\n"
-            return "Patient has strab";
+            self.defects["hasStrab"] = True
+            self.defects["strabXDifference"] = str(xDifference)
+            if DEBUG:
+                print "Refer for strabismus, info below:"
+                print "xDifference: " + str(xDifference) + "\n"
 
-        lyDistance = math.abs(wdLeftCenterY - pLeftCenterY);
-        ryDistance = math.abs(wdRightCenterY - pRightCenterY);
+        lyDistance = abs(wdleftCenterY - pleftCenterY);
+        ryDistance = abs(wdrightCenterY - prightCenterY);
 
-        yDifference = math.abs(lyDifference - ryDistance);
+        yDifference = abs(lyDistance - ryDistance);
 
         # checks threshold y distance
         if yDifference > yThreshold:                             # yThreshold should be near 0
-            print "Refer for strabismus, info below:"
-            print "yDifference: " + str(yDifference) + "\n"
-            return "Patient has strab";
+            self.defects["hasStrab"] = True
+            self.defects["strabYDifference"] = str(yDifference)
+            if DEBUG:
+                print "Refer for strabismus, info below:"
+                print "yDifference: " + str(yDifference) + "\n"
 
+        return "strabismus called"
         # Calculate strab for the vertical photo
 
 
@@ -418,34 +361,72 @@ class Patient:
         # between the horiz and ver photos
         if abs(refErrs[0] - refErrs[2]) > threshold:
             healthy = False
-            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
-            print "Refer for astigmatism, info below:"
-            print "Diff in refractive error: " + str(abs(refErrs[0] - refErrs[2]))
-            print "horiz left: " + str(refErrs[0]) + " vert left: " + str(refErrs[2]) + "\n"
+            self.defects["hasAstig"] = True
+            self.defects["astigRefErrDiff"] = str(abs(refErrs[0] - refErrs[2]))
+            self.defects["astigLeft"] = "horiz left: " + str(refErrs[0]) + " vert left: " + str(refErrs[2])
+            if DEBUG:
+                print "Refer for astigmatism, info below:"
+                print "Diff in refractive error: " + str(abs(refErrs[0] - refErrs[2]))
+                print "horiz left: " + str(refErrs[0]) + " vert left: " + str(refErrs[2]) + "\n"
+
         if abs(refErrs[1] - refErrs[3]) > threshold:
             healthy = False
-            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
-            print "Refer for astigmatism, info below:"
-            print "Diff in refractive error: " + str(abs(refErrs[1] - refErrs[3]))
-            print "horiz right: " + str(refErrs[1]) + " vert right: " + str(refErrs[3]) + "\n"
+            self.defects["hasAstig"] = True
+            self.defects["astigRefErrDiff"] = str(abs(refErrs[1] - refErrs[3]))
+            self.defects["astigRight"] = "horiz right: " + str(refErrs[1]) + " vert right: " + str(refErrs[3])
+            if DEBUG:
+                print "Refer for astigmatism, info below:"
+                print "Diff in refractive error: " + str(abs(refErrs[1] - refErrs[3]))
+                print "horiz right: " + str(refErrs[1]) + " vert right: " + str(refErrs[3]) + "\n"
+        
+        if DEBUG and healthy:
+            print "No astigmatism detected with a threshold of refractive error of " + str(threshold)
+
+        return "Astigmatism detection called"
+
+    def anisometropia(self,threshold):
+        """ Analyze this patient for signs of anisometropia """
+        pupils = self.getAllPupils() #This call returns a tuple of Pupil objects
+        if DEBUG:
+            print str(pupils)
+
+        refErrs = []
+
+        for pupil in pupils:
+            if pupil == None:
+                print "Error: The horizontal photo's left pupil is not defined"
+            else:
+                refErrs.append( pupil.getCrescent() / pupil.getPupilArea()) # getPupilArea returns a float for the area of the pupil
+        if DEBUG:
+            print refErrs
+
+        # flag to be set to false if any defects are found
+        healthy = True
 
         # anisometropia is a difference in refractive error 
         # between the left and right eye in the same photo
         if abs(refErrs[0] - refErrs[1]) > threshold:
             healthy = False
-            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
-            print "Refer for anisometropia, info below:"
-            print "Diff in refractive error: " + str(abs(refErrs[0] - refErrs[1]))
-            print "horiz left: " + str(refErrs[0]) + " horiz right: " + str(refErrs[1]) + "\n"
+            self.defects["hasAnisomet"] = True
+            self.defects["anisometRefErrDiff"] = str(abs(refErrs[0] - refErrs[1]))
+            self.defects["anisometHoriz"] = "horiz left: " + str(refErrs[0]) + " horiz right: " + str(refErrs[1])
+            if DEBUG:
+                print "Refer for anisometropia, info below:"
+                print "Diff in refractive error: " + str(abs(refErrs[0] - refErrs[1]))
+                print "horiz left: " + str(refErrs[0]) + " horiz right: " + str(refErrs[1]) + "\n"
+
         if abs(refErrs[2] - refErrs[3]) > threshold:
             healthy = False
-            #TODO: This will need to be replaced with a structure to return. Perhaps a dict?
-            print "Refer for anisometropia, info below:"
-            print "Diff in refractive error: " + str(abs(refErrs[2] - refErrs[3]))
-            print "vert left: " + str(refErrs[2]) + " vert right: " + str(refErrs[3]) + "\n"
+            self.defects["hasAnisomet"] = True
+            self.defects["anisometRefErrDiff"] = str(abs(refErrs[2] - refErrs[3]))
+            self.defects["anisometHoriz"] = "vert left: " + str(refErrs[2]) + " vert right: " + str(refErrs[3]) 
+            if DEBUG:
+                print "Refer for anisometropia, info below:"
+                print "Diff in refractive error: " + str(abs(refErrs[2] - refErrs[3]))
+                print "vert left: " + str(refErrs[2]) + " vert right: " + str(refErrs[3]) + "\n"
         
-        if healthy:
-            print "No astigmatism or anisometropia detected with a threshold of refractive error of " + str(threshold)
+        if DEBUG and healthy:
+            print "No anisometropia detected with a threshold of refractive error of " + str(threshold)
 
         return "Astigmatism detection called"
 
