@@ -294,6 +294,11 @@ class Patient:
 
         lSlope = pleftCenterY / pleftCenterX;
         rSlope = prightCenterY /prightCenterX;
+        x = float('nan');
+        if lSlope == x:
+            lSlope = 1000;
+        if rSlope == x:
+            rSlope = 1000;
         dSlope = abs(lSlope - rSlope);
 
         # checks threshold slope "distance"
