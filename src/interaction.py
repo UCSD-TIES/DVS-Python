@@ -179,10 +179,17 @@ class interaction():
 		mdc.DrawRectangle(coors[1][0]*self.widthRatio, coors[1][1]*self.heightRatio, coors[1][2], coors[1][3])
 		hImgCtrl.SetBitmap(self.hBitMap)  # Sets modified bitmap back into the img ctrl
 
+		img = self.vBitMap.ConvertToImage()	# To get width
+		width = img.GetWidth()
+		#img = img.Rotate90()
+		#self.vBitMap = wx.BitmapFromImage(img)
 		mdc.SelectObject(self.vBitMap)    # sets a bitmap to e modified
 		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
-		mdc.DrawRectangle(coors[2][0], coors[2][1], coors[2][2], coors[2][3])
-		mdc.DrawRectangle(coors[3][0], coors[3][1], coors[3][2], coors[3][3])
+		# THIS MIGHT BE WRONG
+		mdc.DrawRectangle((coors[2][1]+coors[2][3])*self.heightRatio, (width - coors[2][0]-coors[2][2])*self.widthRatio, coors[2][3], coors[2][2])
+		mdc.DrawRectangle((coors[3][1]+coors[3][3])*self.heightRatio, (width - coors[3][0]-coors[3][2])*self.widthRatio, coors[3][3], coors[3][2])
+		#mdc.DrawRectangle(coors[2][0]*self.widthRatio, coors[2][1]*self.heightRatio, coors[2][2], coors[2][3])
+		#mdc.DrawRectangle(coors[3][0]*self.widthRatio, coors[3][1]*self.heightRatio, coors[3][2], coors[3][3])
 		vImgCtrl.SetBitmap(self.vBitMap)  # Sets modified bitmap back into the img ctrl
 
 		mdc.SelectObject(wx.NullBitmap)   # MemoryDC must be set back to a null bitmap when done

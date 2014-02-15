@@ -115,7 +115,7 @@ class page(wx.Panel):
 		# mainGrid has three FlexGrids inside it
 		# wx.FlexGridSizer(rows, cols, vgap, hgap)
 		mainGrid = wx.FlexGridSizer(3, 1, 5, 5)
-		menu = wx.FlexGridSizer(1, 5, 5, 5)
+		menu = wx.FlexGridSizer(1, 4, 5, 5)
 		pics = wx.FlexGridSizer(1, 2, 5, 5)
 
 		###############COMPONENTS################
