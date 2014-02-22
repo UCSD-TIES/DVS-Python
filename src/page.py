@@ -49,7 +49,10 @@ class page(wx.Panel):
 		mainGrid = wx.FlexGridSizer(3, 1, 5, 5)    # A column that holds the rest of the sizers
 		menu = wx.FlexGridSizer(1, 5, 5, 5)        # Title, reset, next button
 		pics = wx.FlexGridSizer(1, 2, 5, 5)        # Uploaded photos
-		upload = wx.FlexGridSizer(1, 4, 5, 5)      # Path names and upload buttons
+		upload = wx.FlexGridSizer(1, 5, 5, 4)      # Path names and upload buttons
+
+		pic1 = wx.BoxSizer(wx.VERTICAL)
+		pic2 = wx.BoxSizer(wx.VERTICAL)
 
 		###############COMPONENTS################
 		verImg = wx.EmptyImage(440,440)            # Images start off as blank images
@@ -60,9 +63,9 @@ class page(wx.Panel):
 		title = wx.StaticText(page, label="Welcome to DVS")   # Static text for the page
 
 		# Displays path of images, uneditable
-		horPhotoTxt = wx.TextCtrl(page, size=(350,-1), style=wx.TE_READONLY)
+		horPhotoTxt = wx.TextCtrl(page, size=(360,-1), style=wx.TE_READONLY)
 		horPhotoTxt.SetValue("Please upload an image.")
-		verPhotoTxt = wx.TextCtrl(page, size=(350,-1), style=wx.TE_READONLY)
+		verPhotoTxt = wx.TextCtrl(page, size=(360,-1), style=wx.TE_READONLY)
 		verPhotoTxt.SetValue("Please upload an image.")
 
 
@@ -96,9 +99,11 @@ class page(wx.Panel):
 		mainGrid.AddMany([(menu),(upload),(pics)])         # Adds the three sizers to the main sizer
 
 		# Adds the components to the layout sizers
-		menu.AddMany([(title),(595,0),(resetBtn),(nextBtn)])      # Title, large space, reset, next
-		pics.AddMany([(self.horImgCtrl),(self.verImgCtrl)])       # The two images
-		upload.AddMany([(horPhotoTxt),(horiBtn),(verPhotoTxt),(vertBtn)])   # Text boxes and buttons
+		menu.AddMany([(title),(640,0),(resetBtn),(nextBtn)])      # Title, large space, reset, next
+		pic1.Add(self.horImgCtrl, flag = wx.ALIGN_CENTER)
+		pic2.Add(self.verImgCtrl, flag = wx.ALIGN_CENTER)
+		pics.AddMany([(pic1),(pic2)])       # The two images
+		upload.AddMany([(horPhotoTxt),(horiBtn),(0,0),(verPhotoTxt),(vertBtn)])   # Text boxes and buttons
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)   # Adds everything to real main sizer
 		page.SetSizer(vbox)                                # Sets the main sizer as the page's sizer
@@ -117,6 +122,9 @@ class page(wx.Panel):
 		mainGrid = wx.FlexGridSizer(3, 1, 5, 5)
 		menu = wx.FlexGridSizer(1, 4, 5, 5)
 		pics = wx.FlexGridSizer(1, 2, 5, 5)
+
+		pic1 = wx.BoxSizer(wx.VERTICAL)
+		pic2 = wx.BoxSizer(wx.VERTICAL)
 
 		###############COMPONENTS################
 		# Note that the imgCtrl's here were made in page 1's next button
@@ -139,7 +147,9 @@ class page(wx.Panel):
 		# See page 1's set up
 		mainGrid.AddMany([(menu),(pics)])
 		menu.AddMany([(title),(560,0),(yesBtn),(noBtn)])
-		pics.AddMany([(self.hor2ImgCtrl),(self.ver2ImgCtrl)])
+		pic1.Add(self.hor2ImgCtrl, flag = wx.ALIGN_RIGHT)
+		pic2.Add(self.ver2ImgCtrl, flag = wx.ALIGN_LEFT)
+		pics.AddMany([(pic1),(pic2)]) 
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)
@@ -173,12 +183,12 @@ class page(wx.Panel):
 		# Mouse events for vertical image
 		self.ver3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.interact.mousePress)
 		self.ver3ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.ver3ImgCtrl))
-		self.ver3ImgCtrl.Bind(wx.EVT_LEFT_UP, self.interact.mouseRelease)
+		self.ver3ImgCtrl.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.ver3ImgCtrl))
 
 		# Mouse events for horizontal image
 		self.hor3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, self.interact.mousePress)
 		self.hor3ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event, self.hor3ImgCtrl))
-		self.hor3ImgCtrl.Bind(wx.EVT_LEFT_UP, self.interact.mouseRelease)
+		self.hor3ImgCtrl.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.hor3ImgCtrl))
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)

@@ -235,15 +235,28 @@ class interaction():
 		self.startY = event.GetY()
 
 	# Mouse event handler, on click release
-	def mouseRelease(self, event):
-		print "Mouse released"
+	def mouseRelease(self, event, imgCtrl):
+		#print "Mouse released"
+		x = event.GetX()
+		y = event.GetY()
+		
+		
+		mdc = wx.MemoryDC()
+		bdc = wx.BufferedDC(mdc)
+		bitmap = imgCtrl.GetBitmap()
+		bdc.SelectObject(bitmap)
+		bdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
+		bdc.DrawRectangle(self.startX, self.startY, x - self.startX, y - self.startY)
+		bdc.SelectObject(wx.NullBitmap)
+		imgCtrl.SetBitmap(bitmap)
 
 	# Mouse event handler, on drag
 	def mouseDrag(self, event, imgCtrl):
 		if event.Dragging():
 			x = event.GetX()
 			y = event.GetY()
-			print "Mouse dragged x:  %d, y: %d" % (x, y)
+			#print "Mouse dragged x:  %d, y: %d" % (x, y)
+			'''
 			mdc = wx.MemoryDC()
 			bdc = wx.BufferedDC(mdc)
 			bitmap = imgCtrl.GetBitmap()
@@ -252,7 +265,7 @@ class interaction():
 			bdc.DrawRectangle(self.startX, self.startY, x - self.startX, y - self.startY)
 			bdc.SelectObject(wx.NullBitmap)
 			imgCtrl.SetBitmap(bitmap)
-
+			'''
 
 
 	### Mouse event tests end
