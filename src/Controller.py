@@ -12,7 +12,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = False
+TEST = True
 PRINT = False
 
 CIRCLE_COLOR = (0, 255, 0)
@@ -429,4 +429,14 @@ if (TEST):
 
     print "Beginning eye analysis...\n"
     patient.analyzeEyes(0.17)
+    
+    allInfo = patient.getInfo()
+    allDefects = patient.getDefects()
+
+    for key in  allDefects.keys():
+        print "[" + key + "]" + " = " + str(allDefects[key] )
+    print "\n"
+    for key in  allInfo.keys():
+        print "[" + key + "]" + " = " + str(allInfo[key] )
+    print "\n"
 
