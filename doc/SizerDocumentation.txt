@@ -1,0 +1,21 @@
+Documentation for Sizers for the Front-end of DVS.
+
+Notes:
+Referred variables are tentative to change.
+
+
+A wx.Frame is what holds everything. The top of the top.
+The wx.Frame is where we set things like:
+- placing the frame at the center of the screen on startup
+- setting it to be of size 1000px by 600px.
+
+This frame holds a boxSizer called pageSizer.
+
+pageSizer is a boxSizer set to wx.VERTICAL, which makes all objects inside it stack on top of each other depending on what is created first.
+pageSizer holds all the pages, and all pages are hidden except first page at the start.
+
+All the pages are wx.Panels, set to wx.EXPAND.
+
+Each page at the top level has a boxSizer named vBox, set to wx.VERTICAL, so our general layout of each page is a stack, like the frame.
+
+Each page is set to this sizer using SetSizer(), typically found at the bottom of the pageSetUp() method. vBox will contain multiple sizers, which together makes up the content of the respective page.
