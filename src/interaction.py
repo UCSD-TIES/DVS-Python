@@ -19,9 +19,20 @@ class interaction():
 		self.hBitMap = None
 		self.vBitMap = None
 
+		# Images to make bitmaps out of, will store original image for resets
+		self.hImg = None
+		self.vImg = None
+
+		# Coordinates for user input in tuple
+		# set of tuples for horizontal and vertical, outer tuple is (left eye, right eye)
+		# inner tuple is (Top Left X, Top Left Y, Bot Right X, Bot Right Y)
+		self.hcoors = [[0,0,0,0],[0,0,0,0]]
+		self.vcoors = [[0,0,0,0],[0,0,0,0]]
+
+		# For drawing and only for drawing
 		self.startX = 0
 		self.startY = 0
-
+		self.overlay = wx.Overlay()
 	# BUTTONS
 
 	# upload button, 1st page
@@ -127,8 +138,10 @@ class interaction():
 	  	# Stores data for interaction obj depending on orientation
 	  	if orientation == 0:
 	  		self.hBitMap = wx.BitmapFromImage(newImg)
+	  		self.hImg = newImg
 	  	elif orientation == 1:
 	  		self.vBitMap = wx.BitmapFromImage(newImg)
+	  		self.vImg = newImg
 	  	page.Refresh()
 
 	# Next Button for first page
@@ -162,7 +175,7 @@ class interaction():
 		else:
 		'''
 		self.patient = makePatient(self.horizontalPath, self.verticalPath)
-		coors = getEyeCoors(self.patient)
+		coors = getEyeCoors(self.patient)                 # this coors is local, just for drawing
 		print coors
 
 		# Paints the images of page 2 and hides the first page
@@ -175,6 +188,8 @@ class interaction():
 		
 		mdc.SelectObject(self.hBitMap)    # sets a bitmap to e modified
 		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
+
+		# Rectangles are drawn with DC.DrawRectangle(X, Y, width, Height)
 		mdc.DrawRectangle(coors[0][0]*self.widthRatio, coors[0][1]*self.heightRatio, coors[0][2], coors[0][3])
 		mdc.DrawRectangle(coors[1][0]*self.widthRatio, coors[1][1]*self.heightRatio, coors[1][2], coors[1][3])
 		hImgCtrl.SetBitmap(self.hBitMap)  # Sets modified bitmap back into the img ctrl
@@ -186,10 +201,10 @@ class interaction():
 		mdc.SelectObject(self.vBitMap)    # sets a bitmap to e modified
 		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
 		# THIS MIGHT BE WRONG
-		mdc.DrawRectangle((coors[2][1]+coors[2][3])*self.heightRatio, (width - coors[2][0]-coors[2][2])*self.widthRatio, coors[2][3], coors[2][2])
-		mdc.DrawRectangle((coors[3][1]+coors[3][3])*self.heightRatio, (width - coors[3][0]-coors[3][2])*self.widthRatio, coors[3][3], coors[3][2])
-		#mdc.DrawRectangle(coors[2][0]*self.widthRatio, coors[2][1]*self.heightRatio, coors[2][2], coors[2][3])
-		#mdc.DrawRectangle(coors[3][0]*self.widthRatio, coors[3][1]*self.heightRatio, coors[3][2], coors[3][3])
+		#mdc.DrawRectangle((coors[2][1]+coors[2][3])*self.heightRatio, (width - coors[2][0]-coors[2][2])*self.widthRatio, coors[2][3], coors[2][2])
+		#mdc.DrawRectangle((coors[3][1]+coors[3][3])*self.heightRatio, (width - coors[3][0]-coors[3][2])*self.widthRatio, coors[3][3], coors[3][2])
+		mdc.DrawRectangle(coors[2][0]*self.widthRatio, coors[2][1]*self.heightRatio, coors[2][2], coors[2][3])
+		mdc.DrawRectangle(coors[3][0]*self.widthRatio, coors[3][1]*self.heightRatio, coors[3][2], coors[3][3])
 		vImgCtrl.SetBitmap(self.vBitMap)  # Sets modified bitmap back into the img ctrl
 
 		mdc.SelectObject(wx.NullBitmap)   # MemoryDC must be set back to a null bitmap when done
@@ -229,16 +244,119 @@ class interaction():
 
 	### Mouse events
 	# Mouse event handler, on click press
-	def mousePress(self, event):
+	# orientation: vertical is 1, horizontal is 0
+	def mousePress(self, event, orientation):
 		#print "Mouse clicked"
-		self.startX = event.GetX()
-		self.startY = event.GetY()
+		newX = event.GetX()
+		newY = event.GetY()
+		self.startX = newX
+		self.startY = newY
+		if orientation == 0:
+			if self.hcoors[0][0] == 0:      # if hcoors is empty, assume left eye
+				self.hcoors[0][0] = newX
+				self.hcoors[0][1] = newY
+			elif self.hcoors[1][0] == 0:    # if right eye has no value yet
+				self.whichEye(0, newX, newY, 0)  # check which eye new value belongs to
+		elif orientation == 1:
+			if self.vcoors[0][0] == 0:
+				self.vcoors[0][0] = newX
+				self.vcoors[0][1] = newY
+			elif self.vcoors[1][0] == 0:
+				self.whichEye(1, newX, newY, 0)
+
+
+	# Helper function checks which eye inputed values belong to
+	# orientation: vertical is 1, horizontal is 0
+	# point: 0 if starting point, 1 if ending point, of the rectangle
+	def whichEye(self, orientation, newX, newY, point):
+		if point == 1:                              # for ending point
+			if orientation == 0:
+				if newX > self.hcoors[0][2]:        # values for right eye
+					self.hcoors[1][2] = newX
+					self.hcoors[1][3] = newY
+				else:							# New eye values are for left eye
+					self.hcoors[1][2] = self.hcoors[0][2]
+					self.hcoors[1][3] = self.hcoors[0][3]
+					self.hcoors[0][2] = newX
+					self.hcoors[0][3] = newY
+			if orientation == 1:
+				if newX > self.vcoors[0][2]:    # New eye values are for right eye
+					self.vcoors[1][2] = newX
+					self.vcoors[1][3] = newY
+				else:							# New eye values are for left eye
+					self.vcoors[1][2] = self.vcoors[0][2]
+					self.vcoors[1][3] = self.vcoors[0][3]
+					self.vcoors[0][2] = newX
+					self.vcoors[0][3] = newY
+
+		# For starting point
+		if point == 0:
+			if orientation == 0:
+				if newX > self.hcoors[0][0]:    # New eye values are for right eye
+					self.hcoors[1][0] = newX
+					self.hcoors[1][1] = newY
+				else:							# New eye values are for left eye
+					self.hcoors[1][0] = self.hcoors[0][0]
+					self.hcoors[1][1] = self.hcoors[0][1]
+					self.hcoors[0][0] = newX
+					self.hcoors[0][1] = newY
+			if orientation == 1:
+				if newX > self.vcoors[0][0]:    # New eye values are for right eye
+					self.vcoors[1][0] = newX
+					self.vcoors[1][1] = newY
+				else:							# New eye values are for left eye
+					self.vcoors[1][0] = self.vcoors[0][0]
+					self.vcoors[1][1] = self.vcoors[0][1]
+					self.vcoors[0][0] = newX
+					self.vcoors[0][1] = newY
+
+
+		
 
 	# Mouse event handler, on click release
-	def mouseRelease(self, event, imgCtrl):
+	# orientation: vertical is 1, horizontal is 0
+	def mouseRelease(self, event, imgCtrl, orientation):
 		#print "Mouse released"
-		x = event.GetX()
-		y = event.GetY()
+		endX = event.GetX()
+		endY = event.GetY()
+
+
+
+		# Managing how the user is drawing
+		# User might not draw from top left to bottom right
+		if self.startX > endX:
+			temp = self.startX
+			self.startX = endX
+			endX = temp
+		if self.startY > endY:
+			temp = self.startY
+			self.startY = endY
+			endY = temp
+
+		if orientation == 0:
+			if self.hcoors[0][2] == 0:      # if hcoors is empty, assume left eye
+				self.hcoors[0][2] = endX
+				self.hcoors[0][3] = endY
+			elif self.hcoors[1][2] == 0:
+				self.whichEye(orientation, endX, endY, 1)
+		elif orientation == 1:
+			if self.vcoors[0][2] == 0:
+				self.vcoors[0][2] = endX
+				self.vcoors[0][3] = endY
+			elif self.vcoors[1][2] == 0:
+				self.whichEye(orientation, endX, endY, 1)
+		'''
+		elif orientation == 1:
+			if self.vstartX > self.vendX:
+				temp = self.vstartX
+				self.vstartX = self.vendX
+				self.vendX = temp
+			if self.vstartY > self.vendY:
+				temp = self.vstartY
+				self.vstartY = self.vendY
+				self.vendY = temp
+		'''
+
 		
 		
 		mdc = wx.MemoryDC()
@@ -246,17 +364,48 @@ class interaction():
 		bitmap = imgCtrl.GetBitmap()
 		bdc.SelectObject(bitmap)
 		bdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
-		bdc.DrawRectangle(self.startX, self.startY, x - self.startX, y - self.startY)
+
+		bdc.DrawRectangle(self.startX, self.startY, endX - self.startX, endY - self.startY)
+		print "startX: %d startY: %d endX: %d endY: %d" % (self.startX, self.startY, endX, endY)
+		'''
+		elif orientation == 1:
+			bdc.DrawRectangle(self.vstartX, self.vstartY, self.vendX - self.vstartX, self.vendY - self.vstartY)
+			print "startX: %d startY: %d endX: %d endY: %d" % (self.vstartX, self.vstartY, self.vendX, self.vendY)
+		'''
 		bdc.SelectObject(wx.NullBitmap)
 		imgCtrl.SetBitmap(bitmap)
+		self.startX = 0
+		self.startY = 0
+		print self.hcoors
+		print self.vcoors
+
 
 	# Mouse event handler, on drag
 	def mouseDrag(self, event, imgCtrl):
+
+		
 		if event.Dragging():
 			x = event.GetX()
 			y = event.GetY()
+			rect = wx.RectPP( (self.startX,self.startY), (x,y))
+
+			dc = wx.ClientDC(imgCtrl)
+
+			odc = wx.DCOverlay(self.overlay, dc)
+			odc.Clear()
+
+			dc.SetPen(wx.Pen("black", 2))
+			dc.SetBrush(wx.TRANSPARENT_BRUSH)
+			dc.DrawRectangleRect(rect)
+
+			self.overlay.DrawRectangleRect(rect)
+
+			del odc
+		'''
 			#print "Mouse dragged x:  %d, y: %d" % (x, y)
-			'''
+			# DRAWING HERE WAS SO YOU CAN SEE THE RECTANGLE BEING DRAWN
+			# DOESN'T WORK SO MOVED TO UPON RELEASE
+			
 			mdc = wx.MemoryDC()
 			bdc = wx.BufferedDC(mdc)
 			bitmap = imgCtrl.GetBitmap()
@@ -265,8 +414,8 @@ class interaction():
 			bdc.DrawRectangle(self.startX, self.startY, x - self.startX, y - self.startY)
 			bdc.SelectObject(wx.NullBitmap)
 			imgCtrl.SetBitmap(bitmap)
-			'''
-
+			
+		'''
 
 	### Mouse event tests end
 	'''
@@ -283,3 +432,6 @@ class interaction():
 	def OnCancelAndExit(self, event):
 		self.GetParent().ShutDown()
 	'''
+	def seeResult(self, page3, resultPage): 
+		page3.Hide() # Hides 3nd page 
+		self.ShowYourself(resultPage) # Shows result page
