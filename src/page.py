@@ -226,7 +226,7 @@ class page(wx.Panel):
 			print "[" + line + "]" + " = " + str(all_info[line])
 		print "\n"
 
-
+		'''
 		# print out title on top left corner of the page
 		resultText = "This is result page"
 		result = wx.StaticText(page, -1, resultText, (0, 40), (1000, -1), wx.ALIGN_CENTER)
@@ -267,4 +267,4 @@ class page(wx.Panel):
 		notRefer.SetBackgroundColour('maroon')
 		notRefer.SetForegroundColour('green')
 		notRefer.SetFont(referFont)
-
+		'''
