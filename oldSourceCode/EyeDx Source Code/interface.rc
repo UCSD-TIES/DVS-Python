@@ -1,0 +1,231 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#include "winver.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+ID_EYEDX_ICON           ICON    DISCARDABLE     "EYEDX.ICO"
+ID_EYEDX_ICON_SM        ICON    DISCARDABLE     "EYEDX.ICO"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+ID_FILE_MENU DIALOG DISCARDABLE  20, 20, 150, 110
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Open File"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_DIRECTORY,6,5,136,13,ES_AUTOHSCROLL | NOT WS_TABSTOP
+    LISTBOX         IDC_LIST,6,20,136,59,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    LBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "OK",IDOK,17,87,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,79,87,50,14,WS_GROUP
+END
+
+ID_ABOUT_DIALOG DIALOG DISCARDABLE  0, 0, 186, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About EyeDx..."
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,67,65,50,14
+    RTEXT           "The EyeDx Photoscreening Tool",-1,41,7,104,8,NOT 
+                    WS_GROUP
+    RTEXT           "Copyright 1997,1998  ExeDx, Inc.",-1,41,19,107,8,NOT 
+                    WS_GROUP
+    RTEXT           "Release Version 1.0",-1,62,41,64,8,NOT WS_GROUP
+END
+
+ID_DIRECT_MENU DIALOGEX 0, 0, 174, 141
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Run Direct From Camera"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "",-1,5,5,72,85
+    RTEXT           "Up Image",-1,23,12,32,8,NOT WS_GROUP
+    GROUPBOX        "",-1,12,21,57,44
+    PUSHBUTTON      "Select",ID_UPNEXT,16,71,50,14,WS_GROUP,WS_EX_CLIENTEDGE | 
+                    WS_EX_STATICEDGE
+    GROUPBOX        "",-1,91,5,72,85
+    RTEXT           "Side Image",-1,107,12,36,8,NOT WS_GROUP
+    GROUPBOX        "",-1,98,21,57,44
+    PUSHBUTTON      "Select",ID_SIDENEXT,102,71,50,14,WS_GROUP,
+                    WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
+    PUSHBUTTON      "OK",IDOK,31,123,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",ID_CANCEL,87,123,50,14,WS_GROUP
+    RADIOBUTTON     "Show Animation During Processing",IDD_ANIMATION,21,111,
+                    126,10,WS_GROUP | WS_TABSTOP
+    EDITTEXT        IDC_REPORT_NAME,66,94,86,13,ES_AUTOHSCROLL | NOT 
+                    WS_TABSTOP
+    RTEXT           "Report Name:",-1,13,96,45,8,NOT WS_GROUP
+END
+
+ID_REPLACE_DIALOG DIALOG DISCARDABLE  20, 20, 150, 74
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Warning"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "OK",IDOK,17,49,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,79,49,50,14,WS_GROUP
+    RTEXT           "A report with that name",-1,34,8,74,8
+    RTEXT           "already exists.",-1,48,19,45,8
+    RTEXT           "Replace?",-1,55,34,32,8
+END
+
+ID_ILLLOAD_DIALOG DIALOG DISCARDABLE  20, 20, 150, 74
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Warning"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "OK",IDOK,17,49,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,79,49,50,14,WS_GROUP
+    RTEXT           "This image is not the",-1,39,8,66,8
+    RTEXT           "expected size.",-1,47,19,46,8
+    RTEXT           "Load anyway?",-1,47,34,47,8
+END
+
+ID_ONE_YEAR_DIALOG DIALOG DISCARDABLE  20, 20, 150, 74
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Age Test"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "Yes",IDYES,17,49,50,14,WS_GROUP
+    PUSHBUTTON      "No",IDNO,79,49,50,14,WS_GROUP
+    RTEXT           "Is this person less than",-1,35,8,72,8
+    RTEXT           "twelve months in age?",-1,35,19,72,8
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+1 VERSIONINFO
+ FILEVERSION 3,3,0,0
+ PRODUCTVERSION 3,3,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0xbL
+#else
+ FILEFLAGS 0xaL
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "04090480"
+        BEGIN
+            VALUE "CompanyName", "EyeDx, Inc.\0"
+            VALUE "FileDescription", "EyeDx Photoscreening Tool\0"
+            VALUE "FileVersion", "R1.0\0"
+            VALUE "InternalName", "EyeDx software\0"
+            VALUE "LegalCopyright", "Copyright © EyeDx. 1997,1998\0"
+            VALUE "LegalTrademarks", "Microsoft® is a registered trademark of \nMicrosoft Corporation.  Windows (TM) is a \ntrademark of Microsoft Corporation\0"
+            VALUE "OriginalFilename", "\0"
+            VALUE "ProductName", "EyeDx Photoscreening Tool\0"
+            VALUE "ProductVersion", "1.0\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1152
+    END
+END
+
+#endif    // !_MAC
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""winver.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    "ID_ABOUT_DIALOG", DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

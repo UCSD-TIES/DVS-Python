@@ -1,0 +1,122 @@
+
+#define WINDOWS		/* for Kodak SDK */
+#ifndef WIN32
+#define WIN32		/* for Kodak SDK, 32-bit windows */
+#endif
+#define THUMB_WIDTH		80	/* size of thumbnail images from camera */
+#define THUMB_HEIGHT	60
+
+#define MAX_BRIGHTS	1000	/* max number of places to try to fit eyes */
+
+#define	BRIGHT			255	/* image labels used in threshimage */
+#define BRIGHT_CHECKING	1	/*  during processing */
+#define POSS_REFLEX		254
+#define CORN_REFLEX		253
+#define ABNORMAL		252
+#define	BRIGHT_OTHER	2
+#define	DARK			200
+#define	OTHER			0
+
+#define MIN_IRIS_RAD	17		/* units are pixel lengths */
+#define MAX_IRIS_RAD	83		/* units are pixel lengths */
+#define MIN_CR_AREA		4		/* units are pixel squares */
+#define MAX_CR_AREA		80		/* units are pixel squares */
+#define MIN_PUPIL_RAD	6		/* units are pixel lengths */
+#define MAX_PUPIL_RAD	39		/* units are pixel lengths */
+#define MIN_2R_AREA		0.05	/* units are percentage of pupil area */
+#define MAX_2R_AREA		0.50	/* units are percentage of pupil area */
+
+#define BRIGHT_THRESH	200		/* units are intensity-levels */
+
+#define MAX_HEAD_TILT	30.0	/* units are degrees */
+#define MAX_EYE_RESID	1.5		/* units are pixel-distances */
+#define MAX_EYE_SPACE	4.0		/* units are pixel-distances */
+#define MAX_EYE_GRAD	500		/* units are intensity-levels */
+#define MIN_EYE_ARC		0.3		/* units are percentage of circle-arc */
+#define MAX_LUMIN_DIFF	20		/* units are intensity-levels */
+#define MIN_CRESC		0.25	/* units are percentage of pupil perimeter */
+#define MAX_CR_PUP_DIST	0.20	/* units are percentage of pupil radius */
+
+#define SQR(x) ((x)*(x))	/* macro for square */
+#ifndef M_PI			/* in case M_PI not found in math.h */
+#define M_PI 3.1415927
+#endif
+
+#define NOT_AVAILABLE	0	/* labels for test reports (internal) */
+#define NORMAL			1
+#define CRESCENT		2
+#define OTHER_BLOB		3
+#define NOT_LOOKING		2
+#define EXOTROPIA		3
+#define ESOTROPIA		4
+#define HYPERTROPIA		5
+#define NOT_DETECTED	2
+#define UNEQUAL_LUMIN	3
+
+
+#define MAX_FILENAME_CHARS	200
+
+char	ImagesPath[MAX_FILENAME_CHARS];
+char	DataPath[MAX_FILENAME_CHARS];
+char	up_filename[MAX_FILENAME_CHARS];
+char	side_filename[MAX_FILENAME_CHARS];
+char	report_filename[MAX_FILENAME_CHARS];
+
+HINSTANCE	hInst;		// current instance; windows hook
+HWND		MainWnd;	// handle to main window
+
+		// image data to analyze kept in global variables
+unsigned char	*up_image,*side_image;
+int				UP_ROWS,UP_COLS,SIDE_ROWS,SIDE_COLS;
+		// flags and variables for user control
+int				SideWhichWay,DisplayGraphics,RunInProgress;
+		// analyzation variables
+int				MinIrisRad,MaxIrisRad,MinPupilRad,MaxPupilRad;
+int				MinCRArea,MaxCRArea,BrightThresh;
+		// animation variables
+int				CircleThickness,FramePause,ZoomSteps,Flashes;
+
+		// windows interfacing functions
+LRESULT CALLBACK WndProc(HWND,UINT,WPARAM,LPARAM);
+BOOL SetFilename(HINSTANCE,HWND,char *,char *);
+LRESULT CALLBACK OpenFileProc(HWND,UINT,WPARAM,LPARAM);
+LRESULT CALLBACK RunDirectProc(HWND,UINT,WPARAM,LPARAM);
+LRESULT CALLBACK ContinueDlgProc(HWND,UINT,WPARAM,LPARAM);
+LRESULT CALLBACK YesNoDlgProc(HWND,UINT,WPARAM,LPARAM);
+			// Functions for displaying images
+void MakeDisplayImage(unsigned char *,int,int,int);
+void PaintImage();
+void FlashCircles(unsigned char *,int,int,double *,double *);
+void ZoomDisplay(unsigned char *,int,int,int,int,int,int,int);
+		// kodak camera-related stuff
+int ConnectToCamera();
+void GetIconFromCamera(int,int);
+int DownloadImageFromCamera(int,unsigned char **,int *,int *,char *);
+void CloseCamera();
+		// loading and saving images
+int ReadImage(char *,unsigned char	**,int *,int *);
+int SaveImage(char *,unsigned char	*,int,int,int);
+int WriteImage(char *,unsigned char *,int,int,double *,int *,int,int *,int,int,	
+				double *,int *,int,int *,int,int,int,int,int,int);
+		// main function to call from interface
+void EyeDx(char *,char *,int,int);
+		// Functions for analyzing given image(s)
+int ProcessImage(char *,int,double *,double *,int *,int *,int *,int *,
+				 int *,int *,int *,int *,int,int,char *);
+void DontUseIsolatedPoints(int *,int,int *,int *,int);
+void ComputeCircleFitStatistics(double *,int *,int,int *,int,int *,int,int,
+								double *,double *,double *);
+void FitSubArcCircle(int *,int,int *,int *,int *,double *,int,int);
+int RegionFill(unsigned char *,int,int,int,int,int,int);
+int FindBrightSpots(unsigned char *,int,int,unsigned char *,int *,int *);
+void ClassifyPupilAlignment(double *,int *,int,double *,int *,int,int,int,int *);
+void ClassifyPupilInterior(unsigned char *,unsigned char *,unsigned char *,int,int,
+						   double *,int,int *,int *,int *,int *,int *,int *,int *,int *);
+void Fit_Circle_To_Points(int,int *,int *,double *);
+void FindCircles(unsigned char *,int,int,unsigned char *,int *,int,double **,double *,
+				 double *,double *,double **,double *,double *,double *,double *);
+int BestTwoCircles(int *,int,int,double **,double *,double *,double *,double **,double *,
+				   double *,double *,double *,int *,int *);
+void MakeCircleIndices(double,double,double,int,int,int *,int *);
+void MakeLineIndices(int,int,int,int,int,int,int *,int *);
+void StripFilename(char *,char *);

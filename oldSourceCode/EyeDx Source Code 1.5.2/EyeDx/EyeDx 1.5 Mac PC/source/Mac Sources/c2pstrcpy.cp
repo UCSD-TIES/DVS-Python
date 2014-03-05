@@ -1,0 +1,1 @@
+#include <stdio.h>#include <stdlib.h>#include <strings.h>void c2pstrcpy(Str255 dst, const char *src){   dst[0] = sprintf((char *) &dst[1], "%s", src);}

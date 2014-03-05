@@ -1,0 +1,157 @@
+Let's try this again (the UCSD email server refused my zip attachment)... So I've resent the email with the individual files. Hope this gets through and I apologize for the duplicate email.
+
+
+-------
+
+Here's a bunch of information about the project...
+
+CMyGWorldView
+
+I've attached a zip file containing the header and source files for the CMyWorldView class. It implements a derived class based upon CodeWarrior PowerPlant's LView class, which I believe is the base "view" container in PowerPlant (which can be embedded in a pane in a window). The derived class implements members that allow setting the view content from raw pixel data (in various formats) which match the formats the EyeDx application used for image data in memory. It also implemented annotation members for drawing circles (a frequent operation in the EyeDx software for annotating discovery of pupils and such) and loading images from existing MacOS picture objects (read from files).
+
+Since PowerPlant is ancient history on the Mac, I'm a bit fuzzy on the class hierarchy and implementation. But the bottom line is that this class is Mac-only. The MFC implementation used a different platform-specific view implementation for view data.
+
+Analysis Code
+
+In response to the issues regarding the analysis code: The files "models", "files", "interface", "crescent", "iris", "fit-circle-pts", "corn-refl", "geom", and "circles" (.cp, .c, and .h) are slightly modified versions of the original Win32 application sources. They were modified only to the extent required to make them work in an event-driven GUI-based application running on both MacOS and Windows.
+
+At the time the algorithm developer was still making occasional changes using his Win32-based testbed application, so merging his changes into my code base was simplified by leaving his code as little changed as possible and manually diff'ing and applying the changes. Also, there was a lot of voodoo in the logic and I didn't want to break anything by changing his code in any fundamental way. This unfortunately means that the guts of the program are procedural and use a different style of design than the remainder of the code.
+
+Cross-Platform Design
+
+If you look at globals.h, you will see platform compile-time definitions of various constants, data types, inline functions, etc. The idea was to make as much of the code common across platforms using types that mapped to the platform-specific types when the sources were compiled for each platform. Since the APIs for the basic types sometimes varied, I tried to rely on the simplest common feature set, and if that wasn't possible, provided inline "macros" that were implemented in a platform-specific manner to carry out common tasks.
+
+For example, the inline routine "SetCaptionText" takes a GUI caption pointer that is declared in a general way but is implemented as a CodeWarrior LStaticText on MacOS and a CStatic on Windows. The routine does the right thing based on what platform is being compiled, as it is conditionally compiled to invoke the proper members of the platform-specific object to carry out setting text on a static text control.
+
+This allows the code that needs to set a caption to be the same on both platforms - at compile time the proper implementation is selected. This design works fine when you are working on two platforms and understand the mapping of the general EyeDx types to both platform's objects or data types, but if you're just working with Windows it can get in the way of understanding the code. The intent was to make as much of the code as possible platform-neutral and to implement only the GUI portion of the code using platform-specific code. This allowed the GUI to conform to each platform's look and feel and conventions, instead of using something like Java and Swing or whatever to force a common but non-native GUI on both platforms. Writing cross-platform GUI code still isn't easy - we don't even try at Kodak - my Mac code is Cocoa/Objective C++ and the Windows side is .NET/C#, with common portable non-GUI code in C++/STL.
+
+Globals
+
+Unfortunately, the analysis routines also used a lot of globals (as defined in globals.h). In order to maintain compatibility with the author's code base I had to continue using them. The plan was to eventually convert everything into an object-based design with no globals (perhaps using singleton objects encapsulating the data), but EyeDx ran out of time and $$$...
+
+1.5.X vs 2.0
+
+The 2.0 sources will have common classes defining various camera types (look for "CEyeDxDC120Camera.cp" and such in Common Sources). If you find these you probably have 2.0 Alpha 4 or 5 source code. This is the code in which I was starting to implement a way to support more than the single camera model that was supported in 1.5.X. The original DC120 model was being phased out and the newer DC265 and DC290 models were becoming available.
+
+2.0 Camera Support
+
+For 2.0 I was implementing a virtual constructor design, which allows the application code to ask the base CEyeDxCamera class to instantiate a derived camera class object based upon the type of camera that was connected to the computer. You'll see the implementation of this in CEyeDxCamera.cp.
+
+The design was meant to be extensible to other camera types. The virtual constructor allowed the base class to check with each derived class if it detected a matching attached camera, and if so, that derived class instance would be the one returned to the application for camera management. The derived classes were responsible for implementing a common API for camera access, and handling communication with the associated camera model through whatever I/O or protocol mechanism the camera supported. The two basic Kodak cameras we used had two different SDKs and communication methods, and these were encapsulated in the derived classes so that the main application could perform the required control, monitoring, and capture functions in a camera-agnostic manner.
+
+At the end of 2000 (the end of the project) I had a version working that supported the two classes of cameras mentioned above. In 2003 Dirk asked me if I could help integrate a Canon camera with USB. I researched WIA and USB solutions, and roughed-out a derived class, but the WIA interface was extremely complicated and didn't match well with the serial I/O oriented design of the older camera support classes. In the end I decided that I was over committed to existing clients at the time, and I had to hand it off at that point.
+
+Camera-specific Magic Numbers
+
+Unfortunately (again!), the analysis code had huge tables of magic numbers that determined how analysis was carried out. These were tied closely to the camera image size, format, and capture parameters. These values had been hand-tweeked by the algorithm developer. Since they were not values that could be calculated at runtime for each new camera model, the CEyeDxCamera based class attempted to encapsulate these parameters for each camera model supported. You'll see the first cut at these tables in the same source file. At the time of end of the project we were working with two basic Kodak camera models, and had not received updated parameters for the newer models. Also, we didn't use config files (this was before XML) for these parameters because we wanted the installation of the software to be as fool-proof as possible (and thus the executable contains all necessary tables).
+
+As I recall there were some fundamental issues determining the proper values of the parameters for the larger image sizes captured by the newer cameras. I don't believe these were ever resolved before the end of the project. For example, the expected thresholds for pupil sizes are (I believe) expressed in pixels, and as image size increases the absolute pixel values have to change to represent the same thresholds. So any new camera that works with the existing protocols will have to be exercised and the images analyzed to determine the appropriate table values.
+
+Other Notes
+
+I've also attached an RTF document containing my "Final Status" report for the project. It was meant to log some of the remaining tasks and design issues in case someone else restarted the project. There are a few other documents (most notably a document describing the user-defined variable support) but I can always make copies for you when we meet.
+
+Meeting
+
+I'm available this weekend to walk through the code and try to answer your questions.  I probably won't have time to read the code beforehand but after writing this email a lot of it is coming back to me. It probably would be constructive for you for me to talk about the architecture and where we were headed when the project shut down, and to answer specific questions you may have. I can bring my copies of 1.5.X and 2.0.X sources for reference on my PowerBook. Unfortunately, you're working with a work-in-progress, and as such it probably isn't the easiest code to start with (given all of the constraints and gotchas I described above). But I can hopefully show you where you should look for specific issues to address. If you can bring a laptop with the current project and if we can build it I might be able to see what is causing the compile errors.
+
+I live in Valley Center (N of Escondido) but can meet down at or near UCSD. Right now I'm pretty much open either day, but I do have to work on a project for one of my current clients over the weekend. I'm working most of the week for Kodak so the weekend is better for me. Let me know what time and day work for you - later in the day is also better for me.
+
+- Fred
+
+At 3:04 PM -0800 1/23/07, Michael Chin wrote:
+   I'm not sure if the source code was for the 1.5.2
+ver or the 2.0 alpha.  I'll ask Dr. Bartsch and get
+back to you on that.
+   As for extending the camera models, I believe a
+previous group member was able to write a wrapper
+class around the Cannon SDK so that the new software
+can utilize make any Cannon camera (don't know if
+Windows WIA was used though).  So our application was
+able to grab jpegs from the camera.
+   The only thing left is porting the algorithm to MFC
+6.0, but little progress has been made there due to
+the massive compiler errors we get.  Not sure if it
+might help to try Visual Studio.net (which is all the
+lab computers have now :( ).
+   Thanks again for your help.  I realize you worked
+on the code a long time ago.  In fact, I'm amazed you
+were able to say so much on code written over 6 years
+ago!  I can hardly remember what the code does after
+returning from quarter break.
+   As for meeting to discuss the code, if you could
+make time that would be great.  I'm generally free on
+the weekends and during the day on Mondays and Wed.  I
+would also like for the other 3 software members to be
+there too, since we would all benefit from a walk
+through.
+
+--- "Merle F. McClelland" <mfm@vcweb.org> wrote:
+
+> I believe I have the source code available on a
+> backup. What version are
+> you working with? I was in the middle of a major
+> reworking of the code for
+> EyeDx when work stopped. So the code that was the
+> "final" released version
+> (1.5 I believe) was not the final version I worked
+> on (2.0?). The 2.0
+> version was being design to be extensible for other
+> camera models using a
+> virtual constructor design, but we never got to
+> final testing of that
+> version.
+>
+> Yes, a lot of code is in EyeDx.cp. I took over an
+> existing Win32-based
+> application and had to make it cross-platform (MacOS
+> 8/9 and Windows), but
+> in the initial port did not want to break the
+> algorithmic code. So the
+> ported code was being incrementally modified to make
+> it more
+> object-oriented and more portable. The algorithms
+> were leftover from the
+> Win32 version and were never reworked. So
+> unfortunately, the code is a mix
+> of two styles. I'll look for the CMyGWorldView code
+> - it should be a
+> derived class of the MacOS's offscreen drawing class
+> - I just don't
+> remember the details (it's been over 6 years). I'll
+> look for them this
+> evening at home and get back to you.
+>
+> The code is complex because of the need to support
+> two very different GUI
+> class implementations (MFC and Codewarrior's
+> PowerPlant) while trying to
+> maintain as much source code
+> compatibility/portability as possible. Thus,
+> there is a lot of use of EyeEx types, macros, and
+> inline functions that
+> implement the platform-specific bits which hide the
+> distinction from the
+> bulk of the code. That makes the code more difficult
+> to understand
+> (especially if you come from a Windows background),
+> because much of the
+> platform-specific implementation is separated from
+> the functional
+> implementation. The last time I talked to UCSD about
+> the code, they wanted
+> to integrate Windows WIA support into the code. Is
+> that what is being done
+> now?
+>
+> I can help out a bit with questions and such. I'm
+> currently working for
+> two clients, so my time is limited, but I can
+> possibly meet and walk you
+> through the design at some point.
+>
+> - Fred
+
+
+
+ 

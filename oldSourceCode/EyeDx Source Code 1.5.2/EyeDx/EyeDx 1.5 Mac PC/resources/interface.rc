@@ -1,0 +1,1087 @@
+//Metrowerks Resource Editor generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+#include "dlgs.h"
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_DEFAULT
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+	"\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+	"#include ""dlgs.h""\r\n"
+	"#include ""afxres.h""\r\n"
+	"#include ""afxcmn.h""\r\n"
+	"\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+	"\r\n"
+	"\0"
+END
+
+
+#endif    // APSTUDIO_INVOKED
+
+// These are developer-defined variables that describe the EyeDx-provided template variables
+
+IDC_DEFAULT_VARIABLE_TABLE IDC_DEFAULT_VARIABLE_TABLE_TYPE
+BEGIN
+// 	nameStrID, 			version, 	extraEntryLines, valueMustBeEntered, varClass, varType, promptType, dataType, hidden, promptOrder, exportOrder, numOptionStrs,  2, 3, 4, 5, 6
+	IDS_DEFAULTVARBASE,     1, 		0, 				 0, 				0, 			1,  	1,  		4, 			0, 		1, 			-1, 		0, 				0, 0, 0, 0, 0,		// BIRTH DATE
+	IDS_DEFAULTVARBASE+10,  1, 		0, 				 0, 				0, 			2, 		-1,  		3, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// AGE
+	IDS_DEFAULTVARBASE+20,  1, 		0, 				 0, 				0, 			2, 		-1, 		0,	 		0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// UP IMAGE NAME
+	IDS_DEFAULTVARBASE+30,  1, 		0, 				 0, 				0, 			2, 		-1, 		0, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SIDE IMAGE NAME
+	IDS_DEFAULTVARBASE+40,  1, 		0, 				 0, 				0, 			2, 		-1, 		0, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// RESULT
+	IDS_DEFAULTVARBASE+50,  1, 		0, 				 0, 				0, 			2, 		-1, 		0,	 		0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// ONE YEAR PROMPT
+	IDS_DEFAULTVARBASE+60,  1, 		0, 				 0, 				0, 			2, 		-1,  		1, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// TODAYS DATE
+	IDS_DEFAULTVARBASE+70,  1, 		0, 				 0, 				0,			2, 		-1,  		2, 			0, 		0, 			-1, 		0, 			    0, 0, 0, 0, 0,		// SUBJECT START TIME
+	IDS_DEFAULTVARBASE+80,  1, 		0, 				 0, 				0,			2, 		-1,  		2, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SUBJECT END TIME
+	IDS_DEFAULTVARBASE+90,  1, 		0, 				 0, 				0, 			2, 		-1,  		3, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SUBJECTS MEASURED
+	IDS_DEFAULTVARBASE+100, 1, 		0, 				 0, 				0,			2, 		-1, 		0,	 		0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// REPORT NAME
+	IDS_DEFAULTVARBASE+110, 1, 		0, 				 0, 				0, 			2, 		-1, 		0,			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// APPLICATION VERSION
+	IDS_DEFAULTVARBASE+120, 1, 		0, 				 0, 				0, 			2, 		-1,  		3, 			1, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// UP IMAGE FOCUS POSITION
+	IDS_DEFAULTVARBASE+130, 1, 		0, 				 0, 				0, 			2, 		-1,  		3, 			1, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SIDE IMAGE FOCUS POSITION
+	IDS_DEFAULTVARBASE+140, 1, 		0, 				 0, 				0, 			2, 		-1,  		3, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SUBJECT TOTAL RETAKES
+	IDS_DEFAULTVARBASE+150, 1, 		0, 				 0, 				0, 			2, 		-1,  		2, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SUBJECT ANALYSIS START TIME
+	IDS_DEFAULTVARBASE+160, 1, 		0, 				 0, 				0, 			2, 		-1,  		2, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SUBJECT ANALYSIS END TIME
+	IDS_DEFAULTVARBASE+170, 1, 		0, 				 0, 				0, 			2, 		-1, 		0,	 		0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// PIMAGES PATH
+	IDS_DEFAULTVARBASE+180, 1, 		0, 				 0, 				1, 			1,  	4,  		7, 			0, 		1, 			-1, 		2, 				0, 0, 0, 0, 0,		// Gender
+	IDS_DEFAULTVARBASE+190, 1, 		0, 				 0, 				1, 			0, 		-1, 		0,	 		0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// Organization Phone Number
+	IDS_DEFAULTVARBASE+200, 1, 		0, 				 0, 				1, 			0, 		-1, 		0, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// Organization Name
+	IDS_DEFAULTVARBASE+210, 1, 		0, 				 0, 				1, 			0, 		-1, 		0, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// Organization Location
+	IDS_DEFAULTVARBASE+220, 1, 		0, 				 0, 				1, 			1,  	4,  		0, 			0, 		2, 			-1, 		0, 				0, 0, 0, 0, 0,		// Parent Name
+	IDS_DEFAULTVARBASE+230, 1, 		0, 				 0, 				1, 			1,  	4,  		0, 			0, 		3, 			-1, 		0, 				0, 0, 0, 0, 0,		// Subject Name
+	IDS_DEFAULTVARBASE+240, 1, 		3, 				 0, 				1, 			1,  	4,  		0, 			0, 		4, 			-1, 		0, 				0, 0, 0, 0, 0,		// Comments
+	IDS_DEFAULTVARBASE+250, 1, 		0, 				 0, 				0,			2, 		-1, 		0,	 		0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SESSION NAME
+	IDS_DEFAULTVARBASE+260, 1, 		0, 				 0, 				0, 			2, 		-1,  		3, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SESSION SUBJECT COUNT
+	IDS_DEFAULTVARBASE+270, 1, 		0, 				 0, 				0, 			2, 		-1,  		3, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SESSION PASS COUNT
+	IDS_DEFAULTVARBASE+280, 1, 		0, 				 0, 				0, 			2, 		-1,  		3, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SESSION REFER COUNT
+	IDS_DEFAULTVARBASE+290, 1, 		0, 				 0, 				0, 			2, 		-1,  		3, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SESSION RETAKE COUNT
+	IDS_DEFAULTVARBASE+300, 1, 		0, 				 0, 				0,			2, 		-1, 		0,	 		0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SESSION REPORT LIST
+	IDS_DEFAULTVARBASE+310, 1, 		0, 				 0, 				0, 			2, 		-1,  		1, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SESSION START DATE
+	IDS_DEFAULTVARBASE+320, 1, 		0, 				 0, 				0, 			2, 		-1,  		1, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SESSION END DATE
+	IDS_DEFAULTVARBASE+330, 1, 		0, 				 0, 				0, 			2, 		-1,  		2, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SESSION START TIME
+	IDS_DEFAULTVARBASE+340, 1, 		0, 				 0, 				0, 			2, 		-1,  		2, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SESSION END TIME
+	IDS_DEFAULTVARBASE+350, 1, 		0, 				 0, 				0, 			2, 		-1,  		1, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// UP IMAGE DATE
+	IDS_DEFAULTVARBASE+360, 1, 		0, 				 0, 				0, 			2, 		-1,  		1, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SIDE IMAGE DATE
+	IDS_DEFAULTVARBASE+370, 1, 		0, 				 0, 				0, 			2, 		-1,  		2, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// UP IMAGE TIME
+	IDS_DEFAULTVARBASE+380, 1, 		0, 				 0, 				0, 			2, 		-1,  		2, 			0, 		0, 			-1, 		0, 				0, 0, 0, 0, 0,		// SIDE IMAGE TIME
+	                     0, 0, 		0, 				 0, 				0, 			0,  	0,  		0, 			0, 		0,  		0, 			0, 				0, 0, 0, 0, 0		// Last entry
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+// HELP STRINGS CANNOT BE WIDER THAN:   "12345678901234567890123456789012345678901234567890123456789012345678901234567890"
+
+STRINGTABLE DISCARDABLE
+BEGIN
+	AFX_IDS_APP_TITLE      				"EyeDx PhotoScreener"
+	//IDC_MAIN_CAMERA						"Downloads and analyzes images from the camera."
+	//IDC_MAIN_DISK						"Loads and analyzes images from files on disk or Flash Card."
+	//IDC_MAIN_REPORTS					"Displays previously-stored reports."
+	//IDC_MAIN_ABOUT						"Displays information about the software and EyeDx."
+	//IDC_MAIN_EXIT						"Use this button to exit the program."
+
+// These are definitions for the objects in the disk window
+
+	//IDC_DISK_UP_PROGRESS_CAPTION		"No help"
+	//IDC_DISK_SIDE_PROGRESS_CAPTION		"No help"
+	//IDC_DISK_UP_PROGRESS_BAR			"No help"
+	//IDC_DISK_SIDE_PROGRESS_BAR			"No help"
+	//IDC_DISK_UP_VIEW					"No help"
+	//IDC_DISK_SIDE_VIEW					"No help"
+	//IDC_DISK_UP_QUALITY_ICON			"No help"
+	//IDC_DISK_SIDE_QUALITY_ICON			"No help"
+	//IDC_DISK_UP_CAPTION					"No help"
+	//IDC_DISK_SIDE_CAPTION				"No help"
+	//IDC_DISK_SELECT_UP_BUTTON			"Selects the file containing the image for the 'Up' orientation."
+	//IDC_DISK_SELECT_SIDE_BUTTON			"Select the file containing the image for the 'Side' orientation."
+	//IDC_DISK_ANIMATE_CHECKBOX			"Displays an animation while the program analyzes the images."
+	//IDC_DISK_NAME_EDIT_FIELD_CAPTION	"No help"
+	//IDC_DISK_NAME_EDIT_FIELD			"The text entered here will be used as the name of the report."
+	//IDC_DISK_CANCEL						"Cancels the Run From Disk operation and returns to the main window."
+	//IDC_DISK_OK							"Use this button to start analysis of the selected images."
+
+// These are definitions for the objects in the camera window
+
+	//IDC_CAMERA_UP_PROGRESS_CAPTION		"No help"
+	//IDC_CAMERA_SIDE_PROGRESS_CAPTION	"No help"
+	//IDC_CAMERA_UP_PROGRESS_BAR			"No help"
+	//IDC_CAMERA_SIDE_PROGRESS_BAR		"No help"
+	//IDC_CAMERA_UP_VIEW					"No help"
+	//IDC_CAMERA_SIDE_VIEW				"No help"
+	//IDC_CAMERA_UP_QUALITY_ICON			"No help"
+	//IDC_CAMERA_SIDE_QUALITY_ICON		"No help"
+	//IDC_CAMERA_UP_CAPTION				"No help"
+	//IDC_CAMERA_SIDE_CAPTION				"No help"
+	//IDC_CAMERA_SELECT_UP_BUTTON			"Use this button to preview and select the Up Image from the camera."
+	//IDC_CAMERA_SELECT_SIDE_BUTTON		"Use this button to preview and select the Side Image from the camera."
+	//IDC_CAMERA_ANIMATE_CHECKBOX			"Displays an animation while the program analyzes the images."
+	//IDC_CAMERA_NAME_EDIT_FIELD_CAPTION	"No help"
+	//IDC_CAMERA_NAME_EDIT_FIELD			"The text entered here will be used as the name of the report."
+	//IDC_CAMERA_CANCEL					"Cancels the Run From Camera operation and returns to the main window."
+	//IDC_CAMERA_OK						"Use this button to start analysis of the selected images."
+
+// Camera Image Select Dialog and Controls
+
+	//IDC_CAMERA_PREVIEW					"No help"
+	//IDC_CAMERA_IMAGE_NAME				"No help"
+	//IDC_CAMERA_IMAGE_QUALITY			"No help"
+	//IDC_CAMERA_LISTBOX					"This is the list of images stored in the camera."
+
+// File Open Preview Dialog Extension
+
+	//IDC_IMAGE                     		"No help"
+	//IDC_QUALITY                   		"No help"
+	//IDC_PREVIEW                    		"Check this to display a file preview."
+
+
+// These are definitions for the objects in the analysis window
+
+	//IDC_ANALYSIS_PROGRESS_CAPTION		"No help"
+	//IDC_ANALYSIS_PROGRESS_BAR			"No help"
+	//IDC_ANALYSIS_UP_VIEW				"No help"
+	//IDC_ANALYSIS_SIDE_VIEW				"No help"
+	//IDC_ANALYSIS_UP_CAPTION				"No help"
+	//IDC_ANALYSIS_SIDE_CAPTION			"No help"
+	//IDC_ANALYSIS_MAIN_VIEW				"No help"
+
+// Copy Progress Dialog and Controls
+
+	//IDC_COPY_PROGRESS_ACTION			"No help"
+	//IDC_COPY_PROGRESS_STEP				"No help"
+	//IDC_COPY_PROGRESS_CANCEL			"Cancels the Export Reports operation."
+
+// About Box and Controls
+
+	//IDC_ABOUT_VERSION					"Current program version and copyright information."
+	//IDC_ABOUT_PATENT					"Patent information."
+	//IDC_ABOUT_ADDRESS					"EyeDx Contact Information"
+	//IDC_ABOUT_PHONE						"EyeDx Contact Information"
+	IDC_ABOUT_EMAIL						"Press this link to compose an email message to EyeDx."
+	IDC_ABOUT_WWW						"Press this link to display the EyeDx home page (if on the Internet)."
+	//IDC_ABOUT_ACK						"Copyrighted software used in the creation of the EyeDx program."
+	//IDC_ABOUT_CREDITS					"Copyrighted software used in the creation of the EyeDx program."
+
+// Properties Window and Controls
+
+	IDC_AFTERANALYSIS					"Determines what the program does once analysis is complete."
+	IDC_REPORTFORMAT					"Choose from the available report formats."
+	IDC_SAVEIMAGES						"If on, program copies camera or disk images to Pimages folder as KDC files."
+	IDC_DISPLAYREPORT					"If on, program starts the browser to display the report after analysis."
+	IDC_CAMERARATE						"If on, program uses 115200 bps camera connection rate (default)."
+	IDC_ADJREPORT						"If on, program adds a prefix to the report name to indicate referral result."
+	IDC_USESESSIONS						"If on, program enables controls to allow you to organize subjects by sessions."
+	
+// Default report text blocks
+
+	IDS_DEFAULTTEXTBASE+0				"EyeDx Digital Analysis Results Form\r\nResult: {RESULT}\r\n"
+	IDS_DEFAULTTEXTBASE+1				"Dear {Parent Name?Parent},\n\r"
+	IDS_DEFAULTTEXTBASE+2				"Please note the digital photos of {Subject Name?your child}'s eyes below. Based on the \"PASS\" interpretation of the photos, we do not detect a vision problem at this time.  Please realize this test is not a substitute for a complete pediatric eye exam. Consult an eye specialist if you suspect a vision problem."
+	IDS_DEFAULTTEXTBASE+3				"Please note the digital photos of {Subject Name?your child}'s eyes below. Based on the \"REFER\" interpretation of the photos, your child may have conditions with potential to cause vision loss in one or both of the eyes.  Please take your child to see an ophthalmologist or optometrist in your area. Please also take the Evaluation Sheet, included in this packet, to your appointment and have the eye doctor complete the form and return it to {Organization Location}. If you have any questions about your results please call {Organization Name} at {Organization Phone Number}."
+	IDS_DEFAULTTEXTBASE+4				"Please note the digital photos of {Subject Name?your child}'s eyes below. Based on the \"RETAKE\" interpretation of the photos, we will need to re-screen. Please contact the screening site for date of re-screening. If you have any questions about your results please call {Organization Name} at {Organization Phone Number}."
+	IDS_DEFAULTTEXTBASE+5				"Child's Name: {Subject Name?___________________}    Birthdate: {BIRTH DATE?___________________}\r\n\r\nParent's Name: {Parent Name?___________________}\r\n\r\nComments:\r\n\r\n\r\n\r\n"	
+	IDS_DEFAULTTEXTBASE+6				"Session Summary Report\r\n\r\nSession Name:        {SESSION NAME}\r\nSession Started:     {SESSION START DATE} {SESSION START TIME}\r\nSession Ended:       {SESSION END DATE} {SESSION END TIME}\r\nSubjects Measured:   {SESSION SUBJECT COUNT}\r\nPasses:              {SESSION PASS COUNT}\r\nReferrals:           {SESSION REFER COUNT}\r\nRetakes Recommended: {SESSION RETAKE COUNT}\r\n\r\nReports in Session:\r\n\r\n{SESSION REPORT LIST}\r\n"	
+	IDS_DEFAULTTEXTBASE+7				""	
+
+	IDS_DEFAULTVARBASE+0			"BIRTH DATE"						// Name
+	IDS_DEFAULTVARBASE+1			""									// Default
+	IDS_DEFAULTVARBASE+2			"Birth Date:"						// Prompt
+	IDS_DEFAULTVARBASE+3			"The subject's (child's) birth date. Optional entry." // Comments
+																			// No options strings
+	IDS_DEFAULTVARBASE+10			"AGE"								// Name
+	IDS_DEFAULTVARBASE+11			""									// Default
+	IDS_DEFAULTVARBASE+12			""									// Prompt
+	IDS_DEFAULTVARBASE+13			"The age of the subject calculated from the birthdate." // Comments
+																			// No options strings
+	IDS_DEFAULTVARBASE+20			"UP IMAGE NAME"						// Name
+	IDS_DEFAULTVARBASE+21			""									// Default
+	IDS_DEFAULTVARBASE+22			""									// Prompt
+	IDS_DEFAULTVARBASE+23			"The name of the Up Image file." 	// Comments
+																			// No options strings
+
+	IDS_DEFAULTVARBASE+30			"SIDE IMAGE NAME"					// Name
+	IDS_DEFAULTVARBASE+31			""									// Default
+	IDS_DEFAULTVARBASE+32			""									// Prompt
+	IDS_DEFAULTVARBASE+33			"The name of the Side Image file." 	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+40			"RESULT"							// Name
+	IDS_DEFAULTVARBASE+41			""									// Default
+	IDS_DEFAULTVARBASE+42			""									// Prompt
+	IDS_DEFAULTVARBASE+43			"A string representing the results." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+50			"ONE YEAR PROMPT"					// Name
+	IDS_DEFAULTVARBASE+51			""									// Default
+	IDS_DEFAULTVARBASE+52			""									// Prompt
+	IDS_DEFAULTVARBASE+53			"A string representing the input from the One Year Old prompt." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+60			"TODAYS DATE"						// Name
+	IDS_DEFAULTVARBASE+61			""									// Default
+	IDS_DEFAULTVARBASE+62			""									// Prompt
+	IDS_DEFAULTVARBASE+63			"The date at the start of the current run." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+70			"SUBJECT START TIME"				// Name
+	IDS_DEFAULTVARBASE+71			""									// Default
+	IDS_DEFAULTVARBASE+72			""									// Prompt
+	IDS_DEFAULTVARBASE+73			"The time at the start of the current run." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+80			"SUBJECT END TIME"					// Name
+	IDS_DEFAULTVARBASE+81			""									// Default
+	IDS_DEFAULTVARBASE+82			""									// Prompt
+	IDS_DEFAULTVARBASE+83			"The time at the end of the current run." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+90			"SUBJECTS MEASURED"					// Name
+	IDS_DEFAULTVARBASE+91			""									// Default
+	IDS_DEFAULTVARBASE+92			""									// Prompt
+	IDS_DEFAULTVARBASE+93			"The count of subjects measured since the application started." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+100			"REPORT NAME"						// Name
+	IDS_DEFAULTVARBASE+101			""									// Default
+	IDS_DEFAULTVARBASE+102			""									// Prompt
+	IDS_DEFAULTVARBASE+103			"The name of the current report."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+110			"APPLICATION VERSION"				// Name
+	IDS_DEFAULTVARBASE+111			""									// Default
+	IDS_DEFAULTVARBASE+112			""									// Prompt
+	IDS_DEFAULTVARBASE+113			"The version of the EyeDx Application." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+120			"UP IMAGE FOCUS POSITION"			// Name
+	IDS_DEFAULTVARBASE+121			""									// Default
+	IDS_DEFAULTVARBASE+122			""									// Prompt
+	IDS_DEFAULTVARBASE+123			"Focus distance the camera reported for the Up Image in mm." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+130			"SIDE IMAGE FOCUS POSITION"			// Name
+	IDS_DEFAULTVARBASE+131			""									// Default
+	IDS_DEFAULTVARBASE+132			""									// Prompt
+	IDS_DEFAULTVARBASE+133			"Focus distance the camera reported for the Side Image in mm." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+140			"SUBJECT TOTAL RETAKES"				// Name
+	IDS_DEFAULTVARBASE+141			""									// Default
+	IDS_DEFAULTVARBASE+142			""									// Prompt
+	IDS_DEFAULTVARBASE+143			"The count of retakes required for the current subject." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+150			"SUBJECT ANALYSIS START TIME"		// Name
+	IDS_DEFAULTVARBASE+151			""									// Default
+	IDS_DEFAULTVARBASE+152			""									// Prompt
+	IDS_DEFAULTVARBASE+153			"The time at the start of the analysis for the current run." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+160			"SUBJECT ANALYSIS END TIME"			// Name
+	IDS_DEFAULTVARBASE+161			""									// Default
+	IDS_DEFAULTVARBASE+162			""									// Prompt
+	IDS_DEFAULTVARBASE+163			"The time at the end of the analysis for the current run." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+170			"PIMAGES PATH"						// Name
+	IDS_DEFAULTVARBASE+171			"./NonSession/Pimages/"				// Default
+	IDS_DEFAULTVARBASE+172			""									// Prompt
+	IDS_DEFAULTVARBASE+173			"A string representing the path to the Pimages folder." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+180			"Gender"							// Name
+	IDS_DEFAULTVARBASE+181			""									// Default
+	IDS_DEFAULTVARBASE+182			"Gender:"							// Prompt
+	IDS_DEFAULTVARBASE+183			"The gender of the subject." 		// Comments
+	IDS_DEFAULTVARBASE+184			"Female" 							// Option 1
+	IDS_DEFAULTVARBASE+185			"Male" 								// Option 2
+	
+	IDS_DEFAULTVARBASE+190			"Organization Phone Number"			// Name
+	IDS_DEFAULTVARBASE+191			"(XXX) XXX-XXXX or 1-800-XXX-XXXX"									// Default
+	IDS_DEFAULTVARBASE+192			""									// Prompt
+	IDS_DEFAULTVARBASE+193			"Your organization's phone number." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+200			"Organization Name"					// Name
+	IDS_DEFAULTVARBASE+201			"Your Organization Name"			// Default
+	IDS_DEFAULTVARBASE+202			""									// Prompt
+	IDS_DEFAULTVARBASE+203			"The name of your organization."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+210			"Organization Location"				// Name
+	IDS_DEFAULTVARBASE+211			"our office"						// Default
+	IDS_DEFAULTVARBASE+212			""									// Prompt
+	IDS_DEFAULTVARBASE+213			"A string that describes the location of your office." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+220			"Parent Name"						// Name
+	IDS_DEFAULTVARBASE+221			""									// Default
+	IDS_DEFAULTVARBASE+222			"Parent's Name:"					// Prompt
+	IDS_DEFAULTVARBASE+223			"The name of the parent." 			// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+230			"Subject Name"						// Name
+	IDS_DEFAULTVARBASE+231			""									// Default
+	IDS_DEFAULTVARBASE+232			"Subject's Name:"					// Prompt
+	IDS_DEFAULTVARBASE+233			"The name of the subject." 			// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+240			"Comments"							// Name
+	IDS_DEFAULTVARBASE+241			""									// Default
+	IDS_DEFAULTVARBASE+242			"Comments:"							// Prompt
+	IDS_DEFAULTVARBASE+243			""						 			// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+250			"SESSION NAME"						// Name
+	IDS_DEFAULTVARBASE+251			"NonSession"						// Default
+	IDS_DEFAULTVARBASE+252			""									// Prompt
+	IDS_DEFAULTVARBASE+253			"The name of the current session."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+260			"SESSION SUBJECT COUNT"				// Name
+	IDS_DEFAULTVARBASE+261			""									// Default
+	IDS_DEFAULTVARBASE+262			""									// Prompt
+	IDS_DEFAULTVARBASE+263			"The count of subjects measured during the session." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+270			"SESSION PASS COUNT"				// Name
+	IDS_DEFAULTVARBASE+271			""									// Default
+	IDS_DEFAULTVARBASE+272			""									// Prompt
+	IDS_DEFAULTVARBASE+273			"The count of Pass results for the session." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+280			"SESSION REFER COUNT"				// Name
+	IDS_DEFAULTVARBASE+281			""									// Default
+	IDS_DEFAULTVARBASE+282			""									// Prompt
+	IDS_DEFAULTVARBASE+283			"The count of Refer results for the session." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+290			"SESSION RETAKE COUNT"				// Name
+	IDS_DEFAULTVARBASE+291			""									// Default
+	IDS_DEFAULTVARBASE+292			""									// Prompt
+	IDS_DEFAULTVARBASE+293			"The count of Retake results for the session." // Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+300			"SESSION REPORT LIST"				// Name
+	IDS_DEFAULTVARBASE+301			""									// Default
+	IDS_DEFAULTVARBASE+302			""									// Prompt
+	IDS_DEFAULTVARBASE+303			"This is a placeholder for use in Session Summary Reports."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+310			"SESSION START DATE"				// Name
+	IDS_DEFAULTVARBASE+311			""									// Default
+	IDS_DEFAULTVARBASE+312			""									// Prompt
+	IDS_DEFAULTVARBASE+313			"This is the date at the start of the current session."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+320			"SESSION END DATE"					// Name
+	IDS_DEFAULTVARBASE+321			""									// Default
+	IDS_DEFAULTVARBASE+322			""									// Prompt
+	IDS_DEFAULTVARBASE+323			"This is the date at the end of the current session."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+330			"SESSION START TIME"				// Name
+	IDS_DEFAULTVARBASE+331			""									// Default
+	IDS_DEFAULTVARBASE+332			""									// Prompt
+	IDS_DEFAULTVARBASE+333			"This is the time at the start of the current session."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+340			"SESSION END TIME"					// Name
+	IDS_DEFAULTVARBASE+341			""									// Default
+	IDS_DEFAULTVARBASE+342			""									// Prompt
+	IDS_DEFAULTVARBASE+343			"This is the time at the end of the current session."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+350			"UP IMAGE DATE"						// Name
+	IDS_DEFAULTVARBASE+351			""									// Default
+	IDS_DEFAULTVARBASE+352			""									// Prompt
+	IDS_DEFAULTVARBASE+353			"This is the date at the start of the current session."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+360			"SIDE IMAGE DATE"					// Name
+	IDS_DEFAULTVARBASE+361			""									// Default
+	IDS_DEFAULTVARBASE+362			""									// Prompt
+	IDS_DEFAULTVARBASE+363			"This is the date at the end of the current session."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+370			"UP IMAGE TIME"						// Name
+	IDS_DEFAULTVARBASE+371			""									// Default
+	IDS_DEFAULTVARBASE+372			""									// Prompt
+	IDS_DEFAULTVARBASE+373			"This is the time at the start of the current session."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+380			"SIDE IMAGE TIME"					// Name
+	IDS_DEFAULTVARBASE+381			""									// Default
+	IDS_DEFAULTVARBASE+382			""									// Prompt
+	IDS_DEFAULTVARBASE+383			"This is the time at the end of the current session."	// Comments
+																			// No options strings
+	
+	IDS_DEFAULTVARBASE+390			"DUMMY"								// Name
+	IDS_DEFAULTVARBASE+391			"dummy"								// Default
+	IDS_DEFAULTVARBASE+392			"dummy"								// Prompt
+	IDS_DEFAULTVARBASE+393			"dummy"					 			// Comments
+																			// No options strings
+	
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerators
+//
+
+// DO NOT include any of the standard dialog shortcuts here! Return, Escape, Space all
+// are already handled, and if they are included, the picture will be taken twice!
+
+IDR_MAINWINDOW ACCELERATORS
+BEGIN
+	VK_F12,		IDC_MAIN_ADVANCED_FEATURES, VIRTKEY, CONTROL
+END
+
+IDR_TAKEPICTUREDLG ACCELERATORS
+BEGIN
+	"0",		IDC_TAKE_PICTURE, VIRTKEY
+	"1",		IDC_TAKE_PICTURE, VIRTKEY
+	"2",		IDC_TAKE_PICTURE, VIRTKEY
+	"3",		IDC_TAKE_PICTURE, VIRTKEY
+	"4",		IDC_TAKE_PICTURE, VIRTKEY
+	"5",		IDC_TAKE_PICTURE, VIRTKEY
+	"6",		IDC_TAKE_PICTURE, VIRTKEY
+	"7",		IDC_TAKE_PICTURE, VIRTKEY
+	"8",		IDC_TAKE_PICTURE, VIRTKEY
+	"9",		IDC_TAKE_PICTURE, VIRTKEY
+	"A",		IDC_TAKE_PICTURE, VIRTKEY
+	"B",		IDC_TAKE_PICTURE, VIRTKEY
+	"C",		IDC_TAKE_PICTURE, VIRTKEY
+	"D",		IDC_TAKE_PICTURE, VIRTKEY
+	"E",		IDC_TAKE_PICTURE, VIRTKEY
+	"F",		IDC_TAKE_PICTURE, VIRTKEY
+	"G",		IDC_TAKE_PICTURE, VIRTKEY
+	"H",		IDC_TAKE_PICTURE, VIRTKEY
+	"I",		IDC_TAKE_PICTURE, VIRTKEY
+	"J",		IDC_TAKE_PICTURE, VIRTKEY
+	"K",		IDC_TAKE_PICTURE, VIRTKEY
+	"L",		IDC_TAKE_PICTURE, VIRTKEY
+	"M",		IDC_TAKE_PICTURE, VIRTKEY
+	"N",		IDC_TAKE_PICTURE, VIRTKEY
+	"O",		IDC_TAKE_PICTURE, VIRTKEY
+	"P",		IDC_TAKE_PICTURE, VIRTKEY
+	"Q",		IDC_TAKE_PICTURE, VIRTKEY
+	"R",		IDC_TAKE_PICTURE, VIRTKEY
+	"S",		IDC_TAKE_PICTURE, VIRTKEY
+	"T",		IDC_TAKE_PICTURE, VIRTKEY
+	"U",		IDC_TAKE_PICTURE, VIRTKEY
+	"V",		IDC_TAKE_PICTURE, VIRTKEY
+	"W",		IDC_TAKE_PICTURE, VIRTKEY
+	"X",		IDC_TAKE_PICTURE, VIRTKEY
+	"Y",		IDC_TAKE_PICTURE, VIRTKEY
+	"Z",		IDC_TAKE_PICTURE, VIRTKEY
+	"`",		IDC_TAKE_PICTURE, VIRTKEY
+	";",		IDC_TAKE_PICTURE, VIRTKEY
+	"'",		IDC_TAKE_PICTURE, VIRTKEY
+	"[",		IDC_TAKE_PICTURE, VIRTKEY
+	"]",		IDC_TAKE_PICTURE, VIRTKEY
+	"\\",		IDC_TAKE_PICTURE, VIRTKEY
+	",",		IDC_TAKE_PICTURE, VIRTKEY
+	".",		IDC_TAKE_PICTURE, VIRTKEY
+	"/",		IDC_TAKE_PICTURE, VIRTKEY
+	VK_F1		IDC_TAKE_PICTURE,
+	VK_F2		IDC_TAKE_PICTURE,
+	VK_F3		IDC_TAKE_PICTURE,
+	VK_F4		IDC_TAKE_PICTURE,
+	VK_F5		IDC_TAKE_PICTURE,
+	VK_F6		IDC_TAKE_PICTURE,
+	VK_F7		IDC_TAKE_PICTURE,
+	VK_F8		IDC_TAKE_PICTURE,
+	VK_F9		IDC_TAKE_PICTURE,
+	VK_F10		IDC_TAKE_PICTURE,
+	VK_F11		IDC_TAKE_PICTURE,
+	VK_F12		IDC_TAKE_PICTURE,
+	VK_BACK		IDC_TAKE_PICTURE,
+	VK_TAB		IDC_TAKE_PICTURE,
+	VK_LEFT		IDC_TAKE_PICTURE,
+	VK_UP		IDC_TAKE_PICTURE,
+	VK_RIGHT	IDC_TAKE_PICTURE,
+	VK_DOWN		IDC_TAKE_PICTURE,
+	VK_DELETE	IDC_TAKE_PICTURE,
+	VK_INSERT	IDC_TAKE_PICTURE,
+	VK_HOME		IDC_TAKE_PICTURE,
+	VK_END		IDC_TAKE_PICTURE,
+	VK_NEXT		IDC_TAKE_PICTURE,
+	VK_PRIOR	IDC_TAKE_PICTURE,
+	VK_HOME		IDC_TAKE_PICTURE,
+	VK_CLEAR	IDC_TAKE_PICTURE
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE
+BEGIN
+	POPUP "&File"
+	BEGIN
+		MENUITEM	"&Properties...",					ID_FILE_PROPERTIES
+		MENUITEM	SEPARATOR
+		MENUITEM	"&Install License...",				ID_FILE_INSTALL_LICENSE
+		MENUITEM	"&Display License Status...",		ID_FILE_DISPLAY_LICENSE
+		MENUITEM	SEPARATOR
+		MENUITEM	"&Export Reports...",				ID_FILE_EXPORT_REPORTS
+		MENUITEM	"Export Reports for E&mailing...",	ID_FILE_FLATTEN_REPORTS
+		MENUITEM	SEPARATOR
+		MENUITEM	"E&xit",							ID_APP_EXIT
+	END
+	POPUP "&Help"
+	BEGIN
+		MENUITEM	"&About EyeDx...",					ID_APP_ABOUT
+	END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+ID_TOP_OF_HEAD_SIDEWAYS_BITMAP  BITMAP              "TopOfHeadSide.bmp"
+ID_TOP_OF_HEAD_NORMAL_BITMAP 	BITMAP              "TopOfHeadNorm.bmp"
+
+ID_BAD_QUALITY_BITMAP     	BITMAP                  "Bitmap3.bmp"
+ID_CAUTION_QUALITY_BITMAP 	BITMAP                  "Bitmap2.bmp"
+ID_GOOD_QUALITY_BITMAP    	BITMAP                  "Bitmap1.bmp"
+
+IDR_SMALLBLANK				BITMAP					"BlankSmall.BMP"
+IDR_LARGEBLANK				BITMAP					"BlankLarge.BMP"
+
+ID_CAMERA_SETUP_BITMAP		BITMAP					"CameraSetup.BMP"
+ID_CAMERA_UP_BITMAP			BITMAP					"CameraUp.BMP"
+ID_CAMERA_SIDE_BITMAP		BITMAP					"CameraSide.BMP"
+
+ID_BATTERY_OK_BITMAP		BITMAP					"BatteryOk.BMP"
+ID_BATTERY_WEAK_BITMAP		BITMAP					"BatteryWeak.BMP"
+ID_BATTERY_EMPTY_BITMAP		BITMAP					"BatteryEmpty.BMP"
+
+ZoomButtonU					BITMAP					"ZoomButtonU.BMP"
+ZoomButtonD					BITMAP					"ZoomButtonD.BMP"
+ZoomButtonF					BITMAP					"ZoomButtonF.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Wave Sound
+//
+
+IDR_SILENCE_WAVE			WAVE DISCARDABLE "silence.wav"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+ID_EYEDX_ICON             ICON      DISCARDABLE    "EYEDX.ICO"
+ID_EYEDX_ICON_SM          ICON      DISCARDABLE    "EYEDX.ICO"
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SPLASH_DIALOG DIALOG   0, 0, 400, 400
+STYLE DS_MODALFRAME  | WS_POPUP
+FONT 8, "MS Sans Serif"
+BEGIN
+END
+
+IDD_ABOUT_DIALOG DIALOG  0, 0, 265, 240
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "About EyeDx"
+FONT 8, "MS Sans Serif"
+BEGIN
+	LTEXT            "",IDC_ABOUT_VERSION,10,12,180,16,NOT WS_GROUP
+	LTEXT            "Patent pending on EyeDx(tm) Digital Vision Screening System",IDC_ABOUT_PATENT,10,36,180,8,NOT WS_GROUP
+	LTEXT            "EyeDx\n4370 La Jolla Village Drive, Suite 400\nSan Diego, CA 92122",IDC_ABOUT_ADDRESS,10,48,180,24,NOT WS_GROUP
+	LTEXT            "Toll Free: (877) 32 EYEDX or (877) 323-9339\nPhone: (858) 546-4717\nFAX: (858) 546-4713",IDC_ABOUT_PHONE,10,84,180,24,NOT WS_GROUP
+	LTEXT            "Email:",IDC_ABOUT_EMAIL,10,120,20,8,SS_NOTIFY | NOT WS_GROUP
+	LTEXT            "info@eyedx.com",IDC_ABOUT_EMAIL_LINK,35,120,70,8,NOT WS_GROUP
+	LTEXT            "Web:",IDC_ABOUT_WWW,10,132,20,8,SS_NOTIFY | NOT WS_GROUP
+	LTEXT            "www.eyedx.com",IDC_ABOUT_WWW_LINK,35,132,70,8,NOT WS_GROUP
+	LTEXT            "Other Acknowledgements:",IDC_ABOUT_ACK,10,144,100,8,SS_NOTIFY | NOT WS_GROUP
+	LTEXT            "Camera Library Code Copyright Kodak, Corp.\nJPEG Library Copyright Independent JPEG Group.",IDC_ABOUT_CREDITS,10,156,180,24,NOT WS_GROUP
+	DEFPUSHBUTTON    "OK",IDOK,10,192,50,14
+END
+
+IDD_CAMERA_IMAGE_SELECT DIALOG  0, 0, 239, 137
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Select Camera Image"
+FONT 8, "MS Sans Serif"
+BEGIN
+	DEFPUSHBUTTON    "&Select",IDOK,127,116,50,14
+	PUSHBUTTON       "&Cancel",IDCANCEL,52,116,50,14
+	LTEXT            "",IDC_CAMERA_PREVIEW,127,7,104,68,SS_SUNKEN | NOT WS_GROUP
+	LISTBOX          IDC_CAMERA_LISTBOX,6,9,96,93, WS_VSCROLL | LBS_NOINTEGRALHEIGHT | WS_BORDER | WS_VSCROLL | NOT WS_GROUP
+	LTEXT            "",IDC_CAMERA_IMAGE_NAME,127,80,100,8,NOT WS_GROUP
+	LTEXT            "",IDC_CAMERA_IMAGE_QUALITY,127,97,97,8,NOT WS_GROUP
+END
+
+IDD_COPY_PROGRESS_DLG DIALOG  0, 0, 240, 65
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU | WS_VISIBLE
+CAPTION "Export Report Progress"
+FONT 8, "MS Sans Serif"
+BEGIN
+	DEFPUSHBUTTON    "&Cancel",IDCANCEL,95,43,50,14
+	LTEXT            "",IDC_COPY_PROGRESS_ACTION,5,5,230,8,NOT WS_GROUP
+	LTEXT            "",IDC_COPY_PROGRESS_STEP,5,20,230,16,NOT WS_GROUP
+END
+
+IDD_FILEOPENPREVIEW DIALOGEX  DISCARDABLE 0, 0, 90, 133
+STYLE DS_3DLOOK | DS_NOFAILCREATE | DS_NOFAILCREATE | DS_NOFAILCREATE | DS_CONTROL | WS_CHILD | WS_CHILDWINDOW | WS_CLIPSIBLINGS | WS_VISIBLE
+FONT 8, "MS Sans Serif"
+BEGIN
+	CONTROL          "&Preview",IDC_PREVIEW,"Button",BS_AUTOCHECKBOX | NOT WS_GROUP | WS_TABSTOP,14,112,45,10
+	CONTROL          "",IDC_IMAGE,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,4,20,80,60
+	LTEXT            "",IDC_QUALITY,4,85,80,20,NOT WS_GROUP, WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE
+	LTEXT            "",1119,0,0,2,133,WS_GROUP
+END
+
+IDD_PROPERTIES_DIALOG DIALOG  0, 0, 430, 400
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "EyeDx Properties"
+FONT 8, "MS Sans Serif"
+BEGIN
+	//DEFPUSHBUTTON    "&OK",1,96,380,50,14
+	//PUSHBUTTON       "&Cancel",2,39,380,50,14
+END
+
+// This is a panel in the tabbed Preferences window
+
+IDD_GENERALPROPS_PAGE DIALOG  0, 0, 420, 200
+STYLE WS_CHILD | WS_CAPTION | WS_DISABLED
+CAPTION "General"
+FONT 8, "MS Sans Serif"
+BEGIN
+	CONTROL          "&Indicate Referral Result in Report Name",IDC_ADJREPORT,"Button",BS_AUTOCHECKBOX | NOT WS_GROUP,15,20,156,10
+	RTEXT			 "After Analysis:", IDC_GENPREFSAFTERLABEL, 15,38,50,14
+	COMBOBOX		 IDC_AFTERANALYSIS, 70,36,110,60, CBS_DROPDOWNLIST | NOT CBS_SORT | NOT WS_GROUP | WS_VSCROLL | WS_BORDER
+	RTEXT			 "Report Format:", IDC_GENPREFSFORMATLABEL, 15,54,50,14
+	COMBOBOX		 IDC_REPORTFORMAT, 70,52,110,45, CBS_DROPDOWNLIST | NOT CBS_SORT | NOT WS_GROUP | WS_VSCROLL | WS_BORDER
+	GROUPBOX		 "Reporting Options:",IDC_REPORTINGOPTIONSGB,9,9,220,60
+	CONTROL          "&Copy Original Images to the Pimages Folder",IDC_SAVEIMAGES,"Button",BS_AUTOCHECKBOX | NOT WS_GROUP,15,86,154,10
+	CONTROL          "&Use Sessions to Manage Subjects",IDC_USESESSIONS,"Button",BS_AUTOCHECKBOX | NOT WS_GROUP,15,100,210,10
+	CONTROL          "Start &Auto Camera Mode When Program Starts",IDC_AUTOSTART,"Button",BS_AUTOCHECKBOX | NOT WS_GROUP,15,114,200,10
+	CONTROL          "&Use High Speed Connection",IDC_CAMERARATE,"Button",BS_AUTOCHECKBOX | NOT WS_GROUP,15,128,156,10
+	GROUPBOX         "Run Options:",IDC_RUNOPTIONSGB,9,75,220,69
+END
+
+// This is a panel in the tabbed Preferences window
+
+IDD_VARIABLES_PAGE DIALOG  0, 0, 420, 200
+STYLE WS_CHILD | WS_CAPTION | WS_DISABLED
+CAPTION "Variables"
+FONT 8, "MS Sans Serif"
+BEGIN
+	CONTROL          "",IDC_LAYOUTVARIABLELIST,"SysListView32", WS_CHILD | WS_HSCROLL | WS_BORDER | LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | WS_TABSTOP,9, 9, 405, 159
+	PUSHBUTTON       "&New...", IDC_LAYOUTNEWBUTTON, 9, 175, 50, 14
+	PUSHBUTTON       "&Edit...", IDC_LAYOUTEDITBUTTON, 69, 175, 50, 14
+	PUSHBUTTON       "&Delete", IDC_LAYOUTDELETEBUTTON, 129, 175, 50, 14
+	CONTROL          "&Use separate dialog for each prompt",IDC_LAYOUTSEPARATEDIALOG,"Button",BS_AUTOCHECKBOX | NOT WS_GROUP | WS_TABSTOP, 189, 177, 156,10
+END
+
+// This is a panel in the tabbed Preferences window
+
+IDD_REPORTLAYOUT_PAGE DIALOG  0, 0, 420, 200
+STYLE WS_CHILD | WS_CAPTION | WS_DISABLED
+CAPTION "Custom Report Layout"
+FONT 8, "MS Sans Serif"
+BEGIN
+	RTEXT			 "Define Text for:", IDC_LAYOUTDEFINETEXTLABEL, 9, 11, 50,14
+	COMBOBOX		 IDC_LAYOUTCUSTOMTEXTTYPE, 61, 9, 120,120, CBS_DROPDOWNLIST | NOT CBS_SORT | NOT WS_GROUP | WS_VSCROLL | WS_BORDER | WS_TABSTOP
+	LTEXT			 "", IDC_LAYOUTTEXTHTMLFORMAT, 191, 11, 170,14
+	CONTROL          "", IDC_LAYOUTCUSTOMTEXTEDIT, "RICHEDIT", WS_VSCROLL | ES_MULTILINE | ES_WANTRETURN | ES_AUTOVSCROLL | WS_BORDER | WS_TABSTOP, 9, 25, 405, 150
+	PUSHBUTTON       "&Revert to Previously Saved", IDC_LAYOUTREVERTTOSAVED, 9, 180, 100, 14
+	PUSHBUTTON       "&Set to EyeDx Default",IDC_LAYOUTSETTODEFAULT, 119, 180, 90, 14
+	RTEXT			 "Insert:", IDC_LAYOUTINSERTLABEL, 219, 182, 20, 14
+	COMBOBOX		 IDC_LAYOUTINSERTVARIABLE, 249, 180, 140, 300, CBS_DROPDOWNLIST | CBS_SORT | NOT WS_GROUP | WS_VSCROLL | WS_BORDER | WS_TABSTOP
+END
+
+// This is a panel in the tabbed Preferences window
+
+IDD_DEFINEEXPORTORDER_PAGE DIALOG  0, 0, 420, 200
+STYLE WS_CHILD | WS_CAPTION | WS_DISABLED
+CAPTION "Database Output"
+FONT 8, "MS Sans Serif"
+BEGIN
+	LISTBOX          IDC_DEFINEEXPORTORDER_VARIABLELIST,15,21,128,170, NOT LBS_SORT | WS_VSCROLL | WS_BORDER | WS_VSCROLL | NOT WS_GROUP
+	PUSHBUTTON       "Move Up",IDC_DEFINEEXPORTORDER_MOVEUPBUTTON,149,21,72,14
+	PUSHBUTTON       "Move Down",IDC_DEFINEEXPORTORDER_MOVEDOWNBUTTON,149,40,73,14
+	PUSHBUTTON       "Remove From List",IDC_DEFINEEXPORTORDER_REMOVEBUTTON,149,78,73,14
+	COMBOBOX         IDC_DEFINEEXPORTORDER_VARIABLEMENU,174,59,100,440,CBS_DROPDOWNLIST | CBS_HASSTRINGS | CBS_SORT | NOT WS_GROUP
+	LTEXT            "Insert:",IDC_DEFINEEXPORTORDERINSERTLABEL,151,62,19,8,NOT WS_GROUP
+	GROUPBOX         "Define Variable Export Order:",IDC_DEFINEEXPORTORDERGB,9,9,280,182
+END
+
+IDD_EDITVAR_DIALOG DIALOG 0, 0, 291, 243
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Edit Variable"
+FONT 8, "MS Sans Serif"
+BEGIN
+	GROUPBOX         "",0,5,79,273,33
+	GROUPBOX         "",0,6,115,272,108
+	EDITTEXT         IDC_EDITVAR_VAR_NAMEFIELD,61,6,210,14, ES_AUTOHSCROLL | WS_TABSTOP
+	LTEXT            "Variable Name:",0,7,9,51,8,NOT WS_GROUP
+	LTEXT            "Variable Type:",0,7,26,46,8,NOT WS_GROUP
+	LTEXT            "",IDC_EDITVAR_VAR_TYPECAPTION,62,26,136,8,NOT WS_GROUP
+	LTEXT            "Comment:",0,7,42,37,8,NOT WS_GROUP
+	CONTROL          "Hide in Lists",IDC_EDITVAR_HIDECHECKBOX,"Button",BS_AUTOCHECKBOX | NOT WS_GROUP | WS_TABSTOP,200,42,88,10
+	EDITTEXT         IDC_EDITVAR_COMMENTFIELD,62,41,120,30, ES_MULTILINE | ES_AUTOVSCROLL | WS_TABSTOP
+	CONTROL          "Use Fixed Value:",IDC_EDITVAR_USEFIXEDVALUEBUTTON,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,9,78,70,10
+	EDITTEXT         IDC_EDITVAR_FIXEDVALUEFIELD,21,91,249,14, ES_AUTOHSCROLL | WS_TABSTOP
+	CONTROL          "Prompt For Value:",IDC_EDITVAR_PROMPTFORVALUEBUTTON ,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,10,115,69,10
+	COMBOBOX         IDC_EDITVAR_WHENTOPROMPTMENU,22,126,138,200,CBS_DROPDOWNLIST | CBS_HASSTRINGS | NOT CBS_SORT | WS_GROUP | WS_TABSTOP
+	LTEXT            "Prompt String:",0,23,147,46,8,NOT WS_GROUP
+	EDITTEXT         IDC_EDITVAR_PROMPTSTRINGFIELD,76,145,122,14, ES_AUTOHSCROLL | WS_TABSTOP
+	COMBOBOX         IDC_EDITVAR_VARTYPEMENU,53,165,89,200,CBS_DROPDOWNLIST | CBS_HASSTRINGS | NOT CBS_SORT | NOT WS_GROUP | WS_TABSTOP
+	LTEXT            "Type:",0,24,167,19,8,NOT WS_GROUP
+	PUSHBUTTON       "Define Choices...",IDC_EDITVAR_DEFINECHOICESBUTTON,150,164,68,14
+	EDITTEXT         IDC_EDITVAR_DEFAULTVALUEFIELD,103,185,166,14, ES_AUTOHSCROLL | WS_TABSTOP 
+	LTEXT            "Default Value (optional):",IDC_EDITVAR_DEFAULTVALUECAPTION,24,187,76,8,NOT WS_GROUP
+	CONTROL          "User Must Enter Value",IDC_EDITVAR_MUSTENTERCHECKBOX,"Button",BS_AUTOCHECKBOX | NOT WS_GROUP | WS_TABSTOP,25,207,88,10
+	COMBOBOX         IDC_EDITVAR_ENTRYFIELDLINESMENU,196,204,30,200,CBS_DROPDOWNLIST | CBS_HASSTRINGS | NOT CBS_SORT | NOT WS_GROUP | WS_TABSTOP
+	LTEXT            "Lines in Entry Field:",IDC_EDITVAR_LINESINENTRYCAPTION,130,207,64,8,NOT WS_GROUP
+	CONTROL          "Checked",IDC_EDITVAR_CHECKEDCHECKBOX,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,110,187,45,10
+	CONTROL          "Unchecked",IDC_EDITVAR_UNCHECKEDCHECKBOX,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,164,187,55,10
+	COMBOBOX         IDC_EDITVAR_DEFAULTMENUITEMMENU,80,185,100,440,CBS_DROPDOWNLIST | CBS_HASSTRINGS | NOT CBS_SORT | NOT WS_GROUP | WS_TABSTOP
+	PUSHBUTTON       "Cancel",IDCANCEL,88,227,50,14
+	DEFPUSHBUTTON    "Save",IDOK,147,227,50,14
+END
+
+IDD_DEFINECHOICES_DIALOG DIALOG  0, 0, 200, 159
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Define Choices"
+FONT 8, "MS Sans Serif"
+BEGIN
+	LISTBOX          IDC_DEFINECHOICES_CHOICELIST,9,16,128,52, NOT LBS_SORT | WS_VSCROLL | WS_BORDER | WS_VSCROLL | NOT WS_GROUP | WS_TABSTOP
+	LTEXT            "Choices for Menu:",0,10,4,60,8,NOT WS_GROUP
+	PUSHBUTTON       "Move Up",IDC_DEFINECHOICES_MOVEUPBUTTON,143,16,50,14
+	PUSHBUTTON       "Move Down",IDC_DEFINECHOICES_MOVEDOWNBUTTON,143,35,50,14
+	PUSHBUTTON       "Remove",IDC_DEFINECHOICES_REMOVEBUTTON,143,54,50,14
+	EDITTEXT         IDC_DEFINECHOICES_VALUEFIELD,11,87,126,14, ES_AUTOHSCROLL | WS_TABSTOP
+	PUSHBUTTON       "Create New",IDC_DEFINECHOICES_NEWBUTTON,10,108,50,14
+	PUSHBUTTON       "Modify Selected",IDC_DEFINECHOICES_MODIFYBUTTON,77,108,61,14
+	LTEXT            "Choice Value String:",0,9,74,71,8,NOT WS_GROUP
+	PUSHBUTTON       "Cancel",2,47,135,50,14
+	DEFPUSHBUTTON    "OK",1,105,135,50,14
+END
+
+IDD_LICENSE_STATUS_DIALOG DIALOG  0, 0, 211, 167
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "EyeDx License Status"
+FONT 8, "MS Sans Serif"
+BEGIN
+	DEFPUSHBUTTON    "&OK",1,84,146,50,14
+	LTEXT            "Your license is currently valid.",IDC_LICENSE_STATUS_CAPTION,10,50,191,24,NOT WS_GROUP
+	LTEXT            "nnnn Analysis Runs Available.",IDC_LICENSE_STATUS_ANALYSISRUNS,10,10,191,16,NOT WS_GROUP
+	LTEXT            "Valid through midnight on mm/dd/yy.",IDC_LICENSE_STATUS_EXPDATE,10,30,191,16,NOT WS_GROUP
+	LTEXT            "EyeDx Customer Service:",0,10,89,172,8,NOT WS_GROUP
+	LTEXT            "Toll Free Phone Number: (877) 323-9339",0,22,107,161,8,NOT WS_GROUP
+	LTEXT            "Email: renewal@eyedx.com",0,22,127,162,8,NOT WS_GROUP
+END
+
+IDD_LICENSE_EXPIRED_DIALOG DIALOG  DISCARDABLE 0, 0, 211, 167
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "EyeDx License Expired"
+FONT 8, "MS Sans Serif"
+BEGIN
+	DEFPUSHBUTTON    "OK",IDOK,84,146,50,14
+	LTEXT            "Please obtain a new license from EyeDx, Inc., and install it using the 'Install License' command in the file menu.",IDI_WARNING,10,59,191,15,NOT WS_GROUP
+	LTEXT            "nnnn Analysis Runs Available.",IDC_LICENSE_EXPIRED_CAPTION,10,10,191,15,NOT WS_GROUP
+	LTEXT            "You will be able to use all functions except for Run From Camera and Run From Card or Disk.",IDI_WARNING,10,35,191,15,NOT WS_GROUP
+	LTEXT            "EyeDx Customer Service:",0,10,89,172,8,NOT WS_GROUP
+	LTEXT            "Toll Free Phone Number: (877) 323-9339",0,22,107,161,8,NOT WS_GROUP
+	LTEXT            "Email: renewal@eyedx.com",0,22,127,162,8,NOT WS_GROUP
+END
+
+IDD_LICENSE_ENTRY_DIALOG DIALOG  DISCARDABLE 0, 0, 322, 169
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "EyeDx License Entry"
+FONT 8, "MS Sans Serif"
+BEGIN
+	DEFPUSHBUTTON    "OK",IDOK,170,145,50,14
+	LTEXT            "Please enter the following information. You will find your Customer ID and License Code on the jacket of the CD.",IDI_EXCLAMATION,5,35,302,15,NOT WS_GROUP
+	LTEXT            "nnnn Analysis Runs Available.",IDC_LICENSE_ENTRY_PROMPT,10,10,299,15,NOT WS_GROUP
+	PUSHBUTTON       "Cancel and Exit",IDCANCEL,85,145,66,14
+	EDITTEXT         IDC_LICENSE_ENTRY_CUSTID_FIELD,107,60,85,14, ES_AUTOHSCROLL | WS_TABSTOP
+	RTEXT            "Customer ID:",0,58,63,41,8,NOT WS_GROUP
+	RTEXT            "License Code:",0,53,90,46,8,NOT WS_GROUP
+	EDITTEXT         IDC_LICENSE_ENTRY_FIELD1,108,87,40,14, ES_AUTOHSCROLL | WS_TABSTOP
+	EDITTEXT         IDC_LICENSE_ENTRY_FIELD2,163,87,40,14, ES_AUTOHSCROLL | WS_TABSTOP
+	EDITTEXT         IDC_LICENSE_ENTRY_FIELD3,216,87,40,14, ES_AUTOHSCROLL | WS_TABSTOP
+	EDITTEXT         IDC_LICENSE_ENTRY_FIELD4,271,87,40,14, ES_AUTOHSCROLL | WS_TABSTOP
+	LTEXT            "-",0,209,90,3,8,NOT WS_GROUP
+	LTEXT            "-",0,262,90,3,8,NOT WS_GROUP
+	LTEXT            "-",0,154,90,3,8,NOT WS_GROUP
+	RTEXT            "Your Zip or Postal Code:",0,17,115,82,8,NOT WS_GROUP
+	EDITTEXT         IDC_LICENSE_ENTRY_BOGUS_FIELD,108,113,85,14, ES_AUTOHSCROLL | WS_TABSTOP
+END
+
+IDD_SUMMARY_DIALOG DIALOG   0, 0, 280, 262
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Analysis Results Summary"
+FONT 8, "MS Sans Serif"
+BEGIN
+	RTEXT            "Name or ID number:",0,58,5,80,8,NOT WS_GROUP
+	LTEXT            "Number",IDC_SUMMARY_NAME_CAPTION,142,5,138,8,NOT WS_GROUP
+	LTEXT            "Image(s) unclear. Please repeat.",IDC_SUMMARY_NOTE_CAPTION,142,18,139,8,NOT WS_GROUP
+	RTEXT            "Screening Result:",0,58,18,80,8,NOT WS_GROUP
+	LTEXT            "Left File",IDC_SUMMARY_UP_CAPTION,10,31,40,8,NOT WS_GROUP
+	LTEXT            "Right File",IDC_SUMMARY_SIDE_CAPTION,150,31,40,8,NOT WS_GROUP
+	CONTROL          "",IDC_SUMMARY_UP_VIEW,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,10,44,120,80
+	CONTROL          "",IDC_SUMMARY_SIDE_VIEW,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,150,44,120,80
+	CONTROL          "",IDC_SUMMARY_EYE4_VIEW,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,4,128,64,64
+	CONTROL          "",IDC_SUMMARY_EYE5_VIEW,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,72,128,64,64
+	CONTROL          "",IDC_SUMMARY_EYE6_VIEW,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,144,128,64,64
+	CONTROL          "",IDC_SUMMARY_EYE7_VIEW,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,212,128,64,64
+	CONTROL          "",IDC_SUMMARY_UP_ZOOM_BUTTON,"Button",BS_OWNERDRAW | WS_VISIBLE | WS_CHILD | WS_TABSTOP,60,27,15,13
+	CONTROL          "",IDC_SUMMARY_SIDE_ZOOM_BUTTON,"Button",BS_OWNERDRAW | WS_VISIBLE | WS_CHILD | WS_TABSTOP,200,27,15,13
+	CTEXT            "Left Eyes",IDC_SUMMARY_UP_TOP_RESULTS,4,128,132,64,NOT WS_GROUP
+	CTEXT            "Right Eyes",IDC_SUMMARY_SIDE_TOP_RESULTS,144,128,132,64,NOT WS_GROUP
+	CTEXT            "",IDC_SUMMARY_BOTTOM_CAPTION_1,20,196,240,8,NOT WS_GROUP
+	CTEXT            "",IDC_SUMMARY_BOTTOM_CAPTION_2,20,209,240,8,NOT WS_GROUP
+	DEFPUSHBUTTON    "Done With Subject",IDOK,170,242,80,14
+	PUSHBUTTON       "Retake Up",IDC_SUMMARY_RETAKE_UP,30,222,60,14
+	PUSHBUTTON       "Retake Both",IDCANCEL,110,222,60,14
+	PUSHBUTTON       "Retake Side",IDC_SUMMARY_RETAKE_SIDE,190,222,60,14
+	PUSHBUTTON       "Display Report",IDC_SUMMARY_REPORT,30,242,80,14
+END
+
+IDD_SUMMARY_ZOOM_DIALOG DIALOG   0, 0, 256, 315
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Zoomed Image"
+FONT 8, "MS Sans Serif"
+BEGIN
+	CTEXT            "",IDC_SUMMARY_ZOOM_NAME_CAPTION,80,4,96,8,NOT WS_GROUP
+	//CONTROL          "",IDC_SUMMARY_ZOOM_MAIN_VIEW,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,8,17,240,160
+	//CONTROL          "",IDC_SUMMARY_ZOOM_LEFT_EYE_VIEW,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,8,185,96,96
+	//CONTROL          "",IDC_SUMMARY_ZOOM_RIGHT_EYE_VIEW,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,152,185,96,96
+END
+
+IDD_VERIFY_ZOOM_DIALOG DIALOG   0, 0, 256, 220
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Zoomed Image"
+FONT 8, "MS Sans Serif"
+BEGIN
+	LTEXT            "",IDC_VERIFY_ZOOM_NAME_CAPTION,8,17,96,8, NOT WS_GROUP
+	CONTROL          "",IDC_VERIFY_ZOOM_MAIN_VIEW,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,8,30,240,160
+	CONTROL          "",IDC_VERIFY_ZOOM_PROGRESS_BAR,"msctls_progress32",WS_BORDER | NOT WS_VISIBLE,120,17,80,8
+	DEFPUSHBUTTON    "OK",IDOK,152,198,80,14
+	PUSHBUTTON       "High Resolution",IDC_VERIFY_ZOOM_DOWNLOAD_BUTTON,24,198,80,14
+END
+
+IDD_PREPARE_CAMERA_DIALOG DIALOG  DISCARDABLE 0, 0, 263, 130
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Prepare Camera"
+FONT 8, "MS Sans Serif"
+BEGIN
+	DEFPUSHBUTTON    "Run &Automatically",IDOK,176,109,70,14
+	PUSHBUTTON       "Cancel",IDCANCEL,18,109,50,14
+	PUSHBUTTON       "Run &Manually",IDC_PREPARE_CAMERA_MANUAL_BUTTON,87,109,72,14
+	LTEXT            "Remember to turn on the camera and to connect the serial cable from the camera to the computer.",IDI_WARNING,9,7,84,60,NOT WS_GROUP
+	CTEXT            "Use 'Run Manually' to process pictures already stored in the camera.",IDC_PREPARE_CAMERA_MANUAL_CAPTION,20,92,225,10,NOT WS_GROUP
+	CTEXT            "Use 'Run Automatically' to have the computer control the camera.",IDC_PREPARE_CAMERA_AUTO_CAPTION,19,81,225,10,NOT WS_GROUP
+	CONTROL          "",IDC_PREPARE_CAMERA_BITMAP,"Static",SS_BITMAP,113,6,141,62
+END
+
+IDD_ENTER_NAME_DIALOG DIALOG  0, 0, 240, 120
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Enter Report Name or ID Number"
+FONT 8, "MS Sans Serif"
+BEGIN
+	EDITTEXT         IDC_ENTER_NAME_EDIT_FIELD,75,25,90,14, ES_AUTOHSCROLL | WS_TABSTOP
+	DEFPUSHBUTTON    "OK",IDOK,165,46,50,14
+	PUSHBUTTON       "Cancel",IDCANCEL,95,46,50,14
+	PUSHBUTTON       "End Session",IDC_ENTER_NAME_SESSION_BUTTON,25,46,50,14
+	CTEXT            "Please enter up to 25 characters for the report name or ID number:",IDC_ENTER_NAME_LENGTH_CAPTION,10,8,220,8,NOT WS_GROUP
+	CTEXT            "Note: Can't use the characters \\ / * ? < > | : or """,IDI_WARNING,22,70,179,8,NOT WS_GROUP
+	CTEXT            "",IDC_ENTER_NAME_LICENSE_CAPTION,14,86,194,8,NOT WS_GROUP
+	CTEXT            "",IDC_ENTER_NAME_SESSION_CAPTION,14,102,194,8,NOT WS_GROUP
+END
+
+IDD_PREPARE_PICTURE_DIALOG DIALOG  0, 0, 248, 222
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Prepare to Take Picture"
+FONT 8, "MS Sans Serif"
+BEGIN
+	DEFPUSHBUTTON    "Take Picture",IDOK,136,171,71,14
+	PUSHBUTTON       "Cancel",IDCANCEL,61,171,50,14
+	CONTROL          "",IDD_PREPARE_PICTURE_BITMAP,"Static",SS_BITMAP,138,10,99,91
+	LTEXT            "",IDD_PREPARE_PICTURE_CAPTION,11,7,112,95,NOT WS_GROUP
+	CTEXT            "Note: computer command triggers the exposure, not the camera shutter button.",IDI_WARNING,10,113,227,19, SS_SUNKEN | NOT WS_GROUP
+	CTEXT            "Press the Space Bar or Return/Enter Key to take the picture.",IDI_WARNING,10,142,227,19, SS_SUNKEN | NOT WS_GROUP
+	LTEXT            "Battery Level:",IDI_WARNING,13,197,46,8,NOT WS_GROUP
+	CONTROL          "",IDD_PREPARE_PICTURE_BATTERY_BITMAP,"Static",SS_BITMAP,68,198,25,14
+	LTEXT            "Full",IDD_PREPARE_PICTURE_BATTERY_CAPTION,90,197,64,8,NOT WS_GROUP
+END
+
+IDD_VERIFY_PICTURE_DIALOG DIALOG  0, 0, 264, 166
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Verify Picture"
+FONT 8, "MS Sans Serif"
+BEGIN
+	DEFPUSHBUTTON    "Start Analysis",IDOK,174,145,73,14
+	PUSHBUTTON       "Cancel",IDCANCEL,15,145,50,14
+	CONTROL          "",IDD_VERIFY_PICTURE_VIEW,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN | WS_EX_NOPARENTNOTIFY | WS_EX_CLIENTEDGE,147,22,101,66
+	LTEXT            "",IDD_VERIFY_PICTURE_CAPTION,8,7,98,118,NOT WS_GROUP
+	LTEXT            "",IDD_VERIFY_PICTURE_QUALITY_CAPTION,146,118,103,8,NOT WS_GROUP
+	LTEXT            "File name",IDD_VERIFY_PICTURE_FILENAME_CAPTION,145,101,80,8,NOT WS_GROUP
+	PUSHBUTTON       "Retake Picture",IDD_VERIFY_PICTURE_RETAKE_BUTTON,88,145,67,14
+	CONTROL          "",IDD_VERIFY_PICTURE_SIDE_BITMAP,"Static",SS_BITMAP,135,32,10,60
+	CONTROL          "",IDD_VERIFY_PICTURE_TOP_BITMAP,"Static",SS_BITMAP,177,7,60,10
+	GROUPBOX         "",IDI_WARNING,107,6,4,127
+	CONTROL          "",IDD_VERIFY_PICTURE_ZOOM_BUTTON,"Button",BS_OWNERDRAW | WS_VISIBLE | WS_CHILD | WS_TABSTOP,230,99,15,13
+END
+
+IDD_ERASE_PICTURE_DIALOG DIALOG  DISCARDABLE 0, 0, 165, 55
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Erasing Image in Camera"
+FONT 8, "MS Sans Serif"
+BEGIN
+	CTEXT            "Please wait until erase is complete.",IDI_WARNING,10,10,150,15,NOT WS_GROUP
+	CTEXT            "DO NOT TURN OFF OR UNPLUG CAMERA",IDI_WARNING,10,30,150,15,SS_SUNKEN | NOT WS_GROUP
+END
+
+IDD_ANOTHER_SUBJECT_DIALOG DIALOG  0, 0, 240, 60
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Another Subject"
+FONT 8, "MS Sans Serif"
+BEGIN
+	CTEXT            "Another Subject?",0,25,8,190,8,NOT WS_GROUP
+	DEFPUSHBUTTON    "Yes",IDOK,165,25,50,14
+	PUSHBUTTON       "No",IDCANCEL,95,25,50,14
+	PUSHBUTTON       "End Session",IDC_ANOTHER_SUBJECT_SESSION_BUTTON,25,25,50,14
+	CTEXT            "",IDC_ANOTHER_SUBJECT_SESSION_CAPTION,25,46,190,8,NOT WS_GROUP
+END
+
+IDD_STARTUP_SESSION_DIALOG DIALOG  0, 0, 250, 55
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "End Or Continue Using Session?"
+FONT 8, "MS Sans Serif"
+BEGIN
+	CTEXT            "",IDC_STARTUP_SESSION_CAPTION,20,8,210,16,NOT WS_GROUP
+	DEFPUSHBUTTON    "Continue Using",IDOK,130,35,75,14
+	PUSHBUTTON       "End Session",IDCANCEL,45,35,75,14
+END
+
+IDD_SHUTDOWN_SESSION_DIALOG DIALOG  0, 0, 250, 55
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "End or Remember Session?"
+FONT 8, "MS Sans Serif"
+BEGIN
+	CTEXT            "",IDC_SHUTDOWN_SESSION_CAPTION,20,8,210,16,NOT WS_GROUP
+	DEFPUSHBUTTON    "Remember It",IDOK,130,35,75,14
+	PUSHBUTTON       "End Session",IDCANCEL,45,35,75,14
+END
+
+IDD_SESSION_NAME_DIALOG DIALOG  0, 0, 225, 85
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Enter Session Name"
+FONT 8, "MS Sans Serif"
+BEGIN
+	EDITTEXT         IDC_SESSION_NAME_EDIT_FIELD,50,25,121,14, ES_AUTOHSCROLL | WS_TABSTOP
+	DEFPUSHBUTTON    "OK",IDOK,121,46,50,14
+	PUSHBUTTON       "Cancel",IDCANCEL,50,46,50,14
+	CTEXT            "Please enter up to 25 characters for the session name:",IDC_SESSION_NAME_LENGTH_CAPTION,19,8,186,8,NOT WS_GROUP
+	CTEXT            "Note: Can't use the characters \\ / * ? < > | : or \"",IDI_WARNING,22,70,179,8,NOT WS_GROUP
+END
+
+IDD_PASSWORD_DIALOG DIALOG  0, 0, 225, 70
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Enter Password"
+FONT 8, "MS Sans Serif"
+BEGIN
+	EDITTEXT         IDC_PASSWORD_FIELD,50,25,121,14, ES_AUTOHSCROLL | WS_TABSTOP
+	DEFPUSHBUTTON    "OK",IDOK,121,46,50,14
+	PUSHBUTTON       "Cancel",IDCANCEL,50,46,50,14
+	CTEXT            "Please enter your password:",0,19,8,186,8,NOT WS_GROUP
+END
+
+IDD_PROMPT_FOR_VARIABLE_DIALOG DIALOG  DISCARDABLE 0, 0, 165, 55
+STYLE DS_MODALFRAME | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "Enter Information"
+FONT 8, "MS Sans Serif"
+BEGIN
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+#ifndef _MAC
+VS_VERSION_INFO VERSIONINFO
+ // Convention: Main.Minor.{0,1,2}.BugFix, where 0 is Alpha, 1 is Beta, and 2 is Release
+ FILEVERSION 1, 5, 2, 2
+ PRODUCTVERSION 1, 5, 2, 2
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "04090480"
+		BEGIN
+			VALUE "CompanyName\0", "EyeDx, Inc."
+			VALUE "FileDescription\0", "EyeDx Automated Digital Screening Application"
+			VALUE "FileVersion\0", "1.5.2"
+			VALUE "InternalName\0", "EyeDx Automated Digital Screening Application"
+			VALUE "LegalCopyright\0", "Copyright © 1997,1998,1999,2000 EyeDx, Inc. All Rights Reserved."
+			VALUE "LegalTrademarks\0", "Microsoft® is a registered trademark of \nMicrosoft Corporation.  Windows (TM) is a \ntrademark of Microsoft Corporation"
+			VALUE "ProductName\0", "EyeDx Automated Digital Screening System"
+			VALUE "ProductVersion\0", "1.5.2"
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x409, 0x480
+	END
+END
+#endif	//	!_MAC
+#endif    // English (United States) resources
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

@@ -1,0 +1,99 @@
+Paul, here is the text of the reduced size manual.  The primary area which is changed is "running the EyeDx Program.  I suppose you should leave a blank for the graphics for now.
+
+Thanks much!
+
+EyeDx Digital Vision Screening System 
+User's Guide
+
+Table of contents
+Camera Preparation............................................
+
+Patient Preparation..............................................
+
+Taking Camera Images.......................................
+
+Running the EyeDx Program..............................
+
+Deleting Images From the Camera..................
+
+
+
+Camera Preparation
+
+1. Check batteries to see if they are charged.  Press the Play/Stop switch, and look for the battery icon on the lower right portion of the status display.  If the icon shows a full battery with a slash though it, the battery is fine.  Refer to the Kodak camera manual for more information.  Please keep extra batteries (preferably Lithium) on hand as the camera will not operate when the batteries are low.
+
+2. Turn on the camera by sliding the left front panel next to the lens.
+
+3. Make sure the compression setting is on 
+
+4. This camera can store only 9 images before uploading is required.  Before screening a patient, make sure there are not more than 6 images stored on the camera, as you will be required to take at least 2 to 3 images.  If there are 7 or more pictures stored in the camera, they need to be uploaded onto the computer.  (Refer to section labeled "Running EyeDx Program")
+
+5. Zoom the camera all the way in by pressing  the "T" button located on the top of the camera.
+
+
+Patient Preparation
+1. Before the screening can take place, the patient's eyes will need to be dilated by having him or her sit in a darkened room.
+
+Allow 2 minutes for patients withblue or green eyes.
+
+Allow 3 minutes for patients with brown eyes.
+
+2. If the patient has been previously crying, please ask the parent of the patient to dab the eyes dry, so that the eyes are not "teary".
+
+3. If the patient is wearing any corrective eye wear such as glasses or contact lenses, please ask to have these removed from the patient.
+
+Taking Images
+1. Patients can remain standing or be seated on a chair or a lap of a parent or assistant.  If needed, use toys or other objects to help the patient feel more comfortable.
+
+2. Have the patient or assistant hold the end of the lens cap to their chin.  Step backwards until the string is taut, then have the patient or assistant drop the lens cap to their lap or gently to the floor.  This sets the proper distance for the image. (Make sure the string does not appear in the picture)
+
+3. In the viewfinder there are two circles. Two images, one horizontal and one vertical, will be taken:
+Horizontally: Align the camera so that the dashed circle is between the
+patient's eyes. 
+Vertically:  Align the camera so that the dashed circle is on the patient's right eye
+
+4. Make sure the patient's head is level.  Inform the patient not to smile as smiling will cause the eyelids to become partially closed.  Ask the patient to look closely at the blinking red LEDs.  Take the picture by pressing and holding the shutter button, located on top of the camera, until the flash goes off.
+
+5. This step is extremely important: Review each picture while you are still in the room with the patient or the patient is still within the facility.  If there is a problem with either picture (i.e., not having a red reflex appear in the photo, the photo being off center,  the patient's eyes being closed, or the pupils are too small), repeat the process.
+
+To review the photo, press the Play/Stop switch and the pictures will appear on the LCD screen.  To view each picture individually, use the T and W buttons to move from picture to picture.  
+
+6. Take at least one picture horizontally and one picture vertically.  Take as many additional pictures as necessary for image analysis.
+
+Running the EyeDx Program
+1. Turn the computer on and connect one end of the transfer cord to the computer's COMM port and the other to the camera.  On the camera, this connection is on the left side, underneath the rubber guard with the two arrows.  
+
+2. Click on the "EyeDx" icon found on the desktop of the computer.
+
+3. Click "Run from camera"
+
+4. Choose the desired Up Image and Side Image using the Select button.  Type in the patient's ID andclick OK to proceed with downloading the images.  The images will be analyzed by the EyeDx program and graphically displayed using your Internet browser.
+
+6. To load additional images, repeat steps 3 to 5.  Prior runs of the program are automatically saved as reports.  Select "view previous reports" to view as desired. 
+
+7. Print reports by using the "Print" icon on your browser. 
+
+
+Deleting images from the camera
+1. Make sure your camera is turned on.
+
+2. Press the Play/Stop switch until images appear on the LCD screen.
+
+3. Press the Select button until the images you want deleted is selected.
+
+4. Press the Move/Erase button under the LCD screen.
+
+5. Select "Erase" on the menu using the Select button and press Enter.
+
+6. Press Enter again to "Erase Picture"
+
+(If you want to erase all your images, select "Erase All" instead and press "enter")
+
+
+
+
+
+
+
+
+

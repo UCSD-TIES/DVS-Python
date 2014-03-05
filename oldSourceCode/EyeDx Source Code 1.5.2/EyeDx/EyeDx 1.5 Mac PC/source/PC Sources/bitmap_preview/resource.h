@@ -1,0 +1,1 @@
+// Used by FileOpen.rc//#define IDD_FILEOPENPREVIEW             101#define IDC_PREVIEW                     1000#define IDC_IMAGE                       1001
