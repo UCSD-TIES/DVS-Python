@@ -220,35 +220,17 @@ class page(wx.Panel):
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)
 
-		# setup a result page
+
+	# setup a result page
 	def resultPageSetup(self, page):
 
-		h_path = "/Users/yMac/Desktop/hh.jpg"
-		v_path = "/Users/yMac/Desktop/vv.jpg"
 
-		print 'making patient call'
-		patients = makePatient(h_path, v_path)
-		resetEyes( patients, ((455,572,647,695),(771,537,958,650)) ,((467,596,620,718),(746,614,887,704)) )
-
-		patients.analyzeEyes(0.17)
-
-		all_info = patients.getInfo()
-		all_defects = patients.getDefects()
-
-		for line in  all_defects.keys():
-			print "[" + line + "]" + " = " + str(all_defects[line])
-		print "\n"
-		for line in  all_info.keys():
-			print "[" + line + "]" + " = " + str(all_info[line])
-		print "\n"
-
-		'''
 		# print out title on top left corner of the page
 		resultText = "This is result page"
 		result = wx.StaticText(page, -1, resultText, (0, 40), (1000, -1), wx.ALIGN_CENTER)
 		result.SetBackgroundColour('blue')
 		result.SetForegroundColour('white')
-
+		'''
 		picThumbnail = "Picture thumbnail goes here"
 		wx.StaticText(page, -1, picThumbnail, (50, 200))
 
