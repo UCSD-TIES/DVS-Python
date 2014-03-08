@@ -422,6 +422,32 @@ class interaction():
 	def OnCancelAndExit(self, event):
 		self.GetParent().ShutDown()
 	'''
-	def seeResult(self, page3, resultPage): 
+	# corrected = 1 if user corrected detection
+	def seeResult(self, page3, resultPage, corrected):
 		page3.Hide() # Hides 3nd page 
 		self.ShowYourself(resultPage) # Shows result page
+
+		if corrected == 1:
+			hTuple = ((self.hcoors[0][0],self.hcoors[0][1],self.hcoors[0][2],self.hcoors[0][3]),
+			          (self.hcoors[1][0],self.hcoors[1][1],self.hcoors[1][2],self.hcoors[1][3]))
+			vTuple = ((self.vcoors[0][0],self.vcoors[0][1],self.vcoors[0][2],self.vcoors[0][3]),
+			          (self.vcoors[1][0],self.vcoors[1][1],self.vcoors[1][2],self.vcoors[1][3]))
+			resetEyes(self.patient, hTuple, vTuple)
+		self.patient.analyzeEyes(0.17)
+		all_info = self.patient.getInfo()
+		all_defects = self.patient.getDefects()
+
+		y = 100
+		for line in all_defects.keys():
+			print "[" + line + "]" + " = " + str(all_defects[line])
+			wx.StaticText(resultPage, -1, line, (200, y), (-1, -1), wx.ALIGN_CENTER)
+			wx.StaticText(resultPage, -1, str(all_defects[line]), (500, y), (-1, -1), wx.ALIGN_CENTER)
+			y += 30
+
+		print "\n"
+		for line in all_info.keys():
+			print "[" + line + "]" + " = " + str(all_info[line])
+			wx.StaticText(resultPage, -1, line, (200, y), (-1, -1), wx.ALIGN_CENTER)
+			wx.StaticText(resultPage, -1, str(all_info[line]), (500, y), (-1, -1), wx.ALIGN_CENTER)
+			y += 30
+		print "\n"
