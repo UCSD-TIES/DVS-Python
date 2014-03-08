@@ -65,23 +65,28 @@ class interaction():
 	#       imgCtrl2 - Other control
 	#       text1 - text control to be cleared
 	#       text2 - other text control to be cleared
-	def reset(self, page, imgCtrl1, imgCtrl2, text1, text2):
-		empty = wx.EmptyImage(440,440)     # Create empty image
+	def reset(self, page, horImgCtrl, verImgCtrl, text1, text2, pageNum):
+		if pageNum == 1:
+			empty = wx.EmptyImage(440,440)     # Create empty image
 
-		# Sets the 2 image controls to empty
-		imgCtrl1.SetBitmap(wx.BitmapFromImage(empty))
-		imgCtrl2.SetBitmap(wx.BitmapFromImage(empty))
+			# Sets the 2 image controls to empty
+			horImgCtrl.SetBitmap(wx.BitmapFromImage(empty))
+			verImgCtrl.SetBitmap(wx.BitmapFromImage(empty))
+			# Resets path names
+			text1.SetValue("Please upload an image.")
+			text2.SetValue("Please upload an image.")
 
-		# Resets path names
-		text1.SetValue("Please upload an image.")
-		text2.SetValue("Please upload an image.")
+			# Deletes interaction object's data 
+			self.horizontalPath = None
+			self.verticalPath = None
+			self.hBitMap = None
+			self.vBitMap = None
+
+		elif pageNum == 3:
+			horImgCtrl.SetBitmap(self.hBitMap)
+			verImgCtrl.SetBitmap(self.vBitMap)
+
 		page.Refresh()
-
-		# Deletes interaction object's data 
-		self.horizontalPath = None
-		self.verticalPath = None
-		self.hBitMap = None
-		self.vBitMap = None
 
 	# helper method for upload button, resizes and shows uploaded image
 	# Args: page - the page passed in from upload() (page 1)
@@ -152,28 +157,13 @@ class interaction():
 	#       hImgCtrl - horizontal image control of 2nd page
 	#       vImgCtrl - vertical image control of 2nd page
 	def next1(self, hPhotoTxt, vPhotoTxt, page1, page2, hImgCtrl, vImgCtrl):
-		'''    These are checks that are turned off for convenience
 		pleaseText = "Please upload an image."
 		if hPhotoTxt == pleaseText and vPhotoTxt == pleaseText:
-			errorTxt1 = "No Images Detected, Please Enter Images"
-			errMsg1 = wx.MessageDialog(page, errorTxt1, "No Images Detected", wx.OK)
+			errorTxt1 = "Missing images, please upload."
+			errMsg1 = wx.MessageDialog(page1, errorTxt1, "No Images Detected", wx.OK)
 			errMsg1.ShowModal()
 			errMsg1.Destroy()
-		# When no horizontal image is entered
-		elif hPhotoTxt == pleaseText:
-			errorTxt2 = "No Horizontal Image Detected, Please Enter a Horizontal Image"
-			errMsg2 = wx.MessageDialog(page, errorTxt2, "No Horizontal Image", wx.OK)
-			errMsg2.ShowModal()
-			errMsg2.Destroy()
-		# When no vertical image is entered
-		elif vPhotoTxt == pleaseText:
-			errorTxt3 = "No Vertical Image Detected, Please Enter a Vertical Image"
-			errMsg3 = wx.MessageDialog(page, errorTxt3, "No Vertical Image", wx.OK)
-			errMsg3.ShowModal()
-			errMsg3.Destroy()
-		# Move to next panel
-		else:
-		'''
+			
 		self.patient = makePatient(self.horizontalPath, self.verticalPath)
 		coors = getEyeCoors(self.patient)                 # this coors is local, just for drawing
 		print coors
