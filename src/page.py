@@ -1,6 +1,11 @@
 import wx, os
 from interaction import *
 
+'''
+TODO:
+- Change pageSetUp to handle ALL pages. This will reduce repeated code.
+'''
+
 class page(wx.Panel):
 
 	def __init__(self, parent, baseSizer):
@@ -23,13 +28,14 @@ class page(wx.Panel):
 		self.page2.Hide()               # Pages that aren't page 1 start off hidden
 		self.page3.Hide()
 
-
+		
 		# set up result page
 		self.resultPage = wx.Panel(parent)
 		self.resultPageSetup(self.resultPage)
 		baseSizer.Add(self.resultPage, 1, wx.EXPAND)
 		#self.page1.Hide()
 		self.resultPage.Hide()
+		
 
 
 	''' Unused
@@ -174,6 +180,9 @@ class page(wx.Panel):
 		menu = wx.FlexGridSizer(1, 5, 5, 5)
 		pics = wx.FlexGridSizer(1, 2, 5, 5)
 
+		pic1 = wx.BoxSizer(wx.VERTICAL)
+		pic2 = wx.BoxSizer(wx.VERTICAL)
+
 		###############COMPONENTS################
 		verImg = wx.EmptyImage(440,440)
 		self.ver3ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(verImg))
@@ -181,14 +190,15 @@ class page(wx.Panel):
 		self.hor3ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
 
 		title = wx.StaticText(page, label="Please correct the eye detection.")
+		# Button to clear pictures and paths
+		resetBtn = wx.Button(page, label='Reset')
+		resetBtn.Bind(wx.EVT_BUTTON,
+			lambda event: self.interact.reset(page, self.hor3ImgCtrl, 
+				self.ver3ImgCtrl, None, None, 3))
 
 		# adding see result button
 		resultBtn = wx.Button(page, label="See Result")
 		resultBtn.Bind(wx.EVT_BUTTON, lambda event: self.interact.seeResult(self.page3, self.resultPage))
-		menu.AddMany([(title), (560, 0), (resultBtn)])
-
-		mainGrid.AddMany([(menu),(pics)])
-		pics.AddMany([(self.hor3ImgCtrl),(self.ver3ImgCtrl)])
 
 		### Mouse events, on click, on drag
 		# Mouse events for vertical image
@@ -200,6 +210,12 @@ class page(wx.Panel):
 		self.hor3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 0))
 		self.hor3ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event, self.hor3ImgCtrl))
 		self.hor3ImgCtrl.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.hor3ImgCtrl, 0))
+
+		mainGrid.AddMany([(menu),(pics)])
+		menu.AddMany([(title),(560,0),(resetBtn),(resultBtn)])
+		pic1.Add(self.hor3ImgCtrl, flag = wx.ALIGN_CENTER)
+		pic2.Add(self.ver3ImgCtrl, flag = wx.ALIGN_CENTER)
+		pics.AddMany([(pic1),(pic2)])
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)
