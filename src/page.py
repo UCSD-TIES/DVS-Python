@@ -200,7 +200,7 @@ class page(wx.Panel):
 
 		# adding see result button
 		resultBtn = wx.Button(page, label="See Result")
-		resultBtn.Bind(wx.EVT_BUTTON, lambda event: self.interact.seeResult(self.page3, self.resultPage))
+		resultBtn.Bind(wx.EVT_BUTTON, lambda event: self.interact.seeResult(self.page3, self.resultPage, 1))
 
 		### Mouse events, on click, on drag
 		# Mouse events for vertical image
