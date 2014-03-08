@@ -385,10 +385,11 @@ class interaction():
 			odc.Clear()
 
 			dc.SetPen(wx.Pen("black", 2))
-			dc.SetBrush(wx.TRANSPARENT_BRUSH)
+			if 'wxMac' in wx.PlatformInfo:
+				dc.SetBrush(wx.Brush(wx.Colour(0xC0, 0xC0, 0xC0, 0x80)))
+			else:
+				dc.SetBrush(wx.TRANSPARENT_BRUSH)
 			dc.DrawRectangleRect(rect)
-
-			self.overlay.DrawRectangleRect(rect)
 
 			del odc
 		'''
