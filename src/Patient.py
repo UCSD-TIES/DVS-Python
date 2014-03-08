@@ -194,8 +194,8 @@ class Patient:
             relRightCenterY = vRight[1] + rightCenterY
             vPD = math.sqrt((relLeftCenterX-relRightCenterX)**2 +(relLeftCenterY-relRightCenterY)**2)
         #print "Vert PD: " + str(vPD)
-        self.info["HorizPD"] = str(hPD)
-        self.info["VertPD"] = str(vPD)
+        self.info["Horizontal Pupillary Distance"] = str(hPD)
+        self.info["Vertical Pupillary Distance"] = str(vPD)
         return "Horiz PD: " + str(hPD) + " Vert PD: " + str(vPD)
 
 
@@ -282,8 +282,8 @@ class Patient:
 
         # checks threshold distance
         if dDistance > dThreshold:                            # dThreshold should be near 0
-           self.defects["hasStrab"] = True
-           self.defects["strabDDistance"] = str(dDistance)
+           self.defects["has Strabismus"] = True
+           self.defects["Strabismus Disctance Difference"] = str(dDistance)
            if DEBUG:
                print "Refer for strabismus, info below:"
                print "dDistance: " + str(dDistance) + "\n"
@@ -303,8 +303,8 @@ class Patient:
 
         # checks threshold slope "distance"
         if dSlope > sThreshold:                   # sThreshold should be near 0
-            self.defects["hasStrab"] = True
-            self.defects["strabDSlope"] = str(dSlope)
+            self.defects["has Strabismus"] = True
+            self.defects["Strabismus Slope Difference"] = str(dSlope)
             if DEBUG:
                 print "Refer for strabismus, info below:"
                 print "dSlope: " + str(dSlope) + "\n"
@@ -319,8 +319,8 @@ class Patient:
 
         #checks threshold x distance
         if xDifference > xThreshold:                              # xThreshold should be near 0
-            self.defects["hasStrab"] = True
-            self.defects["strabXDifference"] = str(xDifference)
+            self.defects["has Strabismus"] = True
+            self.defects["Strabismus X Difference"] = str(xDifference)
             if DEBUG:
                 print "Refer for strabismus, info below:"
                 print "xDifference: " + str(xDifference) + "\n"
@@ -332,8 +332,8 @@ class Patient:
 
         # checks threshold y distance
         if yDifference > yThreshold:                             # yThreshold should be near 0
-            self.defects["hasStrab"] = True
-            self.defects["strabYDifference"] = str(yDifference)
+            self.defects["has Strabismus"] = True
+            self.defects["Strabismus Y Difference"] = str(yDifference)
             if DEBUG:
                 print "Refer for strabismus, info below:"
                 print "yDifference: " + str(yDifference) + "\n"
@@ -366,9 +366,9 @@ class Patient:
         # between the horiz and ver photos
         if abs(refErrs[0] - refErrs[2]) > threshold:
             healthy = False
-            self.defects["hasAstig"] = True
-            self.defects["astigRefErrDiff"] = str(abs(refErrs[0] - refErrs[2]))
-            self.defects["astigLeft"] = "horiz left: " + str(refErrs[0]) + " vert left: " + str(refErrs[2])
+            self.defects["has Astigmatism"] = True
+            self.defects["Astigmatism Refractor Error Difference"] = str(abs(refErrs[0] - refErrs[2]))
+            self.defects["Astigmatism Left"] = "horiz left: " + str(refErrs[0]) + " vert left: " + str(refErrs[2])
             if DEBUG:
                 print "Refer for astigmatism, info below:"
                 print "Diff in refractive error: " + str(abs(refErrs[0] - refErrs[2]))
@@ -376,9 +376,9 @@ class Patient:
 
         if abs(refErrs[1] - refErrs[3]) > threshold:
             healthy = False
-            self.defects["hasAstig"] = True
-            self.defects["astigRefErrDiff"] = str(abs(refErrs[1] - refErrs[3]))
-            self.defects["astigRight"] = "horiz right: " + str(refErrs[1]) + " vert right: " + str(refErrs[3])
+            self.defects["has Astigmatism"] = True
+            self.defects["Astigmatism Refractor Error Difference"] = str(abs(refErrs[1] - refErrs[3]))
+            self.defects["Astigmatism Right"] = "horiz right: " + str(refErrs[1]) + " vert right: " + str(refErrs[3])
             if DEBUG:
                 print "Refer for astigmatism, info below:"
                 print "Diff in refractive error: " + str(abs(refErrs[1] - refErrs[3]))
