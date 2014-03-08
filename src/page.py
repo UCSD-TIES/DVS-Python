@@ -150,7 +150,9 @@ class page(wx.Panel):
 		title = wx.StaticText(page, label="Do the boxes frame the eyes?")   # Different title from page 1's
 
 		yesBtn = wx.Button(page, label='Yes')     # Button to go to 4th page - FUNCTIONALITY NOT ADDED YET
-
+		yesBtn.Bind(wx.EVT_BUTTON,
+		    	lambda event: self.interact.seeResult(self.page2, self.resultPage, 0))
+		    
 		noBtn = wx.Button(page, label='No')       # Button to go to 3rd page
 		noBtn.Bind(wx.EVT_BUTTON,
 			lambda event: self.interact.No2(self.page2, self.page3, self.hor3ImgCtrl, self.ver3ImgCtrl))
