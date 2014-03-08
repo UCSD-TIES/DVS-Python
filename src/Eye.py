@@ -11,7 +11,7 @@ import PIL.ImageOps
 import math
 from sys import maxint
 
-DEBUG = False
+DEBUG = False 
 
 ########## Descriptive Variables for tweakable constants ###############
 
@@ -217,6 +217,15 @@ class Eye:
                 if dist < minDist:
                     minDist = dist
                     minCircleIndex = i
+                if DEBUG:
+                    #draw all the potential circles
+                    
+                    draw_circles(np.array([[storage[i, 0, 0], storage[i, 0, 1],storage[i, 0, 2]]]),self.eyePhoto)
+
+            if DEBUG:
+                cv.ShowImage("Eye with all circles", self.eyePhoto)
+                cv.WaitKey(0)
+                cv.DestroyWindow("Eye with all circles")
 
             if minCircleIndex != -1:
                 finalCircle = np.array([[storage[minCircleIndex, 0, 0], storage[minCircleIndex, 0, 1],storage[minCircleIndex, 0, 2]]])
