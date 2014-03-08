@@ -12,7 +12,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = True
+TEST = False
 PRINT = False
 
 CIRCLE_COLOR = (0, 255, 0)
@@ -304,18 +304,19 @@ if (TEST):
 
     # Horizontal photos have the eyes along a horizontal axis
     horiz = os.path.dirname(os.path.abspath(sys.argv[0]))
-    horiz += "/pics/Red06.jpg"
+    horiz += "/pics/homemade/jthorizontal.jpg"  
     vert = os.path.dirname(os.path.abspath(sys.argv[0]))
-    vert += "/pics/Red11.jpg"
+    vert += "/pics/homemade/andrewvertical.jpg"
     patient = makePatient(horiz, vert)
 
     # Take the horizontal image and draw bounding eye boxes
     horizontalPhoto = patient.getHorizontal()
-
+    
     # Reset the eye regions and pupil regions
     # print "Resetting the eye regions and the pupil regions..."
-    #resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((101,101,151,151),(151,151,201,201)) )
-    #resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
+    resetEyes( patient, ((455,572,647,695),(771,537,958,650)) ,((467,596,620,718),(746,614,887,704)) )
+    # Pass in pupil coordinates relative to the eye photo 
+    resetPupils( patient, ((93,64,17),(91,62,19)) , ((33,32,8 ),(32,28,8)) )
 
     # We don't actually need the circle of the white dot  and findWhiteDot
     # finds a contour which isn't quite a cirlce so we'll just deal with
@@ -375,12 +376,12 @@ if (TEST):
     if vLeftPupil != None:
         x = int(vLeft[0] + vLeftPupil[0])
         y = int(vLeft[1] + vLeftPupil[1])
-        cv.Circle(horizontalPhoto, (x, y), vLeftPupil[2], 
+        cv.Circle(verticalPhoto, (x, y), vLeftPupil[2], 
             CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
     if vRightPupil != None:
         x = int(vRight[0] + vRightPupil[0])
         y = int(vRight[1] + vRightPupil[1])
-        cv.Circle(horizontalPhoto, (x, y), vRightPupil[2], 
+        cv.Circle(verticalPhoto, (x, y), vRightPupil[2], 
             CIRCLE_COLOR, THICKNESS, LINE_TYPE, SHIFT)
 
     # Display the image
@@ -393,7 +394,7 @@ if (TEST):
     hLeftEyePhoto = patient.getEyePhoto(True,True)
     hRightEyePhoto = patient.getEyePhoto(True,False)
     cv.ShowImage("Horizontal's Left Eye",hLeftEyePhoto)
-    cv.WaitKey(0)
+    cv.WaitKey(0) 
     cv.DestroyWindow("Horizontal's Left Eye")
 
     cv.ShowImage("Horizontal's Right Eye",hRightEyePhoto)
@@ -420,7 +421,7 @@ if (TEST):
             patient.vertical.left.eyePupil.toString()
         else:
             print "Cannot print"
-            
+              
         print "\nVertical Right Pupil: "
         if patient.vertical.right.eyePupil != None:
             patient.vertical.right.eyePupil.toString()
