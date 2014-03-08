@@ -80,10 +80,172 @@ def resetEyes(thisPatient, horizontalTuple, verticalTuple):
 
     Return:
         None
-    """  
-    # Set horizontal photo data?
-    if horizontalTuple != None and thisPatient.horizontal != None:
-        thisPatient.horizontal.setEyes(horizontalTuple[0],horizontalTuple[1])
+    """      
+    
+    RESET_EYE = True
+    ### coordinate negative value check ###
+    # horizontal left coordinate
+    if horizontalTuple[0][0] < 0 or horizontalTuple[0][1] < 0:
+        print "Error..Horizontal left coordinate cannot have negative value"
+        RESET_EYE = False
+    elif horizontalTuple[0][2] < 0 or horizontalTuple[0][3] < 0:
+        print "Error..Horizontal left Coordinate cannot have negative value "
+        RESET_EYE = False
+        
+    # horizontal right coordinate
+    if horizontalTuple[1][0] < 0 or horizontalTuple[1][1] < 0:
+        print "Error..Horizontal right coordinates cannot have negative value"
+        RESET_EYE = False
+    elif horizontalTuple[1][2] < 0 or horizontalTuple[1][3] < 0:
+        print "Error..Horizontal right coordinates cannot have negative value"
+        RESET_EYE = False
+        
+    # vertical left coordinate
+    if verticalTuple[0][0] < 0 or verticalTuple[0][1] < 0:
+        print "Error..Vertical left coordinate cannot have negative value"
+        RESET_EYE = False
+    elif verticalTuple[0][2] < 0 or verticalTuple[0][3] < 0:
+        print "Error..Vertical left Coordinate cannot have negative value "
+        RESET_EYE = False
+        
+    #vertical right coordinate
+    if verticalTuple[1][0] < 0 or verticalTuple[1][1] < 0:
+        print "Error..vertical right coordinates cannot have negative value"
+        RESET_EYE = False
+    elif verticalTuple[1][2] < 0 or verticalTuple[1][3] < 0:
+        print "Error..vertical right coordinates cannot have negative value"
+        RESET_EYE = False    
+          
+    ####  check end ###
+    
+    ###  Check if top left is less than bottom right  ####
+    # horizontal tuple, left coordinate
+    if horizontalTuple[0][0] > horizontalTuple[0][2]:
+        print "Error.. Horizontal left: topLeft X cannot be greater than bottomRight X"
+        RESET_EYE = False
+    elif horizontalTuple[0][1] > horizontalTuple[0][3]:
+        print "Error.. Horizontal left: topLeft Y cannot be greater than bottomRight Y"
+        RESET_EYE = False
+        
+    #horizontal tuple, right coordinate
+    if horizontalTuple[1][0] > horizontalTuple[1][2]:
+        print "Error.. Horizontal right: topLeft X cannot be greater than bottomRight X"
+        RESET_EYE = False
+    elif horizontalTuple[1][1] > horizontalTuple[1][3]:
+        print "Error.. Horizontal right: topLeft Y cannot be greater than bottomRight Y"
+        RESET_EYE = False
+        
+    # vertical tuple, Left coordinate
+    if verticalTuple[0][0] > verticalTuple[0][2]:
+        print "Error.. Vertical left: topleftX cannot be greater than bottomRight X"
+        RESET_EYE = False
+    elif verticalTuple[0][1] > verticalTuple[0][3]:
+        print "Error.. vertical left: topLeft Y cannot be greater than bottomRight Y"
+        RESET_EYE = False
+        
+    # vertical tuple, right coordinate
+    if verticalTuple[1][0] > verticalTuple[1][2]:
+        print "Error.. Vertical right: topleftX cannot be greater than bottomRight X"
+        RESET_EYE = False
+    elif verticalTuple[1][1] > verticalTuple[1][3]:
+        print "Error.. vertical right: topLeft Y cannot be greater than bottomRight Y"
+        RESET_EYE = False
+        
+    ### end ###
+    
+    ### check if topLeft and bottomRight are equal, they shouldn't be equal  ###
+    
+    # Horizontal tuple, left coordinate
+    if horizontalTuple[0][0] == horizontalTuple[0][2]:
+        print "Error.. Horizontal left: topLeft X and bottomRight x cannot be equal"
+        RESET_EYE = False
+    elif horizontalTuple[0][1] == horizontalTuple[0][3]:
+        print "Error.. Horizontal left: topLeft Y and bottomRight Y cannot be equal"
+        RESET_EYE = False
+        
+     #horizontal tuple, right coordinate
+    if horizontalTuple[1][0] == horizontalTuple[1][2]:
+        print "Error.. Horizontal right: topLeft X and bottomRight X cannot be equal"
+        RESET_EYE = False
+    elif horizontalTuple[1][1] == horizontalTuple[1][3]:
+        print "Error.. Horizontal right: topLeft Y and bottomRight Y cannot be equal"
+        RESET_EYE = False
+        
+    # vertical tuple, left coordinate
+    if verticalTuple[0][0] == verticalTuple[0][2]:
+        print "Error.. vertical left: topLeft X and bottomRight X cannot be equal"
+        RESET_EYE = False
+    elif verticalTuple[0][1] == verticalTuple[0][3]:
+        print "Error.. vertical left: topLeft Y and bottomRight Y cannot be equal"
+        RESET_EYE = False
+        
+     #vertical tuple, right coordinate
+    if verticalTuple[1][0] == verticalTuple[1][2]:
+        print "Error.. vertical right: topLeft X and bottomRight X cannot be equal"
+        RESET_EYE = False
+    elif verticalTuple[1][1] == verticalTuple[1][3]:
+        print "Error.. vertical right: topLeft Y and bottomRight Y cannot be equal"  
+        RESET_EYE = False
+        
+    ### end  ####
+    
+    ### check if left coordinate & right coordinate equal  ###
+    if horizontalTuple[0][0] == horizontalTuple[1][0]:
+        if horizontalTuple[0][1] == horizontalTuple[1][1]:
+            if horizontalTuple[0][2] == horizontalTuple[1][2]:
+                if horizontalTuple[0][3] == horizontalTuple[1][3]:
+                    print "Error.. horizontal, left and right coordinate cannot be equal"
+                    RESET_EYE = False
+    if verticalTuple[0][0] == verticalTuple[1][0]:
+        if verticalTuple[0][1] == verticalTuple[1][1]:
+            if verticalTuple[0][2] == verticalTuple[1][2]:
+                if verticalTuple[0][3] == verticalTuple[1][3]:
+                    print "Error.. vertical, left and right coordinate cannot be equal"
+                    RESET_EYE = False
+    
+    ### ends ###
+    
+    ### check if all values are 0 ###
+ 
+    # horizontal, left coordinate
+    '''
+    if horizontalTuple[0][0] == 0 and horizontalTuple[0][1] == 0:
+        print"Error.. Horizontal left, topLeft X and topLeft Y cannot be 0"
+        RESET_EYE = False
+    elif horizontalTuple[0][2] == 0 and horizontalTuple[0][3] == 0:
+        print "Error.. Horizontal left, bottomRight X and Y cannot be 0"
+        RESET_EYE = False
+        
+    # horizontal, right coordinate
+    if horizontalTuple[1][0] == 0 and horizontalTuple[1][1] == 0:
+        print"Error.. Horizontal right, topLeft X and topLeft Y cannot be 0"
+        RESET_EYE = False
+    elif horizontalTuple[1][2] == 0 and horizontalTuple[1][3] == 0:
+        print "Error.. Horizontal right, bottomRight X and Y cannot be 0"
+        RESET_EYE = False
+        
+    # for vertical, left coordinate
+    if verticalTuple[0][0] == 0 and verticalTuple[0][1] == 0:
+        print "Error.. vertical left, topLeft X and Y cannot be 0"
+        RESET_EYE = False
+    elif verticalTuple[0][2] == 0 and verticalTuple[0][3] == 0:
+        print "Error.. vertical left, bottomRight X and Y cannot be 0"
+        RESET_EYE = False
+        
+    # vertical, right coordinate
+    if verticalTuple[1][0] == 0 and verticalTuple[1][1] == 0:
+        print "Error.. vertical right, topLeft X and Y cannot be 0"
+        RESET_EYE = False
+    elif verticalTuple[1][2] == 0 and verticalTuple[1][3] == 0:
+        print "Error.. vertical right, bottomRight X and Y cannot be 0"
+        RESET_EYE = False
+        
+    ## end ###
+'''    
+  
+    if RESET_EYE:
+        if horizontalTuple != None and thisPatient.horizontal != None:
+            thisPatient.horizontal.setEyes(horizontalTuple[0],horizontalTuple[1])
         '''
         # Set left eye coords?
         if horizontalTuple[0] != None:
@@ -101,9 +263,9 @@ def resetEyes(thisPatient, horizontalTuple, verticalTuple):
                 print "Error: thisPatient.horizontal.right == None"
         '''
 
-    # Set vert photo data?
-    if verticalTuple != None and thisPatient.vertical != None:
-        thisPatient.vertical.setEyes(verticalTuple[0],verticalTuple[1])
+        # Set vert photo data?
+        if verticalTuple != None and thisPatient.vertical != None:
+            thisPatient.vertical.setEyes(verticalTuple[0],verticalTuple[1])
         '''
         # Set left eye coords?
         if verticalTuple[0] != None:
@@ -122,6 +284,8 @@ def resetEyes(thisPatient, horizontalTuple, verticalTuple):
             else:
                 print "Error: thisPatient.vertical.right == None"
         '''
+    else:  ### if RESET_EYE == False ###
+        print " Can't reset eyes... "
 
 def resetPupils(thisPatient, horizontalTuple, verticalTuple):
     """ Resets (or sets) the pupil regions in the eyes
@@ -315,6 +479,21 @@ if (TEST):
     # Reset the eye regions and pupil regions
     # print "Resetting the eye regions and the pupil regions..."
     #resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((101,101,151,151),(151,151,201,201)) )
+    
+    # negative value
+#    resetEyes( patient, ((-1, 0, 30, 40), (0, 20, 30, 40)), (( 101, 101,151,151), (151,151, 201, 201)))
+    
+    # topleft x greater than bottom right x
+#    resetEyes( patient, ((10,10, 5, 5), (0, 20, 30, 40)), ((101, 101, 151, 151), (151, 151, 201, 201)))
+    
+    # topleft x equal to bottom right x
+#    resetEyes( patient, ((0, 10, 0, 20), (0, 20, 30, 40)), ((101, 101, 151, 151), (151, 151, 201, 201)))
+    
+    # left coordinate and right coordinate equal
+#    resetEyes( patient, ((0, 10, 20, 30), (0, 10, 20, 30)), ((101, 101, 151, 151), (151, 151, 201, 201)))
+
+#    resetEyes( patient, ((1, 10, 20, 30), (2, 11, 21, 31)), ((101, 102, 140, 156), (123, 141, 202, 200)))
+    
     #resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
 
     # We don't actually need the circle of the white dot  and findWhiteDot
