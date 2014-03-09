@@ -180,8 +180,8 @@ class interaction():
 		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
 
 		# Rectangles are drawn with DC.DrawRectangle(X, Y, width, Height)
-		mdc.DrawRectangle(coors[0][0]*self.widthRatio, coors[0][1]*self.heightRatio, coors[0][2], coors[0][3])
-		mdc.DrawRectangle(coors[1][0]*self.widthRatio, coors[1][1]*self.heightRatio, coors[1][2], coors[1][3])
+		mdc.DrawRectangle(coors[0][0]*self.widthRatio, coors[0][1]*self.heightRatio, coors[0][2]*self.widthRatio, coors[0][3]*self.heightRatio)
+		mdc.DrawRectangle(coors[1][0]*self.widthRatio, coors[1][1]*self.heightRatio, coors[1][2]*self.widthRatio, coors[1][3]*self.heightRatio)
 		hImgCtrl.SetBitmap(self.hBitMap)  # Sets modified bitmap back into the img ctrl
 
 		img = self.vBitMap.ConvertToImage()	# To get width
@@ -193,8 +193,8 @@ class interaction():
 		# THIS MIGHT BE WRONG
 		#mdc.DrawRectangle((coors[2][1]+coors[2][3])*self.heightRatio, (width - coors[2][0]-coors[2][2])*self.widthRatio, coors[2][3], coors[2][2])
 		#mdc.DrawRectangle((coors[3][1]+coors[3][3])*self.heightRatio, (width - coors[3][0]-coors[3][2])*self.widthRatio, coors[3][3], coors[3][2])
-		mdc.DrawRectangle(coors[2][0]*self.widthRatio, coors[2][1]*self.heightRatio, coors[2][2], coors[2][3])
-		mdc.DrawRectangle(coors[3][0]*self.widthRatio, coors[3][1]*self.heightRatio, coors[3][2], coors[3][3])
+		mdc.DrawRectangle(coors[2][0]*self.widthRatio, coors[2][1]*self.heightRatio, coors[2][2]*self.widthRatio, coors[2][3]*self.heightRatio)
+		mdc.DrawRectangle(coors[3][0]*self.widthRatio, coors[3][1]*self.heightRatio, coors[3][2]*self.widthRatio, coors[3][3]*self.heightRatio)
 		vImgCtrl.SetBitmap(self.vBitMap)  # Sets modified bitmap back into the img ctrl
 
 		mdc.SelectObject(wx.NullBitmap)   # MemoryDC must be set back to a null bitmap when done
@@ -428,10 +428,12 @@ class interaction():
 		self.ShowYourself(resultPage) # Shows result page
 
 		if corrected == 1:
-			hTuple = ((self.hcoors[0][0],self.hcoors[0][1],self.hcoors[0][2],self.hcoors[0][3]),
-			          (self.hcoors[1][0],self.hcoors[1][1],self.hcoors[1][2],self.hcoors[1][3]))
-			vTuple = ((self.vcoors[0][0],self.vcoors[0][1],self.vcoors[0][2],self.vcoors[0][3]),
-			          (self.vcoors[1][0],self.vcoors[1][1],self.vcoors[1][2],self.vcoors[1][3]))
+			x = self.widthRatio
+			y = self.heightRatio
+			hTuple = ((int (self.hcoors[0][0]/x),int (self.hcoors[0][1]/y),int (self.hcoors[0][2]/x),int (self.hcoors[0][3]/y)),
+			          (int (self.hcoors[1][0]/x),int (self.hcoors[1][1]/y),int (self.hcoors[1][2]/x),int (self.hcoors[1][3]/y)))
+			vTuple = ((int (self.vcoors[0][0]/x),int (self.vcoors[0][1]/y),int (self.vcoors[0][2]/x),int (self.vcoors[0][3]/y)),
+			          (int (self.vcoors[1][0]/x),int (self.vcoors[1][1]/y),int (self.vcoors[1][2]/x),int (self.vcoors[1][3]/y)))
 			resetEyes(self.patient, hTuple, vTuple)
 		self.patient.analyzeEyes(0.17)
 		all_info = self.patient.getInfo()
