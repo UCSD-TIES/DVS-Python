@@ -116,7 +116,7 @@ class Pupil:
     # Image Processing
     
     # read the im from disc using absolute path
-    im = cv2.imread("/Users/byungchulin/Desktop/DVS-Python/src/PUPILPHOTO.jpg")
+    im = cv2.imread("/Users/yMac/Dropbox/ProgrammingLibrary/pycharm/DVS-Python/src/PUPILPHOTO.jpg")
 
     if DEBUG:
         print "im is of type: " + str(type(im))
@@ -220,7 +220,7 @@ class Pupil:
     #im = np.asarray(self.pupilPhoto)
 
     # read the im from disc using absolute path
-    im = cv2.imread("/Users/byungchulin/Desktop/DVS-Python/src/PUPILPHOTO.jpg")
+    im = cv2.imread("/Users/yMac/Dropbox/ProgrammingLibrary/pycharm/DVS-Python/src/PUPILPHOTO.jpg")
 
     if DEBUG:
         print "im is of type: " + str(type(im))
