@@ -149,12 +149,11 @@ class Patient:
         Return:
             TODO: dict????
         """ 
-        results = self.strabismus()
-        results = results + " " + self.astigmatism(threshold)
-        results = results + " " + self.anisometropia(threshold)
-        results = results + " " + self.cataracts()
-        results = results + " " + self.pupillaryDistance()
-        return results
+        self.strabismus()
+        self.astigmatism(threshold)
+        self.anisometropia(threshold)
+        self.cataracts()
+        self.pupillaryDistance()
 
     def pupillaryDistance(self):
         """ Calculates the Pupillary Distance (PD), prints it, and returns it
@@ -267,7 +266,8 @@ class Patient:
 
             wdrightCenterX = pupils[1].getWhiteDotCenter()[0]
             wdrightCenterY = pupils[1].getWhiteDotCenter()[1]
-
+        else:
+            return
 
         # 1.)  calculating difference of distances----------------------------------------------------------------
 
@@ -346,6 +346,8 @@ class Patient:
         """ Analyze this patient for signs of astigmatism """
         # astigmatism logic goes here
         pupils = self.getAllPupils() #This call returns a tuple of Pupil objects
+        if pupils == None:
+            return
         if DEBUG:
             print str(pupils)
 
