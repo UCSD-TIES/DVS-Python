@@ -33,6 +33,8 @@ class page(wx.Panel):
 		self.resultPage = wx.Panel(parent)
 		self.resultPageSetup(self.resultPage)
 		baseSizer.Add(self.resultPage, 1, wx.EXPAND)
+
+		# to only test result page, reverse comment the following line
 		#self.page1.Hide()
 		self.resultPage.Hide()
 		
@@ -226,45 +228,8 @@ class page(wx.Panel):
 	# setup a result page
 	def resultPageSetup(self, page):
 
-
 		# print out title on top left corner of the page
 		resultText = "This is result page"
 		result = wx.StaticText(page, -1, resultText, (0, 40), (1000, -1), wx.ALIGN_CENTER)
 		result.SetBackgroundColour('blue')
 		result.SetForegroundColour('white')
-		'''
-		picThumbnail = "Picture thumbnail goes here"
-		wx.StaticText(page, -1, picThumbnail, (50, 200))
-
-		foundTxt = "Found in (left/right/both/none)"
-		found = wx.StaticText(page, -1, foundTxt, (750, 100), (-1, -1), wx.ALIGN_CENTER)
-		found.SetBackgroundColour('blue')
-		found.SetForegroundColour('white')
-
-		# passing data from backend to here
-		disease1 = "Disease Name 1: left eye"
-		disease2 = "Disease Name 2: right eye"
-		disease3 = "Disease Name 3: both eyes"
-		disease4 = "Disease Name 4: NONE"
-		disease5 = "Disease Name 5: right eye"
-		wx.StaticText(page, -1, disease1, (600, 140))
-		wx.StaticText(page, -1, disease2, (600, 180))
-		wx.StaticText(page, -1, disease3, (600, 220))
-		wx.StaticText(page, -1, disease4, (600, 260))
-		wx.StaticText(page, -1, disease5, (600, 300))
-
-
-		referFont = wx.Font(28, wx.DECORATIVE, wx.DEFAULT, wx.BOLD)
-		referTxt = "Refer"
-		refer = wx.StaticText(page, -1, referTxt, (800, 450), (-1, -1), wx.ALIGN_CENTER)
-		refer.SetBackgroundColour('yellow')
-		refer.SetForegroundColour('red')
-		refer.SetFont(referFont)
-
-
-		notReferTxt = "Not Refer"
-		notRefer = wx.StaticText(page, -1, notReferTxt, (800, 500), (-1, -1), wx.ALIGN_CENTER)
-		notRefer.SetBackgroundColour('maroon')
-		notRefer.SetForegroundColour('green')
-		notRefer.SetFont(referFont)
-		'''
