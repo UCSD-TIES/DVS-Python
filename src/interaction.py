@@ -12,7 +12,8 @@ class interaction():
 		self.patient = None          # This might not be used
 		self.horizontalPath = None   # Path of horizontal image
 		self.verticalPath = None     # Path of vertical image
-		self.heightRatio = None
+
+		self.heightRatio = None      # To resize the pictures to fit onto the UI
 		self.widthRatio = None
 
 		# These bitmaps are needed to draw on, can't draw on img Ctrls
@@ -22,6 +23,9 @@ class interaction():
 		# Images to make bitmaps out of, will store original image for resets
 		self.hImg = None
 		self.vImg = None
+
+		# Patient object for back-end analysis
+		self.patient = None
 
 		# Coordinates for user input in tuple
 		# set of tuples for horizontal and vertical, outer tuple is (left eye, right eye)
@@ -33,6 +37,7 @@ class interaction():
 		self.startX = 0
 		self.startY = 0
 		self.overlay = wx.Overlay()
+
 	# BUTTONS
 
 	# upload button, 1st page
@@ -82,9 +87,12 @@ class interaction():
 			self.hBitMap = None
 			self.vBitMap = None
 
+		# This resets the images on page 3
 		elif pageNum == 3:
 			horImgCtrl.SetBitmap(self.hBitMap)
 			verImgCtrl.SetBitmap(self.vBitMap)
+			#NEEDS TO BE DONE: RESET THE COORDINATES THAT USER PUT IN
+			# self.hcoors, self.vcoors, self.startX, self.startY, self.overlay NEED TO BE RESETTED
 
 		page.Refresh()
 
@@ -132,6 +140,7 @@ class interaction():
 		  	newHeight = maxSize
 		  	newWidth = maxSize * width/ height
 
+		# Get the correction ratio
 		self.heightRatio = float(newHeight)/float(height)
 		self.widthRatio = float(newWidth)/float(width)
 		print "OG Height:", height, "| OG Width", width, "| New Height:", newHeight, "| New Width:", newWidth
@@ -157,13 +166,14 @@ class interaction():
 	#       hImgCtrl - horizontal image control of 2nd page
 	#       vImgCtrl - vertical image control of 2nd page
 	def next1(self, hPhotoTxt, vPhotoTxt, page1, page2, hImgCtrl, vImgCtrl):
-		pleaseText = "Please upload an image."
-		if hPhotoTxt == pleaseText and vPhotoTxt == pleaseText:
+		pleaseText = "Please upload an image."			# Default label in text box
+		if hPhotoTxt == pleaseText and vPhotoTxt == pleaseText:	# If no pictures uploaded
 			errorTxt1 = "Missing images, please upload."
 			errMsg1 = wx.MessageDialog(page1, errorTxt1, "No Images Detected", wx.OK)
 			errMsg1.ShowModal()
 			errMsg1.Destroy()
 			
+		# Make the patient object
 		self.patient = makePatient(self.horizontalPath, self.verticalPath)
 		coors = getEyeCoors(self.patient)                 # this coors is local, just for drawing
 		print coors
@@ -179,7 +189,7 @@ class interaction():
 		mdc.SelectObject(self.hBitMap)    # sets a bitmap to e modified
 		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
 
-		# Rectangles are drawn with DC.DrawRectangle(X, Y, width, Height)
+		# Rectangles are drawn with DC.DrawRectangle(X, Y, width, Height), fit to scale with ratio
 		mdc.DrawRectangle(coors[0][0]*self.widthRatio, coors[0][1]*self.heightRatio, coors[0][2]*self.widthRatio, coors[0][3]*self.heightRatio)
 		mdc.DrawRectangle(coors[1][0]*self.widthRatio, coors[1][1]*self.heightRatio, coors[1][2]*self.widthRatio, coors[1][3]*self.heightRatio)
 		hImgCtrl.SetBitmap(self.hBitMap)  # Sets modified bitmap back into the img ctrl
@@ -348,7 +358,7 @@ class interaction():
 		'''
 
 		
-		
+		# Upon release, draw the rectangle that the user drew using their coordinates
 		mdc = wx.MemoryDC()
 		bdc = wx.BufferedDC(mdc)
 		bitmap = imgCtrl.GetBitmap()
@@ -373,7 +383,7 @@ class interaction():
 	# Mouse event handler, on drag
 	def mouseDrag(self, event, imgCtrl):
 
-		
+		# Uses the overlay to show the user the rectangle he or she is drawing
 		if event.Dragging():
 			x = event.GetX()
 			y = event.GetY()
@@ -428,6 +438,7 @@ class interaction():
 		page3.Hide() # Hides 3nd page 
 		self.ShowYourself(resultPage) # Shows result page
 
+		# If user corrected the detection then we need to reset the eyes before analyzing
 		if corrected == 1:
 			x = self.widthRatio
 			y = self.heightRatio
@@ -440,6 +451,7 @@ class interaction():
 		all_info = self.patient.getInfo()
 		all_defects = self.patient.getDefects()
 
+		# Prints out hte results of the analysis
 		y = 100
 		for line in all_defects.keys():
 			print "[" + line + "]" + " = " + str(all_defects[line])
