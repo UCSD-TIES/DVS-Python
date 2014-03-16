@@ -14,48 +14,9 @@ import os
 
 DEBUG = False
 
-########## Descriptive Variables for tweakable constants ###############
-### I just directly copied them from the Eye.py for now,
-### Do we need to change the Circle radius constants?
-
-# Threshold parameters
-LOWER_WHITE_RANGE = np.array((100,100,100))
-UPPER_WHITE_RANGE = np.array((255,255,255))
-
-# Erode and dilate parameters
-ERODE_ITERATIONS = 1
-DILATE_ITERATIONS = 1
-
-# Circle detection parameters
-CIRCLE_RESOLUTION_RATIO = 1
-# The minimum distance between circle centerpoints
-CIRCLE_MIN_DISTANCE = 32
-# I'm not exactly sure what the THRESHOLD ones do. See link for more info:
-# http://www.adaptive-vision.com/en/technical_data/documentation/3.0/filters/FeatureDetection/cvHoughCircles.html
-CIRCLE_THRESHOLD_1 = 10
-# The accumulator threshold. The higher this is the less circles you get.
-CIRCLE_THRESHOLD_2 = 2
-CIRCLE_MIN_RADIUS = 10
-CIRCLE_MAX_RADIUS = 500
-
-# Circle drawing parameters
-CIRCLE_COLOR = (0, 0, 255)
-THICKNESS = 3
-LINE_TYPE = 8
-SHIFT = 0
-
-# Smooth parameters
-APERTURE_WIDTH = 9
-APERTURE_HEIGHT = 9
-
-# Canny parameters
-CANNY_THRESHOLD_1 = 32
-CANNY_THRESHOLD_2 = 2
-
-
 class Pupil:
   """ This class has attributes:
-      PIL pupilPhoto - a cropped photo showing only the pupil
+      cv2.cv.cvmat pupilPhoto - a cropped photo showing only the pupil
       tuple pupil - a tuple representing the circluar region of the pupil. The tuple
                     is formatted as such: (centerX, centerY, radius)
       tuple center - the center point of the pupil region formatted as (x,y)
@@ -71,11 +32,14 @@ class Pupil:
     self.pupilPhoto = newPupilPhoto
     # Write the pupilPhoto to disk in order to debug the
     # single-segment buffer object error findCrescent is currently doing
+    # TODO: Change code so we don't have to do a janky one time write to disk
     if DEBUG:
         print "PupilPhoto is of type: " + str(type(newPupilPhoto))
     cv2.imwrite("PUPILPHOTO.jpg",np.asarray(newPupilPhoto))
+
     # Set the pupil region to the region passed in
     self.pupil = pupilRegion
+
     # Initialize the other attributes to None so that they exist
     self.center = None
     if pupilRegion != None:
@@ -118,6 +82,8 @@ class Pupil:
     # read the im from disc using absolute path
     im = cv2.imread("/Users/yMac/Dropbox/ProgrammingLibrary/pycharm/DVS-Python/src/PUPILPHOTO.jpg")
 
+    # TODO - change all the random explicit numbers in this method
+    #         to descriptively named class level variables
     if DEBUG:
         print "im is of type: " + str(type(im))
     im2 = im.copy()
@@ -226,7 +192,7 @@ class Pupil:
         print "im is of type: " + str(type(im))
     imblur = cv2.blur(im,(3,3))
     imgray = cv2.cvtColor(imblur,cv2.COLOR_BGR2GRAY)
-    # TODO Take away magic 127,255,0 numbers here and make pretty
+    # TODO Take away magic (ex: 127,255,0) numbers here and make pretty
     # Variables at the top
     ret,thresh = cv2.threshold(imgray,127,255,0)
     contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
@@ -253,8 +219,6 @@ class Pupil:
             
     #set the max_area found into the actual structure
     self.setCrescent(max_area)
-
-    
 
     #show it, or exit on waitkey
     #cv2.imshow('imblur',imblur)
@@ -308,13 +272,13 @@ class Pupil:
     if self.pupil != None:
         return math.pi * self.pupil[2] * self.pupil[2] # pi * r^2
     else:
+        # TODO: Implement a more graceful way of dealing with this error
         print "Error: Pupil is not defined"
 
 #################### Setters ##################################
 
   def setPupilRegion(self,newRegion):
     """ Sets the pupil's region to the tuple passed in as argument """
-
     self.pupil = newRegion
 
   def setCenter(self,newCenter):

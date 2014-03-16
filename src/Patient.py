@@ -10,6 +10,10 @@ class Patient:
     """ This class has attributes:
       HorizontalPhoto horizontal - an horizontal image object
       VerticalPhoto vertical - a vertical image object
+      dict defects - a dictionary containing information on disease detected
+                     if it is empty, the patient is healthy
+      dict info - dictionary contating information about the eyes like pupil size
+                   and pupillary distance
     """
     def __init__(self, horizontalImg, horizontalPath, verticalImg, verticalPath):
         """ Initialize the horizontal and vertical attributes by creating
@@ -135,19 +139,21 @@ class Patient:
 
 #################### Setters ##################################
 
-
+# TODO: Write some setters maybe?
 
 ################## Disease Detection ##########################
 
     def analyzeEyes(self,threshold):
-        """ Analyze all eye diseases and return the results 
+        """ Analyze all eye diseases and populate defects{} and info{} 
 
         Args:
             float threshold - the threshold of refractive error 
                               above which we will give a referral
+            Add more arguments to support thresholds for strabismus,
+             and other diseases
 
         Return:
-            TODO: dict????
+            None
         """ 
         self.strabismus()
         self.astigmatism(threshold)
@@ -156,11 +162,12 @@ class Patient:
         self.pupillaryDistance()
 
     def pupillaryDistance(self):
-        """ Calculates the Pupillary Distance (PD), prints it, and returns it
+        """ Calculates the Pupillary Distance (PD) and puts into info{}
         """
         pupils = self.getAllPupils()
         hPD = 0
         vPD = 0
+
         # calculate PD from the horizontal photo
         if pupils[0] != None and pupils[1] != None:
             # These coordinates are relative to the pupil photo, not the photo at large
@@ -192,10 +199,10 @@ class Patient:
             relRightCenterX = vRight[0] + rightCenterX
             relRightCenterY = vRight[1] + rightCenterY
             vPD = math.sqrt((relLeftCenterX-relRightCenterX)**2 +(relLeftCenterY-relRightCenterY)**2)
+       
         #print "Vert PD: " + str(vPD)
-        self.info["Horizontal Pupillary Distance"] = str(hPD)
-        self.info["Vertical Pupillary Distance"] = str(vPD)
-        return "Horiz PD: " + str(hPD) + " Vert PD: " + str(vPD)
+        avgPD = (hPD + vPD )/ 2
+        self.info["Pupillary Distance"] = str(avgPD)
 
 
     def strabismus(self):
@@ -343,8 +350,8 @@ class Patient:
 
 
     def astigmatism(self,threshold):
-        """ Analyze this patient for signs of astigmatism """
-        # astigmatism logic goes here
+        """ Analyze this patient for signs of astigmatism, put info into defects{}"""
+
         pupils = self.getAllPupils() #This call returns a tuple of Pupil objects
         if pupils == None:
             return
@@ -389,10 +396,9 @@ class Patient:
         if DEBUG and healthy:
             print "No astigmatism detected with a threshold of refractive error of " + str(threshold)
 
-        return "Astigmatism detection called"
 
     def anisometropia(self,threshold):
-        """ Analyze this patient for signs of anisometropia """
+        """ Analyze this patient for signs of anisometropia, put info into defects{} """
         pupils = self.getAllPupils() #This call returns a tuple of Pupil objects
         if DEBUG:
             print str(pupils)
@@ -435,7 +441,6 @@ class Patient:
         if DEBUG and healthy:
             print "No anisometropia detected with a threshold of refractive error of " + str(threshold)
 
-        return "Astigmatism detection called"
 
     def cataracts(self):
         """ Analyze this patient for signs of cataracts 
@@ -445,7 +450,6 @@ class Patient:
         it might be a good idea to work just from the original photo of the eye
         """
         # cataracts logic goes here
-        return "Cataracts detection called"
 
 
 

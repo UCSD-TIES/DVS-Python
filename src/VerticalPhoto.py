@@ -27,6 +27,7 @@ class VerticalPhoto(FacePhoto,object):
         # Rotate photo
         # NOTE: Not sure if this will rotate the photo to be right side
         #       up or upside
+        # TODO: Find this out for sure from the hardware team
         #photo = self.rotateImage(photo,270)
         if DEBUG:
             cv.ShowImage("Rotated Image (in VerticalPhoto init)",photo) 

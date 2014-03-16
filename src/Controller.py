@@ -12,7 +12,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = False
+TEST = True
 PRINT = False
 
 CIRCLE_COLOR = (0, 255, 0)
@@ -31,7 +31,7 @@ def makePatient(horizontalPath, verticalPath):
         Patient - the patient object created
 
     """
-    # Load the images
+    # Load the images 
     horizontalImg = cv.LoadImage(horizontalPath)
     verticalImg = cv.LoadImage(verticalPath)
     thisPatient = Patient(horizontalImg, horizontalPath, verticalImg, verticalPath)
@@ -205,86 +205,17 @@ def resetEyes(thisPatient, horizontalTuple, verticalTuple):
     
     ### ends ###
     
-    ### check if all values are 0 ###
- 
-    # horizontal, left coordinate
-    '''
-    if horizontalTuple[0][0] == 0 and horizontalTuple[0][1] == 0:
-        print"Error.. Horizontal left, topLeft X and topLeft Y cannot be 0"
-        RESET_EYE = False
-    elif horizontalTuple[0][2] == 0 and horizontalTuple[0][3] == 0:
-        print "Error.. Horizontal left, bottomRight X and Y cannot be 0"
-        RESET_EYE = False
-        
-    # horizontal, right coordinate
-    if horizontalTuple[1][0] == 0 and horizontalTuple[1][1] == 0:
-        print"Error.. Horizontal right, topLeft X and topLeft Y cannot be 0"
-        RESET_EYE = False
-    elif horizontalTuple[1][2] == 0 and horizontalTuple[1][3] == 0:
-        print "Error.. Horizontal right, bottomRight X and Y cannot be 0"
-        RESET_EYE = False
-        
-    # for vertical, left coordinate
-    if verticalTuple[0][0] == 0 and verticalTuple[0][1] == 0:
-        print "Error.. vertical left, topLeft X and Y cannot be 0"
-        RESET_EYE = False
-    elif verticalTuple[0][2] == 0 and verticalTuple[0][3] == 0:
-        print "Error.. vertical left, bottomRight X and Y cannot be 0"
-        RESET_EYE = False
-        
-    # vertical, right coordinate
-    if verticalTuple[1][0] == 0 and verticalTuple[1][1] == 0:
-        print "Error.. vertical right, topLeft X and Y cannot be 0"
-        RESET_EYE = False
-    elif verticalTuple[1][2] == 0 and verticalTuple[1][3] == 0:
-        print "Error.. vertical right, bottomRight X and Y cannot be 0"
-        RESET_EYE = False
-        
-    ## end ###
-'''    
+    ### do not need to check check if all values are 0 (rect of 0 area), front end will check this###
   
     if RESET_EYE:
         if horizontalTuple != None and thisPatient.horizontal != None:
             thisPatient.horizontal.setEyes(horizontalTuple[0],horizontalTuple[1])
-        '''
-        # Set left eye coords?
-        if horizontalTuple[0] != None:
-            # I'm just gunna go direct because this isn't final code
-            # TODO: write the appropriate methods for this
-            if thisPatient.horizontal.left != None:
-                thisPatient.horizontal.left.setEyeRegion(horizontalTuple[0])
-            else:
-                print "Error: thisPatient.horizontal.left == None"
-        # Set right eye coords?
-        if horizontalTuple[1] != None:
-            if thisPatient.horizontal.right != None:
-                thisPatient.horizontal.right.setEyeRegion(horizontalTuple[1])
-            else:
-                print "Error: thisPatient.horizontal.right == None"
-        '''
-
-        # Set vert photo data?
+        # Set vert photo data
         if verticalTuple != None and thisPatient.vertical != None:
             thisPatient.vertical.setEyes(verticalTuple[0],verticalTuple[1])
-        '''
-        # Set left eye coords?
-        if verticalTuple[0] != None:
 
-            
-            if thisPatient.vertical.left != None:
-                thisPatient.vertical.left.setEyeRegion(verticalTuple[0])
-            else:
-                print "Error: thisPatient.vertical.left == None"
-            
-        # Set right eye coords?
-        
-        if verticalTuple[1] != None:
-            if thisPatient.vertical.right != None:
-                thisPatient.vertical.right.setEyeRegion(verticalTuple[1])
-            else:
-                print "Error: thisPatient.vertical.right == None"
-        '''
     else:  ### if RESET_EYE == False ###
+        # TODO: Implement out a more graceful way of dealing with this error case
         print " Can't reset eyes... "
 
 def resetPupils(thisPatient, horizontalTuple, verticalTuple):
@@ -323,20 +254,22 @@ def resetPupils(thisPatient, horizontalTuple, verticalTuple):
             thisPatient.vertical.right.setPupil(verticalTuple[1])
 
 def resetWhiteDot(thisPatient, horizontalTuple, verticalTuple):
-    """ Resets the eye regions to whatever 
+    """ Resets the white dots for the patient
 
     Args:
         Patient thisPatient - the patient to change
         tuple horizontalTuple - (leftCoordinates, rightCoordinates)
         tuple verticalTuple - (leftCoordinates, rightCoordinates)
         where leftCoordinates and rightCoordinates are formatted as 
-        (topLeftX, topLeftY, bottomRightX, bottomRightY)
+        (centerX, centerY)
 
 
     Return:
         None
     """  
     if thisPatient.horizontal.left.eyePupil == None:
+        # TODO: Again implement a more graceful way of dealing 
+        #       with these error cases
         print "Error: thisPatient.horizontal.left.eyePupil == None"
         return
     # Set horizontal photo data?
@@ -499,7 +432,7 @@ if (TEST):
     
     #resetPupils( patient, ((125,125,10),(175,175,20)) , ((125,125,10),(175,175,20)) )
 
-    # We don't actually need the circle of the white dot  and findWhiteDot
+    # TODO: We don't actually need the circle of the white dot  and findWhiteDot
     # finds a contour which isn't quite a cirlce so we'll just deal with
     # whiteDotCenter now. resetWhiteDot will probably take some tweaking
     # resetWhiteDot(patient, ((100, 100, 10), (150, 150, 10)), ((100, 100,10),(150,150,10,10)))
@@ -507,6 +440,7 @@ if (TEST):
 
     hLeft = patient.getEyeRegion(True,True)
     hRight = patient.getEyeRegion(True,False)
+
     # Draw Left and right eyes
     print "Drawing bounding boxes for the horizontal photo..."
     if hLeft != None and hRight != None:
@@ -514,6 +448,7 @@ if (TEST):
                  cv.RGB(255,0,0,), 1, 8, 0)
         cv.Rectangle(horizontalPhoto, (hRight[0],hRight[1]),(hRight[2],hRight[3]),
                  cv.RGB(255,0,0,), 1, 8, 0)
+
     # Draw the Left and Right pupils
     hLeftPupil = patient.getPupilRegion(True,True)
     hRightPupil = patient.getPupilRegion(True,False)
@@ -571,16 +506,16 @@ if (TEST):
     cv.DestroyWindow("Vertical with eyes")
 
     #Display the eyes only of the horizontal photo
-    #if DEBUG: 
-    hLeftEyePhoto = patient.getEyePhoto(True,True)
-    hRightEyePhoto = patient.getEyePhoto(True,False)
-    cv.ShowImage("Horizontal's Left Eye",hLeftEyePhoto)
-    cv.WaitKey(0) 
-    cv.DestroyWindow("Horizontal's Left Eye")
+    if DEBUG: 
+        hLeftEyePhoto = patient.getEyePhoto(True,True)
+        hRightEyePhoto = patient.getEyePhoto(True,False)
+        cv.ShowImage("Horizontal's Left Eye",hLeftEyePhoto)
+        cv.WaitKey(0) 
+        cv.DestroyWindow("Horizontal's Left Eye")
 
-    cv.ShowImage("Horizontal's Right Eye",hRightEyePhoto)
-    cv.WaitKey(0)
-    cv.DestroyWindow("Horizontal's Right Eye")
+        cv.ShowImage("Horizontal's Right Eye",hRightEyePhoto)
+        cv.WaitKey(0)
+        cv.DestroyWindow("Horizontal's Right Eye")
     
     if PRINT:
         getEyeCoors(patient)
@@ -615,6 +550,7 @@ if (TEST):
     allInfo = patient.getInfo()
     allDefects = patient.getDefects()
 
+    # Print all the results
     for key in  allDefects.keys():
         print "[" + key + "]" + " = " + str(allDefects[key] )
     print "\n"

@@ -25,8 +25,6 @@ class FacePhoto():
         Eye right - the right eye object
     """
 
-    #TODO: Error checking and raising is not accounted for in psudeoclasses
-
     def __init__(self, photoImg, photoPath):
         """ Initializes eye objects
 
@@ -56,8 +54,8 @@ class FacePhoto():
 
         Uses opencv libarary methods to detect a face and then detect the
         eyes in that face. If there are exactly two eye regions found it
-        populates the region attributes. If a face is not found or exactly two
-        eye regions are not found the method returns false.
+        populates the region attributes. If not exactly two
+        eye regions are found the method returns false.
 
         Args:
             None
@@ -70,18 +68,14 @@ class FacePhoto():
         imcolor = self.facePhoto
 
         #Path setups
-        
         cwd = os.path.dirname(os.path.abspath(sys.argv[0]))
         cwd += "/opencv/haarcascades/"
         frontalface = cwd + "haarcascade_frontalface_default.xml"
         eye = cwd + "haarcascade_eye.xml"
 
-        #NOTE: You may need to modify this path to point to the dir with your cascades
         faceCascade = cv.Load(frontalface)
         eyeCascade = cv.Load(eye)
         
-
-        # NOTE: You may need to modify this path to point to the dir with this file on your comp
         haarEyes = cv.Load(eye)
         storage = cv.CreateMemStorage()
         detectedEyes = cv.HaarDetectObjects(imcolor,haarEyes,storage)
@@ -91,7 +85,7 @@ class FacePhoto():
 
         if len(detectedEyes) == 2:
             if DEBUG:
-                # TODO: Draw the rectangle here
+                # Draw the rectangle 
                 cv.Rectangle(imcolor,(detectedEyes[0][0][0], detectedEyes[0][0][1]), 
                     (detectedEyes[0][0][0] + detectedEyes[0][0][2], 
                     detectedEyes[0][0][1] + detectedEyes[0][0][3]),cv.RGB(155,155,200),2)
@@ -127,7 +121,7 @@ class FacePhoto():
             region region - a region representing the eye
 
         Return:
-            photo eyePhoto - a photo of just the eye
+            cv2.cv.cvmat eyePhoto - a photo of just the eye
         """
         # really takes in four points per region
         crop = (region[0],region[1], region[2] - region[0], region[3] - region[1])

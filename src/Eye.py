@@ -11,7 +11,7 @@ import PIL.ImageOps
 import math
 from sys import maxint
 
-DEBUG = False 
+DEBUG = True
 
 ########## Descriptive Variables for tweakable constants ###############
 
@@ -23,12 +23,15 @@ UPPER_RED_RANGE = np.array((255,255,255))
 ERODE_ITERATIONS = 1
 DILATE_ITERATIONS = 1
 
+# NOTE: tweaking any or all of these vars seems to only eliminate
+#        erroneous circles, not move the position of the circles detected
 # Circle detection parameters
 CIRCLE_RESOLUTION_RATIO = 1
 # The minimum distance between circle centerpoints
 CIRCLE_MIN_DISTANCE = 32
 # I'm not exactly sure what the THRESHOLD ones do. See link for more info:
 # http://www.adaptive-vision.com/en/technical_data/documentation/3.0/filters/FeatureDetection/cvHoughCircles.html
+# You will need to look at the above url on archive.org. The actual site no longer has that page.
 CIRCLE_THRESHOLD_1 = 10
 # The accumulator threshold. The higher this is the less circles you get.
 CIRCLE_THRESHOLD_2 = 2
@@ -66,7 +69,7 @@ def draw_circles(storage, output):
 
 class Eye:
     """ This class has attributes :
-      PIL  eyePhoto - a cropped photo of the eye
+      cv2.cv.cvmat  eyePhoto - a cropped photo of the eye
       tuple eyeRegion - a region that represents the exact location of the eye
       Pupil eyePupil - the eye's pupil
       
@@ -100,14 +103,16 @@ class Eye:
         http://opencv-code.com/tutorials/pupil-detection-from-an-eye-image/
         Algorithm Overview:
             Load the source image.
-            Invert it.
-            Convert to grayscale.
-            Convert to binary image by thresholding it.
-            Find all blobs.
-            Remove noise by filling holes in each blob.
-            Get blob which is big enough and has round shape.
+            Threshold based on a range of red.
+            Invert the photo.
+            Erode and dilate to reduce noise.
+            Find the contours.
+            Smooth to improve canny edge detection.
+            Canny edge detection.
+            Hough circle detection.
+            Choose the most central circle.
         Then initializes eyePupil by constructing a new pupil object. 
-        Returns false if any errors are encountered
+        Returns false if no pupil is found
 
         Args:
             None
@@ -260,10 +265,10 @@ class Eye:
             the form (centerX, centerY, radius)
 
         Return:
-            photo  - TODO: I'm not sure of the type
+            cv2.cv.cvmat  -  the photo of just the pupil
         """
 
-        # Should these be rows - 1 and cols -1 to avoid going 
+        # TODO: Should these be rows - 1 and cols -1 to avoid going 
         # off the edge of the picture?
         maxX = self.eyePhoto.rows 
         maxY = self.eyePhoto.cols
@@ -331,6 +336,7 @@ class Eye:
             crop[2] = 1
         else:
         '''
+
         if DEBUG:
             print "Finally doing cv subrect"
 
