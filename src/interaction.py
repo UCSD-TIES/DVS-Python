@@ -12,8 +12,7 @@ class interaction():
 		self.patient = None          # This might not be used
 		self.horizontalPath = None   # Path of horizontal image
 		self.verticalPath = None     # Path of vertical image
-
-		self.heightRatio = None      # To resize the pictures to fit onto the UI
+		self.heightRatio = None
 		self.widthRatio = None
 
 		# These bitmaps are needed to draw on, can't draw on img Ctrls
@@ -23,9 +22,6 @@ class interaction():
 		# Images to make bitmaps out of, will store original image for resets
 		self.hImg = None
 		self.vImg = None
-
-		# Patient object for back-end analysis
-		self.patient = None
 
 		# Coordinates for user input in tuple
 		# set of tuples for horizontal and vertical, outer tuple is (left eye, right eye)
@@ -37,7 +33,6 @@ class interaction():
 		self.startX = 0
 		self.startY = 0
 		self.overlay = wx.Overlay()
-
 	# BUTTONS
 
 	# upload button, 1st page
@@ -87,12 +82,9 @@ class interaction():
 			self.hBitMap = None
 			self.vBitMap = None
 
-		# This resets the images on page 3
 		elif pageNum == 3:
 			horImgCtrl.SetBitmap(self.hBitMap)
 			verImgCtrl.SetBitmap(self.vBitMap)
-			#NEEDS TO BE DONE: RESET THE COORDINATES THAT USER PUT IN
-			# self.hcoors, self.vcoors, self.startX, self.startY, self.overlay NEED TO BE RESETTED
 
 		page.Refresh()
 
@@ -140,7 +132,6 @@ class interaction():
 		  	newHeight = maxSize
 		  	newWidth = maxSize * width/ height
 
-		# Get the correction ratio
 		self.heightRatio = float(newHeight)/float(height)
 		self.widthRatio = float(newWidth)/float(width)
 		print "OG Height:", height, "| OG Width", width, "| New Height:", newHeight, "| New Width:", newWidth
@@ -166,14 +157,13 @@ class interaction():
 	#       hImgCtrl - horizontal image control of 2nd page
 	#       vImgCtrl - vertical image control of 2nd page
 	def next1(self, hPhotoTxt, vPhotoTxt, page1, page2, hImgCtrl, vImgCtrl):
-		pleaseText = "Please upload an image."			# Default label in text box
-		if hPhotoTxt == pleaseText and vPhotoTxt == pleaseText:	# If no pictures uploaded
+		pleaseText = "Please upload an image."
+		if hPhotoTxt == pleaseText and vPhotoTxt == pleaseText:
 			errorTxt1 = "Missing images, please upload."
 			errMsg1 = wx.MessageDialog(page1, errorTxt1, "No Images Detected", wx.OK)
 			errMsg1.ShowModal()
 			errMsg1.Destroy()
 			
-		# Make the patient object
 		self.patient = makePatient(self.horizontalPath, self.verticalPath)
 		coors = getEyeCoors(self.patient)                 # this coors is local, just for drawing
 		print coors
@@ -189,7 +179,7 @@ class interaction():
 		mdc.SelectObject(self.hBitMap)    # sets a bitmap to e modified
 		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
 
-		# Rectangles are drawn with DC.DrawRectangle(X, Y, width, Height), fit to scale with ratio
+		# Rectangles are drawn with DC.DrawRectangle(X, Y, width, Height)
 		mdc.DrawRectangle(coors[0][0]*self.widthRatio, coors[0][1]*self.heightRatio, coors[0][2]*self.widthRatio, coors[0][3]*self.heightRatio)
 		mdc.DrawRectangle(coors[1][0]*self.widthRatio, coors[1][1]*self.heightRatio, coors[1][2]*self.widthRatio, coors[1][3]*self.heightRatio)
 		hImgCtrl.SetBitmap(self.hBitMap)  # Sets modified bitmap back into the img ctrl
@@ -358,7 +348,7 @@ class interaction():
 		'''
 
 		
-		# Upon release, draw the rectangle that the user drew using their coordinates
+		
 		mdc = wx.MemoryDC()
 		bdc = wx.BufferedDC(mdc)
 		bitmap = imgCtrl.GetBitmap()
@@ -383,7 +373,7 @@ class interaction():
 	# Mouse event handler, on drag
 	def mouseDrag(self, event, imgCtrl):
 
-		# Uses the overlay to show the user the rectangle he or she is drawing
+		
 		if event.Dragging():
 			x = event.GetX()
 			y = event.GetY()
@@ -438,7 +428,6 @@ class interaction():
 		page3.Hide() # Hides 3nd page 
 		self.ShowYourself(resultPage) # Shows result page
 
-		# If user corrected the detection then we need to reset the eyes before analyzing
 		if corrected == 1:
 			x = self.widthRatio
 			y = self.heightRatio
@@ -451,18 +440,55 @@ class interaction():
 		all_info = self.patient.getInfo()
 		all_defects = self.patient.getDefects()
 
-		# Prints out hte results of the analysis
-		y = 100
-		for line in all_defects.keys():
-			print "[" + line + "]" + " = " + str(all_defects[line])
-			wx.StaticText(resultPage, -1, line, (200, y), (-1, -1), wx.ALIGN_CENTER)
-			wx.StaticText(resultPage, -1, str(all_defects[line]), (500, y), (-1, -1), wx.ALIGN_CENTER)
-			y += 30
+		defectSize = len(all_defects)
+		infoSize = len(all_info)
 
-		print "\n"
+		print "all_defects size: ", defectSize
+		print "all_info size:    ", infoSize
+
+		defectsArray = [[0 for x in xrange(2)] for y in xrange(defectSize)]
+		infoArray = [[0 for x in xrange(2)] for y in xrange(infoSize)]
+
+		refer = 0
+		lineCounter = 0
+		for line in all_defects.keys():
+			if line == "Anisomet" or line == "Strabismus" or line == "Astigmatism": refer = 1
+			defectsArray[lineCounter][0] = line
+			defectsArray[lineCounter][1] = str(all_defects[line])
+			lineCounter += 1
+		defectsArray.sort()
+
+		lineCounter = 0
 		for line in all_info.keys():
-			print "[" + line + "]" + " = " + str(all_info[line])
-			wx.StaticText(resultPage, -1, line, (200, y), (-1, -1), wx.ALIGN_CENTER)
-			wx.StaticText(resultPage, -1, str(all_info[line]), (500, y), (-1, -1), wx.ALIGN_CENTER)
+			infoArray[lineCounter][0] = line
+			infoArray[lineCounter][1] = str(all_info[line])
+			lineCounter += 1
+		infoArray.sort()
+
+		# print info to the console
+		for line in defectsArray: print line
+		for line in infoArray: print line
+
+		# display defects to result page
+		y = 100
+		for line in defectsArray:
+			wx.StaticText(resultPage, -1, line[0], (200, y), (-1, -1), wx.ALIGN_CENTER)
+			wx.StaticText(resultPage, -1, line[1], (500, y), (-1, -1), wx.ALIGN_CENTER)
 			y += 30
 		print "\n"
+
+		# display info to result page
+		y += 30
+		for line in infoArray:
+			wx.StaticText(resultPage, -1, line[0], (200, y), (-1, -1), wx.ALIGN_CENTER)
+			wx.StaticText(resultPage, -1, line[1], (500, y), (-1, -1), wx.ALIGN_CENTER)
+			y += 30
+		print "\n"
+
+		# display refer result to result page
+		y += 30
+		referText = "Refer" if refer == 1 else "Not Refer"
+
+		font1 = wx.Font(30, wx.NORMAL, wx.ITALIC, wx.NORMAL)
+		result = wx.StaticText(resultPage, -1, referText, (850, y), (-1, -1), wx.ALIGN_CENTRE)
+		result.SetFont(font1)
