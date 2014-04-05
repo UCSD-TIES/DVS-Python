@@ -10,10 +10,6 @@ class Patient:
     """ This class has attributes:
       HorizontalPhoto horizontal - an horizontal image object
       VerticalPhoto vertical - a vertical image object
-      dict defects - a dictionary containing information on disease detected
-                     if it is empty, the patient is healthy
-      dict info - dictionary contating information about the eyes like pupil size
-                   and pupillary distance
     """
     def __init__(self, horizontalImg, horizontalPath, verticalImg, verticalPath):
         """ Initialize the horizontal and vertical attributes by creating
@@ -139,21 +135,19 @@ class Patient:
 
 #################### Setters ##################################
 
-# TODO: Write some setters maybe?
+
 
 ################## Disease Detection ##########################
 
     def analyzeEyes(self,threshold):
-        """ Analyze all eye diseases and populate defects{} and info{} 
+        """ Analyze all eye diseases and return the results 
 
         Args:
             float threshold - the threshold of refractive error 
                               above which we will give a referral
-            Add more arguments to support thresholds for strabismus,
-             and other diseases
 
         Return:
-            None
+            TODO: dict????
         """ 
         self.strabismus()
         self.astigmatism(threshold)
@@ -162,12 +156,11 @@ class Patient:
         self.pupillaryDistance()
 
     def pupillaryDistance(self):
-        """ Calculates the Pupillary Distance (PD) and puts into info{}
+        """ Calculates the Pupillary Distance (PD), prints it, and returns it
         """
         pupils = self.getAllPupils()
         hPD = 0
         vPD = 0
-
         # calculate PD from the horizontal photo
         if pupils[0] != None and pupils[1] != None:
             # These coordinates are relative to the pupil photo, not the photo at large
@@ -199,10 +192,10 @@ class Patient:
             relRightCenterX = vRight[0] + rightCenterX
             relRightCenterY = vRight[1] + rightCenterY
             vPD = math.sqrt((relLeftCenterX-relRightCenterX)**2 +(relLeftCenterY-relRightCenterY)**2)
-       
         #print "Vert PD: " + str(vPD)
-        avgPD = (hPD + vPD )/ 2
-        self.info["Pupillary Distance"] = str(avgPD)
+        self.info["Horizontal Pupillary Distance"] = str(hPD)
+        self.info["Vertical Pupillary Distance"] = str(vPD)
+        return "Horiz PD: " + str(hPD) + " Vert PD: " + str(vPD)
 
 
     def strabismus(self):
@@ -289,8 +282,8 @@ class Patient:
 
         # checks threshold distance
         if dDistance > dThreshold:                            # dThreshold should be near 0
-           self.defects["has Strabismus"] = True
-           self.defects["Strabismus Disctance Difference"] = str(dDistance)
+           self.defects["Strabismus"] = True
+           self.defects["Strabismus Distance Difference"] = str(dDistance)
            if DEBUG:
                print "Refer for strabismus, info below:"
                print "dDistance: " + str(dDistance) + "\n"
@@ -310,7 +303,7 @@ class Patient:
 
         # checks threshold slope "distance"
         if dSlope > sThreshold:                   # sThreshold should be near 0
-            self.defects["has Strabismus"] = True
+            self.defects["Strabismus"] = True
             self.defects["Strabismus Slope Difference"] = str(dSlope)
             if DEBUG:
                 print "Refer for strabismus, info below:"
@@ -326,7 +319,7 @@ class Patient:
 
         #checks threshold x distance
         if xDifference > xThreshold:                              # xThreshold should be near 0
-            self.defects["has Strabismus"] = True
+            self.defects["Strabismus"] = True
             self.defects["Strabismus X Difference"] = str(xDifference)
             if DEBUG:
                 print "Refer for strabismus, info below:"
@@ -339,7 +332,7 @@ class Patient:
 
         # checks threshold y distance
         if yDifference > yThreshold:                             # yThreshold should be near 0
-            self.defects["has Strabismus"] = True
+            self.defects["Strabismus"] = True
             self.defects["Strabismus Y Difference"] = str(yDifference)
             if DEBUG:
                 print "Refer for strabismus, info below:"
@@ -350,8 +343,8 @@ class Patient:
 
 
     def astigmatism(self,threshold):
-        """ Analyze this patient for signs of astigmatism, put info into defects{}"""
-
+        """ Analyze this patient for signs of astigmatism """
+        # astigmatism logic goes here
         pupils = self.getAllPupils() #This call returns a tuple of Pupil objects
         if pupils == None:
             return
@@ -375,9 +368,9 @@ class Patient:
         # between the horiz and ver photos
         if abs(refErrs[0] - refErrs[2]) > threshold:
             healthy = False
-            self.defects["has Astigmatism"] = True
+            self.defects["Astigmatism"] = True
             self.defects["Astigmatism Refractor Error Difference"] = str(abs(refErrs[0] - refErrs[2]))
-            self.defects["Astigmatism Left"] = "horiz left: " + str(refErrs[0]) + " vert left: " + str(refErrs[2])
+            self.defects["Astigmatism Left"] = "H: " + str(refErrs[0]) + "   V: " + str(refErrs[2])
             if DEBUG:
                 print "Refer for astigmatism, info below:"
                 print "Diff in refractive error: " + str(abs(refErrs[0] - refErrs[2]))
@@ -385,9 +378,9 @@ class Patient:
 
         if abs(refErrs[1] - refErrs[3]) > threshold:
             healthy = False
-            self.defects["has Astigmatism"] = True
+            self.defects["Astigmatism"] = True
             self.defects["Astigmatism Refractor Error Difference"] = str(abs(refErrs[1] - refErrs[3]))
-            self.defects["Astigmatism Right"] = "horiz right: " + str(refErrs[1]) + " vert right: " + str(refErrs[3])
+            self.defects["Astigmatism Right"] = "H: " + str(refErrs[1]) + "   V: " + str(refErrs[3])
             if DEBUG:
                 print "Refer for astigmatism, info below:"
                 print "Diff in refractive error: " + str(abs(refErrs[1] - refErrs[3]))
@@ -396,9 +389,10 @@ class Patient:
         if DEBUG and healthy:
             print "No astigmatism detected with a threshold of refractive error of " + str(threshold)
 
+        return "Astigmatism detection called"
 
     def anisometropia(self,threshold):
-        """ Analyze this patient for signs of anisometropia, put info into defects{} """
+        """ Analyze this patient for signs of anisometropia """
         pupils = self.getAllPupils() #This call returns a tuple of Pupil objects
         if DEBUG:
             print str(pupils)
@@ -420,9 +414,9 @@ class Patient:
         # between the left and right eye in the same photo
         if abs(refErrs[0] - refErrs[1]) > threshold:
             healthy = False
-            self.defects["hasAnisomet"] = True
-            self.defects["anisometRefErrDiff"] = str(abs(refErrs[0] - refErrs[1]))
-            self.defects["anisometHoriz"] = "horiz left: " + str(refErrs[0]) + " horiz right: " + str(refErrs[1])
+            self.defects["Anisomet"] = True
+            self.defects["Anisomet Refractor Error Difference"] = str(abs(refErrs[0] - refErrs[1]))
+            self.defects["Anisomet Horizontal"] = "L: " + str(refErrs[0]) + "   R: " + str(refErrs[1])
             if DEBUG:
                 print "Refer for anisometropia, info below:"
                 print "Diff in refractive error: " + str(abs(refErrs[0] - refErrs[1]))
@@ -430,9 +424,9 @@ class Patient:
 
         if abs(refErrs[2] - refErrs[3]) > threshold:
             healthy = False
-            self.defects["hasAnisomet"] = True
-            self.defects["anisometRefErrDiff"] = str(abs(refErrs[2] - refErrs[3]))
-            self.defects["anisometHoriz"] = "vert left: " + str(refErrs[2]) + " vert right: " + str(refErrs[3]) 
+            self.defects["Anisomet"] = True
+            self.defects["Anisomet Refractor Error Difference"] = str(abs(refErrs[2] - refErrs[3]))
+            self.defects["Anisomet Vertical"] = "L: " + str(refErrs[2]) + "   R: " + str(refErrs[3])
             if DEBUG:
                 print "Refer for anisometropia, info below:"
                 print "Diff in refractive error: " + str(abs(refErrs[2] - refErrs[3]))
@@ -441,6 +435,7 @@ class Patient:
         if DEBUG and healthy:
             print "No anisometropia detected with a threshold of refractive error of " + str(threshold)
 
+        return "Astigmatism detection called"
 
     def cataracts(self):
         """ Analyze this patient for signs of cataracts 
@@ -450,6 +445,7 @@ class Patient:
         it might be a good idea to work just from the original photo of the eye
         """
         # cataracts logic goes here
+        return "Cataracts detection called"
 
 
 
