@@ -21,6 +21,7 @@ class Patient:
         self.info = {}
 
 
+
 #################### Getters ##################################
 
     def getHorizontal(self):
@@ -445,6 +446,9 @@ class Patient:
         """
         # cataracts logic goes here
         return "Cataracts detection called"
+
+
+
 
 
 

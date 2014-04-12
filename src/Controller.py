@@ -17,7 +17,7 @@ import os
 DEBUG = False
 TEST = True
 PRINT = False
-
+     
 CIRCLE_COLOR = (0, 255, 0)
 THICKNESS = 1
 LINE_TYPE = 8
@@ -396,6 +396,7 @@ def drawOnEyes(thisPatient):
                 cv.RGB(255,0,0),1,8,0)
     """
 
+
 ######################Testing ######################
 
 if (TEST):
@@ -415,8 +416,10 @@ if (TEST):
     # Reset the eye regions and pupil regions
     # print "Resetting the eye regions and the pupil regions..."
     resetEyes( patient, ((455,572,647,695),(771,537,958,650)) ,((467,596,620,718),(746,614,887,704)) )
+    #resetEyes (patient, ((1,10,20,30), (2,11,21,32)), ((101,102,140,156), (123,141,202,200)))
+
     # Pass in pupil coordinates relative to the eye photo 
-    resetPupils( patient, ((93,64,17),(91,62,19)) , ((33,32,8 ),(32,28,8)) )
+    #resetPupils( patient, ((93,64,17),(91,62,19)) , ((33,32,8 ),(32,28,8)) )
     #resetEyes( patient, ((100,100,150,150),(150,150,200,200)) , ((101,101,151,151),(151,151,201,201)) )
     
     # negative value
