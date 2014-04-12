@@ -4,7 +4,7 @@ between the classes (Model in MVC) and the UI(View in MVC)
 
 
 
-
+    
 from Patient import *
 from FacePhoto import *
 from HorizontalPhoto import *

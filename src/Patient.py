@@ -193,10 +193,9 @@ class Patient:
             relRightCenterY = vRight[1] + rightCenterY
             vPD = math.sqrt((relLeftCenterX-relRightCenterX)**2 +(relLeftCenterY-relRightCenterY)**2)
         #print "Vert PD: " + str(vPD)
-        self.info["Horizontal Pupillary Distance"] = str(hPD)
-        self.info["Vertical Pupillary Distance"] = str(vPD)
-        return "Horiz PD: " + str(hPD) + " Vert PD: " + str(vPD)
-
+        avgPD = (hPD + vPD) /2
+        self.info["Pupillary Distance"] = str(avgPD)
+        return "PD: " + str(avgPD) 
 
     def strabismus(self):
         """
