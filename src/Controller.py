@@ -67,6 +67,20 @@ def makePatient(horizontalPath, verticalPath):
 
     return thisPatient
 
+def removePupilPhoto():
+    """ Function call to remove PUPILPHOTO.jpg when called by frontend
+    Need to change address to proper address for each user
+    TODO: NEEDS TESTING. 
+    
+    Args:
+        None
+    Return:
+        None
+    Side Effects:
+        Deletes PUPILPHOTO.jpg from disk
+    """
+    
+    os.remove("C:/Users/Alan/Documents/GitHub/DVS-Python/src/PUPILPHOTO.jpg")
 
 ### Reset Methods ###
 
