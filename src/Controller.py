@@ -15,7 +15,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = True
+TEST = False
 PRINT = False
      
 CIRCLE_COLOR = (0, 255, 0)
@@ -407,7 +407,7 @@ def getEyeCoors(thisPatient):
     return ((hLeftX,hLeftY,hLeftWidth,hLeftHeight),(hRightX,hRightY,hRightWidth,hRightHeight),
         (vLeftX,vLeftY,vLeftWidth,vLeftHeight),(vRightX,vRightY,vRightWidth,vRightHeight))
 
-def getEyePhotos():
+def getEyePhotos(thisPatient):
     """"
         Write eye photos to disk in jpg formatted
              bcuz what front end wants front end gets
@@ -416,10 +416,10 @@ def getEyePhotos():
     """
 
     # Get Photos
-    hLeftEyePhoto = patient.getEyePhoto(True,True)
-    hRightEyePhoto = patient.getEyePhoto(True,False)
-    vLeftEyePhoto = patient.getEyePhoto(False,True)
-    vRightEyePhoto = patient.getEyePhoto(False,False)
+    hLeftEyePhoto = thisPatient.getEyePhoto(True,True)
+    hRightEyePhoto = thisPatient.getEyePhoto(True,False)
+    vLeftEyePhoto = thisPatient.getEyePhoto(False,True)
+    vRightEyePhoto = thisPatient.getEyePhoto(False,False)
 
     #Write to disk
     cv2.imwrite("hLeftEye.jpg",np.asarray(hLeftEyePhoto))

@@ -105,7 +105,7 @@ class page(wx.Panel):
 		resetBtn = wx.Button(page, label='Reset')
 		resetBtn.Bind(wx.EVT_BUTTON,
 			lambda event: self.interact.reset(page, self.horImgCtrl,
-				self.verImgCtrl, horPhotoTxt, verPhotoTxt))
+				self.verImgCtrl, horPhotoTxt, verPhotoTxt, 1))
 		# Passes in current page's imgCtrl's and text controls to delete
 
 		# Button to upload a horizontal photo

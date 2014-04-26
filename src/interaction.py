@@ -226,6 +226,9 @@ class interaction():
     #       hImgCtrl - 3rd page's horizontal image control
     #       vImgCtrl - 3rd page's vertical image control
 	def Yes2(self, page2, page4, hImgCtrl, vImgCtrl):
+		EyePhotos = getEyePhotos(self.patient)
+		self.verticalPath = EyePhotos[0]
+		self.horizontalPath = EyePhotos[1]
 		# displays image on 4th page
 		self.upPaint(page4, self.verticalPath, vImgCtrl, 1)
 		self.upPaint(page4, self.horizontalPath, hImgCtrl, 0)
