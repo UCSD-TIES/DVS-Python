@@ -15,6 +15,11 @@ class interaction():
 		self.heightRatio = None
 		self.widthRatio = None
 
+		self.hRightPath = None
+		self.hLeftPath = None
+		self.vRightPath = None
+		self.vLeftPath = None
+
 		# These bitmaps are needed to draw on, can't draw on img Ctrls
 		self.hBitMap = None
 		self.vBitMap = None
@@ -223,30 +228,69 @@ class interaction():
     # The "Yes" button on page2 - Moves from page 2 to 4
     # Args: page2 - 2nd page
     #       page4 - 4th page
-    #       hImgCtrl - 3rd page's horizontal image control
-    #       vImgCtrl - 3rd page's vertical image control
-	def Yes2(self, page2, page4, hImgCtrl, vImgCtrl):
+	def Yes2(self, page2, page4, hRightImgCtrl, 
+				hLeftImgCtrl, vRightImgCtrl, vLeftImgCtrl):
 		EyePhotos = getEyePhotos(self.patient)
-		self.verticalPath = EyePhotos[0]
-		self.horizontalPath = EyePhotos[1]
+		self.hRightPath = EyePhotos[0]
+		self.hLeftPath = EyePhotos[1]
+		self.vRightPath = EyePhotos[2]
+		self.vLeftPath = EyePhotos[3]
 		# displays image on 4th page
-		self.upPaint(page4, self.verticalPath, vImgCtrl, 1)
-		self.upPaint(page4, self.horizontalPath, hImgCtrl, 0)
+		self.upPupilPaint(page4, self.hRightPath, hRightImgCtrl)
+		self.upPupilPaint(page4, self.hLeftPath, hLeftImgCtrl)
+		self.upPupilPaint(page4, self.vRightPath, vRightImgCtrl)
+		self.upPupilPaint(page4, self.vLeftPath, vLeftImgCtrl)
 		page2.Hide()                    # Hides 2nd page
 		self.ShowYourself(page4)        # Shows 3rd page
-		
+
+	# specialized upPaint function for cropped pupil photos
+	# Args: page - the page passed in from upload() (page 1)
+	#       upPath - path of the image to be shown
+	#       imgCtrl - holds the newly shown image
+	#       orientation - vertical or horizontal, taken from upload()
+	def upPupilPaint(self, page, upPath, imgCtrl):
+		# Makes a new image using the file path
+		newImg = wx.Image(upPath, wx.BITMAP_TYPE_ANY)
+
+		# Getting width and height of this image
+		width = newImg.GetWidth()
+		height = newImg.GetHeight()
+		maxSize = 100
+
+		# Scales the image
+	  	# This scaling works, but may have problems in future
+	  	if width > height:
+			newWidth = maxSize
+		  	newHeight = maxSize * height/ width
+	  	else:
+		  	newHeight = maxSize
+		  	newWidth = maxSize * width/ height
+
+		self.heightRatio = float(newHeight)/float(height)
+		self.widthRatio = float(newWidth)/float(width)
+		print "OG Height:", height, "| OG Width", width, "| New Height:", newHeight, "| New Width:", newWidth
+		print "Height Ratio:", self.heightRatio, "| Width Ratio:", self.widthRatio
+		# Finishes scaling and sets img into the imgCtrl  
+	  	newImg = newImg.Scale(newWidth,newHeight)
+	  	imgCtrl.SetBitmap(wx.BitmapFromImage(newImg))
+
+	  	page.Refresh()
+
     # The "No" button on page4 - Moves from page 4 to 5
     # Args: page4 - 4nd page
     #       page5 - 5rd page
     #       hImgCtrl - 5rd page's horizontal image control
     #       vImgCtrl - 5rd page's vertical image control
-	def No4(self, page4, page5, hImgCtrl, vImgCtrl):
-		# displays image on 3rd page
-		self.upPaint(page5, self.verticalPath, vImgCtrl, 1)
-		self.upPaint(page5, self.horizontalPath, hImgCtrl, 0)
+	def No4(self, page4, page5, hRightImgCtrl, 
+				hLeftImgCtrl, vRightImgCtrl, vLeftImgCtrl):
+		# displays image on 4th page
+		self.upPupilPaint(page5, self.hRightPath, hRightImgCtrl)
+		self.upPupilPaint(page5, self.hLeftPath, hLeftImgCtrl)
+		self.upPupilPaint(page5, self.vRightPath, vRightImgCtrl)
+		self.upPupilPaint(page5, self.vLeftPath, vLeftImgCtrl)
 		page4.Hide()                    # Hides 2nd page
-		self.ShowYourself(page5)        # Shows 3rd page
-
+		self.ShowYourself(page5)        # Shows 5th page
+		
 
 	# page movement functions
 	# Page to be shown

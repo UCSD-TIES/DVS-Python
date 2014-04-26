@@ -156,12 +156,21 @@ class page(wx.Panel):
 		horImg = wx.EmptyImage(440,440)
 		self.hor2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
 
+		hRightImg = wx.EmptyImage(0,0)
+		self.hRightImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hRightImg))
+		hLeftImg = wx.EmptyImage(0,0)
+		self.hLeftImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hLeftImg))
+		vRightImg = wx.EmptyImage(0,0)
+		self.vRightImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vRightImg))
+		vLeftImg = wx.EmptyImage(0,0)
+		self.vLeftImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vLeftImg))
 
 		title = wx.StaticText(page, label="Do the boxes frame the eyes?")   # Different title from page 1's
 
 		yesBtn = wx.Button(page, label='Yes')  
-		yesBtn.Bind(wx.EVT_BUTTON,         # Button to go to 4th page - FUNCTIONALITY NOT ADDED YET
-			lambda event: self.interact.Yes2(self.page2, self.page4, self.hor4ImgCtrl, self.ver4ImgCtrl))
+		yesBtn.Bind(wx.EVT_BUTTON,         # Button to go to 4th page
+			lambda event: self.interact.Yes2(self.page2, self.page4, self.hRightImgCtrl, 
+				self.hLeftImgCtrl, self.vRightImgCtrl, self.vLeftImgCtrl))
 		# Passes in path names for both photos, current page, page 4, creates page 4's imgCtrl's
 			
 		noBtn = wx.Button(page, label='No')       # Button to go to 3rd page
@@ -243,17 +252,22 @@ class page(wx.Panel):
 		# wx.FlexGridSizer(rows, cols, vgap, hgap)
 		mainGrid = wx.FlexGridSizer(3, 1, 5, 5)
 		menu = wx.FlexGridSizer(1, 4, 5, 5)
-		pics = wx.FlexGridSizer(1, 2, 5, 5)
+		pics = wx.FlexGridSizer(1, 4, 5, 5)
 
 		pic1 = wx.BoxSizer(wx.VERTICAL)
 		pic2 = wx.BoxSizer(wx.VERTICAL)
+		pic3 = wx.BoxSizer(wx.VERTICAL)
+		pic4 = wx.BoxSizer(wx.VERTICAL)
 
 		###############COMPONENTS################
-		# Note that the imgCtrl's here were made in page 2's next button
-		verImg = wx.EmptyImage(440,440)
-		self.ver4ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(verImg))
-		horImg = wx.EmptyImage(440,440)
-		self.hor4ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
+		hRightImg = wx.EmptyImage(100,100)
+		self.hRightImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hRightImg))
+		hLeftImg = wx.EmptyImage(100,100)
+		self.hLeftImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hLeftImg))
+		vRightImg = wx.EmptyImage(100,100)
+		self.vRightImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vRightImg))
+		vLeftImg = wx.EmptyImage(100,100)
+		self.vLeftImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vLeftImg))
 
 		title = wx.StaticText(page, label="Do the boxes frame the pupils?")   # Different title from page 1's
 
@@ -263,16 +277,19 @@ class page(wx.Panel):
 			
 		noBtn = wx.Button(page, label='No')       # Button to go to 5th page
 		noBtn.Bind(wx.EVT_BUTTON,
-			lambda event: self.interact.No4(self.page4, self.page5, self.hor5ImgCtrl, self.ver5ImgCtrl))
+			lambda event: self.interact.No4(self.page4, self.page5, self.hRightImgCtrl, 
+				self.hLeftImgCtrl, self.vRightImgCtrl, self.vLeftImgCtrl))
 		# Will pass in image controls of 4th page
 
 		#################ADDING STUFF#################
 		# See page 1's set up
 		mainGrid.AddMany([(menu),(pics)])
 		menu.AddMany([(title),(560,0),(yesBtn),(noBtn)])
-		pic1.Add(self.hor4ImgCtrl, flag = wx.ALIGN_RIGHT)
-		pic2.Add(self.ver4ImgCtrl, flag = wx.ALIGN_LEFT)
-		pics.AddMany([(pic1),(pic2)])
+		pic1.Add(self.hRightImgCtrl, flag = wx.ALIGN_RIGHT)
+		pic2.Add(self.hLeftImgCtrl, flag = wx.ALIGN_RIGHT)
+		pic3.Add(self.vRightImgCtrl, flag = wx.ALIGN_LEFT)
+		pic4.Add(self.vLeftImgCtrl, flag = wx.ALIGN_LEFT)
+		pics.AddMany([(pic1),(pic2),(pic3),(pic4)])
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)
