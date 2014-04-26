@@ -617,6 +617,8 @@ if (TEST):
     for key in  allInfo.keys():
         print "[" + key + "]" + " = " + str(allInfo[key] )
     print "\n"
+    
+    removePupilPhoto()
 
     removePupilPhoto()
 
