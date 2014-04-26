@@ -71,19 +71,25 @@ def makePatient(horizontalPath, verticalPath):
 
 
 def removePupilPhoto():
-    """ Function call to remove PUPILPHOTO.jpg when called by frontend
-    Need to change address to proper address for each user
-    TODO: NEEDS TESTING. 
+    """ Function call to remove photos of the pupil saved to disk during
+    runtime of the program when called by frontend
+ 
+    Path should be relative path
     
     Args:
         None
     Return:
         None
     Side Effects:
-        Deletes PUPILPHOTO.jpg from disk
+        Deletes PUPILPHOTO.jpg, hLeftEye.jpg, hRightEye.jpg,
+    vLeftEye.jpg, and vRightEye.jpg from disk
     """
     
     os.remove(os.path.join(os.path.dirname(__file__), 'PUPILPHOTO.jpg'))
+    os.remove(os.path.join(os.path.dirname(__file__), 'hLeftEye.jpg'))
+    os.remove(os.path.join(os.path.dirname(__file__), 'hRightEye.jpg'))
+    os.remove(os.path.join(os.path.dirname(__file__), 'vLeftEye.jpg'))
+    os.remove(os.path.join(os.path.dirname(__file__), 'vRightEye.jpg'))
 
 ### Reset Methods ###
 
