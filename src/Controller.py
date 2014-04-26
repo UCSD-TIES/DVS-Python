@@ -618,6 +618,8 @@ if (TEST):
         print "[" + key + "]" + " = " + str(allInfo[key] )
     print "\n"
     
+    #Added method just for testing. Can be deleted or commented out in actual
+    # working code.
     removePupilPhoto()
 
     removePupilPhoto()
