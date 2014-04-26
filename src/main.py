@@ -14,4 +14,4 @@ base(None, -1, 'Digital Vision Screening',
 
 # The mainloop is an endless cycle. It catches and dispatches all events 
 # that exist during the life of our application.
-app.MainLoop()     
+app.MainLoop()

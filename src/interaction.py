@@ -208,7 +208,6 @@ class interaction():
 		draw.SetBrush(wx.Brush('#000000', wx.TRANSPARENT))
 		draw.DrawRectangle(10, 10, 100, 100)
 	'''
-	
     # The "No" button on page2 - Moves from page 2 to 3
     # Args: page2 - 2nd page
     #       page3 - 3rd page
@@ -221,29 +220,7 @@ class interaction():
 		page2.Hide()                    # Hides 2nd page
 		self.ShowYourself(page3)        # Shows 3rd page
 
-    # The "Yes" button on page2 - Moves from page 2 to 4
-    # Args: page2 - 2nd page
-    #       page4 - 4th page
-    #       hImgCtrl - 3rd page's horizontal image control
-    #       vImgCtrl - 3rd page's vertical image control
-	def Yes2(self, page2, page4, hImgCtrl, vImgCtrl):
-		# displays image on 4th page
-		self.upPaint(page4, self.verticalPath, vImgCtrl, 1)
-		self.upPaint(page4, self.horizontalPath, hImgCtrl, 0)
-		page2.Hide()                    # Hides 2nd page
-		self.ShowYourself(page4)        # Shows 3rd page
-		
-    # The "No" button on page4 - Moves from page 4 to 5
-    # Args: page4 - 4nd page
-    #       page5 - 5rd page
-    #       hImgCtrl - 5rd page's horizontal image control
-    #       vImgCtrl - 5rd page's vertical image control
-	def No4(self, page4, page5, hImgCtrl, vImgCtrl):
-		# displays image on 3rd page
-		self.upPaint(page5, self.verticalPath, vImgCtrl, 1)
-		self.upPaint(page5, self.horizontalPath, hImgCtrl, 0)
-		page4.Hide()                    # Hides 2nd page
-		self.ShowYourself(page5)        # Shows 3rd page
+
 
 	# page movement functions
 	# Page to be shown
