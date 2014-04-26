@@ -441,8 +441,7 @@ if (TEST):
     # TODO: We don't actually need the circle of the white dot  and findWhiteDot
     # finds a contour which isn't quite a cirlce so we'll just deal with
     # whiteDotCenter now. resetWhiteDot will probably take some tweaking
-    # resetWhiteDot(patient, ((100, 100, 10), (150, 150, 10)), ((100, 100,10),(150,150,10,10)))
-
+    # resetWhiteDot(patient, ((100, 100, 10), (150, 150, 10)), (( 100, 100,10),(150,150,10,10)))
 
     hLeft = patient.getEyeRegion(True,True)
     hRight = patient.getEyeRegion(True,False)

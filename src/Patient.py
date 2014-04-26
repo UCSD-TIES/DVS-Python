@@ -444,10 +444,10 @@ class Patient:
         probably thrown pupil, whiteDot, crescent, and sclera detection off so
         it might be a good idea to work just from the original photo of the eye
 
-        If pupil is “white”ish overall : possible cataracts
-        Else if pupil is “red”ish overall
+        If pupil is 'white'ish overall : possible cataracts
+        Else if pupil is 'red'ish overall
             if has dark spots : possible cataracts
-        Else if pupil is “black”ish overall
+        Else if pupil is 'black'ish overall
             if pupils have white blobs (other than the crescent): possible cataracts
 
         """
