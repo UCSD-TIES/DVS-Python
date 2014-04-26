@@ -80,6 +80,7 @@ class Pupil:
     # Image Processing
     
     # read the im from disc using absolute path
+
     im = cv2.imread(os.path.join(os.path.dirname(__file__), 'PUPILPHOTO.jpg'))
 
     # TODO - change all the random explicit numbers in this method
@@ -187,6 +188,7 @@ class Pupil:
 
     # read the im from disc using absolute path
     im = cv2.imread(os.path.join(os.path.dirname(__file__), 'PUPILPHOTO.jpg'))
+
 
     if DEBUG:
         print "im is of type: " + str(type(im))
