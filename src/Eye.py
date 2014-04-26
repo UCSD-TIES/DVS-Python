@@ -11,7 +11,7 @@ import PIL.ImageOps
 import math
 from sys import maxint
 
-DEBUG = True
+DEBUG = False
 
 ########## Descriptive Variables for tweakable constants ###############
 

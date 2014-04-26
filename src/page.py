@@ -25,8 +25,16 @@ class page(wx.Panel):
 		self.page3 = wx.Panel(parent)
 		self.pageSetUp3(self.page3)
 		baseSizer.Add(self.page3, 1, wx.EXPAND)
+		self.page4 = wx.Panel(parent)
+		self.pageSetUp4(self.page4)
+		baseSizer.Add(self.page4, 1, wx.EXPAND)
+		self.page5 = wx.Panel(parent)
+		self.pageSetUp5(self.page5)
+		baseSizer.Add(self.page5, 1, wx.EXPAND)
 		self.page2.Hide()               # Pages that aren't page 1 start off hidden
 		self.page3.Hide()
+		self.page4.Hide()
+		self.page5.Hide()
 
 		
 		# set up result page
@@ -151,10 +159,11 @@ class page(wx.Panel):
 
 		title = wx.StaticText(page, label="Do the boxes frame the eyes?")   # Different title from page 1's
 
-		yesBtn = wx.Button(page, label='Yes')     # Button to go to 4th page - FUNCTIONALITY NOT ADDED YET
-		yesBtn.Bind(wx.EVT_BUTTON,
-		    	lambda event: self.interact.seeResult(self.page2, self.resultPage, 0))
-		    
+		yesBtn = wx.Button(page, label='Yes')  
+		yesBtn.Bind(wx.EVT_BUTTON,         # Button to go to 4th page - FUNCTIONALITY NOT ADDED YET
+			lambda event: self.interact.Yes2(self.page2, self.page4, self.hor4ImgCtrl, self.ver4ImgCtrl))
+		# Passes in path names for both photos, current page, page 4, creates page 4's imgCtrl's
+			
 		noBtn = wx.Button(page, label='No')       # Button to go to 3rd page
 		noBtn.Bind(wx.EVT_BUTTON,
 			lambda event: self.interact.No2(self.page2, self.page3, self.hor3ImgCtrl, self.ver3ImgCtrl))
@@ -224,6 +233,102 @@ class page(wx.Panel):
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)
 
+	# Set up for page 4 - Page for pupil detection
+	def pageSetUp4(self, page):
+		# instantiate the most outer sizer
+		vbox = wx.BoxSizer(wx.VERTICAL)
+
+		##############SIZERS#####################
+		# mainGrid has three FlexGrids inside it
+		# wx.FlexGridSizer(rows, cols, vgap, hgap)
+		mainGrid = wx.FlexGridSizer(3, 1, 5, 5)
+		menu = wx.FlexGridSizer(1, 4, 5, 5)
+		pics = wx.FlexGridSizer(1, 2, 5, 5)
+
+		pic1 = wx.BoxSizer(wx.VERTICAL)
+		pic2 = wx.BoxSizer(wx.VERTICAL)
+
+		###############COMPONENTS################
+		# Note that the imgCtrl's here were made in page 2's next button
+		verImg = wx.EmptyImage(440,440)
+		self.ver4ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(verImg))
+		horImg = wx.EmptyImage(440,440)
+		self.hor4ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
+
+		title = wx.StaticText(page, label="Do the boxes frame the pupils?")   # Different title from page 1's
+
+		yesBtn = wx.Button(page, label='Yes')     # Button to go to result page
+		yesBtn.Bind(wx.EVT_BUTTON,
+				lambda event: self.interact.seeResult(self.page4, self.resultPage, 1))
+			
+		noBtn = wx.Button(page, label='No')       # Button to go to 5th page
+		noBtn.Bind(wx.EVT_BUTTON,
+			lambda event: self.interact.No4(self.page4, self.page5, self.hor5ImgCtrl, self.ver5ImgCtrl))
+		# Will pass in image controls of 4th page
+
+		#################ADDING STUFF#################
+		# See page 1's set up
+		mainGrid.AddMany([(menu),(pics)])
+		menu.AddMany([(title),(560,0),(yesBtn),(noBtn)])
+		pic1.Add(self.hor4ImgCtrl, flag = wx.ALIGN_RIGHT)
+		pic2.Add(self.ver4ImgCtrl, flag = wx.ALIGN_LEFT)
+		pics.AddMany([(pic1),(pic2)])
+
+		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
+		page.SetSizer(vbox)
+		
+	# Set up for page 5 - Nothing special about this page yet, 
+	# This is the user input pupil detection correction page
+	def pageSetUp5(self, page):
+		# instantiate the most outer sizer
+		vbox = wx.BoxSizer(wx.VERTICAL)
+
+		##############SIZERS#####################
+		# mainGrid has three FlexGrids inside it
+		# wx.FlexGridSizer(rows, cols, vgap, hgap)
+		mainGrid = wx.FlexGridSizer(2, 1, 5, 5)
+		menu = wx.FlexGridSizer(1, 5, 5, 5)
+		pics = wx.FlexGridSizer(1, 2, 5, 5)
+
+		pic1 = wx.BoxSizer(wx.VERTICAL)
+		pic2 = wx.BoxSizer(wx.VERTICAL)
+
+		###############COMPONENTS################
+		verImg = wx.EmptyImage(440,440)
+		self.ver5ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(verImg))
+		horImg = wx.EmptyImage(440,440)
+		self.hor5ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
+
+		title = wx.StaticText(page, label="Please correct the pupil detection.")
+		# Button to clear pictures and paths
+		resetBtn = wx.Button(page, label='Reset')
+		resetBtn.Bind(wx.EVT_BUTTON,
+			lambda event: self.interact.reset(page, self.hor5ImgCtrl, 
+				self.ver5ImgCtrl, None, None, 3))
+
+		# adding see result button
+		resultBtn = wx.Button(page, label="See Result")
+		resultBtn.Bind(wx.EVT_BUTTON, lambda event: self.interact.seeResult(self.page5, self.resultPage, 1))
+
+		### Mouse events, on click, on drag
+		# Mouse events for vertical image
+		self.ver5ImgCtrl.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 1))
+		self.ver5ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.ver5ImgCtrl))
+		self.ver5ImgCtrl.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.ver5ImgCtrl, 1))
+
+		# Mouse events for horizontal image
+		self.hor5ImgCtrl.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 0))
+		self.hor5ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event, self.hor5ImgCtrl))
+		self.hor5ImgCtrl.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.hor5ImgCtrl, 0))
+
+		mainGrid.AddMany([(menu),(pics)])
+		menu.AddMany([(title),(560,0),(resetBtn),(resultBtn)])
+		pic1.Add(self.hor5ImgCtrl, flag = wx.ALIGN_CENTER)
+		pic2.Add(self.ver5ImgCtrl, flag = wx.ALIGN_CENTER)
+		pics.AddMany([(pic1),(pic2)])
+
+		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
+		page.SetSizer(vbox)
 
 	# setup a result page
 	def resultPageSetup(self, page):
