@@ -15,7 +15,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = False
+TEST = True
 PRINT = False
      
 CIRCLE_COLOR = (0, 255, 0)
@@ -608,7 +608,7 @@ if (TEST):
             print "Cannot print"
 
     print "Here are the eye photo paths: "
-    print getEyePhotos()
+    print getEyePhotos(patient)
 
     print "Beginning eye analysis...\n"
     patient.analyzeEyes(0.17)
@@ -626,7 +626,5 @@ if (TEST):
     
     #Added method just for testing. Can be deleted or commented out in actual
     # working code.
-    removePupilPhoto()
-
     removePupilPhoto()
 
