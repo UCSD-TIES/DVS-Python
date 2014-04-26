@@ -2,3 +2,4 @@ Faces/
 ignore/
 *.pyc
 *.DS_Store
+*.*~
