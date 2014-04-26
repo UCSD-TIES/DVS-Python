@@ -15,7 +15,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = False
+TEST = True
 PRINT = False
      
 CIRCLE_COLOR = (0, 255, 0)
@@ -66,6 +66,9 @@ def makePatient(horizontalPath, verticalPath):
         print "Here's our right region again: " + str(thisPatient.horizontal.right.eyeRegion)
 
     return thisPatient
+
+
+
 
 def removePupilPhoto():
     """ Function call to remove PUPILPHOTO.jpg when called by frontend
@@ -327,6 +330,8 @@ def resetWhiteDot(thisPatient, horizontalTuple, verticalTuple):
 
 ### Get Methods ###
 
+
+
 def getEyeCoors(thisPatient):
     """ Returns a tuple of coordinates that represent the bounding rectangles
         of the eyes. The tuple returned is formatted thus:
@@ -401,6 +406,39 @@ def getEyeCoors(thisPatient):
 
     return ((hLeftX,hLeftY,hLeftWidth,hLeftHeight),(hRightX,hRightY,hRightWidth,hRightHeight),
         (vLeftX,vLeftY,vLeftWidth,vLeftHeight),(vRightX,vRightY,vRightWidth,vRightHeight))
+
+def getEyePhotos():
+    """"
+        Write eye photos to disk in jpg formatted
+             bcuz what front end wants front end gets
+        Pass back a tuple of the paths to the photos
+            in the format (hLeftPath, hRightPath, vLeftPath, vRightPath)
+    """
+
+    # Get Photos
+    hLeftEyePhoto = patient.getEyePhoto(True,True)
+    hRightEyePhoto = patient.getEyePhoto(True,False)
+    vLeftEyePhoto = patient.getEyePhoto(False,True)
+    vRightEyePhoto = patient.getEyePhoto(False,False)
+
+    #Write to disk
+    cv2.imwrite("hLeftEye.jpg",np.asarray(hLeftEyePhoto))
+    cv2.imwrite("hRightEye.jpg",np.asarray(hRightEyePhoto))
+    cv2.imwrite("vLeftEye.jpg",np.asarray(vLeftEyePhoto))
+    cv2.imwrite("vRightEye.jpg",np.asarray(vRightEyePhoto))
+
+    # Make path strings
+    hLeftPath = os.path.dirname(os.path.abspath(sys.argv[0]))
+    hLeftPath += "/hLeftEye.jpg"  
+    hRightPath = os.path.dirname(os.path.abspath(sys.argv[0]))
+    hRightPath += "/hRightEye.jpg"  
+    vLeftPath = os.path.dirname(os.path.abspath(sys.argv[0]))
+    vLeftPath += "/vLeftEye.jpg"  
+    vRightPath = os.path.dirname(os.path.abspath(sys.argv[0]))
+    vRightPath += "/vRightEye.jpg"  
+
+    # Pass back paths
+    return(hLeftPath, hRightPath, vLeftPath, vRightPath)
 
 def drawOnEyes(thisPatient):
     """ Draws rectangles around the facephoto of a horizontal and vertical photo
@@ -563,6 +601,9 @@ if (TEST):
         else:
             print "Cannot print"
 
+    print "Here are the eye photo paths: "
+    print getEyePhotos()
+
     print "Beginning eye analysis...\n"
     patient.analyzeEyes(0.17)
     
@@ -576,4 +617,6 @@ if (TEST):
     for key in  allInfo.keys():
         print "[" + key + "]" + " = " + str(allInfo[key] )
     print "\n"
+
+    removePupilPhoto()
 
