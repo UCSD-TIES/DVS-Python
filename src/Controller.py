@@ -80,7 +80,7 @@ def removePupilPhoto():
         Deletes PUPILPHOTO.jpg from disk
     """
     
-    os.remove("C:/Users/Alan/Documents/GitHub/DVS-Python/src/PUPILPHOTO.jpg")
+    os.remove(os.path.join(os.path.dirname(__file__), 'PUPILPHOTO.jpg'))
 
 ### Reset Methods ###
 
