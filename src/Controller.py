@@ -15,7 +15,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = False
+TEST = True
 PRINT = False
      
 CIRCLE_COLOR = (0, 255, 0)
@@ -576,4 +576,6 @@ if (TEST):
     for key in  allInfo.keys():
         print "[" + key + "]" + " = " + str(allInfo[key] )
     print "\n"
+    
+    removePupilPhoto()
 
