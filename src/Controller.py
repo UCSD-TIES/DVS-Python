@@ -23,7 +23,15 @@ THICKNESS = 1
 LINE_TYPE = 8
 SHIFT = 0
 
-def makePatient(horizontalPath, verticalPath):
+def makePatient0(name, birth, gender, ethnicity, language, roomNumber, school, 
+                 screeningComment, referral):
+    
+    thisPatient = Patient(name, birth, gender, ethnicity, language, roomNumber, 
+                          school, screeningComment, referral)
+    
+    return thisPatient
+
+def setPatient(horizontalPath, verticalPath, patient):
     """ Makes and returns a patient object
 
     Args:
@@ -37,7 +45,9 @@ def makePatient(horizontalPath, verticalPath):
     # Load the images 
     horizontalImg = cv.LoadImage(horizontalPath)
     verticalImg = cv.LoadImage(verticalPath)
-    thisPatient = Patient(horizontalImg, horizontalPath, verticalImg, verticalPath)
+    #thisPatient = Patient(horizontalImg, horizontalPath, verticalImg, verticalPath)
+    patient.setHorizontal(horizontalImg, horizontalPath)
+    patient.setVertical(verticalImg, verticalPath)
     
     if DEBUG:
         # show the variables as they have been populated
@@ -65,7 +75,7 @@ def makePatient(horizontalPath, verticalPath):
         print "Here's our left region again: " + str(thisPatient.horizontal.left.eyeRegion)
         print "Here's our right region again: " + str(thisPatient.horizontal.right.eyeRegion)
 
-    return thisPatient
+    return patient
 
 
 

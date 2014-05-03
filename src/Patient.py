@@ -11,15 +11,28 @@ class Patient:
       HorizontalPhoto horizontal - an horizontal image object
       VerticalPhoto vertical - a vertical image object
     """
-    def __init__(self, horizontalImg, horizontalPath, verticalImg, verticalPath):
+    def __init__(self, name, birth, gender, ethnicity, language, roomNumber,
+                 school, screeningComment, referral):
         """ Initialize the horizontal and vertical attributes by creating
             HorizontalPhoto and VerticalPhoto objects
         """
-        self.horizontal = HorizontalPhoto(horizontalImg, horizontalPath)
-        self.vertical = VerticalPhoto(verticalImg, verticalPath)
+        #self.horizontal = HorizontalPhoto(horizontalImg, horizontalPath)
+        #self.vertical = VerticalPhoto(verticalImg, verticalPath)
+        self.horizontal = None
+        self.vertical = None
         self.defects ={}
         self.info = {}
-
+        
+        # Patients' Information (Name, Age, Ethnicity, etc.)
+        self.name = "N/A"
+        self.birth = "N/A"
+        self.gender = "N/A"
+        self.ethnicity = "N/A"
+        self.language = "N/A"
+        self.roomNumber = "N/A"
+        self.school = "N/A"
+        self.screeningComment = "N/A"
+        self.referral = "N/A"
 
 
 #################### Getters ##################################
@@ -136,6 +149,11 @@ class Patient:
 
 #################### Setters ##################################
 
+    def setHorizontal(self, horizontalImg, horizontalPath):
+        self.horizontal = HorizontalPhoto(horizontalImg, horizontalPath)
+
+    def setVertical(self, verticalImg, verticalPath):
+        self.vertical = VerticalPhoto(verticalImg, verticalPath)
 
 
 ################## Disease Detection ##########################

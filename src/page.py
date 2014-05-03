@@ -16,8 +16,11 @@ class page(wx.Panel):
 										# They don't even need to be initialized here
 
 		#page setups
+		self.page0 = wx.Panel(parent)   # Creates the page, which is a panel
+		self.pageSetUp0(self.page0)      # Each page is set up differently
+		baseSizer.Add(self.page0, 1, wx.EXPAND)   # Add the page to the frame's sizer
 		self.page1 = wx.Panel(parent)   # Creates the page, which is a panel
-		self.pageSetUp(self.page1)      # Each page is set up differently
+		self.pageSetUp1(self.page1)      # Each page is set up differently
 		baseSizer.Add(self.page1, 1, wx.EXPAND)   # Add the page to the frame's sizer
 		self.page2 = wx.Panel(parent)
 		self.pageSetUp2(self.page2)
@@ -31,6 +34,7 @@ class page(wx.Panel):
 		self.page5 = wx.Panel(parent)
 		self.pageSetUp5(self.page5)
 		baseSizer.Add(self.page5, 1, wx.EXPAND)
+		self.page1.Hide()
 		self.page2.Hide()               # Pages that aren't page 1 start off hidden
 		self.page3.Hide()
 		self.page4.Hide()
@@ -64,7 +68,66 @@ class page(wx.Panel):
 		page.GetParent().GetSizer().Show(page)
 		page.GetParent().GetSizer().Layout()
 	'''
-	def pageSetUp(self, page):
+	def pageSetUp0(self, page):
+                # instantiate the most outer sizer
+		vbox = wx.BoxSizer(wx.VERTICAL)
+		
+		##############SIZERS#####################
+                mainGrid = wx.FlexGridSizer(10, 2, 5, 5)
+
+		###############STATIC TEXT################
+                name = wx.StaticText(page, label="Name: ")  
+                birth = wx.StaticText(page, label="Date of Birth: ")  
+                gender = wx.StaticText(page, label="Gender: ")  
+                ethnicity = wx.StaticText(page, label="Ethnicity: ")  
+                language = wx.StaticText(page, label="Language: ")  
+                roomNumber = wx.StaticText(page, label="Room Number: ")  
+                school = wx.StaticText(page, label="School: ")  
+                screeningComment = wx.StaticText(page, label="Screening Comment: ")  
+                referral = wx.StaticText(page, label="Referral: ")  
+                
+		###################INPUTS####################
+		nameInput = wx.TextCtrl(page, -1, "", size=(175, -1))
+		birthInput = wx.TextCtrl(page, -1, "", size=(175, -1))
+		genderInput = wx.TextCtrl(page, -1, "", size=(175, -1))
+		ethnicityInput = wx.TextCtrl(page, -1, "", size=(175, -1))
+		languageInput = wx.TextCtrl(page, -1, "", size=(175, -1))
+		roomNumberInput = wx.TextCtrl(page, -1, "", size=(175, -1))
+		schoolInput = wx.TextCtrl(page, -1, "", size=(175, -1))
+		screeningCommentInput = wx.TextCtrl(page, -1, "", size=(175, -1))
+		referralInput = wx.TextCtrl(page, -1, "", size=(175, -1))
+		# Passes in path names for both photos, current page, page 2, creates page 2's imgCtrl's		
+
+                ###################Buttons####################
+		nextBtn0 = wx.Button(page, label='Next')          # Button for moving onto next page
+		nextBtn0.Bind(wx.EVT_BUTTON, lambda event: 
+		              self.interact.next0(self.page0, self.page1, 
+		                                  nameInput.GetValue(), 
+		                                  birthInput.GetValue(), 
+		                                  genderInput.GetValue(),
+		                                  ethnicityInput.GetValue(),
+		                                  languageInput.GetValue(),
+		                                  roomNumberInput.GetValue(),
+		                                  schoolInput.GetValue(),
+		                                  screeningCommentInput.GetValue(),
+		                                  referralInput.GetValue()))
+
+		###################ADDING_STUFF#################
+	        mainGrid.AddMany([(name),(nameInput)])
+	        mainGrid.AddMany([(birth),(birthInput)])
+	        mainGrid.AddMany([(gender),(genderInput)])
+	        mainGrid.AddMany([(ethnicity),(ethnicityInput)])	        
+	        mainGrid.AddMany([(language),(languageInput)])
+	        mainGrid.AddMany([(roomNumber),(roomNumberInput)])
+	        mainGrid.AddMany([(school),(schoolInput)])
+	        mainGrid.AddMany([(screeningComment),(screeningCommentInput)])
+	        mainGrid.AddMany([(referral),(referralInput)])
+	        mainGrid.AddMany([(nextBtn0)])
+	        
+	        vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)   # Adds everything to real main sizer
+		page.SetSizer(vbox)                                # Sets the main sizer as the page's sizer
+	
+	def pageSetUp1(self, page):
 		# instantiate the most outer sizer
 		vbox = wx.BoxSizer(wx.VERTICAL)
 
@@ -94,9 +157,9 @@ class page(wx.Panel):
 		verPhotoTxt.SetValue("Please upload an image.")
 
 
-		###################BUTTONS####################
-		nextBtn = wx.Button(page, label='Next')          # Button for moving onto next page
-		nextBtn.Bind(wx.EVT_BUTTON,
+		###################BUTTONS####################		
+		nextBtn1 = wx.Button(page, label='Next')          # Button for moving onto next page
+		nextBtn1.Bind(wx.EVT_BUTTON,
 			lambda event: self.interact.next1(horPhotoTxt.GetValue(),
 				verPhotoTxt.GetValue(), self.page1, self.page2, self.hor2ImgCtrl, self.ver2ImgCtrl))
 		# Passes in path names for both photos, current page, page 2, creates page 2's imgCtrl's
@@ -124,7 +187,7 @@ class page(wx.Panel):
 		mainGrid.AddMany([(menu),(upload),(pics)])         # Adds the three sizers to the main sizer
 
 		# Adds the components to the layout sizers
-		menu.AddMany([(title),(640,0),(resetBtn),(nextBtn)])      # Title, large space, reset, next
+		menu.AddMany([(title),(640,0),(resetBtn),(nextBtn1)])      # Title, large space, reset, next
 		pic1.Add(self.horImgCtrl, flag = wx.ALIGN_CENTER)
 		pic2.Add(self.verImgCtrl, flag = wx.ALIGN_CENTER)
 		pics.AddMany([(pic1),(pic2)])       # The two images
@@ -156,13 +219,13 @@ class page(wx.Panel):
 		horImg = wx.EmptyImage(440,440)
 		self.hor2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
 
-		hRightImg = wx.EmptyImage(0,0)
+		hRightImg = wx.EmptyImage(1,1)
 		self.hRightImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hRightImg))
-		hLeftImg = wx.EmptyImage(0,0)
+		hLeftImg = wx.EmptyImage(1,1)
 		self.hLeftImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hLeftImg))
-		vRightImg = wx.EmptyImage(0,0)
+		vRightImg = wx.EmptyImage(1,1)
 		self.vRightImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vRightImg))
-		vLeftImg = wx.EmptyImage(0,0)
+		vLeftImg = wx.EmptyImage(1,1)
 		self.vLeftImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vLeftImg))
 
 		title = wx.StaticText(page, label="Do the boxes frame the eyes?")   # Different title from page 1's

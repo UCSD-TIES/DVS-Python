@@ -63,7 +63,7 @@ class interaction():
 	  	elif orientation == 1:
 	  		self.upPaint(page, upPath, imgCtrl, orientation)
 	  		self.verticalPath = upPath
-		  
+
 	# reset button, 1st page
 	# Args: page - panel to clear images and paths (will be page 1)
 	#       imgCtrl1 - vertical or horizontal image control to be cleared
@@ -161,6 +161,29 @@ class interaction():
 	#       page2 - 2nd page
 	#       hImgCtrl - horizontal image control of 2nd page
 	#       vImgCtrl - vertical image control of 2nd page
+	def next0(self, page0, page1, name, birth, gender, ethnicity, language,
+	          roomNumber, school, screeningComment, referral):
+	        #if name == "" or age == "" or ethnicity == "":
+	        #    errorTxt = "Please fill out all inputs."
+	        #    errMsg = wx.MessageDialog(page0, errorTxt, "Please fill out all inputs.", wx.OK)
+	        #    errMsg.ShowModal()
+	        #    errMsg.Destroy()
+	        #else:
+	        
+                self.patient = makePatient0(name, birth, gender, ethnicity, 
+                                            language, roomNumber, school, 
+                                            screeningComment, referral)
+   	    
+  		page0.Hide()
+  		self.ShowYourself(page1)          # Shows 2nd page
+
+	# Next Button for first page
+	# Args: hPhotoTxt - text control for horizontal image
+	#       vPhotoTxt - text control for vertical image
+	#       page1 - 1st page
+	#       page2 - 2nd page
+	#       hImgCtrl - horizontal image control of 2nd page
+	#       vImgCtrl - vertical image control of 2nd page
 	def next1(self, hPhotoTxt, vPhotoTxt, page1, page2, hImgCtrl, vImgCtrl):
 		pleaseText = "Please upload an image."
 		if hPhotoTxt == pleaseText and vPhotoTxt == pleaseText:
@@ -169,7 +192,10 @@ class interaction():
 			errMsg1.ShowModal()
 			errMsg1.Destroy()
 			
-		self.patient = makePatient(self.horizontalPath, self.verticalPath)
+	        print "good"
+			
+		#self.patient = makePatient(self.horizontalPath, self.verticalPath)
+                setPatient(self.horizontalPath, self.verticalPath, self.patient)
 		coors = getEyeCoors(self.patient)                 # this coors is local, just for drawing
 		print coors
 
@@ -224,7 +250,7 @@ class interaction():
 		self.upPaint(page3, self.horizontalPath, hImgCtrl, 0)
 		page2.Hide()                    # Hides 2nd page
 		self.ShowYourself(page3)        # Shows 3rd page
-		
+
     # The "Yes" button on page2 - Moves from page 2 to 4
     # Args: page2 - 2nd page
     #       page4 - 4th page
@@ -290,7 +316,7 @@ class interaction():
 		self.upPupilPaint(page5, self.vLeftPath, vLeftImgCtrl)
 		page4.Hide()                    # Hides 2nd page
 		self.ShowYourself(page5)        # Shows 5th page
-		
+
 
 	# page movement functions
 	# Page to be shown
@@ -371,7 +397,7 @@ class interaction():
 					self.vcoors[0][1] = newY
 
 
-		
+
 
 	# Mouse event handler, on click release
 	# orientation: vertical is 1, horizontal is 0
@@ -417,8 +443,8 @@ class interaction():
 				self.vendY = temp
 		'''
 
-		
-		
+
+
 		mdc = wx.MemoryDC()
 		bdc = wx.BufferedDC(mdc)
 		bitmap = imgCtrl.GetBitmap()
@@ -443,7 +469,7 @@ class interaction():
 	# Mouse event handler, on drag
 	def mouseDrag(self, event, imgCtrl):
 
-		
+
 		if event.Dragging():
 			x = event.GetX()
 			y = event.GetY()
