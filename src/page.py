@@ -340,8 +340,8 @@ class page(wx.Panel):
 			
 		noBtn = wx.Button(page, label='No')       # Button to go to 5th page
 		noBtn.Bind(wx.EVT_BUTTON,
-			lambda event: self.interact.No4(self.page4, self.page5, self.hRightImgCtrl, 
-				self.hLeftImgCtrl, self.vRightImgCtrl, self.vLeftImgCtrl))
+			lambda event: self.interact.No4(self.page4, self.page5, self.hRight2ImgCtrl, 
+				self.hLeft2ImgCtrl, self.vRight2ImgCtrl, self.vLeft2ImgCtrl))
 		# Will pass in image controls of 4th page
 
 		#################ADDING STUFF#################
@@ -376,14 +376,14 @@ class page(wx.Panel):
 		pic4 = wx.BoxSizer(wx.VERTICAL)
 
 		###############COMPONENTS################
-		hRight2Img = wx.EmptyImage(100,100)
-		self.hRight2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hRight2Img))
-		hLeft2Img = wx.EmptyImage(100,100)
-		self.hLeft2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hLeft2Img))
-		vRight2Img = wx.EmptyImage(100,100)
-		self.vRight2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vRight2Img))
-		vLeft2Img = wx.EmptyImage(100,100)
-		self.vLeft2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vLeft2Img))
+		hRightImg = wx.EmptyImage(100,100)
+		self.hRight2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hRightImg))
+		hLeftImg = wx.EmptyImage(100,100)
+		self.hLeft2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hLeftImg))
+		vRightImg = wx.EmptyImage(100,100)
+		self.vRight2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vRightImg))
+		vLeftImg = wx.EmptyImage(100,100)
+		self.vLeft2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vLeftImg))
 
 		title = wx.StaticText(page, label="Please correct the pupil detection:")
 		# Button to clear pictures and paths
