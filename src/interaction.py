@@ -562,3 +562,12 @@ class interaction():
 		font1 = wx.Font(30, wx.NORMAL, wx.ITALIC, wx.NORMAL)
 		result = wx.StaticText(resultPage, -1, referText, (850, y), (-1, -1), wx.ALIGN_CENTRE)
 		result.SetFont(font1)
+	def startOver(self, resultPage, page1, horImgCtrl, verImgCtrl, text1, text2, pageNum):
+
+		# Hides result page
+		resultPage.Hide()
+
+		self.reset(page1, horImgCtrl, verImgCtrl, text1, text2, pageNum)
+
+		# Shows first page
+		page1.Show()
