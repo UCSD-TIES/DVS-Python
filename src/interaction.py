@@ -169,13 +169,10 @@ class interaction():
 	        #    errMsg.ShowModal()
 	        #    errMsg.Destroy()
 	        #else:
-	        
-                self.patient = makePatient0(name, birth, gender, ethnicity, 
-                                            language, roomNumber, school, 
-                                            screeningComment, referral)
-   	    
-  		page0.Hide()
-  		self.ShowYourself(page1)          # Shows 2nd page
+		self.patient = makePatient0(name, birth, gender, ethnicity, language, 
+        	roomNumber, school, screeningComment, referral)
+		page0.Hide()
+		self.ShowYourself(page1)          # Shows 2nd page
 
 	# Next Button for first page
 	# Args: hPhotoTxt - text control for horizontal image
@@ -195,7 +192,7 @@ class interaction():
 	        print "good"
 			
 		#self.patient = makePatient(self.horizontalPath, self.verticalPath)
-                setPatient(self.horizontalPath, self.verticalPath, self.patient)
+		setPatient(self.horizontalPath, self.verticalPath, self.patient)
 		coors = getEyeCoors(self.patient)                 # this coors is local, just for drawing
 		print coors
 
