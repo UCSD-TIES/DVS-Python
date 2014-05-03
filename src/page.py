@@ -355,3 +355,25 @@ class page(wx.Panel):
 		result = wx.StaticText(page, -1, resultText, (0, 40), (1000, -1), wx.ALIGN_CENTER)
 		result.SetBackgroundColour('blue')
 		result.SetForegroundColour('white')
+
+
+		horPhotoTxt = wx.TextCtrl(page, size=(360,-1), style=wx.TE_READONLY)
+		verPhotoTxt = wx.TextCtrl(page, size=(360,-1), style=wx.TE_READONLY)
+
+		horPhotoTxt.SetValue("Please upload an image.")
+		verPhotoTxt.SetValue("Please upload an image.")
+
+		horPhotoTxt.Hide()
+		verPhotoTxt.Hide()
+
+
+		restartBtn = wx.Button(page, label="Start Over", pos=(840, 520))
+
+		restartBtn.Bind(wx.EVT_BUTTON,
+		            lambda event: self.interact.startOver(self.resultPage,
+		                                                  self.page1,
+		                                                  self.horImgCtrl,
+		                                                  self.verImgCtrl,
+		                                                  horPhotoTxt,
+		                                                  verPhotoTxt,
+		                                                  1))
