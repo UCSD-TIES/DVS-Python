@@ -15,7 +15,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = True
+TEST = False
 PRINT = False
      
 CIRCLE_COLOR = (0, 255, 0)

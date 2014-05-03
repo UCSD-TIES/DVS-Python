@@ -285,10 +285,10 @@ class page(wx.Panel):
 		# See page 1's set up
 		mainGrid.AddMany([(menu),(pics)])
 		menu.AddMany([(title),(560,0),(yesBtn),(noBtn)])
-		pic1.Add(self.hRightImgCtrl, flag = wx.ALIGN_RIGHT)
-		pic2.Add(self.hLeftImgCtrl, flag = wx.ALIGN_RIGHT)
-		pic3.Add(self.vRightImgCtrl, flag = wx.ALIGN_LEFT)
-		pic4.Add(self.vLeftImgCtrl, flag = wx.ALIGN_LEFT)
+		pic1.Add(self.hLeftImgCtrl, flag = wx.ALIGN_RIGHT)
+		pic2.Add(self.hRightImgCtrl, flag = wx.ALIGN_RIGHT)
+		pic3.Add(self.vLeftImgCtrl, flag = wx.ALIGN_LEFT)
+		pic4.Add(self.vRightImgCtrl, flag = wx.ALIGN_LEFT)
 		pics.AddMany([(pic1),(pic2),(pic3),(pic4)])
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
