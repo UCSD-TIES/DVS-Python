@@ -340,8 +340,8 @@ class page(wx.Panel):
 			
 		noBtn = wx.Button(page, label='No')       # Button to go to 5th page
 		noBtn.Bind(wx.EVT_BUTTON,
-			lambda event: self.interact.No4(self.page4, self.page5, self.hRightImgCtrl, 
-				self.hLeftImgCtrl, self.vRightImgCtrl, self.vLeftImgCtrl))
+			lambda event: self.interact.No4(self.page4, self.page5, self.hRightImgCtrl2, 
+				self.hLeftImgCtrl2, self.vRightImgCtrl2, self.vLeftImgCtrl2))
 		# Will pass in image controls of 4th page
 
 		#################ADDING STUFF#################
@@ -368,16 +368,22 @@ class page(wx.Panel):
 		# wx.FlexGridSizer(rows, cols, vgap, hgap)
 		mainGrid = wx.FlexGridSizer(2, 1, 5, 5)
 		menu = wx.FlexGridSizer(1, 5, 5, 5)
-		pics = wx.FlexGridSizer(1, 2, 5, 5)
+		pics = wx.FlexGridSizer(1, 4, 5, 5)
 
 		pic1 = wx.BoxSizer(wx.VERTICAL)
 		pic2 = wx.BoxSizer(wx.VERTICAL)
+		pic3 = wx.BoxSizer(wx.VERTICAL)
+		pic4 = wx.BoxSizer(wx.VERTICAL)
 
 		###############COMPONENTS################
-		verImg = wx.EmptyImage(440,440)
-		self.ver5ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(verImg))
-		horImg = wx.EmptyImage(440,440)
-		self.hor5ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(horImg))
+		hRightImg = wx.EmptyImage(100,100)
+		self.hRightImgCtrl2 = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hRightImg))
+		hLeftImg = wx.EmptyImage(100,100)
+		self.hLeftImgCtrl2 = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hLeftImg))
+		vRightImg = wx.EmptyImage(100,100)
+		self.vRightImgCtrl2 = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vRightImg))
+		vLeftImg = wx.EmptyImage(100,100)
+		self.vLeftImgCtrl2 = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vLeftImg))
 
 		title = wx.StaticText(page, label="Please correct the pupil detection.")
 		# Button to clear pictures and paths
@@ -392,20 +398,30 @@ class page(wx.Panel):
 
 		### Mouse events, on click, on drag
 		# Mouse events for vertical image
-		self.ver5ImgCtrl.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 1))
-		self.ver5ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.ver5ImgCtrl))
-		self.ver5ImgCtrl.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.ver5ImgCtrl, 1))
+		self.hRightImgCtrl2.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 1))
+		self.hRightImgCtrl2.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.hRightImgCtrl2))
+		self.hRightImgCtrl2.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.hRightImgCtrl2, 1))
+
+		self.hLeftImgCtrl2.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 1))
+		self.hLeftImgCtrl2.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.hLeftImgCtrl2))
+		self.hLeftImgCtrl2.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.hLeftImgCtrl2, 1))
 
 		# Mouse events for horizontal image
-		self.hor5ImgCtrl.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 0))
-		self.hor5ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event, self.hor5ImgCtrl))
-		self.hor5ImgCtrl.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.hor5ImgCtrl, 0))
+		self.vRightImgCtrl2.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 0))
+		self.vRightImgCtrl2.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event, self.vRightImgCtrl2))
+		self.vRightImgCtrl2.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.vRightImgCtrl2, 0))
+
+		self.vLeftImgCtrl2.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 1))
+		self.vLeftImgCtrl2.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.vLeftImgCtrl2))
+		self.vLeftImgCtrl2.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.vLeftImgCtrl2, 1))
 
 		mainGrid.AddMany([(menu),(pics)])
 		menu.AddMany([(title),(560,0),(resetBtn),(resultBtn)])
-		pic1.Add(self.hor5ImgCtrl, flag = wx.ALIGN_CENTER)
-		pic2.Add(self.ver5ImgCtrl, flag = wx.ALIGN_CENTER)
-		pics.AddMany([(pic1),(pic2)])
+		pic1.Add(self.hLeftImgCtrl2, flag = wx.ALIGN_RIGHT)
+		pic2.Add(self.hRightImgCtrl2, flag = wx.ALIGN_RIGHT)
+		pic3.Add(self.vLeftImgCtrl2, flag = wx.ALIGN_LEFT)
+		pic4.Add(self.vRightImgCtrl2, flag = wx.ALIGN_LEFT)
+		pics.AddMany([(pic1),(pic2),(pic3),(pic4)])
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 		page.SetSizer(vbox)

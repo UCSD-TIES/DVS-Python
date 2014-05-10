@@ -1,6 +1,6 @@
 import wx, os, tkFileDialog
 from Controller import *
-from xlwt import Workbook
+#from xlwt import Workbook
 #use makepatient method from controller
 
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
