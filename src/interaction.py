@@ -1,5 +1,6 @@
-import wx, os
+import wx, os, tkFileDialog
 from Controller import *
+from xlwt import Workbook
 #use makepatient method from controller
 
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
@@ -163,17 +164,36 @@ class interaction():
 	#       vImgCtrl - vertical image control of 2nd page
 	def next0(self, page0, page1, name, birth, gender, ethnicity, language,
 	          roomNumber, school, screeningComment, referral):
-	        #if name == "" or age == "" or ethnicity == "":
-	        #    errorTxt = "Please fill out all inputs."
-	        #    errMsg = wx.MessageDialog(page0, errorTxt, "Please fill out all inputs.", wx.OK)
-	        #    errMsg.ShowModal()
-	        #    errMsg.Destroy()
-	        #else:
 	        
-                self.patient = makePatient0(name, birth, gender, ethnicity, 
-                                            language, roomNumber, school, 
-                                            screeningComment, referral)
-   	    
+	        self.patient = Patient()
+	        
+	        if name != "":
+   		   self.patient.name = name
+   		  
+   		if birth != "":
+   		   self.patient.birth = birth
+   		   
+   		if gender != "":
+   		   self.patient.gender = gender
+   		   
+   		if ethnicity != "":
+   		   self.patient.ethnicity = ethnicity
+   		   
+   		if language != "":
+   		   self.patient.language = language
+   		   
+   		if roomNumber != "":
+   		   self.patient.roomNumber = roomNumber
+   		   
+   		if school != "":
+   		   self.patient.school = school
+   		   
+   		if screeningComment != "":
+   		   self.patient.screeningComment = screeningComment
+   		   
+   		if referral != "":
+   		   self.patient.referral = referral
+   		
   		page0.Hide()
   		self.ShowYourself(page1)          # Shows 2nd page
 
@@ -192,7 +212,7 @@ class interaction():
 			errMsg1.ShowModal()
 			errMsg1.Destroy()
 			
-	        print "good"
+		print self.patient.name
 			
 		#self.patient = makePatient(self.horizontalPath, self.verticalPath)
                 setPatient(self.horizontalPath, self.verticalPath, self.patient)
@@ -597,3 +617,50 @@ class interaction():
 
 		# Shows first page
 		page1.Show()
+		
+	def exportData(self,page):
+            book = Workbook()
+            sheet1 = book.add_sheet('Patient Data')
+            
+            sheet1.write(0,0,'Name')
+            sheet1.write(0,1,self.patient.name)
+            
+            row1 = sheet1.row(1)
+            row1.write(0,'Date of Birth')
+            row1.write(1,self.patient.birth)
+            
+            row2 = sheet1.row(2)
+            row2.write(0,'Gender')
+            row2.write(1,self.patient.gender)
+            
+            row3 = sheet1.row(3)
+            row3.write(0,'Ethnicity')
+            row3.write(1,self.patient.ethnicity)
+            
+            row4 = sheet1.row(4)
+            row4.write(0,'Language')
+            row4.write(1,self.patient.language)
+            
+            row5 = sheet1.row(5)
+            row5.write(0,'Room Number')
+            row5.write(1,self.patient.roomNumber)
+            
+            row6 = sheet1.row(6)
+            row6.write(0,'School')
+            row6.write(1,self.patient.school)
+            
+            row7 = sheet1.row(7)
+            row7.write(0,'Screening Comment')
+            row7.write(1,self.patient.screeningComment)
+
+            row8 = sheet1.row(8)
+            row8.write(0,'Referral')
+            row8.write(1,self.patient.referral)
+                        
+            sheet1.col(0).width = 5000
+            sheet1.col(1).width = 5000
+
+            book.save('patient_data.xls')
+            msg = "Excel file saved in current directory"
+            savedMsg = wx.MessageDialog(page, msg, "Patient Data Exported", wx.OK)
+            savedMsg.ShowModal()

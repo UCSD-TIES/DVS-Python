@@ -429,9 +429,15 @@ class page(wx.Panel):
 		horPhotoTxt.Hide()
 		verPhotoTxt.Hide()
 
+                x = 740
+                y = 520
 
-		restartBtn = wx.Button(page, label="Start Over", pos=(840, 520))
+		exportBtn = wx.Button(page, label="Export Data", pos=(x, y))
+		restartBtn = wx.Button(page, label="Start Over", pos=(x + 100, y))
 
+                exportBtn.Bind(wx.EVT_BUTTON,
+                            lambda event: self.interact.exportData(page))
+        
 		restartBtn.Bind(wx.EVT_BUTTON,
 		            lambda event: self.interact.startOver(self.resultPage,
 		                                                  self.page1,
