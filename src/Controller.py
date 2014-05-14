@@ -82,7 +82,9 @@ def setPatient(horizontalPath, verticalPath, patient):
 
 def removePupilPhoto():
     """ Function call to remove photos of the pupil saved to disk during
-    runtime of the program when called by frontend
+    runtime of the program when called by frontend. Checks if files exists first
+    then deletes if exists.
+    TODO: Need to rename method
  
     Path should be relative path
     
@@ -95,11 +97,21 @@ def removePupilPhoto():
     vLeftEye.jpg, and vRightEye.jpg from disk
     """
     
-    os.remove(os.path.join(os.path.dirname(__file__), 'PUPILPHOTO.jpg'))
-    os.remove(os.path.join(os.path.dirname(__file__), 'hLeftEye.jpg'))
-    os.remove(os.path.join(os.path.dirname(__file__), 'hRightEye.jpg'))
-    os.remove(os.path.join(os.path.dirname(__file__), 'vLeftEye.jpg'))
-    os.remove(os.path.join(os.path.dirname(__file__), 'vRightEye.jpg'))
+    if os.path.isfile(os.path.join(os.path.dirname(__file__), 'PUPILPHOTO.jpg')):
+        os.remove(os.path.join(os.path.dirname(__file__), 'PUPILPHOTO.jpg'))
+        
+    if os.path.isfile(os.path.join(os.path.dirname(__file__), 'hLeftEye.jpg')):
+        os.remove(os.path.join(os.path.dirname(__file__), 'hLeftEye.jpg'))
+    
+    if os.path.isfile(os.path.join(os.path.dirname(__file__), 'hRightEye.jpg')):
+        os.remove(os.path.join(os.path.dirname(__file__), 'hRightEye.jpg'))
+    
+    if os.path.isfile(os.path.join(os.path.dirname(__file__), 'vLeftEye.jpg')):
+        os.remove(os.path.join(os.path.dirname(__file__), 'vLeftEye.jpg'))
+    
+    if os.path.isfile(os.path.join(os.path.dirname(__file__), 'vRightEye.jpg')):
+        os.remove(os.path.join(os.path.dirname(__file__), 'vRightEye.jpg'))
+
 
 ### Reset Methods ###
 
