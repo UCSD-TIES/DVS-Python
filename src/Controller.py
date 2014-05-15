@@ -80,11 +80,11 @@ def setPatient(horizontalPath, verticalPath, patient):
 
 
 
+def deleteEyePictures():
 def removePupilPhoto():
     """ Function call to remove photos of the pupil saved to disk during
     runtime of the program when called by frontend. Checks if files exists first
     then deletes if exists.
-    TODO: Need to rename method
  
     Path should be relative path
     
@@ -111,6 +111,7 @@ def removePupilPhoto():
     
     if os.path.isfile(os.path.join(os.path.dirname(__file__), 'vRightEye.jpg')):
         os.remove(os.path.join(os.path.dirname(__file__), 'vRightEye.jpg'))
+
 
 ### Reset Methods ###
 
@@ -647,5 +648,5 @@ if (TEST):
     
     #Added method just for testing. Can be deleted or commented out in actual
     # working code.
-    removePupilPhoto()
+    deleteEyePictures()
 

@@ -1,3 +1,4 @@
+import wx, os
 import wx, os, tkFileDialog
 from Controller import *
 from xlwt import Workbook
@@ -47,23 +48,23 @@ class interaction():
 	#       text - Text control - either vertical or horizontal
 	#       orientation - specify which image is uploading, 1 for vertical and 0 for horizontal
 	def upload(self, page, imgCtrl, text, orientation):
-	  	# pops up box for user to upload image
-	  	upBox = wx.FileDialog(page, "Choose an image.", os.getcwd(), "",
+		# pops up box for user to upload image
+		upBox = wx.FileDialog(page, "Choose an image.", os.getcwd(), "",
 							IMGMASK, wx.OPEN)
 
-	  	# Once the user hits the "OK" button
-	  	if upBox.ShowModal() == wx.ID_OK:
+		# Once the user hits the "OK" button
+		if upBox.ShowModal() == wx.ID_OK:
 			upPath = upBox.GetPath()            # Gets the path of the uploaded file
 			text.SetValue(upPath)               # Sets path into the text control
 
 		# Depending on which image is being uploaded, sets interaction object's
 		# data field and paints the image onto the page.
-	  	if orientation == 0:
-	  		self.upPaint(page, upPath, imgCtrl, orientation)
-	  		self.horizontalPath = upPath
-	  	elif orientation == 1:
-	  		self.upPaint(page, upPath, imgCtrl, orientation)
-	  		self.verticalPath = upPath
+		if orientation == 0:
+			self.upPaint(page, upPath, imgCtrl, orientation)
+			self.horizontalPath = upPath
+		elif orientation == 1:
+			self.upPaint(page, upPath, imgCtrl, orientation)
+			self.verticalPath = upPath
 
 	# reset button, 1st page
 	# Args: page - panel to clear images and paths (will be page 1)
@@ -110,50 +111,50 @@ class interaction():
 
 	  # scale the image to preserving the aspect ratio
 		'''   UNUSED - FOR NOW
-	  	if width > height and width > maxSize:
+		if width > height and width > maxSize:
 			newWidth = maxSize
 			newHeight = height / (width / float(maxSize))
-	  	elif width > height and width < maxSize:
+		elif width > height and width < maxSize:
 			newWidth = maxSize
 			newHeight = height * (width / float(maxSize))
-	  	elif width == maxSize:
+		elif width == maxSize:
 			newWidth = maxSize
 
-	  	if height > width and height > maxSize:
+		if height > width and height > maxSize:
 			newHeight = maxSize
 			newWidth = width / (height / float(maxSize))
-	  	elif height > width and height < maxSize:
+		elif height > width and height < maxSize:
 			newHeight = maxSize
 			newWidth = width * (height / float(maxSize))
-	  	elif height == maxSize:
+		elif height == maxSize:
 			newHeight = maxSize
 		'''
 
 		# Scales the image
-	  	# This scaling works, but may have problems in future
-	  	if width > height:
+		# This scaling works, but may have problems in future
+		if width > height:
 			newWidth = maxSize
-		  	newHeight = maxSize * height/ width
-	  	else:
-		  	newHeight = maxSize
-		  	newWidth = maxSize * width/ height
+			newHeight = maxSize * height/ width
+		else:
+			newHeight = maxSize
+			newWidth = maxSize * width/ height
 
 		self.heightRatio = float(newHeight)/float(height)
 		self.widthRatio = float(newWidth)/float(width)
 		print "OG Height:", height, "| OG Width", width, "| New Height:", newHeight, "| New Width:", newWidth
 		print "Height Ratio:", self.heightRatio, "| Width Ratio:", self.widthRatio
 		# Finishes scaling and sets img into the imgCtrl  
-	  	newImg = newImg.Scale(newWidth,newHeight)
-	  	imgCtrl.SetBitmap(wx.BitmapFromImage(newImg))
+		newImg = newImg.Scale(newWidth,newHeight)
+		imgCtrl.SetBitmap(wx.BitmapFromImage(newImg))
 
-	  	# Stores data for interaction obj depending on orientation
-	  	if orientation == 0:
-	  		self.hBitMap = wx.BitmapFromImage(newImg)
-	  		self.hImg = newImg
-	  	elif orientation == 1:
-	  		self.vBitMap = wx.BitmapFromImage(newImg)
-	  		self.vImg = newImg
-	  	page.Refresh()
+		# Stores data for interaction obj depending on orientation
+		if orientation == 0:
+			self.hBitMap = wx.BitmapFromImage(newImg)
+			self.hImg = newImg
+		elif orientation == 1:
+			self.vBitMap = wx.BitmapFromImage(newImg)
+			self.vImg = newImg
+		page.Refresh()
 
 	# Next Button for first page
 	# Args: hPhotoTxt - text control for horizontal image
@@ -163,52 +164,39 @@ class interaction():
 	#       hImgCtrl - horizontal image control of 2nd page
 	#       vImgCtrl - vertical image control of 2nd page
 	def next0(self, page0, page1, name, birth, gender, ethnicity, language,
-	          roomNumber, school, screeningComment, referral):
-<<<<<<< HEAD
-	        
-	        self.patient = Patient()
-	        
-	        if name != "":
-   		   self.patient.name = name
-   		  
-   		if birth != "":
-   		   self.patient.birth = birth
-   		   
-   		if gender != "":
-   		   self.patient.gender = gender
-   		   
-   		if ethnicity != "":
-   		   self.patient.ethnicity = ethnicity
-   		   
-   		if language != "":
-   		   self.patient.language = language
-   		   
-   		if roomNumber != "":
-   		   self.patient.roomNumber = roomNumber
-   		   
-   		if school != "":
-   		   self.patient.school = school
-   		   
-   		if screeningComment != "":
-   		   self.patient.screeningComment = screeningComment
-   		   
-   		if referral != "":
-   		   self.patient.referral = referral
-   		
-  		page0.Hide()
-  		self.ShowYourself(page1)          # Shows 2nd page
-=======
-	        #if name == "" or age == "" or ethnicity == "":
-	        #    errorTxt = "Please fill out all inputs."
-	        #    errMsg = wx.MessageDialog(page0, errorTxt, "Please fill out all inputs.", wx.OK)
-	        #    errMsg.ShowModal()
-	        #    errMsg.Destroy()
-	        #else:
-		self.patient = makePatient0(name, birth, gender, ethnicity, language, 
-        	roomNumber, school, screeningComment, referral)
+			  roomNumber, school, screeningComment, referral):
+
+		self.patient = Patient()
+
+		if name != "":
+			self.patient.name = name
+
+		if birth != "":
+			self.patient.birth = birth
+
+		if gender != "":
+			self.patient.gender = gender
+
+		if ethnicity != "":
+			self.patient.ethnicity = ethnicity
+
+		if language != "":
+			self.patient.language = language
+
+		if roomNumber != "":
+			self.patient.roomNumber = roomNumber
+
+		if school != "":
+			self.patient.school = school
+
+		if screeningComment != "":
+			self.patient.screeningComment = screeningComment
+
+		if referral != "":
+			self.patient.referral = referral
+
 		page0.Hide()
 		self.ShowYourself(page1)          # Shows 2nd page
->>>>>>> 9fde59ab06b3e0e493cb9c16717f6ba7bb77320c
 
 	# Next Button for first page
 	# Args: hPhotoTxt - text control for horizontal image
@@ -272,11 +260,11 @@ class interaction():
 		draw.SetBrush(wx.Brush('#000000', wx.TRANSPARENT))
 		draw.DrawRectangle(10, 10, 100, 100)
 	'''
-    # The "No" button on page2 - Moves from page 2 to 3
-    # Args: page2 - 2nd page
-    #       page3 - 3rd page
-    #       hImgCtrl - 3rd page's horizontal image control
-    #       vImgCtrl - 3rd page's vertical image control
+	# The "No" button on page2 - Moves from page 2 to 3
+	# Args: page2 - 2nd page
+	#       page3 - 3rd page
+	#       hImgCtrl - 3rd page's horizontal image control
+	#       vImgCtrl - 3rd page's vertical image control
 	def No2(self, page2, page3, hImgCtrl, vImgCtrl):
 		# displays image on 3rd page
 		self.upPaint(page3, self.verticalPath, vImgCtrl, 1)
@@ -284,9 +272,9 @@ class interaction():
 		page2.Hide()                    # Hides 2nd page
 		self.ShowYourself(page3)        # Shows 3rd page
 
-    # The "Yes" button on page2 - Moves from page 2 to 4
-    # Args: page2 - 2nd page
-    #       page4 - 4th page
+	# The "Yes" button on page2 - Moves from page 2 to 4
+	# Args: page2 - 2nd page
+	#       page4 - 4th page
 	def Yes2(self, page2, page4, hRightImgCtrl, 
 				hLeftImgCtrl, vRightImgCtrl, vLeftImgCtrl):
 		EyePhotos = getEyePhotos(self.patient)
@@ -317,29 +305,29 @@ class interaction():
 		maxSize = 100
 
 		# Scales the image
-	  	# This scaling works, but may have problems in future
-	  	if width > height:
+		# This scaling works, but may have problems in future
+		if width > height:
 			newWidth = maxSize
-		  	newHeight = maxSize * height/ width
-	  	else:
-		  	newHeight = maxSize
-		  	newWidth = maxSize * width/ height
+			newHeight = maxSize * height/ width
+		else:
+			newHeight = maxSize
+			newWidth = maxSize * width/ height
 
 		self.heightRatio = float(newHeight)/float(height)
 		self.widthRatio = float(newWidth)/float(width)
 		print "OG Height:", height, "| OG Width", width, "| New Height:", newHeight, "| New Width:", newWidth
 		print "Height Ratio:", self.heightRatio, "| Width Ratio:", self.widthRatio
 		# Finishes scaling and sets img into the imgCtrl  
-	  	newImg = newImg.Scale(newWidth,newHeight)
-	  	imgCtrl.SetBitmap(wx.BitmapFromImage(newImg))
+		newImg = newImg.Scale(newWidth,newHeight)
+		imgCtrl.SetBitmap(wx.BitmapFromImage(newImg))
 
-	  	page.Refresh()
+		page.Refresh()
 
-    # The "No" button on page4 - Moves from page 4 to 5
-    # Args: page4 - 4nd page
-    #       page5 - 5rd page
-    #       hImgCtrl - 5rd page's horizontal image control
-    #       vImgCtrl - 5rd page's vertical image control
+	# The "No" button on page4 - Moves from page 4 to 5
+	# Args: page4 - 4nd page
+	#       page5 - 5rd page
+	#       hImgCtrl - 5rd page's horizontal image control
+	#       vImgCtrl - 5rd page's vertical image control
 	def No4(self, page4, page5, hRightImgCtrl, 
 				hLeftImgCtrl, vRightImgCtrl, vLeftImgCtrl):
 		# displays image on 4th page
@@ -561,9 +549,9 @@ class interaction():
 			x = self.widthRatio
 			y = self.heightRatio
 			hTuple = ((int (self.hcoors[0][0]/x),int (self.hcoors[0][1]/y),int (self.hcoors[0][2]/x),int (self.hcoors[0][3]/y)),
-			          (int (self.hcoors[1][0]/x),int (self.hcoors[1][1]/y),int (self.hcoors[1][2]/x),int (self.hcoors[1][3]/y)))
+					  (int (self.hcoors[1][0]/x),int (self.hcoors[1][1]/y),int (self.hcoors[1][2]/x),int (self.hcoors[1][3]/y)))
 			vTuple = ((int (self.vcoors[0][0]/x),int (self.vcoors[0][1]/y),int (self.vcoors[0][2]/x),int (self.vcoors[0][3]/y)),
-			          (int (self.vcoors[1][0]/x),int (self.vcoors[1][1]/y),int (self.vcoors[1][2]/x),int (self.vcoors[1][3]/y)))
+					  (int (self.vcoors[1][0]/x),int (self.vcoors[1][1]/y),int (self.vcoors[1][2]/x),int (self.vcoors[1][3]/y)))
 			resetEyes(self.patient, hTuple, vTuple)
 		self.patient.analyzeEyes(0.17)
 		all_info = self.patient.getInfo()
@@ -632,48 +620,48 @@ class interaction():
 		page1.Show()
 		
 	def exportData(self,page):
-            book = Workbook()
-            sheet1 = book.add_sheet('Patient Data')
-            
-            sheet1.write(0,0,'Name')
-            sheet1.write(0,1,self.patient.name)
-            
-            row1 = sheet1.row(1)
-            row1.write(0,'Date of Birth')
-            row1.write(1,self.patient.birth)
-            
-            row2 = sheet1.row(2)
-            row2.write(0,'Gender')
-            row2.write(1,self.patient.gender)
-            
-            row3 = sheet1.row(3)
-            row3.write(0,'Ethnicity')
-            row3.write(1,self.patient.ethnicity)
-            
-            row4 = sheet1.row(4)
-            row4.write(0,'Language')
-            row4.write(1,self.patient.language)
-            
-            row5 = sheet1.row(5)
-            row5.write(0,'Room Number')
-            row5.write(1,self.patient.roomNumber)
-            
-            row6 = sheet1.row(6)
-            row6.write(0,'School')
-            row6.write(1,self.patient.school)
-            
-            row7 = sheet1.row(7)
-            row7.write(0,'Screening Comment')
-            row7.write(1,self.patient.screeningComment)
+			book = Workbook()
+			sheet1 = book.add_sheet('Patient Data')
 
-            row8 = sheet1.row(8)
-            row8.write(0,'Referral')
-            row8.write(1,self.patient.referral)
-                        
-            sheet1.col(0).width = 5000
-            sheet1.col(1).width = 5000
+			sheet1.write(0,0,'Name')
+			sheet1.write(0,1,self.patient.name)
 
-            book.save('patient_data.xls')
-            msg = "Excel file saved in current directory"
-            savedMsg = wx.MessageDialog(page, msg, "Patient Data Exported", wx.OK)
-            savedMsg.ShowModal()
+			row1 = sheet1.row(1)
+			row1.write(0,'Date of Birth')
+			row1.write(1,self.patient.birth)
+
+			row2 = sheet1.row(2)
+			row2.write(0,'Gender')
+			row2.write(1,self.patient.gender)
+
+			row3 = sheet1.row(3)
+			row3.write(0,'Ethnicity')
+			row3.write(1,self.patient.ethnicity)
+
+			row4 = sheet1.row(4)
+			row4.write(0,'Language')
+			row4.write(1,self.patient.language)
+
+			row5 = sheet1.row(5)
+			row5.write(0,'Room Number')
+			row5.write(1,self.patient.roomNumber)
+
+			row6 = sheet1.row(6)
+			row6.write(0,'School')
+			row6.write(1,self.patient.school)
+
+			row7 = sheet1.row(7)
+			row7.write(0,'Screening Comment')
+			row7.write(1,self.patient.screeningComment)
+
+			row8 = sheet1.row(8)
+			row8.write(0,'Referral')
+			row8.write(1,self.patient.referral)
+
+			sheet1.col(0).width = 5000
+			sheet1.col(1).width = 5000
+
+			book.save('patient_data.xls')
+			msg = "Excel file saved in current directory"
+			savedMsg = wx.MessageDialog(page, msg, "Patient Data Exported", wx.OK)
+			savedMsg.ShowModal()
