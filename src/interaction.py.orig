@@ -1,5 +1,4 @@
 import wx, os
-import wx, os, tkFileDialog
 from Controller import *
 from xlwt import Workbook
 #use makepatient method from controller
@@ -11,7 +10,6 @@ IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
 
 class interaction():
 	def __init__(self):
-	        self.patientData = []
 		self.patient = None          # This might not be used
 		self.horizontalPath = None   # Path of horizontal image
 		self.verticalPath = None     # Path of vertical image
@@ -165,6 +163,54 @@ class interaction():
 	#       hImgCtrl - horizontal image control of 2nd page
 	#       vImgCtrl - vertical image control of 2nd page
 	def next0(self, page0, page1, name, birth, gender, ethnicity, language,
+<<<<<<< HEAD
+	          roomNumber, school, screeningComment, referral):
+<<<<<<< HEAD
+	        
+	        self.patient = Patient()
+	        
+	        if name != "":
+   		   self.patient.name = name
+   		  
+   		if birth != "":
+   		   self.patient.birth = birth
+   		   
+   		if gender != "":
+   		   self.patient.gender = gender
+   		   
+   		if ethnicity != "":
+   		   self.patient.ethnicity = ethnicity
+   		   
+   		if language != "":
+   		   self.patient.language = language
+   		   
+   		if roomNumber != "":
+   		   self.patient.roomNumber = roomNumber
+   		   
+   		if school != "":
+   		   self.patient.school = school
+   		   
+   		if screeningComment != "":
+   		   self.patient.screeningComment = screeningComment
+   		   
+   		if referral != "":
+   		   self.patient.referral = referral
+   		
+  		page0.Hide()
+  		self.ShowYourself(page1)          # Shows 2nd page
+=======
+	        #if name == "" or age == "" or ethnicity == "":
+	        #    errorTxt = "Please fill out all inputs."
+	        #    errMsg = wx.MessageDialog(page0, errorTxt, "Please fill out all inputs.", wx.OK)
+	        #    errMsg.ShowModal()
+	        #    errMsg.Destroy()
+	        #else:
+		self.patient = makePatient0(name, birth, gender, ethnicity, language, 
+        	roomNumber, school, screeningComment, referral)
+		page0.Hide()
+		self.ShowYourself(page1)          # Shows 2nd page
+>>>>>>> 9fde59ab06b3e0e493cb9c16717f6ba7bb77320c
+=======
 			  roomNumber, school, screeningComment, referral):
 
 		self.patient = Patient()
@@ -198,6 +244,7 @@ class interaction():
 
 		page0.Hide()
 		self.ShowYourself(page1)          # Shows 2nd page
+>>>>>>> 302ddaaecdb5d03c034f1692c19df69a12780c98
 
 	# Next Button for first page
 	# Args: hPhotoTxt - text control for horizontal image
@@ -619,109 +666,98 @@ class interaction():
 
 		# Shows first page
 		page1.Show()
-
-	def saveData(self, page, name, birth, gender, ethnicity, language,
-			  roomNumber, school, screeningComment, referral):		
-	   
-	   # Creates a patient object to be saved into data structure
-    	   patient = Patient()
-
-	   if name.GetValue() != "":
-	       patient.name = name.GetValue()
-
-	   if birth.GetValue() != "":
-	       patient.birth = birth.GetValue()
-
-	   if gender.GetValue() != "":
-	       patient.gender = gender.GetValue()
-
-	   if ethnicity.GetValue() != "":
-	       patient.ethnicity = ethnicity.GetValue()
-
-	   if language.GetValue() != "":
-	       patient.language = language.GetValue()
-
-	   if roomNumber.GetValue() != "":
-	       patient.roomNumber = roomNumber.GetValue()
-
-	   if school.GetValue() != "":
-	       patient.school = school.GetValue()
-
-           if screeningComment.GetValue() != "":
-	       patient.screeningComment = screeningComment.GetValue()
-
-	   if referral.GetValue() != "":
-	       patient.referral = referral.GetValue()
-			
-	   # Saves patient data into data structure
-	   self.patientData.append(patient)
-	   msg = "Patient Data was saved into the database."
-           savedMsg = wx.MessageDialog(page, msg, "Patient Data Saved", wx.OK)
-           savedMsg.ShowModal()
-           
-           # Clears inputs after patient data is saved
-           name.Clear()
-           birth.Clear()
-           gender.Clear() 
-           ethnicity.Clear()
-           language.Clear()
-           roomNumber.Clear()
-           school.Clear()
-           screeningComment.Clear()
-           referral.Clear()											
-															
+		
 	def exportData(self,page):
-
-            # Exports data in Excel file
+<<<<<<< HEAD
             book = Workbook()
+            sheet1 = book.add_sheet('Patient Data')
             
-            # index for sheet page
-            i = 1
+            sheet1.write(0,0,'Name')
+            sheet1.write(0,1,self.patient.name)
             
-	    for patient in self.patientData:
+            row1 = sheet1.row(1)
+            row1.write(0,'Date of Birth')
+            row1.write(1,self.patient.birth)
             
-                sheet = book.add_sheet('Patient Data' + str(i))     
-                sheet.write(0,0,'Name')
-                sheet.write(0,1,patient.name)
-                
-                row1 = sheet.row(1)
-                row1.write(0,'Date of Birth')
-                row1.write(1,patient.birth)
-                
-                row2 = sheet.row(2)
-                row2.write(0,'Gender')
-                row2.write(1,patient.gender)
-                
-                row3 = sheet.row(3)
-                row3.write(0,'Ethnicity')
-                row3.write(1,patient.ethnicity)
-                
-                row4 = sheet.row(4)
-                row4.write(0,'Language')
-                row4.write(1,patient.language)
-                
-                row5 = sheet.row(5)
-                row5.write(0,'Room Number')
-                row5.write(1,patient.roomNumber)
-                
-                row6 = sheet.row(6)
-                row6.write(0,'School')
-                row6.write(1,patient.school)
-                
-                row7 = sheet.row(7)
-                row7.write(0,'Screening Comment')
-                row7.write(1,patient.screeningComment)
-                
-                row8 = sheet.row(8)
-                row8.write(0,'Referral')
-                row8.write(1,patient.referral)
-                
-                sheet.col(0).width = 5000
-                sheet.col(1).width = 5000
-                
-                i += 1
-                
+            row2 = sheet1.row(2)
+            row2.write(0,'Gender')
+            row2.write(1,self.patient.gender)
+            
+            row3 = sheet1.row(3)
+            row3.write(0,'Ethnicity')
+            row3.write(1,self.patient.ethnicity)
+            
+            row4 = sheet1.row(4)
+            row4.write(0,'Language')
+            row4.write(1,self.patient.language)
+            
+            row5 = sheet1.row(5)
+            row5.write(0,'Room Number')
+            row5.write(1,self.patient.roomNumber)
+            
+            row6 = sheet1.row(6)
+            row6.write(0,'School')
+            row6.write(1,self.patient.school)
+            
+            row7 = sheet1.row(7)
+            row7.write(0,'Screening Comment')
+            row7.write(1,self.patient.screeningComment)
+
+            row8 = sheet1.row(8)
+            row8.write(0,'Referral')
+            row8.write(1,self.patient.referral)
+                        
+            sheet1.col(0).width = 5000
+            sheet1.col(1).width = 5000
+
             book.save('patient_data.xls')
             msg = "Excel file saved in current directory"
             savedMsg = wx.MessageDialog(page, msg, "Patient Data Exported", wx.OK)
             savedMsg.ShowModal()
+=======
+			book = Workbook()
+			sheet1 = book.add_sheet('Patient Data')
+
+			sheet1.write(0,0,'Name')
+			sheet1.write(0,1,self.patient.name)
+
+			row1 = sheet1.row(1)
+			row1.write(0,'Date of Birth')
+			row1.write(1,self.patient.birth)
+
+			row2 = sheet1.row(2)
+			row2.write(0,'Gender')
+			row2.write(1,self.patient.gender)
+
+			row3 = sheet1.row(3)
+			row3.write(0,'Ethnicity')
+			row3.write(1,self.patient.ethnicity)
+
+			row4 = sheet1.row(4)
+			row4.write(0,'Language')
+			row4.write(1,self.patient.language)
+
+			row5 = sheet1.row(5)
+			row5.write(0,'Room Number')
+			row5.write(1,self.patient.roomNumber)
+
+			row6 = sheet1.row(6)
+			row6.write(0,'School')
+			row6.write(1,self.patient.school)
+
+			row7 = sheet1.row(7)
+			row7.write(0,'Screening Comment')
+			row7.write(1,self.patient.screeningComment)
+
+			row8 = sheet1.row(8)
+			row8.write(0,'Referral')
+			row8.write(1,self.patient.referral)
+
+			sheet1.col(0).width = 5000
+			sheet1.col(1).width = 5000
+
+			book.save('patient_data.xls')
+			msg = "Excel file saved in current directory"
+			savedMsg = wx.MessageDialog(page, msg, "Patient Data Exported", wx.OK)
+			savedMsg.ShowModal()
+>>>>>>> 302ddaaecdb5d03c034f1692c19df69a12780c98

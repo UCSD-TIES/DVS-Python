@@ -72,9 +72,8 @@ class page(wx.Panel):
                 # instantiate the most outer sizer
 		vbox = wx.BoxSizer(wx.VERTICAL)
 		
-		##############Grids#####################
+		##############SIZERS#####################
                 mainGrid = wx.FlexGridSizer(10, 2, 5, 5)
-                buttonGrid = wx.FlexGridSizer(10, 2, 15, 15)
 
 		###############STATIC TEXT################
                 name = wx.StaticText(page, label="Name: ")  
@@ -97,26 +96,10 @@ class page(wx.Panel):
 		schoolInput = wx.TextCtrl(page, -1, "", size=(175, -1))
 		screeningCommentInput = wx.TextCtrl(page, -1, "", size=(175, -1))
 		referralInput = wx.TextCtrl(page, -1, "", size=(175, -1))
+		# Passes in path names for both photos, current page, page 2, creates page 2's imgCtrl's		
 
-                # Position for Next button
-                x = 840
-                y = 520
-        
                 ###################Buttons####################
-                saveBtn = wx.Button(page, label="Save")
-                exportBtn = wx.Button(page, label="Export")
-		nextBtn0 = wx.Button(page, label='Next', pos=(x,y))          # Button for moving onto next page
-		
-		saveBtn.Bind(wx.EVT_BUTTON, lambda event: 
-		             self.interact.saveData(page, nameInput, birthInput, 
-    		                                    genderInput, ethnicityInput,
-    		                                    languageInput, roomNumberInput,
-    		                                    schoolInput, screeningCommentInput,
-    		                                    referralInput))
-  		
-		exportBtn.Bind(wx.EVT_BUTTON, 
-		              lambda event: self.interact.exportData(page))
-		              
+		nextBtn0 = wx.Button(page, label='Next')          # Button for moving onto next page
 		nextBtn0.Bind(wx.EVT_BUTTON, lambda event: 
 		              self.interact.next0(self.page0, self.page1, 
 		                                  nameInput.GetValue(), 
@@ -139,14 +122,10 @@ class page(wx.Panel):
 	        mainGrid.AddMany([(school),(schoolInput)])
 	        mainGrid.AddMany([(screeningComment),(screeningCommentInput)])
 	        mainGrid.AddMany([(referral),(referralInput)])
-	        buttonGrid.AddMany([(saveBtn),(exportBtn)])
+	        mainGrid.AddMany([(nextBtn0)])
 	        
-	        # Adds everything to real main sizer
-	        vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
-	        vbox.Add(buttonGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)   
-	        
-	        # Sets the main sizer as the page's sizer
-		page.SetSizer(vbox)
+	        vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)   # Adds everything to real main sizer
+		page.SetSizer(vbox)                                # Sets the main sizer as the page's sizer
 	
 	def pageSetUp1(self, page):
 		# instantiate the most outer sizer
@@ -305,8 +284,6 @@ class page(wx.Panel):
 		# adding see result button
 		resultBtn = wx.Button(page, label="Next")
 		resultBtn.Bind(wx.EVT_BUTTON, lambda event: self.interact.seeResult(self.page3, self.page4, 1))
-		resultBtn = wx.Button(page, label="See Result")
-		resultBtn.Bind(wx.EVT_BUTTON, lambda event: self.interact.seeResult(self.page3, self.resultPage, 1))
 
 		### Mouse events, on click, on drag
 		# Mouse events for vertical image
@@ -363,8 +340,13 @@ class page(wx.Panel):
 			
 		noBtn = wx.Button(page, label='No')       # Button to go to 5th page
 		noBtn.Bind(wx.EVT_BUTTON,
+<<<<<<< HEAD
+			lambda event: self.interact.No4(self.page4, self.page5, self.hRight2ImgCtrl, 
+				self.hLeft2ImgCtrl, self.vRight2ImgCtrl, self.vLeft2ImgCtrl))
+=======
 			lambda event: self.interact.No4(self.page4, self.page5, self.hRightImgCtrl2, 
 				self.hLeftImgCtrl2, self.vRightImgCtrl2, self.vLeftImgCtrl2))
+>>>>>>> 302ddaaecdb5d03c034f1692c19df69a12780c98
 		# Will pass in image controls of 4th page
 
 		#################ADDING STUFF#################
@@ -400,6 +382,15 @@ class page(wx.Panel):
 
 		###############COMPONENTS################
 		hRightImg = wx.EmptyImage(100,100)
+<<<<<<< HEAD
+		self.hRight2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hRightImg))
+		hLeftImg = wx.EmptyImage(100,100)
+		self.hLeft2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hLeftImg))
+		vRightImg = wx.EmptyImage(100,100)
+		self.vRight2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vRightImg))
+		vLeftImg = wx.EmptyImage(100,100)
+		self.vLeft2ImgCtrl = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vLeftImg))
+=======
 		self.hRightImgCtrl2 = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hRightImg))
 		hLeftImg = wx.EmptyImage(100,100)
 		self.hLeftImgCtrl2 = wx.StaticBitmap(page, -1, wx.BitmapFromImage(hLeftImg))
@@ -407,6 +398,7 @@ class page(wx.Panel):
 		self.vRightImgCtrl2 = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vRightImg))
 		vLeftImg = wx.EmptyImage(100,100)
 		self.vLeftImgCtrl2 = wx.StaticBitmap(page, -1, wx.BitmapFromImage(vLeftImg))
+>>>>>>> 302ddaaecdb5d03c034f1692c19df69a12780c98
 
 		title = wx.StaticText(page, label="Please correct the pupil detection:")
 		# Button to clear pictures and paths
@@ -420,6 +412,31 @@ class page(wx.Panel):
 		resultBtn.Bind(wx.EVT_BUTTON, lambda event: self.interact.seeResult(self.page5, self.resultPage, 1))
 
 		### Mouse events, on click, on drag
+<<<<<<< HEAD
+		self.hRight2ImgCtrl.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 1))
+		self.hRight2ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.hRight2ImgCtrl))
+		self.hRight2ImgCtrl.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.hRight2ImgCtrl, 1))
+
+		self.hLeft2ImgCtrl.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 1))
+		self.hLeft2ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.hLeft2ImgCtrl))
+		self.hLeft2ImgCtrl.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.hLeft2ImgCtrl, 1))
+
+		self.vRight2ImgCtrl.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 1))
+		self.vRight2ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.vRight2ImgCtrl))
+		self.vRight2ImgCtrl.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.vRight2ImgCtrl, 1))
+
+		self.vLeft2ImgCtrl.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 1))
+		self.vLeft2ImgCtrl.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.vLeft2ImgCtrl))
+		self.vLeft2ImgCtrl.Bind(wx.EVT_LEFT_UP, lambda event: self.interact.mouseRelease(event, self.vLeft2ImgCtrl, 1))
+
+
+		mainGrid.AddMany([(menu),(pics)])
+		menu.AddMany([(title),(560,0),(resetBtn),(resultBtn)])
+		pic1.Add(self.hLeft2ImgCtrl, flag = wx.ALIGN_RIGHT)
+		pic2.Add(self.hRight2ImgCtrl, flag = wx.ALIGN_RIGHT)
+		pic3.Add(self.vLeft2ImgCtrl, flag = wx.ALIGN_LEFT)
+		pic4.Add(self.vRight2ImgCtrl, flag = wx.ALIGN_LEFT)
+=======
 		# Mouse events for vertical image
 		self.hRightImgCtrl2.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 1))
 		self.hRightImgCtrl2.Bind(wx.EVT_MOTION, lambda event: self.interact.mouseDrag(event,self.hRightImgCtrl2))
@@ -444,6 +461,7 @@ class page(wx.Panel):
 		pic2.Add(self.hRightImgCtrl2, flag = wx.ALIGN_RIGHT)
 		pic3.Add(self.vLeftImgCtrl2, flag = wx.ALIGN_LEFT)
 		pic4.Add(self.vRightImgCtrl2, flag = wx.ALIGN_LEFT)
+>>>>>>> 302ddaaecdb5d03c034f1692c19df69a12780c98
 		pics.AddMany([(pic1),(pic2),(pic3),(pic4)])
 
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
@@ -472,11 +490,11 @@ class page(wx.Panel):
                 x = 740
                 y = 520
 
-		#exportBtn = wx.Button(page, label="Export Data", pos=(x, y))
+		exportBtn = wx.Button(page, label="Export Data", pos=(x, y))
 		restartBtn = wx.Button(page, label="Start Over", pos=(x + 100, y))
 
-                #exportBtn.Bind(wx.EVT_BUTTON,
-                #            lambda event: self.interact.exportData(page))
+                exportBtn.Bind(wx.EVT_BUTTON,
+                            lambda event: self.interact.exportData(page))
         
 		restartBtn.Bind(wx.EVT_BUTTON,
 		            lambda event: self.interact.startOver(self.resultPage,
