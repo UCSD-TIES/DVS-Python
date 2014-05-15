@@ -164,6 +164,7 @@ class interaction():
 	#       vImgCtrl - vertical image control of 2nd page
 	def next0(self, page0, page1, name, birth, gender, ethnicity, language,
 	          roomNumber, school, screeningComment, referral):
+<<<<<<< HEAD
 	        
 	        self.patient = Patient()
 	        
@@ -196,6 +197,18 @@ class interaction():
    		
   		page0.Hide()
   		self.ShowYourself(page1)          # Shows 2nd page
+=======
+	        #if name == "" or age == "" or ethnicity == "":
+	        #    errorTxt = "Please fill out all inputs."
+	        #    errMsg = wx.MessageDialog(page0, errorTxt, "Please fill out all inputs.", wx.OK)
+	        #    errMsg.ShowModal()
+	        #    errMsg.Destroy()
+	        #else:
+		self.patient = makePatient0(name, birth, gender, ethnicity, language, 
+        	roomNumber, school, screeningComment, referral)
+		page0.Hide()
+		self.ShowYourself(page1)          # Shows 2nd page
+>>>>>>> 9fde59ab06b3e0e493cb9c16717f6ba7bb77320c
 
 	# Next Button for first page
 	# Args: hPhotoTxt - text control for horizontal image
@@ -215,7 +228,7 @@ class interaction():
 		print self.patient.name
 			
 		#self.patient = makePatient(self.horizontalPath, self.verticalPath)
-                setPatient(self.horizontalPath, self.verticalPath, self.patient)
+		setPatient(self.horizontalPath, self.verticalPath, self.patient)
 		coors = getEyeCoors(self.patient)                 # this coors is local, just for drawing
 		print coors
 
