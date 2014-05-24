@@ -229,33 +229,15 @@ class interaction():
 			  roomNumber, school, screeningComment, referral):
 
 		self.patient = Patient()
-
-		if name != "":
-			self.patient.name = name
-
-		if birth != "":
-			self.patient.birth = birth
-
-		if gender != "":
-			self.patient.gender = gender
-
-		if ethnicity != "":
-			self.patient.ethnicity = ethnicity
-
-		if language != "":
-			self.patient.language = language
-
-		if roomNumber != "":
-			self.patient.roomNumber = roomNumber
-
-		if school != "":
-			self.patient.school = school
-
-		if screeningComment != "":
-			self.patient.screeningComment = screeningComment
-
-		if referral != "":
-			self.patient.referral = referral
+		self.patient.setName(name)
+		self.patient.setBirth(birth)
+		self.patient.setGender(gender)
+		self.patient.setEthnicity(ethnicity)
+		self.patient.setLanguage(language) 
+		self.patient.setRoomNumber(roomNumber) 
+		self.patient.setSchool(school)
+		self.patient.setScreeningComment(screeningComment)
+		self.patient.setReferral(referral)
 
 		page0.Hide()
 		self.ShowYourself(page1)          # Shows 2nd page
@@ -278,7 +260,7 @@ class interaction():
 		print self.patient.name
 			
 		#self.patient = makePatient(self.horizontalPath, self.verticalPath)
-		setPatient(self.horizontalPath, self.verticalPath, self.patient)
+		self.patient.setImages(self.horizontalPath, self.verticalPath)
 		coors = getEyeCoors(self.patient)                 # this coors is local, just for drawing
 		print coors
 

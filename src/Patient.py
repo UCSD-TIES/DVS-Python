@@ -15,8 +15,6 @@ class Patient:
         """ Initialize the horizontal and vertical attributes by creating
             HorizontalPhoto and VerticalPhoto objects
         """
-        #self.horizontal = HorizontalPhoto(horizontalImg, horizontalPath)
-        #self.vertical = VerticalPhoto(verticalImg, verticalPath)
         self.horizontal = None
         self.vertical = None
         self.defects ={}
@@ -148,11 +146,55 @@ class Patient:
 
 #################### Setters ##################################
 
+    def setImages(self, horizontalPath, verticalPath):
+         # Load the images 
+        horizontalImg = cv.LoadImage(horizontalPath)
+        verticalImg = cv.LoadImage(verticalPath)
+        
+        patient.setHorizontal(horizontalImg, horizontalPath)
+        patient.setVertical(verticalImg, verticalPath)
+
     def setHorizontal(self, horizontalImg, horizontalPath):
         self.horizontal = HorizontalPhoto(horizontalImg, horizontalPath)
 
     def setVertical(self, verticalImg, verticalPath):
         self.vertical = VerticalPhoto(verticalImg, verticalPath)
+
+    def setName(self, newName):
+        if newName:
+            self.name = newName
+
+    def setBirth(self, newBirth):
+        if newBirth:
+            self.birth = newBirth
+
+    def setGender(self, newGender):
+        if newGender:
+            self.gender = newGender
+
+    def setEthnicity(self, newEthnicity):
+        if newEthnicity:
+            self.ethnicity = newEthnicity
+
+    def setLanguage(self, newLanguage):
+        if newLanguage:
+            self.language = newLanguage
+
+    def setRoomNumber(self, newRoomNumber):
+        if newRoomNumber:
+            self.roomNumber = newRoomNumber
+
+    def setSchool(self, newSchool):
+        if newSchool:
+            self.school = newSchool
+
+    def setScreeningComment(self, newScreeningComment):
+        if newScreeningComment:
+            self.screeningComment = newScreeningComment
+
+    def setReferral(self, newReferral):
+        if newReferral:
+            self.referral = newReferral
 
 
 ################## Disease Detection ##########################

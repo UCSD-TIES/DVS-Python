@@ -25,57 +25,8 @@ SHIFT = 0
 
 def makePatient(name, birth, gender, ethnicity, language, roomNumber, school, 
                  screeningComment, referral):
-    
-    thisPatient = Patient(name, birth, gender, ethnicity, language, roomNumber, 
+    return Patient(name, birth, gender, ethnicity, language, roomNumber, 
                           school, screeningComment, referral)
-    
-    return thisPatient
-
-def setPatient(horizontalPath, verticalPath, patient):
-    """ Makes and returns a patient object
-
-    Args:
-        string horizontalPath - the full path to the horizontal photo
-        string verticalPath - the full path to the vertical photo
-
-    Return:
-        Patient - the patient object created
-
-    """
-    # Load the images 
-    horizontalImg = cv.LoadImage(horizontalPath)
-    verticalImg = cv.LoadImage(verticalPath)
-    #thisPatient = Patient(horizontalImg, horizontalPath, verticalImg, verticalPath)
-    patient.setHorizontal(horizontalImg, horizontalPath)
-    patient.setVertical(verticalImg, verticalPath)
-    
-    if DEBUG:
-        # show the variables as they have been populated
-        print "Showing patient's horizontal image..."
-        cv.ShowImage("Horizontal",thisPatient.getHorizontal())
-        cv.WaitKey(0)
-        cv.DestroyWindow("Horizontal")
-        print "Showing patient's vertical image..."
-        cv.ShowImage("Vertical",thisPatient.getVertical())
-        cv.WaitKey(0)
-        cv.DestroyWindow("Vertical")
-        print "Showing photo of the patient's horizontal left eye..."
-        print thisPatient.horizontal.left.eyePhoto
-        cv.ShowImage("Horizontal Left Eye",thisPatient.horizontal.left.eyePhoto)
-        cv.WaitKey(0)
-        cv.DestroyWindow("Horizontal Left Eye")
-        print "Showing photo of the patient's horizonal right eye..."
-        cv.ShowImage("Horizontal Right Eye",thisPatient.horizontal.right.eyePhoto)
-        cv.WaitKey(0)
-        cv.DestroyWindow("Horizontal Right Eye")
-        
-        # ISSUE: These two print statemtents are not actually printing
-        print "Patient: " + str(thisPatient)
-        print "Attributes: " + str(thisPatient.__dict__)
-        print "Here's our left region again: " + str(thisPatient.horizontal.left.eyeRegion)
-        print "Here's our right region again: " + str(thisPatient.horizontal.right.eyeRegion)
-
-    return patient
 
 def removePupilPhoto():
     """ Function call to remove photos of the pupil saved to disk during
