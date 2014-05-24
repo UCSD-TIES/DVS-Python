@@ -1,5 +1,5 @@
 import wx, os
-import wx, os, tkFileDialog
+import wx, os
 from Controller import *
 from xlwt import Workbook
 #use makepatient method from controller
@@ -11,7 +11,7 @@ IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
 
 class interaction():
 	def __init__(self):
-	        self.patientData = []
+		self.patientData = []
 		self.patient = None          # This might not be used
 		self.horizontalPath = None   # Path of horizontal image
 		self.verticalPath = None     # Path of vertical image
@@ -604,7 +604,7 @@ class interaction():
 		print "\n"
 
 		# display refer result to result page
-		y += 30
+		y = 480
 		referText = "Refer" if refer == 1 else "Not Refer"
 
 		font1 = wx.Font(30, wx.NORMAL, wx.ITALIC, wx.NORMAL)
