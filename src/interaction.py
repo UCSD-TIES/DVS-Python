@@ -1,7 +1,7 @@
 import wx, os
 import wx, os
 from Controller import *
-from xlwt import Workbook
+#from xlwt import Workbook
 #use makepatient method from controller
 
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
@@ -17,6 +17,8 @@ class interaction():
 		self.verticalPath = None     # Path of vertical image
 		self.heightRatio = None
 		self.widthRatio = None
+		self.rRatio = None
+		self.lRatio = None
 
 		self.hRightPath = None
 		self.hLeftPath = None
@@ -27,9 +29,19 @@ class interaction():
 		self.hBitMap = None
 		self.vBitMap = None
 
+		self.hlBitMap = None
+		self.hrBitMap = None
+		self.vlBitMap = None
+		self.vrBitMap = None
+
 		# Images to make bitmaps out of, will store original image for resets
 		self.hImg = None
 		self.vImg = None
+
+		self.hlImg = None
+		self.hrImg = None
+		self.vlImg = None
+		self.vrImg = None
 
 		# Coordinates for user input in tuple
 		# set of tuples for horizontal and vertical, outer tuple is (left eye, right eye)
@@ -156,6 +168,55 @@ class interaction():
 			self.vBitMap = wx.BitmapFromImage(newImg)
 			self.vImg = newImg
 		page.Refresh()
+	
+	# specialized upPaint function for cropped pupil photos
+	# Args: page - the page passed in from upload() (page 1)
+	#       upPath - path of the image to be shown
+	#       imgCtrl - holds the newly shown image
+	#       orientation - vertical or horizontal, taken from upload()
+	#		eyeNum - flag of which eye is being painted
+	def upPupilPaint(self, page, upPath, imgCtrl, eyeNum):
+		# Makes a new image using the file path
+		newImg = wx.Image(upPath, wx.BITMAP_TYPE_ANY)
+
+		# Getting width and height of this image
+		width = newImg.GetWidth()
+		height = newImg.GetHeight()
+		maxSize = 100
+
+		# Scales the image
+		# This scaling works, but may have problems in future
+		if width > height:
+			newWidth = maxSize
+			newHeight = maxSize * height/ width
+		else:
+			newHeight = maxSize
+			newWidth = maxSize * width/ height
+		if eyeNum == 0 | eyeNum == 2:
+			self.lRatio = float(newHeight)/float(height)
+		elif eyeNum == 1 | eyeNum == 3:
+			self.rRatio = float(newHeight)/float(height)
+
+		print "OG Height:", height, "| OG Width", width, "| New Height:", newHeight, "| New Width:", newWidth
+		print "Left Eye Photos Ratio:", self.lRatio, "| Right Eye Photos Ratio:", self.rRatio
+		# Finishes scaling and sets img into the imgCtrl  
+		newImg = newImg.Scale(newWidth,newHeight)
+		imgCtrl.SetBitmap(wx.BitmapFromImage(newImg))
+
+		if eyeNum == 0:
+			self.hlBitMap = wx.BitmapFromImage(newImg)
+			self.hlImg = newImg
+		elif eyeNum == 1:
+			self.hrBitMap = wx.BitmapFromImage(newImg)
+			self.hrImg = newImg
+		elif eyeNum == 2:
+			self.vlBitMap = wx.BitmapFromImage(newImg)
+			self.vlImg = newImg
+		elif eyeNum == 3:
+			self.vrBitMap = wx.BitmapFromImage(newImg)
+			self.vrImg = newImg
+
+		page.Refresh()
 
 	# Next Button for first page
 	# Args: hPhotoTxt - text control for horizontal image
@@ -229,7 +290,7 @@ class interaction():
 		# Drawing rectangle with MemoryDC
 		mdc = wx.MemoryDC()
 		
-		mdc.SelectObject(self.hBitMap)    # sets a bitmap to e modified
+		mdc.SelectObject(self.hBitMap)    # sets a bitmap to be modified
 		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
 
 		# Rectangles are drawn with DC.DrawRectangle(X, Y, width, Height)
@@ -237,11 +298,11 @@ class interaction():
 		mdc.DrawRectangle(coors[1][0]*self.widthRatio, coors[1][1]*self.heightRatio, coors[1][2]*self.widthRatio, coors[1][3]*self.heightRatio)
 		hImgCtrl.SetBitmap(self.hBitMap)  # Sets modified bitmap back into the img ctrl
 
-		img = self.vBitMap.ConvertToImage()	# To get width
-		width = img.GetWidth()
+		#img = self.vBitMap.ConvertToImage()	# To get width
+		#width = img.GetWidth()
 		#img = img.Rotate90()
 		#self.vBitMap = wx.BitmapFromImage(img)
-		mdc.SelectObject(self.vBitMap)    # sets a bitmap to e modified
+		mdc.SelectObject(self.vBitMap)    # sets a bitmap to be modified
 		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
 		# THIS MIGHT BE WRONG
 		#mdc.DrawRectangle((coors[2][1]+coors[2][3])*self.heightRatio, (width - coors[2][0]-coors[2][2])*self.widthRatio, coors[2][3], coors[2][2])
@@ -261,6 +322,7 @@ class interaction():
 		draw.SetBrush(wx.Brush('#000000', wx.TRANSPARENT))
 		draw.DrawRectangle(10, 10, 100, 100)
 	'''
+
 	# The "No" button on page2 - Moves from page 2 to 3
 	# Args: page2 - 2nd page
 	#       page3 - 3rd page
@@ -284,46 +346,44 @@ class interaction():
 		self.vRightPath = EyePhotos[2]
 		self.vLeftPath = EyePhotos[3]
 		# displays image on 4th page
-		self.upPupilPaint(page4, self.hRightPath, hRightImgCtrl)
-		self.upPupilPaint(page4, self.hLeftPath, hLeftImgCtrl)
-		self.upPupilPaint(page4, self.vRightPath, vRightImgCtrl)
-		self.upPupilPaint(page4, self.vLeftPath, vLeftImgCtrl)
+		self.upPupilPaint(page4, self.hRightPath, hRightImgCtrl, 1)
+		self.upPupilPaint(page4, self.hLeftPath, hLeftImgCtrl, 0)
+		self.upPupilPaint(page4, self.vRightPath, vRightImgCtrl, 3)
+		self.upPupilPaint(page4, self.vLeftPath, vLeftImgCtrl, 2)
 		page2.Hide()                    # Hides 2nd page
-		self.ShowYourself(page4)        # Shows 3rd page
 
-	# specialized upPaint function for cropped pupil photos
-	# Args: page - the page passed in from upload() (page 1)
-	#       upPath - path of the image to be shown
-	#       imgCtrl - holds the newly shown image
-	#       orientation - vertical or horizontal, taken from upload()
-	def upPupilPaint(self, page, upPath, imgCtrl):
-		# Makes a new image using the file path
-		newImg = wx.Image(upPath, wx.BITMAP_TYPE_ANY)
+		setPatient(self.horizontalPath, self.verticalPath, self.patient)
+		coors = getPupilCoors(self.patient)  # this coors is local, just for drawing
+		print coors
 
-		# Getting width and height of this image
-		width = newImg.GetWidth()
-		height = newImg.GetHeight()
-		maxSize = 100
+		# Drawing circles with MemoryDC
+		mdc = wx.MemoryDC()
+		
+		mdc.SelectObject(self.hlBitMap)    # sets a bitmap to be modified
+		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
+		mdc.DrawCircle(coors[0][0]*self.lRatio, coors[0][1]*self.lRatio, coors[0][2]) #DrawCircle(Xpos, Ypos, radius)
+		hLeftImgCtrl.SetBitmap(self.hlBitMap)  # Sets modified bitmap back into the img ctrl
 
-		# Scales the image
-		# This scaling works, but may have problems in future
-		if width > height:
-			newWidth = maxSize
-			newHeight = maxSize * height/ width
-		else:
-			newHeight = maxSize
-			newWidth = maxSize * width/ height
+		mdc.SelectObject(self.hrBitMap)
+		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
+		mdc.DrawCircle(coors[1][0]*self.rRatio, coors[1][1]*self.rRatio, coors[1][2])
+		hRightImgCtrl.SetBitmap(self.hrBitMap)
 
-		self.heightRatio = float(newHeight)/float(height)
-		self.widthRatio = float(newWidth)/float(width)
-		print "OG Height:", height, "| OG Width", width, "| New Height:", newHeight, "| New Width:", newWidth
-		print "Height Ratio:", self.heightRatio, "| Width Ratio:", self.widthRatio
-		# Finishes scaling and sets img into the imgCtrl  
-		newImg = newImg.Scale(newWidth,newHeight)
-		imgCtrl.SetBitmap(wx.BitmapFromImage(newImg))
+		mdc.SelectObject(self.vlBitMap)
+		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
+		mdc.DrawCircle(coors[2][0]*self.lRatio, coors[2][1]*self.lRatio, coors[2][2])
+		vLeftImgCtrl.SetBitmap(self.vlBitMap)
 
-		page.Refresh()
+		mdc.SelectObject(self.vrBitMap)
+		mdc.SetBrush(wx.Brush('#CCFF99', wx.TRANSPARENT))
+		mdc.DrawCircle(coors[3][0]*self.rRatio, coors[3][1]*self.rRatio, coors[3][2])
+		vRightImgCtrl.SetBitmap(self.vrBitMap)
 
+		mdc.SelectObject(wx.NullBitmap)   # MemoryDC must be set back to a null bitmap when done
+		
+		self.ShowYourself(page4)        # Shows 4th page
+
+	
 	# The "No" button on page4 - Moves from page 4 to 5
 	# Args: page4 - 4nd page
 	#       page5 - 5rd page
@@ -332,10 +392,10 @@ class interaction():
 	def No4(self, page4, page5, hRightImgCtrl, 
 				hLeftImgCtrl, vRightImgCtrl, vLeftImgCtrl):
 		# displays image on 4th page
-		self.upPupilPaint(page5, self.hRightPath, hRightImgCtrl)
-		self.upPupilPaint(page5, self.hLeftPath, hLeftImgCtrl)
-		self.upPupilPaint(page5, self.vRightPath, vRightImgCtrl)
-		self.upPupilPaint(page5, self.vLeftPath, vLeftImgCtrl)
+		self.upPupilPaint(page5, self.hRightPath, hRightImgCtrl, 1)
+		self.upPupilPaint(page5, self.hLeftPath, hLeftImgCtrl, 0)
+		self.upPupilPaint(page5, self.vRightPath, vRightImgCtrl, 3)
+		self.upPupilPaint(page5, self.vLeftPath, vLeftImgCtrl, 2)
 		page4.Hide()                    # Hides 2nd page
 		self.ShowYourself(page5)        # Shows 5th page
 

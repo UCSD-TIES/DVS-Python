@@ -15,7 +15,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = True
+TEST = False
 PRINT = False
      
 CIRCLE_COLOR = (0, 255, 0)
@@ -468,8 +468,8 @@ def getPupilCoors(thisPatient):
     """ 
         Get pupil coors. (hLeft, hRight, vLeft, vRight)
     """
-    return( thisPatent.getPupilRegion(true,true),thisPatent.getPupilRegion(true,false),
-            thisPatent.getPupilRegion(false,true),thisPatent.getPupilRegion(false,false))
+    return(thisPatient.getPupilRegion(True,True),thisPatient.getPupilRegion(True,False),
+            thisPatient.getPupilRegion(False,True),thisPatient.getPupilRegion(False,False))
 
 
 def drawOnEyes(thisPatient):
@@ -492,7 +492,7 @@ if (TEST):
     horiz += "/pics/homemade/jthorizontal.jpg"  
     vert = os.path.dirname(os.path.abspath(sys.argv[0]))
     vert += "/pics/homemade/andrewvertical.jpg"
-    patient = makePatient(horiz, vert)
+    patient = setPatient(horiz, vert, Patient())
 
     # Take the horizontal image and draw bounding eye boxes
     horizontalPhoto = patient.getHorizontal()

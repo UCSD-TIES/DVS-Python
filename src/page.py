@@ -63,7 +63,7 @@ class page(wx.Panel):
 	''' Moved to interaction.py
 	def ShowYourself(self, page):
 		page.Raise()
-		page.SetPosition((0,0))
+		page.osition((0,0))
 		page.Fit()
 		page.GetParent().GetSizer().Show(page)
 		page.GetParent().GetSizer().Layout()
@@ -305,9 +305,7 @@ class page(wx.Panel):
 		# adding see result button
 		resultBtn = wx.Button(page, label="Next")
 		resultBtn.Bind(wx.EVT_BUTTON, lambda event: self.interact.seeResult(self.page3, self.page4, 1))
-		resultBtn = wx.Button(page, label="See Result")
-		resultBtn.Bind(wx.EVT_BUTTON, lambda event: self.interact.seeResult(self.page3, self.resultPage, 1))
-
+		
 		### Mouse events, on click, on drag
 		# Mouse events for vertical image
 		self.ver3ImgCtrl.Bind(wx.EVT_LEFT_DOWN, lambda event: self.interact.mousePress(event, 1))
