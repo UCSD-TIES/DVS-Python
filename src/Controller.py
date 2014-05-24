@@ -15,7 +15,7 @@ import cv2.cv as cv
 import os
 
 DEBUG = False
-TEST = False
+TEST = True
 PRINT = False
      
 CIRCLE_COLOR = (0, 255, 0)
@@ -23,7 +23,7 @@ THICKNESS = 1
 LINE_TYPE = 8
 SHIFT = 0
 
-def makePatient0(name, birth, gender, ethnicity, language, roomNumber, school, 
+def makePatient(name, birth, gender, ethnicity, language, roomNumber, school, 
                  screeningComment, referral):
     
     thisPatient = Patient(name, birth, gender, ethnicity, language, roomNumber, 
@@ -464,6 +464,14 @@ def getEyePhotos(thisPatient):
     # Pass back paths
     return(hLeftPath, hRightPath, vLeftPath, vRightPath)
 
+def getPupilCoors(thisPatient):
+    """ 
+        Get pupil coors. (hLeft, hRight, vLeft, vRight)
+    """
+    return( thisPatent.getPupilRegion(true,true),thisPatent.getPupilRegion(true,false),
+            thisPatent.getPupilRegion(false,true),thisPatent.getPupilRegion(false,false))
+
+
 def drawOnEyes(thisPatient):
     """ Draws rectangles around the facephoto of a horizontal and vertical photo
         and displays them in succession
@@ -641,6 +649,8 @@ if (TEST):
     for key in  allInfo.keys():
         print "[" + key + "]" + " = " + str(allInfo[key] )
     print "\n"
+
+    print "PupilCoors: " + patient.getPupilCoors()
     
     #Added method just for testing. Can be deleted or commented out in actual
     # working code.
