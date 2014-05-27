@@ -140,15 +140,13 @@ def findPupil(eyePhoto):
         cv2.drawContours(dilate,contours,-1,(255,255,255),-1)
         if DEBUG:
             cv.ShowImage("Contours", cv.fromarray(dilate))
-            cv.WaitKey(0)
-            cv.DestroyWindow("Contours")
 
         print "type of dilate:  " + str(type(dilate))
         print "size of dilate:  " + str(dilate.size)
         
         cv2.imwrite("dilate.jpg", dilate   )
         big = bigContinWC(dilate)
-        print big[0]
+        print "Big is " + str(big)
 
         
         eye = cv.fromarray(eyePhoto)
@@ -159,6 +157,16 @@ def findPupil(eyePhoto):
             cv.DestroyWindow("Biggest")
     
 
+def swap_dims(arr):
+    ''' 
+        swap the dimension of a 2d array
+    '''
+    newArr = np.empty([len(arr[0]),len(arr)])
+    for x in range(len(arr)):
+        for y in range(len(arr[x])):
+            newArr[y][x] = arr[x][y]
+
+    return newArr
         
 def bigContinWC(photo):
     '''
@@ -177,22 +185,21 @@ def bigContinWC(photo):
     bigY = -1
     lineX = -1
     lineY = -1
-    for x in range(len(photo)):
+    print "y goes from 0 to " + str(len(photo) -1 )
+    print "x goes from 0 to " + str(len(photo[0]) -1 )
+    for y in range(len(photo[0])):
         lineWC = 0
-        wc =0
+        wc =0 
         tempCount = 0
-        for y in range(len(photo[x])):
+        for x in range(len(photo)):
             pixel = photo[x][y]
             
             if pixel == 255:
-                print "yes its white\n"
                 tempCount = tempCount + 1
-                print tempCount
             elif tempCount > wc:
-                print "black"
                 wc = tempCount
-                lineY = y-wc
                 lineX = x
+                lineY = y-wc
                 tempCount =0
         lineWC = wc
         if lineWC > bigWC:
