@@ -140,6 +140,8 @@ def findPupil(eyePhoto):
         cv2.drawContours(dilate,contours,-1,(255,255,255),-1)
         if DEBUG:
             cv.ShowImage("Contours", cv.fromarray(dilate))
+            cv.WaitKey(0)
+            cv.DestroyWindow("Contours")
 
         print "type of dilate:  " + str(type(dilate))
         print "size of dilate:  " + str(dilate.size)
@@ -148,9 +150,9 @@ def findPupil(eyePhoto):
         big = bigContinWC(dilate)
         print "Big is " + str(big)
 
-        
         eye = cv.fromarray(eyePhoto)
-        draw_circles((big[0],big[1],3), eye)
+        #draw_circles((big[0],big[1],3), eye)
+        cv2.line(eyePhoto, (big[0],big[1]),(big[0],big[1]+big[2]),CIRCLE_COLOR,THICKNESS,LINE_TYPE)
         if DEBUG:
             cv.ShowImage("Biggest", eye)
             cv.WaitKey(0)
