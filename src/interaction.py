@@ -1,7 +1,7 @@
 import wx, os
 import wx, os
 from Controller import *
-#from xlwt import Workbook
+from xlwt import Workbook
 #use makepatient method from controller
 
 IMGMASK = "JPEG Files(*.jpg;*.jpeg;*.jpe;*.jfif) " \
@@ -226,18 +226,47 @@ class interaction():
 	#       hImgCtrl - horizontal image control of 2nd page
 	#       vImgCtrl - vertical image control of 2nd page
 	def next0(self, page0, page1, name, birth, gender, ethnicity, language,
-			  roomNumber, school, screeningComment, referral):
+			  roomNumber, school, screeningComment):
 
-		self.patient = Patient()
-		self.patient.setName(name)
-		self.patient.setBirth(birth)
-		self.patient.setGender(gender)
-		self.patient.setEthnicity(ethnicity)
-		self.patient.setLanguage(language) 
-		self.patient.setRoomNumber(roomNumber) 
-		self.patient.setSchool(school)
-		self.patient.setScreeningComment(screeningComment)
-		self.patient.setReferral(referral)
+        	# Creates a patient object to be saved into data structure
+        	self.patient = Patient()
+        
+        	if name.GetValue() != "":
+        	   self.patient.name = name.GetValue()
+        
+        	if birth.GetValue() != "":
+        	   self.patient.birth = birth.GetValue()
+        
+        	if gender.GetValue() != "":
+        	   self.patient.gender = gender.GetValue()
+        
+        	if ethnicity.GetValue() != "":
+        	   self.patient.ethnicity = ethnicity.GetValue()
+        
+    	        if language.GetValue() != "":
+        	   self.patient.language = language.GetValue()
+        
+        	if roomNumber.GetValue() != "":
+        	   self.patient.roomNumber = roomNumber.GetValue()
+        
+        	if school.GetValue() != "":
+        	   self.patient.school = school.GetValue()
+        
+                if screeningComment.GetValue() != "":
+        	   self.patient.screeningComment = screeningComment.GetValue()
+        
+        	# Saves patient data into data structure
+        	self.patientData.append(self.patient)
+                
+                # Clears inputs after patient data is saved
+                name.Clear()
+                birth.Clear()
+                gender.Clear() 
+                ethnicity.Clear()
+                language.Clear()
+                roomNumber.Clear()
+                school.Clear()
+                screeningComment.Clear()
 
 		page0.Hide()
 		self.ShowYourself(page1)          # Shows 2nd page
@@ -662,54 +691,17 @@ class interaction():
 		# Shows first page
 		page1.Show()
 
-	def saveData(self, page, name, birth, gender, ethnicity, language,
-			  roomNumber, school, screeningComment, referral):		
-	   
-	   # Creates a patient object to be saved into data structure
-    	   patient = Patient()
-
-	   if name.GetValue() != "":
-	       patient.name = name.GetValue()
-
-	   if birth.GetValue() != "":
-	       patient.birth = birth.GetValue()
-
-	   if gender.GetValue() != "":
-	       patient.gender = gender.GetValue()
-
-	   if ethnicity.GetValue() != "":
-	       patient.ethnicity = ethnicity.GetValue()
-
-	   if language.GetValue() != "":
-	       patient.language = language.GetValue()
-
-	   if roomNumber.GetValue() != "":
-	       patient.roomNumber = roomNumber.GetValue()
-
-	   if school.GetValue() != "":
-	       patient.school = school.GetValue()
-
-           if screeningComment.GetValue() != "":
-	       patient.screeningComment = screeningComment.GetValue()
-
+	def saveData(self, page, referral):		
+	   	   
 	   if referral.GetValue() != "":
-	       patient.referral = referral.GetValue()
+                self.patientData[len(self.patientData) - 1].referral = referral.GetValue()
 			
 	   # Saves patient data into data structure
-	   self.patientData.append(patient)
 	   msg = "Patient Data was saved into the database."
            savedMsg = wx.MessageDialog(page, msg, "Patient Data Saved", wx.OK)
            savedMsg.ShowModal()
            
            # Clears inputs after patient data is saved
-           name.Clear()
-           birth.Clear()
-           gender.Clear() 
-           ethnicity.Clear()
-           language.Clear()
-           roomNumber.Clear()
-           school.Clear()
-           screeningComment.Clear()
            referral.Clear()											
 															
 	def exportData(self,page):

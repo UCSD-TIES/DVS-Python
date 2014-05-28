@@ -74,7 +74,6 @@ class page(wx.Panel):
 		
 		##############Grids#####################
 		mainGrid = wx.FlexGridSizer(10, 2, 5, 5)
-		buttonGrid = wx.FlexGridSizer(10, 2, 15, 15)
 
 		###############STATIC TEXT################
 		name = wx.StaticText(page, label="Name: ")
@@ -85,7 +84,6 @@ class page(wx.Panel):
 		roomNumber = wx.StaticText(page, label="Room Number: ")
 		school = wx.StaticText(page, label="School: ")
 		screeningComment = wx.StaticText(page, label="Screening Comment: ")
-		referral = wx.StaticText(page, label="Referral: ")
 
 		###################INPUTS####################
 		nameInput = wx.TextCtrl(page, -1, "", size=(175, -1))
@@ -96,38 +94,17 @@ class page(wx.Panel):
 		roomNumberInput = wx.TextCtrl(page, -1, "", size=(175, -1))
 		schoolInput = wx.TextCtrl(page, -1, "", size=(175, -1))
 		screeningCommentInput = wx.TextCtrl(page, -1, "", size=(175, -1))
-		referralInput = wx.TextCtrl(page, -1, "", size=(175, -1))
 
 		# Position for Next button
 		x = 840
 		y = 520
 
 		###################Buttons####################
-		saveBtn = wx.Button(page, label="Save")
-		exportBtn = wx.Button(page, label="Export")
 		nextBtn0 = wx.Button(page, label='Next', pos=(x,y))          # Button for moving onto next page
-		
-		saveBtn.Bind(wx.EVT_BUTTON, lambda event: 
-					 self.interact.saveData(page, nameInput, birthInput,
-												genderInput, ethnicityInput,
-												languageInput, roomNumberInput,
-												schoolInput, screeningCommentInput,
-												referralInput))
-
-		exportBtn.Bind(wx.EVT_BUTTON, 
-					  lambda event: self.interact.exportData(page))
-
 		nextBtn0.Bind(wx.EVT_BUTTON, lambda event: 
-					  self.interact.next0(self.page0, self.page1,
-										  nameInput.GetValue(),
-										  birthInput.GetValue(),
-										  genderInput.GetValue(),
-										  ethnicityInput.GetValue(),
-										  languageInput.GetValue(),
-										  roomNumberInput.GetValue(),
-										  schoolInput.GetValue(),
-										  screeningCommentInput.GetValue(),
-										  referralInput.GetValue()))
+					  self.interact.next0(self.page0, self.page1, nameInput, birthInput,
+							      genderInput, ethnicityInput, languageInput,
+							      roomNumberInput, schoolInput, screeningCommentInput))
 
 		###################ADDING_STUFF#################
 		mainGrid.AddMany([(name),(nameInput)])
@@ -138,12 +115,9 @@ class page(wx.Panel):
 		mainGrid.AddMany([(roomNumber),(roomNumberInput)])
 		mainGrid.AddMany([(school),(schoolInput)])
 		mainGrid.AddMany([(screeningComment),(screeningCommentInput)])
-		mainGrid.AddMany([(referral),(referralInput)])
-		buttonGrid.AddMany([(saveBtn),(exportBtn)])
 
 		# Adds everything to real main sizer
 		vbox.Add(mainGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
-		vbox.Add(buttonGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
 
 		# Sets the main sizer as the page's sizer
 		page.SetSizer(vbox)
@@ -450,13 +424,16 @@ class page(wx.Panel):
 
 	# setup a result page
 	def resultPageSetup(self, page):
+    		
+    		vbox = wx.BoxSizer(wx.VERTICAL)
+
+	        buttonGrid = wx.FlexGridSizer(10, 2, 15, 15)
 
 		# print out title on top left corner of the page
 		resultText = "This is result page"
 		result = wx.StaticText(page, -1, resultText, (0, 40), (1000, -1), wx.ALIGN_CENTER)
 		result.SetBackgroundColour('blue')
 		result.SetForegroundColour('white')
-
 
 		horPhotoTxt = wx.TextCtrl(page, size=(360,-1), style=wx.TE_READONLY)
 		verPhotoTxt = wx.TextCtrl(page, size=(360,-1), style=wx.TE_READONLY)
@@ -467,20 +444,33 @@ class page(wx.Panel):
 		horPhotoTxt.Hide()
 		verPhotoTxt.Hide()
 
-		x = 740
-		y = 520
+		referral = wx.StaticText(page, label="Referral: ", pos=(380, 460))
+		referralInput = wx.TextCtrl(page, -1, "", size=(175, -1), pos=(460, 460))
 
 		#exportBtn = wx.Button(page, label="Export Data", pos=(x, y))
+	        saveBtn = wx.Button(page, label="Save", pos=(400, 500))
+		exportBtn = wx.Button(page, label="Export", pos=(500, 500))
+		
+	        x = 740
+		y = 520
+		
 		restartBtn = wx.Button(page, label="Start Over", pos=(x + 100, y))
+		
+	        saveBtn.Bind(wx.EVT_BUTTON, lambda event: 
+			     self.interact.saveData(page,referralInput))
 
-		#exportBtn.Bind(wx.EVT_BUTTON,
-		#            lambda event: self.interact.exportData(page))
+		exportBtn.Bind(wx.EVT_BUTTON, lambda event: self.interact.exportData(page))
 
 		restartBtn.Bind(wx.EVT_BUTTON,
 					lambda event: self.interact.startOver(self.resultPage,
-														  self.page0,
-														  self.horImgCtrl,
-														  self.verImgCtrl,
-														  horPhotoTxt,
-														  verPhotoTxt,
-														  1))
+									      self.page0,
+									      self.horImgCtrl,
+									      self.verImgCtrl,
+									      horPhotoTxt,
+									      verPhotoTxt, 1))
+  #  		buttonGrid.AddMany([(referral),(referralInput)])
+		#buttonGrid.AddMany([(saveBtn),(exportBtn)])
+		#
+		#vbox.Add(buttonGrid, proportion=1, flag=wx.ALIGN_CENTER|wx.TOP, border=40)
+  #  		
+  #  		page.SetSizer(vbox)
