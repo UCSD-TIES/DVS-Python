@@ -257,7 +257,7 @@ class interaction():
 			errMsg1.ShowModal()
 			errMsg1.Destroy()
 			
-		print self.patient.name
+		print self.patient
 			
 		#self.patient = makePatient(self.horizontalPath, self.verticalPath)
 		self.patient.setImages(self.horizontalPath, self.verticalPath)
@@ -334,7 +334,7 @@ class interaction():
 		self.upPupilPaint(page4, self.vLeftPath, vLeftImgCtrl, 2)
 		page2.Hide()                    # Hides 2nd page
 
-		setPatient(self.horizontalPath, self.verticalPath, self.patient)
+		self.patient.setImages(self.horizontalPath, self.verticalPath)
 		coors = getPupilCoors(self.patient)  # this coors is local, just for drawing
 		print coors
 

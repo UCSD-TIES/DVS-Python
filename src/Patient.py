@@ -151,8 +151,8 @@ class Patient:
         horizontalImg = cv.LoadImage(horizontalPath)
         verticalImg = cv.LoadImage(verticalPath)
         
-        patient.setHorizontal(horizontalImg, horizontalPath)
-        patient.setVertical(verticalImg, verticalPath)
+        self.setHorizontal(horizontalImg, horizontalPath)
+        self.setVertical(verticalImg, verticalPath)
 
     def setHorizontal(self, horizontalImg, horizontalPath):
         self.horizontal = HorizontalPhoto(horizontalImg, horizontalPath)
