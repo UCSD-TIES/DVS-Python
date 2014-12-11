@@ -3,6 +3,13 @@ DVS
 
 UCSD Global TIES's Digital Vision Screening Project
 
+**UPDATE: Project Moved**
+-----------------
+
+**As of December 2014 this project has been improved and ported to Java. It now resides at https://github.com/UCSD-TIES/DVS-Java**
+
+**Contact the UCSD-TIES admins for access**
+
 **Spring 2013**
 
 Check out the piazza if you need help setting up python, opencv, pydev, or interacting with gitub
